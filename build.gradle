@@ -5,6 +5,29 @@ apply plugin: 'java'
 
 sourceCompatibility = 1.8
 
+//create a single Jar with all dependencies
+task fatJar(type: Jar) {
+	manifest {
+        attributes 'Implementation-Title': 'Gradle Jar File Example',
+        	'Implementation-Version': version,
+        	'Main-Class': 'Main'
+    }
+
+    archiveName = "vsp_abr227.jar"
+
+    destinationDir = file("E:/ownCloud/DockerPraktikum/java")
+
+    into("lib") {
+        project.subprojects.each { p ->
+            from(p.tasks.withType(Jar)*.outputs)
+        }
+    }
+
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
 repositories {
     mavenCentral()
 }

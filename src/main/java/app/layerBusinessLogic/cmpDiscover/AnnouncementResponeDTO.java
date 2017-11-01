@@ -5,13 +5,13 @@ package app.layerBusinessLogic.cmpDiscover;
  */
 public class AnnouncementResponeDTO {
 
-    private int blackboard_Port;
+    private int blackboard_port;
 
-    public AnnouncementResponeDTO(int blackboard_Port) {
-        this.blackboard_Port = blackboard_Port;
+    public AnnouncementResponeDTO(int blackboard_port) {
+        this.blackboard_port = blackboard_port;
     }
 
-    public int getBlackboard_Port() {
-        return blackboard_Port;
+    public int getBlackboard_port() {
+        return blackboard_port;
     }
 }

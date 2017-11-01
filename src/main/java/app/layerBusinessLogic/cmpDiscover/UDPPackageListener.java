@@ -39,7 +39,7 @@ public class UDPPackageListener {
      * Lauscht auf dem Port
      */
     public void receive() {
-    	System.out.println("receive to port: " + this.udpPort);
+    	System.out.println("listen to udp_port: " + this.udpPort);
 
         try {
 
@@ -71,7 +71,7 @@ public class UDPPackageListener {
         // Auf Anfrage warten
         DatagramPacket packet = new DatagramPacket(new byte[BUFFER_LENGHT], BUFFER_LENGHT);
 
-        System.out.println("warte auf packet");
+        System.out.println("wait for datagrampacket");
         socket.receive(packet);
         
         this.run = false;
@@ -81,16 +81,13 @@ public class UDPPackageListener {
         int port = packet.getPort();
         int len = packet.getLength();
         byte[] data = packet.getData();
-        
-        String datas = new String(data, 0, len);
-        String ports = datas.substring(datas.indexOf(":")+1, datas.length()-1);
-        
-        System.out.println("Port ermittelt: " + ports);
 
-        System.out.println("GSon Port ermittelt: " + gson.fromJson(new String(data, 0, len), AnnouncementResponeDTO.class).getBlackboard_Port());
-
-        System.out.printf("recive request \nIP: %s\nPort: %d\nlenght: %d%n%s%n\n",
+        System.out.printf("recive request \n - IP: %s\n - form port: %d\n - lenght: %d %n - %s%n\n",
                 sourceIp, port, len, new String(data, 0, len));
+
+        AnnouncementResponeDTO responeDTO = gson.fromJson(new String(data, 0, len), AnnouncementResponeDTO.class);
+
+        this.transmittedPort = responeDTO.getBlackboard_port();
 
     }
 
