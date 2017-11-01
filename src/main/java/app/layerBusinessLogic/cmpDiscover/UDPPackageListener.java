@@ -1,25 +1,29 @@
 package app.layerBusinessLogic.cmpDiscover;
 
+import com.google.gson.Gson;
+
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 
-public class UDPListener {
+public class UDPPackageListener {
 
     private int udpPort;
     private static final int BUFFER_LENGHT = 1024;
     private boolean run = false;
-    
-    private InetAddress blackboardAddress = null;
-    private int blackboardPort;
 
     private DatagramSocket socket;
 
-    public UDPListener(int port) {
+    private Gson gson;
+
+    private InetAddress sourceIp = null;
+    private int transmittedPort;
+
+    public UDPPackageListener(int port) {
     	this.udpPort = port;
-		this.run = true;
+    	this.gson = new Gson();
 	}
 
     /**
@@ -28,13 +32,14 @@ public class UDPListener {
      */
     private void init() throws SocketException {
         socket = new DatagramSocket(udpPort);
+        this.run = true;
     }
 
     /**
      * Lauscht auf dem Port
      */
-    public void listen() {
-    	System.out.println("listen to port: " + this.udpPort);
+    public void receive() {
+    	System.out.println("receive to port: " + this.udpPort);
 
         try {
 
@@ -72,7 +77,7 @@ public class UDPListener {
         this.run = false;
 
         // Empfänger auslesen
-        this.blackboardAddress = packet.getAddress();
+        this.sourceIp = packet.getAddress();
         int port = packet.getPort();
         int len = packet.getLength();
         byte[] data = packet.getData();
@@ -82,17 +87,19 @@ public class UDPListener {
         
         System.out.println("Port ermittelt: " + ports);
 
+        System.out.println("GSon Port ermittelt: " + gson.fromJson(new String(data, 0, len), AnnouncementResponeDTO.class).getBlackboard_Port());
+
         System.out.printf("recive request \nIP: %s\nPort: %d\nlenght: %d%n%s%n\n",
-                blackboardAddress, port, len, new String(data, 0, len));
+                sourceIp, port, len, new String(data, 0, len));
 
     }
-    
-    public InetAddress getBlackboardIP() {
-    	return this.blackboardAddress;
+
+    public InetAddress getSourceIp() {
+    	return this.sourceIp;
     }
     
-    public int getBlackboardPort() {
-    	return this.blackboardPort;
+    public int getTransmittedPort() {
+    	return this.transmittedPort;
     }
     
     

@@ -4,23 +4,23 @@ import app.layerDataAccess.blackboard.IBlackboardStorage;
 
 public class DiscoverImpl implements IDiscover {
 	
-	private UDPListener udpListener;
+	private UDPPackageListener udpPackageListener;
 	private IBlackboardStorage blackboardStorage;
 	
-	public DiscoverImpl(IBlackboardStorage storage, UDPListener udpListener) {
+	public DiscoverImpl(IBlackboardStorage storage, UDPPackageListener udpPackageListener) {
 		this.blackboardStorage = storage;
-		this.udpListener = udpListener;
+		this.udpPackageListener = udpPackageListener;
 	}
 
 	@Override
 	public void discoverBlackboard() {	
 		System.out.println("starte die Erkundung");
 		
-		this.udpListener.listen();
+		this.udpPackageListener.receive();
 		
 		System.out.println("Packet empfangen, erstelle Blackboard");
-		this.blackboardStorage.setIp(udpListener.getBlackboardIP());
-		this.blackboardStorage.setPort(udpListener.getBlackboardPort());
+		this.blackboardStorage.setIp(udpPackageListener.getSourceIp());
+		this.blackboardStorage.setPort(udpPackageListener.getTransmittedPort());
 		
 		System.out.println(this.blackboardStorage.getUrl());
 		
