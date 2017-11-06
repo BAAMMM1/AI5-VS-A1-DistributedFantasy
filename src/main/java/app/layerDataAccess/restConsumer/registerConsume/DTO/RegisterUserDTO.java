@@ -1,4 +1,4 @@
-package app.layerDataAccess.restConsumer;
+package app.layerDataAccess.restConsumer.registerConsume.DTO;
 
 /**
  * @author Christian G. on 02.11.2017

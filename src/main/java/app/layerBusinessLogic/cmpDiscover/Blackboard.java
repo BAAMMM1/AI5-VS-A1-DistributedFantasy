@@ -1,6 +1,8 @@
 package app.layerBusinessLogic.cmpDiscover;
 
 import java.net.InetAddress;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class Blackboard {
 
@@ -12,8 +14,14 @@ public class Blackboard {
 		this.port = port;
 	}
 
-	public String getUrl() {
-		return "http:/" + ip + ":" + port;
+	public URL getUrl() {
+
+		try {
+			return new URL("http:/" + ip + ":" + port);
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	@Override

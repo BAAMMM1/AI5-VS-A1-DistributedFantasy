@@ -1,5 +1,7 @@
 package app.layerBusinessLogic.cmpDiscover;
 
+import java.net.URL;
+
 public class DiscoverClientImpl implements IDiscoverClient {
 	
 	private Blackboard blackboard;
@@ -24,7 +26,7 @@ public class DiscoverClientImpl implements IDiscoverClient {
 	}
 
     @Override
-    public String getBlackboardURL() {
+    public URL getBlackboardURL() {
         return this.blackboard.getUrl();
     }
 

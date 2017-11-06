@@ -7,23 +7,29 @@ import java.net.URL;
  */
 public class HTTPRequest {
 
-    private final URL url;
+    private final String url;
     private final EnumHTTPMethod method;
     private final String body;
+    private boolean basicAuth = false;
+    private String basicAuthUser;
+    private String basicAuthPw;
+    private boolean authorization = false;
+    private String authorizationToken;
 
-    public HTTPRequest(URL url, EnumHTTPMethod method, String body) {
+    public HTTPRequest(String url, EnumHTTPMethod method, String body) {
         this.url = url;
         this.method = method;
         this.body = body;
+        this.basicAuthUser = null;
     }
 
-    public HTTPRequest(URL url, EnumHTTPMethod method) {
+    public HTTPRequest(String url, EnumHTTPMethod method) {
         this.url = url;
         this.method = method;
         this.body = null;
     }
 
-    public URL getUrl() {
+    public String getUrl() {
         return url;
     }
 
@@ -33,5 +39,36 @@ public class HTTPRequest {
 
     public String getBody() {
         return body;
+    }
+
+    public String getBasicAuthUser() {
+        return basicAuthUser;
+    }
+
+    public String getBasicAuthPw() {
+        return basicAuthPw;
+    }
+
+    public void setBasicAuth(String user, String password){
+        this.basicAuthUser = user;
+        this.basicAuthPw = password;
+        this.basicAuth = true;
+    }
+
+    public boolean isBasicAuth() {
+        return basicAuth;
+    }
+
+    public void setAuthorizationToken(String authorizationToken) {
+        this.authorizationToken = authorizationToken;
+        this.authorization = true;
+    }
+
+    public boolean isAuthorization() {
+        return authorization;
+    }
+
+    public String getAuthorizationToken() {
+        return authorizationToken;
     }
 }

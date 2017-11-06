@@ -8,7 +8,7 @@ sourceCompatibility = 1.8
 //create a single Jar with all dependencies
 task fatJar(type: Jar) {
 	manifest {
-        attributes 'Implementation-Title': 'Gradle Jar File Example',
+        attributes 'Implementation-Title': 'AI5-VS-A1-DistributedFantasy Jar File',
         	'Implementation-Version': version,
         	'Main-Class': 'Main'
     }
