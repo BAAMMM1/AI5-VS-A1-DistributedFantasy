@@ -11,7 +11,7 @@ import java.util.Base64;
  */
 public class HTTPCaller {
 
-    private static final int BUFFER_LENGHT = 26003;
+    private static final int BUFFER_LENGHT = 4096;
     private static final String MEDIA_TYPE_APPLICATION_JSON = "application/json";
 
     public HTTPResponse call(HTTPRequest request) throws IOException {
