@@ -1,8 +1,9 @@
 package app.shell.command;
 
-import app.shell.command.Exception.CommandNotExistsException;
-import app.shell.command.Exception.ParameterIsMissingException;
-import app.shell.command.Exception.ParameterTooManyParameterException;
+import app.shell.command.exception.CommandNotExistsException;
+import app.shell.command.exception.ParameterIsMissingException;
+import app.shell.command.exception.ParameterSyntaxIncorrektException;
+import app.shell.command.exception.ParameterTooManyException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ public class Interpreter {
 
     }
 
-    public Command interpret(String in) throws CommandNotExistsException, ParameterTooManyParameterException, ParameterIsMissingException {
+    public Command interpret(String in) throws CommandNotExistsException, ParameterTooManyException, ParameterIsMissingException, ParameterSyntaxIncorrektException {
 
         String befehl;
         List<String> param = new ArrayList<String>();
@@ -57,7 +58,7 @@ public class Interpreter {
         System.out.println("command substring: " + befehl);
         System.out.println("parameter substring: " + param.toString());
 
-        Command result = this.registerCommands.stream().filter(c -> c.getName().equals(befehl)).findFirst().orElse(null);
+        Command result = this.registerCommands.stream().filter(c -> c.getCommandName().equals(befehl)).findFirst().orElse(null);
 
         if (result != null) {
             result.setParameter(param);

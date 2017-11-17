@@ -17,7 +17,7 @@ public class RegisterClientImp implements IRegisterClient {
 
     @Override
     public void registerUser(String name, String password) {
-        //RegisterUserDTO dto = this.registerConsumer.registerUser(getName, password);
+        //RegisterUserDTO dto = this.registerConsumer.registerUser(getCommandName, password);
 
     }
 

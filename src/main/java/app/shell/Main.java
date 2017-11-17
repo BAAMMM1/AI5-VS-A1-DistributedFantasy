@@ -1,10 +1,12 @@
 package app.shell;
 
 import app.shell.command.*;
-import app.shell.command.Exception.CommandNotExistsException;
-import app.shell.command.Exception.ParameterIsMissingException;
-import app.shell.command.Exception.ParameterTooManyParameterException;
+import app.shell.command.exception.CommandNotExistsException;
+import app.shell.command.exception.ParameterIsMissingException;
+import app.shell.command.exception.ParameterTooManyException;
 import app.shell.command.Register;
+import app.shell.command.state.Context;
+import app.shell.command.state.State;
 
 import java.util.Arrays;
 import java.util.Scanner;
@@ -16,32 +18,24 @@ public class Main {
 
     public static void main(String[] args){
 
-        Interpreter interpreter = new Interpreter();
-        interpreter.registerCommands(Arrays.asList(new Help(), new Register(), new Exit()));
+        Context context = new Context(State.NOT_LOGIN);
+
+        CommandHandler handler = new CommandHandler(context);
+
 
         Scanner reader = new Scanner(System.in);
 
         // Initializte
 
         while (true){
-            System.out.print(">> DistributedFantasy >>: ");
+
+            System.out.print(context.getPromptState());
 
             String in = reader.nextLine();
 
-            try {
-                Command command = interpreter.interpret(in);
+            handler.handleCommand(in);
 
-                command.execute();
 
-            } catch (CommandNotExistsException e) {
-                System.out.println(e.getMessage());
-
-            } catch (ParameterTooManyParameterException e) {
-                System.out.println(e.getMessage());
-
-            } catch (ParameterIsMissingException e) {
-                System.out.println(e.getMessage());
-            }
 
         }
 

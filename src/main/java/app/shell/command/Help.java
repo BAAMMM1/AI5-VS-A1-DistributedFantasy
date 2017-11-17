@@ -1,6 +1,8 @@
 package app.shell.command;
 
-import app.shell.command.Exception.ParameterTooManyParameterException;
+import app.shell.UnAcceptedStateException;
+import app.shell.command.exception.ParameterTooManyException;
+import app.shell.command.state.State;
 
 import java.util.List;
 
@@ -16,25 +18,41 @@ public class Help implements Command {
 
 
     @Override
-    public String getName() {
+    public String getCommandName() {
         return COMMAND_NAME;
     }
 
     @Override
-    public void setParameter(List<String> param) throws ParameterTooManyParameterException {
+    public void setParameter(List<String> param) throws ParameterTooManyException {
 
         if (param.size() != NUMBER_OF_PARAMETER) {
-            throw new ParameterTooManyParameterException();
+            throw new ParameterTooManyException();
         }
+
+    }
+
+    @Override
+    public void checkState(State state) throws UnAcceptedStateException{
+
+        // Hier kann auf einen State, viele States oder gar keinen State verglichen werden.
+
 
     }
 
 
     @Override
-    public void execute() {
+    public State execute(State state) {
+
         // use businesslog
 
-        System.out.println("welcome to help");
+        System.out.println("");
+        System.out.println("# command --- # parameter ------- # discription --------------------------------------");
+        System.out.println("  -help                             displays all possible commands");
+        System.out.println("  -reg          <user> <password>   registered a new user");
+        System.out.println("  -exit                             terminates the application");
+        System.out.println("");
 
+        // return null, if appContext not Change
+        return state;
     }
 }

@@ -44,7 +44,7 @@ public class RegisterConsumer implements IRegisterConsumer {
 
         // preconditions-check
         if(name == null){
-            throw new IllegalArgumentException("getName must not be null");
+            throw new IllegalArgumentException("getCommandName must not be null");
         }
 
         if(password == null){
