@@ -6,12 +6,18 @@ import app.layerGraphicAndPresentation.shell.state.State;
 /**
  * @author Christian G. on 17.11.2017
  */
-public class Exit extends Command {
+public class Clear extends Command {
+
 
     private static final int PARAMETER_SIZE = 0;
 
+    @Override
+    int parameterSize() {
+        return PARAMETER_SIZE;
+    }
 
-    public Exit(Interpreter interpreter) {
+
+    public Clear(Interpreter interpreter) {
         super(interpreter);
     }
 
@@ -19,13 +25,8 @@ public class Exit extends Command {
     @Override
     State instruction() {
 
-        System.exit(1);
+        System.out.flush();
 
         return null;
-    }
-
-    @Override
-    int parameterSize() {
-        return PARAMETER_SIZE;
     }
 }

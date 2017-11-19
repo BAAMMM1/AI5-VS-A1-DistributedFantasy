@@ -1,7 +1,7 @@
 package app.layerGraphicAndPresentation.shell.command;
 
-import app.layerGraphicAndPresentation.shell.exception.UnAcceptedStateException;
-import app.layerGraphicAndPresentation.shell.exception.ParameterTooManyException;
+import app.layerGraphicAndPresentation.shell.Interpreter;
+import app.layerGraphicAndPresentation.shell.exception.ParameterIncorrectException;
 import app.layerGraphicAndPresentation.shell.state.State;
 
 import java.util.List;
@@ -9,40 +9,23 @@ import java.util.List;
 /**
  * @author Christian G. on 17.11.2017
  */
-public class Help implements Command {
+public class Help extends Command {
 
-    private static final String COMMAND_NAME = "help";
-    private static final int NUMBER_OF_PARAMETER = 0;
-
-    private List<String> parameter;
-
+    private static final int PARAMETER_SIZE = 0;
 
     @Override
-    public String getCommandName() {
-        return COMMAND_NAME;
+    int parameterSize() {
+        return PARAMETER_SIZE;
     }
 
-    @Override
-    public void setParameter(List<String> param) throws ParameterTooManyException {
 
-        if (param.size() != NUMBER_OF_PARAMETER) {
-            throw new ParameterTooManyException();
-        }
-
-    }
-
-    @Override
-    public void checkState(State state) throws UnAcceptedStateException {
-
-        // Hier kann auf einen State, viele States oder gar keinen State verglichen werden.
-
-
+    public Help(Interpreter interpreter) {
+        super(interpreter);
     }
 
 
     @Override
-    public State execute(State state) {
-
+    State instruction() {
         // use businesslog
 
         System.out.println("");
@@ -54,6 +37,8 @@ public class Help implements Command {
         System.out.println("");
 
         // return null, if appContext not Change
-        return state;
+        return null;
     }
+
+
 }

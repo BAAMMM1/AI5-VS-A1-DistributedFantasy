@@ -15,7 +15,7 @@ task fatJar(type: Jar) {
 
     archiveName = "vsp_abr227.jar"
 
-    destinationDir = file("E:/ownCloud/DockerPraktikum/java")
+    destinationDir = file("E:/ownCloud/dockerPraktikum/java")
 
     into("lib") {
         project.subprojects.each { p ->

@@ -1,4 +1,4 @@
-package app.layerPersistence.httpAccess;
+package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonHttpAccess;
 
 /**
  * @author Christian G. on 03.11.2017

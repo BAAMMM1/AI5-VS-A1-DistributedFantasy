@@ -1,60 +1,35 @@
 package app.layerGraphicAndPresentation.shell;
 
 import app.layerGraphicAndPresentation.shell.command.Command;
-import app.layerGraphicAndPresentation.shell.command.Exit;
-import app.layerGraphicAndPresentation.shell.command.Help;
-import app.layerGraphicAndPresentation.shell.command.Register;
-import app.layerGraphicAndPresentation.shell.exception.UnAcceptedStateException;
-import app.layerGraphicAndPresentation.shell.exception.CommandNotExistsException;
-import app.layerGraphicAndPresentation.shell.exception.ParameterIsMissingException;
-import app.layerGraphicAndPresentation.shell.exception.ParameterSyntaxIncorrektException;
-import app.layerGraphicAndPresentation.shell.exception.ParameterTooManyException;
+import app.layerGraphicAndPresentation.shell.exception.*;
 import app.layerGraphicAndPresentation.shell.state.Context;
 
-import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author Christian G. on 17.11.2017
  */
 public class CommandHandler {
 
-    Context context;
-
-    CommandInterpreter commandInterpreter = new CommandInterpreter();
+    Interpreter interpreter;
 
 
-    public CommandHandler(Context context, Command ...commands) {
-        this.context = context;
-        commandInterpreter.registerCommands(Arrays.asList(commands));
+    public CommandHandler(Interpreter interpreter) {
+        this.interpreter = interpreter;
 
     }
 
     public void handleCommand(String in) {
 
         try {
-            Command command = commandInterpreter.interpret(in);
+            Command command = interpreter.interpret(in);
+            List<String> param = interpreter.interpretParam(in);
 
-            command.checkState(context.getState());
+            command.execute(param);
 
-            context.setState(command.execute(context.getState()));
+        } catch (CommandNotExistsException | UnAcceptedStateException | ParameterIncorrectException e) {
+            System.out.println(Context.getInstance().getPromptState() + e.getMessage());
 
-            //System.out.println(this.context.getPromptState() + "State after command: " + context.getState());
-
-        } catch (CommandNotExistsException e) {
-            System.out.println(context.getPromptState() + e.getMessage());
-
-        } catch (ParameterTooManyException e) {
-            System.out.println(context.getPromptState() + e.getMessage());
-
-        } catch (ParameterIsMissingException e) {
-            System.out.println(context.getPromptState() + e.getMessage());
-
-        } catch (ParameterSyntaxIncorrektException e) {
-            System.out.println(context.getPromptState() + e.getMessage());
-
-        } catch (UnAcceptedStateException e) {
-            System.out.println(context.getPromptState() + e.getMessage());
         }
-
     }
 }

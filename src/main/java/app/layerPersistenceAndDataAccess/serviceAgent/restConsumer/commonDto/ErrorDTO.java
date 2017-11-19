@@ -1,4 +1,4 @@
-package app.layerPersistence.restConsumer.dto;
+package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonDto;
 
 /**
  * @author Christian G. on 02.11.2017

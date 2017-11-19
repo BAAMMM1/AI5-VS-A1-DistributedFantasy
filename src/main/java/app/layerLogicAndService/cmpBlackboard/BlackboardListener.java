@@ -1,4 +1,4 @@
-package app.layerLogic.cmpBlackboard;
+package app.layerLogicAndService.cmpBlackboard;
 
 import com.google.gson.Gson;
 

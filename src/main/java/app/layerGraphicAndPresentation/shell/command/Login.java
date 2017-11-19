@@ -1,11 +1,13 @@
 package app.layerGraphicAndPresentation.shell.command;
 
-import app.layerGraphicAndPresentation.shell.exception.ParameterIsMissingException;
-import app.layerGraphicAndPresentation.shell.exception.ParameterTooManyException;
+import app.layerGraphicAndPresentation.shell.Interpreter;
 import app.layerGraphicAndPresentation.shell.exception.UnAcceptedStateException;
+import app.layerGraphicAndPresentation.shell.state.Context;
 import app.layerGraphicAndPresentation.shell.state.State;
-import app.layerLogic.cmpAccount.IAccountClient;
-import app.layerPersistence.restConsumer.Exception.NotOKValueException;
+import app.layerLogicAndService.cmpAccount.IAccountService;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonException.ErrorCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.accountConsumer.dto.UserTokenDTO;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonDto.ErrorDTO;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,67 +16,68 @@ import java.util.List;
 /**
  * @author Christian G. on 17.11.2017
  */
-public class Login implements Command {
+public class Login extends Command {
 
-    private IAccountClient client;
+    private IAccountService client;
 
-    private static final String COMMAND_NAME = "login";
-    private static final int NUMBER_OF_PARAMETER = 2;
-
-    private List<String> parameter;
     private List<State> acceptedStates = new ArrayList<State>(Arrays.asList(State.NOT_LOGIN));
 
-    public Login(IAccountClient client) {
+    private static final int PARAMETER_SIZE = 2;
+
+    @Override
+    int parameterSize() {
+        return PARAMETER_SIZE;
+    }
+
+    public Login(Interpreter interpreter, IAccountService client) {
+        super(interpreter);
         this.client = client;
     }
 
-    @Override
-    public String getCommandName() {
-        return COMMAND_NAME;
-    }
 
     @Override
-    public void setParameter(List<String> param) throws ParameterTooManyException, ParameterIsMissingException {
+    public void checkState() throws UnAcceptedStateException {
 
-        if(param.size() < NUMBER_OF_PARAMETER){
-            throw new ParameterIsMissingException();
-        }
-
-        if(param.size() > NUMBER_OF_PARAMETER){
-            throw new ParameterTooManyException();
-        }
-
-        // Parameter auf korrekte eingabe hier überprüfen
-
-        this.parameter = param;
-
-    }
-
-    @Override
-    public void checkState(State state) throws UnAcceptedStateException {
-
-        if(!acceptedStates.contains(state)){
+        if(!acceptedStates.contains(Context.getInstance().getState())){
             throw new UnAcceptedStateException();
         }
 
     }
 
-
     @Override
-    public State execute(State state) {
+    State instruction() {
 
-        System.out.println("execute login with: user: " + parameter.get(0) + " with password: " + parameter.get(1));
+        System.out.println("instruction login with: user: " + this.getParameter().get(0) + " with password: " + this.getParameter().get(1));
 
         // Je nachdem was hier zurück kommt, entweder Ok oder nicht ok, ändere Status
         try {
-            this.client.getAuthenticationToken(parameter.get(0), parameter.get(1));
+            UserTokenDTO dto = this.client.getAuthenticationToken(this.getParameter().get(0), this.getParameter().get(1));
+
+            // Prompt-Ausgabe
+            System.out.println("message: " + dto.getMessage());
+            System.out.println("token: " + dto.getToken());
+            System.out.println("valid till: " + dto.getValid_till());
+
             return State.LOGIN;
 
-        } catch (NotOKValueException e) {
-            System.out.println(e.getMessage());
-            return state;
+        } catch (ErrorCodeException e) {
+            ErrorDTO dto = e.getErrorDTO();
 
+            System.out.println("message: " + dto.getMessage());
+
+            return null;
         }
-
     }
+
+
+
+
+
+
+
+
+
+
+
+
 }
