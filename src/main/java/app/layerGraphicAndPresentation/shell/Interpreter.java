@@ -11,10 +11,10 @@ import java.util.List;
  */
 public class Interpreter {
 
-    List<Command> registerExecutables;
+    List<Command> registerCommands;
 
     public Interpreter() {
-        this.registerExecutables = new ArrayList<Command>();
+        this.registerCommands = new ArrayList<Command>();
     }
 
 
@@ -51,7 +51,7 @@ public class Interpreter {
         //System.out.println("command substring: " + befehl);
         //System.out.println("parameter substring: " + param.toString());
 
-        Command result = this.registerExecutables.stream().filter(c -> c.getCommandName().equals(befehl)).findFirst().orElse(null);
+        Command result = this.registerCommands.stream().filter(c -> c.getCommandName().equals(befehl)).findFirst().orElse(null);
 
         if (result != null) {
             //result.setParam(param);
@@ -92,7 +92,11 @@ public class Interpreter {
 
     }
 
+    public List<Command> getRegisterCommands() {
+        return registerCommands;
+    }
+
     public void registerCommand(Command command){
-        this.registerExecutables.add(command);
+        this.registerCommands.add(command);
     }
 }

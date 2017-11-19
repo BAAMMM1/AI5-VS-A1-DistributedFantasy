@@ -2,10 +2,8 @@ package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.accountConsu
 
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonException.ErrorCodeException;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.accountConsumer.dto.RegisterUserDTO;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.accountConsumer.dto.UserTokenDTO;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.accountConsumer.dto.LoginTokenDTO;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.accountConsumer.dto.WhoamiDTO;
-
-import java.io.IOException;
 
 /**
  * @author Christian G. on 02.11.2017
@@ -13,7 +11,7 @@ import java.io.IOException;
 public interface IAccountConsumer {
 
     RegisterUserDTO registerUser(String name, String password) throws ErrorCodeException;
-    UserTokenDTO getAuthenticationToken(String name, String password) throws ErrorCodeException;
+    LoginTokenDTO getAuthenticationToken(String name, String password) throws ErrorCodeException;
     WhoamiDTO checkLogin(String Token) throws ErrorCodeException;
 
 }

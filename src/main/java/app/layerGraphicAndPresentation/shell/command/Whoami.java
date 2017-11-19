@@ -36,6 +36,11 @@ public class Whoami extends Command {
         return PARAMETER_SIZE;
     }
 
+    @Override
+    String discreption() {
+        return "  -whoami                            indicates if you are athentificated";
+    }
+
 
     public Whoami(Interpreter interpreter) {
         super(interpreter);
@@ -57,12 +62,14 @@ public class Whoami extends Command {
         try {
             WhoamiDTO dto = this.client.checkLogin(Blackboard.getInstance().getToken());
 
-            System.out.println(dto.getMessage());
-            System.out.println(dto.getDeliverables_done());
-            System.out.println(dto.getDelivered());
-            System.out.println(dto.getIp());
-            System.out.println(dto.getLocation());
-            System.out.println(dto.getName());
+            System.out.println("message: " + dto.getMessage());
+            System.out.println("encryption_key:" + dto.getUser().get_links().getEncryption_key());
+            System.out.println("self: " + dto.getUser().get_links().getSelf());
+            System.out.println("deliverables_done: " + dto.getUser().getDeliverables_done());
+            System.out.println("delivered: " + dto.getUser().getDelivered());
+            System.out.println("ip: " + dto.getUser().getIp());
+            System.out.println("location: " + dto.getUser().getLocation());
+            System.out.println("name: " + dto.getUser().getName());
 
             return null;
         } catch (ErrorCodeException e) {

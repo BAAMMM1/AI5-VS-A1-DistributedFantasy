@@ -6,7 +6,7 @@ import app.layerGraphicAndPresentation.shell.state.Context;
 import app.layerGraphicAndPresentation.shell.state.State;
 import app.layerLogicAndService.cmpAccount.IAccountService;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonException.ErrorCodeException;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.accountConsumer.dto.UserTokenDTO;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.accountConsumer.dto.LoginTokenDTO;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonDto.ErrorDTO;
 
 import java.util.ArrayList;
@@ -27,6 +27,11 @@ public class Login extends Command {
     @Override
     int parameterSize() {
         return PARAMETER_SIZE;
+    }
+
+    @Override
+    String discreption() {
+        return "  -login        [user] [password]   login with user and password";
     }
 
     public Login(Interpreter interpreter, IAccountService client) {
@@ -51,7 +56,7 @@ public class Login extends Command {
 
         // Je nachdem was hier zurück kommt, entweder Ok oder nicht ok, ändere Status
         try {
-            UserTokenDTO dto = this.client.getAuthenticationToken(this.getParameter().get(0), this.getParameter().get(1));
+            LoginTokenDTO dto = this.client.getAuthenticationToken(this.getParameter().get(0), this.getParameter().get(1));
 
             // Prompt-Ausgabe
             System.out.println("message: " + dto.getMessage());

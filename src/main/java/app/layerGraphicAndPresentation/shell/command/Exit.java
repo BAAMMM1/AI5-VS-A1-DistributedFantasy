@@ -28,4 +28,9 @@ public class Exit extends Command {
     int parameterSize() {
         return PARAMETER_SIZE;
     }
+
+    @Override
+    String discreption() {
+        return "  -exit                             terminates the application";
+    }
 }

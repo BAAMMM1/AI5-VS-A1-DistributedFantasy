@@ -3,7 +3,7 @@ package app.layerLogicAndService.cmpAccount;
 import app.layerLogicAndService.Exception.NotAuthenticatedException;
 import app.layerLogicAndService.cmpBlackboard.Blackboard;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.accountConsumer.dto.RegisterUserDTO;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.accountConsumer.dto.UserTokenDTO;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.accountConsumer.dto.LoginTokenDTO;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.accountConsumer.IAccountConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.accountConsumer.dto.WhoamiDTO;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonException.ErrorCodeException;
@@ -29,9 +29,9 @@ public class AccountServiceImp implements IAccountService {
     }
 
     @Override
-    public UserTokenDTO getAuthenticationToken(String name, String password) throws ErrorCodeException {
+    public LoginTokenDTO getAuthenticationToken(String name, String password) throws ErrorCodeException {
 
-        UserTokenDTO dto = this.registerConsumer.getAuthenticationToken(name, password);
+        LoginTokenDTO dto = this.registerConsumer.getAuthenticationToken(name, password);
 
         // Username, Password und Token im System hinterlegen
 

@@ -18,6 +18,11 @@ public class Help extends Command {
         return PARAMETER_SIZE;
     }
 
+    @Override
+    String discreption() {
+        return "  -help                             displays all possible commands";
+    }
+
 
     public Help(Interpreter interpreter) {
         super(interpreter);
@@ -29,11 +34,12 @@ public class Help extends Command {
         // use businesslog
 
         System.out.println("");
-        System.out.println("# command --- # parameter ------- # discription --------------------------------------");
-        System.out.println("  -help                             displays all possible commands");
-        System.out.println("  -login        <user> <password>   login with user and password");
-        System.out.println("  -reg          <user> <password>   registered a new user");
-        System.out.println("  -exit                             terminates the application");
+        System.out.println("# command --- # parameter ------- # discription -------------------------------------- # accepted State --------------------------");
+
+        for(Command command : this.getInterpreter().getRegisterCommands()){
+            System.out.println(command.discreption());
+        }
+
         System.out.println("");
 
         // return null, if appContext not Change

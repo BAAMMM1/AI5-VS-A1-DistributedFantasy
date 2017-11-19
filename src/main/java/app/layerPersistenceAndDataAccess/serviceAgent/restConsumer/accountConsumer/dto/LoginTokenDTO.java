@@ -3,15 +3,15 @@ package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.accountConsu
 /**
  * @author Christian G. on 02.11.2017
  */
-public class UserTokenDTO {
+public class LoginTokenDTO {
 
     private String message;
     private String token;
 
-    // TODO - private Date?
+    // TODO - private Date? Was ist das für ein Dateformat?
     private String valid_till;
 
-    public UserTokenDTO(String message, String token, String valid_till) {
+    public LoginTokenDTO(String message, String token, String valid_till) {
         this.message = message;
         this.token = token;
         this.valid_till = valid_till;
@@ -31,7 +31,7 @@ public class UserTokenDTO {
 
     @Override
     public String toString() {
-        return "UserTokenDTO{" +
+        return "LoginTokenDTO{" +
                 "message='" + message + '\'' +
                 ", token='" + token + '\'' +
                 ", valid_till='" + valid_till + '\'' +

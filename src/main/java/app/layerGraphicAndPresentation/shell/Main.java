@@ -7,6 +7,8 @@ import app.layerLogicAndService.cmpAccount.AccountServiceImp;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.accountConsumer.IAccountConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.accountConsumer.AccountConsumer;
 
+import java.util.Date;
+
 /**
  * @author Christian G. on 17.11.2017
  */
@@ -50,12 +52,11 @@ public class Main {
         }
         */
 
-
         listener.receive();
 
         handler.handleCommand("register MeinSuperTestUser test1234");
         System.out.println();
-        //handler.handleCommand("register MeinSuperTestUserTest test1234");
+        //handler.handleCommand("register MeinSuperTestUserTest9 test1234");
         //System.out.println();
 
         handler.handleCommand("login MeinSufqfqwfqwfqwperTestUser test1234");

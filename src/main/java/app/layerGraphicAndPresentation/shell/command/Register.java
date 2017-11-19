@@ -31,6 +31,11 @@ public class Register extends Command {
         return PARAMETER_SIZE;
     }
 
+    @Override
+    String discreption() {
+        return "  -reg          [user] [password]   registered a new user";
+    }
+
     private List<State> acceptedStates = new ArrayList<State>(Arrays.asList(State.NOT_LOGIN));
 
     public Register(Interpreter interpreter) {
@@ -53,7 +58,24 @@ public class Register extends Command {
 
         try {
             RegisterUserDTO dto = this.client.registerUser(this.getParameter().get(0), this.getParameter().get(1));
-            System.out.println(dto.getMessage());
+            System.out.println("message: " + dto.getMessage());
+            System.out.println("algorithm:" + dto.getEncryption().getAlgorithm());
+            System.out.println("encryption: " + dto.getEncryption().getEncryption());
+            System.out.println("hmack: " + dto.getEncryption().getHMACK());
+            System.out.println("key: " + dto.getEncryption().getKey());
+            System.out.println("key_enconding: " + dto.getEncryption().getKey_encoding());
+            System.out.println("key_length: " + dto.getEncryption().getKeylength());
+            System.out.println("mode: " + dto.getEncryption().getMode());
+            System.out.println("padding: " + dto.getEncryption().getPadding());
+            /*
+            System.out.println("encryption_key: " + dto.getObject().get_links().getEncryption_key());
+            System.out.println("self: " + dto.getObject().get_links().getSelf());
+            System.out.println("deliverables_done: "+ dto.getObject().getDeliverables_done());
+            System.out.println("delivered: " + dto.getObject().getDelivered());
+            System.out.println("ip: " + dto.getObject().getIp());
+            System.out.println("location: " + dto.getObject().getLocation());
+            System.out.println("name: " + dto.getObject().getName());
+            */
 
             return null;
 

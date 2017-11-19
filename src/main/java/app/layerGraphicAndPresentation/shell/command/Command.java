@@ -118,10 +118,17 @@ public abstract class Command {
         return parameter;
     }
 
+    public Interpreter getInterpreter() {
+        return interpreter;
+    }
+
+
     /**
      * Jedes Command muss seine Parameteranzahl selbst definieren
      * @return
      */
     abstract int parameterSize();
+
+    abstract String discreption();
 
 }

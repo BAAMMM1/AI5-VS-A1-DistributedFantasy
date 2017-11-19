@@ -1,6 +1,7 @@
 package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.accountConsumer;
 
 import app.layerLogicAndService.cmpBlackboard.Blackboard;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.accountConsumer.dto.LoginTokenDTO;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonException.ErrorCodeException;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonHttpAccess.EnumHTTPMethod;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonHttpAccess.HTTPCaller;
@@ -8,11 +9,8 @@ import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonHttpAcc
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonHttpAccess.HTTPResponse;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonDto.ErrorDTO;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.accountConsumer.dto.RegisterUserDTO;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.accountConsumer.dto.UserTokenDTO;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.accountConsumer.dto.WhoamiDTO;
 import com.google.gson.Gson;
-
-import java.io.IOException;
 
 /**
  * Erstellt die HTTPAnfrage, ruft die Pfade der API auf und erhält die HTTPResponse, welche JSON Objekte als commonDto´s
@@ -61,7 +59,7 @@ public class AccountConsumer implements IAccountConsumer {
 
         // Antwort prüfen
 
-        if (response.getCode() != 200 || response == null) {
+        if (response.getCode() != 201 || response == null) {
             ErrorDTO errorDTO = gson.fromJson(response.getBody(), ErrorDTO.class);
 
             throw new ErrorCodeException(errorDTO);
@@ -76,7 +74,7 @@ public class AccountConsumer implements IAccountConsumer {
     }
 
     @Override
-    public UserTokenDTO getAuthenticationToken(String name, String password) throws ErrorCodeException {
+    public LoginTokenDTO getAuthenticationToken(String name, String password) throws ErrorCodeException {
 
         // preconditions-check
         if (name == null) {
@@ -109,7 +107,7 @@ public class AccountConsumer implements IAccountConsumer {
             throw new ErrorCodeException(errorDTO);
 
         } else {
-            UserTokenDTO userTokenDTO = gson.fromJson(response.getBody(), UserTokenDTO.class);
+            LoginTokenDTO userTokenDTO = gson.fromJson(response.getBody(), LoginTokenDTO.class);
 
             return userTokenDTO;
 
@@ -148,7 +146,7 @@ public class AccountConsumer implements IAccountConsumer {
 
         } else {
             WhoamiDTO whoamiDTO = gson.fromJson(response.getBody(), WhoamiDTO.class);
-            System.out.println(whoamiDTO.toString());
+
             return whoamiDTO;
 
         }

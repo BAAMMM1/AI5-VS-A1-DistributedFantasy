@@ -16,6 +16,11 @@ public class Clear extends Command {
         return PARAMETER_SIZE;
     }
 
+    @Override
+    String discreption() {
+        return "  -clear                            clear the console";
+    }
+
 
     public Clear(Interpreter interpreter) {
         super(interpreter);
@@ -25,6 +30,7 @@ public class Clear extends Command {
     @Override
     State instruction() {
 
+        // TODO - Funktioniert nocht nicht
         System.out.flush();
 
         return null;
