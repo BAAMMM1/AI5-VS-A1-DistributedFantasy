@@ -24,6 +24,9 @@ public class InputHandler {
     public void handleCommand(String in) {
 
         try {
+
+            // TODO - KeyEvent
+
             Command command = inputInterpreter.interpret(in);
             List<String> param = inputInterpreter.interpretParam(in);
 
