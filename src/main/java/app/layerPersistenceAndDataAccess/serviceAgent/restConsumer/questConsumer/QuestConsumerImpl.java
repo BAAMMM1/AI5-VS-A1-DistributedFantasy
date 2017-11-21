@@ -1,15 +1,15 @@
 package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer;
 
-import app.layerLogicAndService.cmpBlackboard.Blackboard;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonDto.ErrorDTO;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonDto.ErrorDelivorDTO;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonException.ErrorDeliverCodeException;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonHttpAccess.EnumHTTPMethod;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonHttpAccess.HTTPCaller;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonHttpAccess.HTTPRequest;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonHttpAccess.HTTPResponse;
+import app.layerLogicAndService.cmpBlackboard.entity.Blackboard;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.dto.ErrorDTO;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.dto.ErrorDelivorDTO;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.ErrorDeliverCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.EnumHTTPMethod;
+import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.HTTPCaller;
+import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.HTTPRequest;
+import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.HTTPResponse;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.dto.*;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonException.ErrorCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.ErrorCodeException;
 import com.google.gson.Gson;
 
 /**
@@ -28,7 +28,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
     @Override
     public QuestsDTO getQuests() throws ErrorCodeException {
 
-        String token = Blackboard.getInstance().getToken();
+        String token = Blackboard.getInstance().getUserToken();
 
 
         // Erstellen der Anfrage
@@ -62,7 +62,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
     @Override
     public QuestDTO getQuest(int index) throws ErrorCodeException {
 
-        String token = Blackboard.getInstance().getToken();
+        String token = Blackboard.getInstance().getUserToken();
 
 
         // Erstellen der Anfrage
@@ -95,7 +95,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
 
     @Override
     public TaskDTO getTask(int index) throws ErrorCodeException {
-        String token = Blackboard.getInstance().getToken();
+        String token = Blackboard.getInstance().getUserToken();
 
         // /blackboard/quests/2/tasks
         // Erstellen der Anfrage
@@ -129,7 +129,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
     @Override
     public MapDTO lookAtTheMap(String location) throws ErrorCodeException {
 
-        String token = Blackboard.getInstance().getToken();
+        String token = Blackboard.getInstance().getUserToken();
 
         // Erstellen der Anfrage
         HTTPRequest httpRequest =
@@ -162,7 +162,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
     @Override
     public VisitDTO visitHost(String ip, int port, String ressource) throws ErrorCodeException {
 
-        String token = Blackboard.getInstance().getToken();
+        String token = Blackboard.getInstance().getUserToken();
 
         // Erstellen der Anfrage
         HTTPRequest httpRequest =
@@ -195,7 +195,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
     @Override
     public AnswerDTO post(String ip, int port, String ressource, String body) throws ErrorCodeException {
 
-        String token = Blackboard.getInstance().getToken();
+        String token = Blackboard.getInstance().getUserToken();
 
         // Erstellen der Anfrage
         HTTPRequest httpRequest =
@@ -229,7 +229,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
     @Override
     public DeliverDTO deliver(int questId, String taskUri, String token) throws ErrorCodeException, ErrorDeliverCodeException {
 
-        String authToken = Blackboard.getInstance().getToken();
+        String authToken = Blackboard.getInstance().getUserToken();
 
         //System.out.println(Blackboard.getInstance().getUrl().toString() + "/blackboard/quests/" + questId + "/deliveries");
 

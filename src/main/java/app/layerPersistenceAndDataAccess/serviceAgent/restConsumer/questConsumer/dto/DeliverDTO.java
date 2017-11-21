@@ -1,5 +1,7 @@
 package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.dto;
 
+import app.layerLogicAndService.cmpQuest.entity.Delivery;
+
 import java.util.List;
 
 /**
@@ -28,10 +30,10 @@ public class DeliverDTO {
      */
 
     private String message;
-    private List<Object> object;
+    private List<Delivery> object;
     private String status;
 
-    public DeliverDTO(String message, List<Object> object, String status) {
+    public DeliverDTO(String message, List<Delivery> object, String status) {
         this.message = message;
         this.object = object;
         this.status = status;
@@ -45,11 +47,11 @@ public class DeliverDTO {
         this.message = message;
     }
 
-    public List<Object> getObject() {
+    public List<Delivery> getObject() {
         return object;
     }
 
-    public void setObject(List<Object> object) {
+    public void setObject(List<Delivery> object) {
         this.object = object;
     }
 
@@ -70,73 +72,6 @@ public class DeliverDTO {
                 '}';
     }
 
-    public class Object{
-
-        private List<Integer> deliverables;
-        private int id;
-        private int quest;
-        private String timestamp;
-        private String user;
-
-        public Object(List<Integer> deliverables, int id, int quest, String timestamp, String user) {
-            this.deliverables = deliverables;
-            this.id = id;
-            this.quest = quest;
-            this.timestamp = timestamp;
-            this.user = user;
-        }
-
-        public List<Integer> getDeliverables() {
-            return deliverables;
-        }
-
-        public void setDeliverables(List<Integer> deliverables) {
-            this.deliverables = deliverables;
-        }
-
-        public int getId() {
-            return id;
-        }
-
-        public void setId(int id) {
-            this.id = id;
-        }
-
-        public int getQuest() {
-            return quest;
-        }
-
-        public void setQuest(int quest) {
-            this.quest = quest;
-        }
-
-        public String getTimestamp() {
-            return timestamp;
-        }
-
-        public void setTimestamp(String timestamp) {
-            this.timestamp = timestamp;
-        }
-
-        public String getUser() {
-            return user;
-        }
-
-        public void setUser(String user) {
-            this.user = user;
-        }
-
-        @Override
-        public String toString() {
-            return "Object{" +
-                    "\ndeliverables=" + deliverables +
-                    ", \nid=" + id +
-                    ", \nquest=" + quest +
-                    ", \ntimestamp='" + timestamp + '\'' +
-                    ", \nuser='" + user + '\'' +
-                    '}';
-        }
-    }
 
 
 }

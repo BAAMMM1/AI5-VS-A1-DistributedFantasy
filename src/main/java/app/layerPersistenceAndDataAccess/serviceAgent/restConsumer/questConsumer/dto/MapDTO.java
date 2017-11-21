@@ -1,5 +1,7 @@
 package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.dto;
 
+import app.layerLogicAndService.cmpQuest.entity.Map;
+
 import java.util.List;
 
 /**
@@ -7,10 +9,10 @@ import java.util.List;
  */
 public class MapDTO {
 
-    private Object object;
+    private Map object;
     private String status;
 
-    public MapDTO(Object object, String status) {
+    public MapDTO(Map object, String status) {
         this.object = object;
         this.status = status;
     }
@@ -19,7 +21,7 @@ public class MapDTO {
         return object;
     }
 
-    public void setObject(Object object) {
+    public void setObject(Map object) {
         this.object = object;
     }
 
@@ -39,59 +41,4 @@ public class MapDTO {
                 '}';
     }
 
-    public class Object{
-        private String host;
-        private String name;
-        private List<Integer> tasks;
-        private List<Integer> visitors;
-
-        public Object(String host, String name, List<Integer> tasks, List<Integer> visitors) {
-            this.host = host;
-            this.name = name;
-            this.tasks = tasks;
-            this.visitors = visitors;
-        }
-
-        public String getHost() {
-            return host;
-        }
-
-        public void setHost(String host) {
-            this.host = host;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public List<Integer> getTasks() {
-            return tasks;
-        }
-
-        public void setTasks(List<Integer> tasks) {
-            this.tasks = tasks;
-        }
-
-        public List<Integer> getVisitors() {
-            return visitors;
-        }
-
-        public void setVisitors(List<Integer> visitors) {
-            this.visitors = visitors;
-        }
-
-        @Override
-        public String toString() {
-            return "\nObject{" +
-                    "\nhost='" + host + '\'' +
-                    ", \nname='" + name + '\'' +
-                    ", \ntasks=" + tasks +
-                    ", \nvisitors=" + visitors +
-                    '}';
-        }
-    }
 }

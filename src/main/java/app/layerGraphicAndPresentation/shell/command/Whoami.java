@@ -1,15 +1,15 @@
 package app.layerGraphicAndPresentation.shell.command;
 
-import app.layerGraphicAndPresentation.shell.Interpreter;
+import app.layerGraphicAndPresentation.shell.InputInterpreter;
 import app.layerGraphicAndPresentation.shell.exception.UnAcceptedStateException;
-import app.layerGraphicAndPresentation.shell.state.Context;
-import app.layerGraphicAndPresentation.shell.state.State;
-import app.layerLogicAndService.cmpAccount.IAccountService;
-import app.layerLogicAndService.Exception.NotAuthenticatedException;
-import app.layerLogicAndService.cmpBlackboard.Blackboard;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.accountConsumer.dto.WhoamiDTO;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonDto.ErrorDTO;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonException.ErrorCodeException;
+import app.layerGraphicAndPresentation.shell.context.Context;
+import app.layerGraphicAndPresentation.shell.context.State;
+import app.layerLogicAndService.cmpBlackboard.service.IBlackboardService;
+import app.layerLogicAndService.cmpBlackboard.Exception.NotAuthenticatedException;
+import app.layerLogicAndService.cmpBlackboard.entity.Blackboard;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.blackboardConsumer.dto.WhoamiDTO;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.dto.ErrorDTO;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.ErrorCodeException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,14 +20,14 @@ import java.util.List;
  */
 public class Whoami extends Command {
 
-    private IAccountService client;
+    private IBlackboardService client;
 
     private List<State> acceptedStates = new ArrayList<State>(Arrays.asList(State.LOGIN));
 
     private static final int PARAMETER_SIZE = 0;
 
-    public Whoami(Interpreter interpreter, IAccountService client) {
-        super(interpreter);
+    public Whoami(InputInterpreter inputInterpreter, IBlackboardService client) {
+        super(inputInterpreter);
         this.client = client;
     }
 
@@ -52,7 +52,7 @@ public class Whoami extends Command {
     State instruction() {
 
         try {
-            WhoamiDTO dto = this.client.checkLogin(Blackboard.getInstance().getToken());
+            WhoamiDTO dto = this.client.checkLogin(Blackboard.getInstance().getUserToken());
 
             System.out.println("message: " + dto.getMessage());
             System.out.println("encryption_key:" + dto.getUser().get_links().getEncryption_key());

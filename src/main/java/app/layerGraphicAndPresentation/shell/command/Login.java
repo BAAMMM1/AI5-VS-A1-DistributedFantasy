@@ -1,13 +1,12 @@
 package app.layerGraphicAndPresentation.shell.command;
 
-import app.layerGraphicAndPresentation.shell.Interpreter;
+import app.layerGraphicAndPresentation.shell.InputInterpreter;
 import app.layerGraphicAndPresentation.shell.exception.UnAcceptedStateException;
-import app.layerGraphicAndPresentation.shell.state.Context;
-import app.layerGraphicAndPresentation.shell.state.State;
-import app.layerLogicAndService.cmpAccount.IAccountService;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonException.ErrorCodeException;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.accountConsumer.dto.LoginTokenDTO;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonDto.ErrorDTO;
+import app.layerGraphicAndPresentation.shell.context.Context;
+import app.layerGraphicAndPresentation.shell.context.State;
+import app.layerLogicAndService.cmpBlackboard.service.IBlackboardService;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.ErrorCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.blackboardConsumer.dto.LoginTokenDTO;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,15 +17,15 @@ import java.util.List;
  */
 public class Login extends Command {
 
-    private IAccountService client;
+    private IBlackboardService client;
 
     private List<State> acceptedStates = new ArrayList<State>(Arrays.asList(State.NOT_LOGIN));
 
     private static final int PARAMETER_SIZE = 2;
 
 
-    public Login(Interpreter interpreter, IAccountService client) {
-        super(interpreter);
+    public Login(InputInterpreter inputInterpreter, IBlackboardService client) {
+        super(inputInterpreter);
         this.client = client;
     }
 

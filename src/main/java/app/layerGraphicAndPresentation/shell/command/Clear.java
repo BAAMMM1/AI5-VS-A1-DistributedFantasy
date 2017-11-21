@@ -1,7 +1,7 @@
 package app.layerGraphicAndPresentation.shell.command;
 
-import app.layerGraphicAndPresentation.shell.Interpreter;
-import app.layerGraphicAndPresentation.shell.state.State;
+import app.layerGraphicAndPresentation.shell.InputInterpreter;
+import app.layerGraphicAndPresentation.shell.context.State;
 
 import java.io.IOException;
 
@@ -14,8 +14,8 @@ public class Clear extends Command {
     private static final int PARAMETER_SIZE = 0;
 
 
-    public Clear(Interpreter interpreter) {
-        super(interpreter);
+    public Clear(InputInterpreter inputInterpreter) {
+        super(inputInterpreter);
     }
 
 

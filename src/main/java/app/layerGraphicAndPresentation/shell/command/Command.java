@@ -1,13 +1,13 @@
 package app.layerGraphicAndPresentation.shell.command;
 
 
-import app.layerGraphicAndPresentation.shell.Interpreter;
+import app.layerGraphicAndPresentation.shell.InputInterpreter;
 import app.layerGraphicAndPresentation.shell.exception.ParameterIncorrectException;
 import app.layerGraphicAndPresentation.shell.exception.UnAcceptedStateException;
-import app.layerGraphicAndPresentation.shell.state.Context;
-import app.layerGraphicAndPresentation.shell.state.State;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonException.ErrorCodeException;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonException.ErrorDeliverCodeException;
+import app.layerGraphicAndPresentation.shell.context.Context;
+import app.layerGraphicAndPresentation.shell.context.State;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.ErrorCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.ErrorDeliverCodeException;
 
 import java.io.IOException;
 import java.util.List;
@@ -20,17 +20,17 @@ public abstract class Command {
     private String commandName;
     private int numberOfParameter;
     private List<String> parameter;
-    private Interpreter interpreter;
+    private InputInterpreter inputInterpreter;
 
     /**
      * Interepreter muss übergeben werden, damit ein Command weiß, bei wem es sich registrieren soll
-     * @param interpreter
+     * @param inputInterpreter
      */
-    public Command(Interpreter interpreter) {
+    public Command(InputInterpreter inputInterpreter) {
         this.commandName = this.getClass().getSimpleName().toLowerCase();
         this.numberOfParameter = this.parameterSize();
-        this.interpreter = interpreter;
-        this.interpreter.registerCommand(this);
+        this.inputInterpreter = inputInterpreter;
+        this.inputInterpreter.registerCommand(this);
     }
 
     /**
@@ -102,7 +102,7 @@ public abstract class Command {
 
 
     /**
-     * Diese Methode gibt an wie das Executable auf der console geschrieben werden muss, damit es vom Interpreter
+     * Diese Methode gibt an wie das Executable auf der console geschrieben werden muss, damit es vom InputInterpreter
      * als Commando erkannt wird.
      *
      * @return Schreibweise des Commands
@@ -119,8 +119,8 @@ public abstract class Command {
         return parameter;
     }
 
-    public Interpreter getInterpreter() {
-        return interpreter;
+    public InputInterpreter getInputInterpreter() {
+        return inputInterpreter;
     }
 
 

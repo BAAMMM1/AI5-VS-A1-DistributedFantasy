@@ -1,13 +1,12 @@
 package app.layerGraphicAndPresentation.shell.command;
 
-import app.layerGraphicAndPresentation.shell.Interpreter;
+import app.layerGraphicAndPresentation.shell.InputInterpreter;
 import app.layerGraphicAndPresentation.shell.exception.ParameterIncorrectException;
 import app.layerGraphicAndPresentation.shell.exception.UnAcceptedStateException;
-import app.layerGraphicAndPresentation.shell.state.Context;
-import app.layerGraphicAndPresentation.shell.state.State;
-import app.layerLogicAndService.cmpQuest.IQuestService;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonException.ErrorCodeException;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.dto.MapDTO;
+import app.layerGraphicAndPresentation.shell.context.Context;
+import app.layerGraphicAndPresentation.shell.context.State;
+import app.layerLogicAndService.cmpQuest.service.IQuestService;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.ErrorCodeException;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.dto.VisitDTO;
 
 import java.io.IOException;
@@ -30,10 +29,10 @@ public class Visit extends Command {
     /**
      * Interepreter muss übergeben werden, damit ein Command weiß, bei wem es sich registrieren soll
      *
-     * @param interpreter
+     * @param inputInterpreter
      */
-    public Visit(Interpreter interpreter, IQuestService client) {
-        super(interpreter);
+    public Visit(InputInterpreter inputInterpreter, IQuestService client) {
+        super(inputInterpreter);
         this.client = client;
     }
 

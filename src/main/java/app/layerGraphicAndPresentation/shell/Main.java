@@ -1,14 +1,13 @@
 package app.layerGraphicAndPresentation.shell;
 
 import app.layerGraphicAndPresentation.shell.command.*;
-import app.layerGraphicAndPresentation.shell.state.Context;
-import app.layerLogicAndService.cmpAccount.AccountServiceImp;
-import app.layerLogicAndService.cmpAccount.IAccountService;
-import app.layerLogicAndService.cmpBlackboard.BlackboardListener;
-import app.layerLogicAndService.cmpQuest.IQuestService;
-import app.layerLogicAndService.cmpQuest.QuestServiceImpl;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.accountConsumer.AccountConsumer;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.accountConsumer.IAccountConsumer;
+import app.layerGraphicAndPresentation.shell.context.Context;
+import app.layerLogicAndService.cmpBlackboard.service.BlackboardServiceImp;
+import app.layerLogicAndService.cmpBlackboard.service.IBlackboardService;
+import app.layerLogicAndService.cmpQuest.service.IQuestService;
+import app.layerLogicAndService.cmpQuest.service.QuestServiceImpl;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.blackboardConsumer.BlackboardConsumer;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.blackboardConsumer.IBlackboardConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.IQuestConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.QuestConsumerImpl;
 
@@ -21,37 +20,38 @@ public class Main {
 
     public static void main(String[] args) {
 
-        BlackboardListener listener = new BlackboardListener(24000); // - TODO - Interface draus machen?
+        //ListenerServiceImpl listener = new ListenerServiceImpl(24000); // - TODO - Interface draus machen?
 
-        IAccountConsumer registerConsumer = new AccountConsumer();
-        IAccountService registerClient = new AccountServiceImp(registerConsumer);
+        IBlackboardConsumer registerConsumer = new BlackboardConsumer();
+        IBlackboardService registerClient = new BlackboardServiceImp(registerConsumer);
 
         IQuestConsumer questConsumer = new QuestConsumerImpl();
         IQuestService questService = new QuestServiceImpl(questConsumer);
 
-        Interpreter interpreter = new Interpreter();
-        CommandHandler handler = new CommandHandler(interpreter);
+        InputInterpreter inputInterpreter = new InputInterpreter();
+        InputHandler handler = new InputHandler(inputInterpreter);
 
-        new Help(interpreter);
-        new Clear(interpreter);
-        new Exit(interpreter);
-        new Register(interpreter, registerClient);
-        new Login(interpreter, registerClient);
-        new Whoami(interpreter, registerClient);
-        new Quests(interpreter, questService);
-        new Quest(interpreter, questService);
-        new Task(interpreter, questService);
-        new Map(interpreter, questService);
-        new Visit(interpreter, questService);
-        new Answer(interpreter, questService);
-        new Deliver(interpreter, questService);
-
-
-
+        new Help(inputInterpreter);
+        new Clear(inputInterpreter);
+        new Exit(inputInterpreter);
+        new Listen(inputInterpreter);
+        new Register(inputInterpreter, registerClient);
+        new Login(inputInterpreter, registerClient);
+        new Whoami(inputInterpreter, registerClient);
+        new Quests(inputInterpreter, questService);
+        new Quest(inputInterpreter, questService);
+        new Task(inputInterpreter, questService);
+        new Map(inputInterpreter, questService);
+        new Visit(inputInterpreter, questService);
+        new Answer(inputInterpreter, questService);
+        new Deliver(inputInterpreter, questService);
 
 
 
-        listener.receive();
+
+
+
+        //listener.receive();
 
         Scanner reader = new Scanner(System.in);
 
@@ -105,7 +105,7 @@ public class Main {
         System.out.println();
         //handler.handleCommand("visit 172.19.0.32 5000");
         System.out.println();
-        //handler.handleCommand("visit 172.19.0.4 5000"); // TODO - Fehler abfangen, wenn host nicht bekannt
+        //handler.handleCommand("visit 172.19.0.4 5000");
         System.out.println();
         handler.handleCommand("help");
         System.out.println();

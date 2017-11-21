@@ -6,6 +6,6 @@ package app.layerGraphicAndPresentation.shell.exception;
 public class UnAcceptedStateException extends Throwable {
 
     public UnAcceptedStateException() {
-        super("state unaccepted for command");
+        super("context unaccepted for command");
     }
 }

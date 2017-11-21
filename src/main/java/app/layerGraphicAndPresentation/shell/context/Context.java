@@ -1,0 +1,54 @@
+package app.layerGraphicAndPresentation.shell.context;
+
+import app.layerLogicAndService.cmpBlackboard.entity.Blackboard;
+
+/**
+ * @author Christian G. on 17.11.2017
+ */
+public class Context {
+
+   private State state;
+
+    private static Context instance;
+
+    private Context(State state) {
+        this.state = state;
+    }
+
+
+    public static Context getInstance () {
+
+        if (Context.instance == null) {
+            Context.instance = new Context(State.UNCONNECTED);
+
+        }
+
+        return Context.instance;
+
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+
+        this.state = state;
+    }
+
+    public String getPromptState(){
+
+        if(state.equals(State.LOGIN)){
+
+            return ">> Distributed Fantasy@" + Blackboard.getInstance().getUserName() +" >> ";
+
+        } else {
+            return ">> Distributed Fantasy >> ";
+        }
+    }
+
+    /*
+    Falls nötig auf static ändern, damit man den Prompt überall erreicht.
+     */
+
+}
