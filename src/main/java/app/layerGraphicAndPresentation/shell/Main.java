@@ -49,7 +49,7 @@ public class Main {
 
 
 
-        /*
+
 
         listener.receive();
 
@@ -66,23 +66,24 @@ public class Main {
 
         }
 
-        */
 
 
 
 
 
 
+
+        /*
         listener.receive();
 
-        //handler.handleCommand("register MeinSuperTestUser test1234");
+        handler.handleCommand("register MeinSuperTestUser test1234");
         System.out.println();
         //handler.handleCommand("register MeinSuperTestUserTest9 test1234");
         //System.out.println();
 
         //handler.handleCommand("login MeinSufqfqwfqwfqwperTestUser test1234");
         System.out.println();
-        //handler.handleCommand("login MeinSuperTestUser test1234");
+        handler.handleCommand("login MeinSuperTestUser test1234");
         System.out.println();
         //handler.handleCommand("whoami");
         System.out.println();
@@ -91,6 +92,12 @@ public class Main {
         //handler.handleCommand("quest 2");
         System.out.println();
         //handler.handleCommand("task 1");
+        System.out.println();
+        handler.handleCommand("deliver 1 1 1");
+        System.out.println();
+        //handler.handleCommand("deliver 2 1 1");
+        System.out.println();
+        //handler.handleCommand("deliver 3 1 1");
         System.out.println();
         //handler.handleCommand("map /map/Throneroom");
         System.out.println();
@@ -103,6 +110,8 @@ public class Main {
         handler.handleCommand("help");
         System.out.println();
         handler.handleCommand("exit");
+        */
+
 
 
 

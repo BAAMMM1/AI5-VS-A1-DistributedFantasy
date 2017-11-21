@@ -42,7 +42,7 @@ public class Login extends Command {
     @Override
     State instruction() throws ErrorCodeException {
 
-        System.out.println("instruction login with: user: " + this.getParameter().get(0) + " with password: " + this.getParameter().get(1));
+        //System.out.println("instruction login with: user: " + this.getParameter().get(0) + " with password: " + this.getParameter().get(1));
 
         // Je nachdem was hier zurück kommt, entweder Ok oder nicht ok, ändere Status
 

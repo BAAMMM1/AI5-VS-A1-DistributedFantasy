@@ -10,11 +10,13 @@ public class RegisterUserDTO {
     private String message;
     private Encryption encryption;
     private List<Encryption.Object> object;
+    private String status;
 
-    public RegisterUserDTO(String message, Encryption encryption, List<Encryption.Object> object) {
+    public RegisterUserDTO(String message, Encryption encryption, List<Encryption.Object> object, String status) {
         this.message = message;
         this.encryption = encryption;
         this.object = object;
+        this.status = status;
     }
 
     public String getMessage() {
@@ -41,12 +43,21 @@ public class RegisterUserDTO {
         this.object = object;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "RegisterUserDTO{" +
-                "message='" + message + '\'' +
-                ", encryption=" + encryption +
-                ", object=" + object +
+                "\nmessage='" + message + '\'' +
+                ", \nencryption=" + encryption +
+                ", \nobject=" + object +
+                ", \nstatus='" + status + '\'' +
                 '}';
     }
 
@@ -136,15 +147,29 @@ public class RegisterUserDTO {
             this.padding = padding;
         }
 
+        @Override
+        public String toString() {
+            return "Encryption{" +
+                    "\nHMACK='" + HMACK + '\'' +
+                    ", \nalgorithm='" + algorithm + '\'' +
+                    ", \nencryption='" + encryption + '\'' +
+                    ", \nkey='" + key + '\'' +
+                    ", \nkey_encoding='" + key_encoding + '\'' +
+                    ", \nkeylength=" + keylength +
+                    ", \nmode='" + mode + '\'' +
+                    ", \npadding='" + padding + '\'' +
+                    '}';
+        }
+
         public class Object {
-            private WhoamiDTO.Link _links;
+            private Link _links;
             List<Integer> deliverables_done;
             List<Integer> delivered;
             String ip;
             String location;
             String name;
 
-            public Object(WhoamiDTO.Link _links, List<Integer> deliverables_done, List<Integer> delivered, String ip, String location, String name) {
+            public Object(Link _links, List<Integer> deliverables_done, List<Integer> delivered, String ip, String location, String name) {
                 this._links = _links;
                 this.deliverables_done = deliverables_done;
                 this.delivered = delivered;
@@ -153,11 +178,11 @@ public class RegisterUserDTO {
                 this.name = name;
             }
 
-            public WhoamiDTO.Link get_links() {
+            public Link get_links() {
                 return _links;
             }
 
-            public void set_links(WhoamiDTO.Link _links) {
+            public void set_links(Link _links) {
                 this._links = _links;
             }
 
@@ -204,12 +229,12 @@ public class RegisterUserDTO {
             @Override
             public String toString() {
                 return "User{" +
-                        "_links=" + _links +
-                        ", deliverables_done=" + deliverables_done +
-                        ", delivered=" + delivered +
-                        ", ip='" + ip + '\'' +
-                        ", location='" + location + '\'' +
-                        ", name='" + name + '\'' +
+                        "\n_links=" + _links +
+                        ", \ndeliverables_done=" + deliverables_done +
+                        ", \ndelivered=" + delivered +
+                        ", \nip='" + ip + '\'' +
+                        ", \nlocation='" + location + '\'' +
+                        ", \nname='" + name + '\'' +
                         '}';
             }
         }
@@ -243,8 +268,8 @@ public class RegisterUserDTO {
             @Override
             public String toString() {
                 return "Link{" +
-                        "encryption_key='" + encryption_key + '\'' +
-                        ", self='" + self + '\'' +
+                        "\nencryption_key='" + encryption_key + '\'' +
+                        ", \nself='" + self + '\'' +
                         '}';
             }
 

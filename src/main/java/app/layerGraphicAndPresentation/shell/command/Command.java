@@ -7,6 +7,7 @@ import app.layerGraphicAndPresentation.shell.exception.UnAcceptedStateException;
 import app.layerGraphicAndPresentation.shell.state.Context;
 import app.layerGraphicAndPresentation.shell.state.State;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonException.ErrorCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonException.ErrorDeliverCodeException;
 
 import java.io.IOException;
 import java.util.List;
@@ -66,7 +67,7 @@ public abstract class Command {
      *
      * @throws UnAcceptedStateException
      */
-    public void execute(List<String> param) throws UnAcceptedStateException, ParameterIncorrectException, ErrorCodeException, IOException, InterruptedException, NumberFormatException  {
+    public void execute(List<String> param) throws UnAcceptedStateException, ParameterIncorrectException, ErrorCodeException, IOException, InterruptedException, NumberFormatException, ErrorDeliverCodeException  {
 
         // TODO - doppel checkParam
         this.checkParam(param);
@@ -97,7 +98,7 @@ public abstract class Command {
      *
      * @return aktuellen State der Application
      */
-    abstract State instruction() throws ErrorCodeException, IOException, InterruptedException;
+    abstract State instruction() throws ErrorCodeException, IOException, InterruptedException, ErrorDeliverCodeException;
 
 
     /**

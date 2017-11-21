@@ -90,8 +90,8 @@ public class HTTPCaller {
 
             String Body = new String(responeBody, 0, responeLen);
 
+            System.out.println(responeCode);
             System.out.println(Body.toString());
-            //System.out.println(responeCode);
 
             HTTPResponse response = new HTTPResponse(responeCode, Body);
 

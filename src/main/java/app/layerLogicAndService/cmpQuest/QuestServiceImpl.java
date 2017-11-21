@@ -1,6 +1,7 @@
 package app.layerLogicAndService.cmpQuest;
 
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonException.ErrorCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonException.ErrorDeliverCodeException;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.IQuestConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.QuestConsumerImpl;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.dto.*;
@@ -66,7 +67,7 @@ public class QuestServiceImpl implements IQuestService {
     }
 
     @Override
-    public DeliverDTO deliver(int questId, String taskUri, String token) throws ErrorCodeException {
+    public DeliverDTO deliver(int questId, String taskUri, String token) throws ErrorCodeException, ErrorDeliverCodeException {
 
         DeliverDTO dto = this.questConsumer.deliver(questId, taskUri, token);
 

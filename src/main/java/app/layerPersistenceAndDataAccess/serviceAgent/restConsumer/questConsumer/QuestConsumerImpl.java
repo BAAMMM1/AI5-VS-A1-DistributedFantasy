@@ -2,6 +2,8 @@ package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsume
 
 import app.layerLogicAndService.cmpBlackboard.Blackboard;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonDto.ErrorDTO;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonDto.ErrorDelivorDTO;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonException.ErrorDeliverCodeException;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonHttpAccess.EnumHTTPMethod;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonHttpAccess.HTTPCaller;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonHttpAccess.HTTPRequest;
@@ -225,11 +227,11 @@ public class QuestConsumerImpl implements IQuestConsumer {
     }
 
     @Override
-    public DeliverDTO deliver(int questId, String taskUri, String token) throws ErrorCodeException {
+    public DeliverDTO deliver(int questId, String taskUri, String token) throws ErrorCodeException, ErrorDeliverCodeException {
 
         String authToken = Blackboard.getInstance().getToken();
 
-        System.out.println(Blackboard.getInstance().getUrl().toString() + "/blackboard/quests/" + questId + "/deliveries");
+        //System.out.println(Blackboard.getInstance().getUrl().toString() + "/blackboard/quests/" + questId + "/deliveries");
 
         // Erstellen der Anfrage
         HTTPRequest httpRequest =
@@ -240,7 +242,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
                 );
         httpRequest.setAuthorizationToken(authToken);
 
-        System.out.println(httpRequest.getBody().toString());
+        //System.out.println(httpRequest.getBody().toString());
 
         // Aufrufen des API´s Pfad
         HTTPResponse response = this.httpCaller.call(httpRequest);
@@ -249,10 +251,10 @@ public class QuestConsumerImpl implements IQuestConsumer {
 
         // Antwort prüfen
 
-        if (response.getCode() != 200) {
-            ErrorDTO errorDTO = gson.fromJson(response.getBody(), ErrorDTO.class);
+        if (response.getCode() != 201) {
+            ErrorDelivorDTO errorDTODeliver = gson.fromJson(response.getBody(), ErrorDelivorDTO.class);
 
-            throw new ErrorCodeException(errorDTO);
+            throw new ErrorDeliverCodeException(errorDTODeliver);
 
         } else {
             DeliverDTO dto = gson.fromJson(response.getBody(), DeliverDTO.class);

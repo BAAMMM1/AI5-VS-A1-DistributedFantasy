@@ -4,6 +4,7 @@ import app.layerGraphicAndPresentation.shell.command.Command;
 import app.layerGraphicAndPresentation.shell.exception.*;
 import app.layerGraphicAndPresentation.shell.state.Context;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonException.ErrorCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonException.ErrorDeliverCodeException;
 
 import java.util.List;
 
@@ -33,6 +34,9 @@ public class CommandHandler {
 
         } catch (ErrorCodeException e) {
             System.out.println("message: " + e.getErrorDTO().getMessage());
+
+        } catch (ErrorDeliverCodeException e) {
+            System.out.println("message: " + e.getErrorDelivorDTO().toString());
 
         } catch (Exception e){
             System.out.println("message: " + e.getMessage());

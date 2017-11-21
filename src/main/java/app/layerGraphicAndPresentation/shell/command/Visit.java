@@ -46,7 +46,7 @@ public class Visit extends Command {
 
         // IP wird im HTTPCaller geprüft, Port hier, Ressource wirft 404 falls nicht vorhanden;
 
-        Integer.valueOf(this.getParameter().get(1));
+        Integer.valueOf(param.get(1));
 
         if(!Pattern.matches("/.*", param.get(2))){
             throw new ParameterIncorrectException("ressource must be started with '/'");
@@ -66,6 +66,8 @@ public class Visit extends Command {
 
     @Override
     State instruction() throws ErrorCodeException, IOException, InterruptedException {
+
+        System.out.println(Context.getInstance().getState());
 
         VisitDTO dto = this.client.visitHost(this.getParameter().get(0), Integer.valueOf(this.getParameter().get(1)), this.getParameter().get(2));
 

@@ -1,6 +1,7 @@
 package app.layerLogicAndService.cmpQuest;
 
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonException.ErrorCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonException.ErrorDeliverCodeException;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.dto.*;
 
 /**
@@ -16,6 +17,6 @@ public interface IQuestService {
     // TODO - 11
     AnswerDTO post(String ip, int port, String ressource, String body) throws ErrorCodeException;
     // TODO - 12
-    DeliverDTO deliver(int questId, String taskUri, String token) throws ErrorCodeException;
+    DeliverDTO deliver(int questId, String taskUri, String token) throws ErrorCodeException, ErrorDeliverCodeException;
 
 }

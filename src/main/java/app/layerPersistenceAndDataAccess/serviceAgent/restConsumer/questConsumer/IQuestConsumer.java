@@ -1,5 +1,6 @@
 package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer;
 
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonException.ErrorDeliverCodeException;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.dto.*;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonException.ErrorCodeException;
 
@@ -16,6 +17,6 @@ public interface IQuestConsumer {
     // TODO - 11
     AnswerDTO post(String ip, int port, String ressource, String body) throws ErrorCodeException;
     // TODO - 12
-    DeliverDTO deliver(int questId, String taskUri, String token) throws ErrorCodeException;
+    DeliverDTO deliver(int questId, String taskUri, String token) throws ErrorCodeException, ErrorDeliverCodeException;
 
 }

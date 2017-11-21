@@ -7,6 +7,7 @@ import app.layerGraphicAndPresentation.shell.state.Context;
 import app.layerGraphicAndPresentation.shell.state.State;
 import app.layerLogicAndService.cmpQuest.IQuestService;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonException.ErrorCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonException.ErrorDeliverCodeException;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.dto.AnswerDTO;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.dto.DeliverDTO;
 
@@ -43,7 +44,7 @@ public class Deliver extends Command {
             throw new ParameterIncorrectException("size of parameter incorrect");
         }
 
-        Integer.parseInt(this.getParameter().get(0));
+        Integer.parseInt(param.get(0));
 
     }
 
@@ -57,7 +58,7 @@ public class Deliver extends Command {
     }
 
     @Override
-    State instruction() throws ErrorCodeException, IOException, InterruptedException {
+    State instruction() throws ErrorCodeException, IOException, InterruptedException, ErrorDeliverCodeException {
 
         DeliverDTO dto = this.client.deliver(
                 Integer.valueOf(this.getParameter().get(0)),
