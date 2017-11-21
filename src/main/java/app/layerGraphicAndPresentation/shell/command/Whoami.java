@@ -31,31 +31,23 @@ public class Whoami extends Command {
         this.client = client;
     }
 
-    @Override
-    int parameterSize() {
-        return PARAMETER_SIZE;
-    }
 
-    @Override
-    String discreption() {
-        return "  -whoami                            indicates if you are athentificated";
-    }
-
-
-    public Whoami(Interpreter interpreter) {
-        super(interpreter);
-    }
 
     @Override
     public void checkState() throws UnAcceptedStateException {
 
-        if(!acceptedStates.contains(Context.getInstance().getState())){
+        if (!acceptedStates.contains(Context.getInstance().getState())) {
             throw new UnAcceptedStateException();
         }
 
     }
 
 
+    /**
+     * Falls Whoami einen ErrorCodeException wirft, wird hier der Application-Context zurück gesetzt.
+     *
+     * @return
+     */
     @Override
     State instruction() {
 
@@ -77,6 +69,7 @@ public class Whoami extends Command {
 
             System.out.println("message: " + dto.getMessage());
             return State.NOT_LOGIN;
+
         } catch (NotAuthenticatedException e) {
 
             System.out.println("message: " + e.getMessage());
@@ -85,4 +78,15 @@ public class Whoami extends Command {
 
 
     }
+
+    @Override
+    int parameterSize() {
+        return PARAMETER_SIZE;
+    }
+
+    @Override
+    String description() {
+        return "  -whoami                           indicates if you are athentificated";
+    }
+
 }

@@ -3,6 +3,7 @@ package app.layerGraphicAndPresentation.shell;
 import app.layerGraphicAndPresentation.shell.command.Command;
 import app.layerGraphicAndPresentation.shell.exception.*;
 import app.layerGraphicAndPresentation.shell.state.Context;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonException.ErrorCodeException;
 
 import java.util.List;
 
@@ -27,9 +28,14 @@ public class CommandHandler {
 
             command.execute(param);
 
-        } catch (CommandNotExistsException | UnAcceptedStateException | ParameterIncorrectException e) {
+        } catch (CommandNotExistsException | UnAcceptedStateException | ParameterIncorrectException | IllegalArgumentException e) {
             System.out.println(Context.getInstance().getPromptState() + e.getMessage());
 
+        } catch (ErrorCodeException e) {
+            System.out.println("message: " + e.getErrorDTO().getMessage());
+
+        } catch (Exception e){
+            System.out.println("message: " + e.getMessage());
         }
     }
 }

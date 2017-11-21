@@ -30,7 +30,7 @@ public class Exit extends Command {
     }
 
     @Override
-    String discreption() {
+    String description() {
         return "  -exit                             terminates the application";
     }
 }

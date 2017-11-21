@@ -12,6 +12,8 @@ public interface IAccountConsumer {
 
     RegisterUserDTO registerUser(String name, String password) throws ErrorCodeException;
     LoginTokenDTO getAuthenticationToken(String name, String password) throws ErrorCodeException;
+
+    // TODO - Muss der Token hier als String übergeben werden, oder besser direkt aus dem Blackboard lesen?
     WhoamiDTO checkLogin(String Token) throws ErrorCodeException;
 
 }

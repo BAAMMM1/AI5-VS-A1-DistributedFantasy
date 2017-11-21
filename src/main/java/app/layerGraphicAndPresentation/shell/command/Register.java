@@ -21,52 +21,36 @@ public class Register extends Command {
 
     private static final int PARAMETER_SIZE = 2;
 
+    private List<State> acceptedStates = new ArrayList<State>(Arrays.asList(State.NOT_LOGIN));
+
+
     public Register(Interpreter interpreter, IAccountService client) {
         super(interpreter);
         this.client = client;
     }
 
     @Override
-    int parameterSize() {
-        return PARAMETER_SIZE;
-    }
-
-    @Override
-    String discreption() {
-        return "  -reg          [user] [password]   registered a new user";
-    }
-
-    private List<State> acceptedStates = new ArrayList<State>(Arrays.asList(State.NOT_LOGIN));
-
-    public Register(Interpreter interpreter) {
-        super(interpreter);
-    }
-
-
-    @Override
     public void checkState() throws UnAcceptedStateException {
 
-        if(!acceptedStates.contains(Context.getInstance().getState())){
+        if (!acceptedStates.contains(Context.getInstance().getState())) {
             throw new UnAcceptedStateException();
         }
 
-
     }
 
     @Override
-    State instruction() {
+    State instruction() throws ErrorCodeException {
 
-        try {
-            RegisterUserDTO dto = this.client.registerUser(this.getParameter().get(0), this.getParameter().get(1));
-            System.out.println("message: " + dto.getMessage());
-            System.out.println("algorithm:" + dto.getEncryption().getAlgorithm());
-            System.out.println("encryption: " + dto.getEncryption().getEncryption());
-            System.out.println("hmack: " + dto.getEncryption().getHMACK());
-            System.out.println("key: " + dto.getEncryption().getKey());
-            System.out.println("key_enconding: " + dto.getEncryption().getKey_encoding());
-            System.out.println("key_length: " + dto.getEncryption().getKeylength());
-            System.out.println("mode: " + dto.getEncryption().getMode());
-            System.out.println("padding: " + dto.getEncryption().getPadding());
+        RegisterUserDTO dto = this.client.registerUser(this.getParameter().get(0), this.getParameter().get(1));
+        System.out.println("message: " + dto.getMessage());
+        System.out.println("algorithm:" + dto.getEncryption().getAlgorithm());
+        System.out.println("encryption: " + dto.getEncryption().getEncryption());
+        System.out.println("hmack: " + dto.getEncryption().getHMACK());
+        System.out.println("key: " + dto.getEncryption().getKey());
+        System.out.println("key_enconding: " + dto.getEncryption().getKey_encoding());
+        System.out.println("key_length: " + dto.getEncryption().getKeylength());
+        System.out.println("mode: " + dto.getEncryption().getMode());
+        System.out.println("padding: " + dto.getEncryption().getPadding());
             /*
             System.out.println("encryption_key: " + dto.getObject().get_links().getEncryption_key());
             System.out.println("self: " + dto.getObject().get_links().getSelf());
@@ -77,15 +61,19 @@ public class Register extends Command {
             System.out.println("name: " + dto.getObject().getName());
             */
 
-            return null;
+        return null;
 
-        } catch (ErrorCodeException e) {
-            System.out.println("message: " + e.getErrorDTO().getMessage());
+    }
 
-            return null;
 
-        }
+    @Override
+    int parameterSize() {
+        return PARAMETER_SIZE;
+    }
 
+    @Override
+    String description() {
+        return "  -register     [user] [password]   registered a new user";
     }
 
 

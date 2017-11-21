@@ -2,6 +2,7 @@ package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.commonHttpAc
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.net.NoRouteToHostException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
@@ -16,11 +17,17 @@ public class HTTPCaller {
 
     public HTTPResponse call(HTTPRequest request) {
 
+        if (request.getUrl().contains("null")) {
+            throw new IllegalArgumentException("error: no host or port");
+        }
+
         try {
             URL url = new URL(request.getUrl());
             HttpURLConnection connection = null;
 
             connection = (HttpURLConnection) url.openConnection();
+            connection.setConnectTimeout(10000);
+
 
 
             connection.setRequestMethod(request.getMethod().toString());
@@ -49,7 +56,15 @@ public class HTTPCaller {
 
             // TODO - commonException in thread "main" java.lang.IllegalArgumentException: protocol = http host = null
 
-            connection.connect();
+
+            try{
+                connection.connect();
+
+            } catch (Exception e){
+                throw new IllegalArgumentException(e.getMessage());
+
+            }
+
 
             // Get the response
             int responeCode = connection.getResponseCode();
@@ -63,6 +78,10 @@ public class HTTPCaller {
                 responeLen = connection.getInputStream().available();
                 connection.getInputStream().read(responeBody);
 
+            } else if(responeCode == 404){
+                    throw new IllegalArgumentException("404 - method not found");
+
+
             } else {
                 responeLen = connection.getErrorStream().available();
                 connection.getErrorStream().read(responeBody);
@@ -74,7 +93,8 @@ public class HTTPCaller {
 
             String Body = new String(responeBody, 0, responeLen);
 
-            //System.out.println(Body.toString());
+            System.out.println(Body.toString());
+            //System.out.println(responeCode);
 
             HTTPResponse response = new HTTPResponse(responeCode, Body);
 
@@ -83,9 +103,7 @@ public class HTTPCaller {
             return response;
 
         } catch (IOException e) {
-            e.printStackTrace();
-
-            return null;
+            throw new IllegalArgumentException(e.getMessage());
         }
     }
 

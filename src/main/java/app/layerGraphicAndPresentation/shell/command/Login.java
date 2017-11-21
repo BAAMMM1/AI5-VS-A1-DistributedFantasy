@@ -24,65 +24,50 @@ public class Login extends Command {
 
     private static final int PARAMETER_SIZE = 2;
 
-    @Override
-    int parameterSize() {
-        return PARAMETER_SIZE;
-    }
-
-    @Override
-    String discreption() {
-        return "  -login        [user] [password]   login with user and password";
-    }
 
     public Login(Interpreter interpreter, IAccountService client) {
         super(interpreter);
         this.client = client;
     }
 
-
     @Override
     public void checkState() throws UnAcceptedStateException {
 
-        if(!acceptedStates.contains(Context.getInstance().getState())){
+        if (!acceptedStates.contains(Context.getInstance().getState())) {
             throw new UnAcceptedStateException();
         }
 
     }
 
     @Override
-    State instruction() {
+    State instruction() throws ErrorCodeException {
 
         System.out.println("instruction login with: user: " + this.getParameter().get(0) + " with password: " + this.getParameter().get(1));
 
         // Je nachdem was hier zurück kommt, entweder Ok oder nicht ok, ändere Status
-        try {
-            LoginTokenDTO dto = this.client.getAuthenticationToken(this.getParameter().get(0), this.getParameter().get(1));
 
-            // Prompt-Ausgabe
-            System.out.println("message: " + dto.getMessage());
-            System.out.println("token: " + dto.getToken());
-            System.out.println("valid till: " + dto.getValid_till());
+        LoginTokenDTO dto = this.client.getAuthenticationToken(this.getParameter().get(0), this.getParameter().get(1));
 
-            return State.LOGIN;
+        // Prompt-Ausgabe
+        System.out.println("message: " + dto.getMessage());
+        System.out.println("token: " + dto.getToken());
+        System.out.println("valid till: " + dto.getValid_till());
 
-        } catch (ErrorCodeException e) {
-            ErrorDTO dto = e.getErrorDTO();
+        return State.LOGIN;
 
-            System.out.println("message: " + dto.getMessage());
 
-            return null;
-        }
+    }
+
+    @Override
+    int parameterSize() {
+        return PARAMETER_SIZE;
     }
 
 
-
-
-
-
-
-
-
-
+    @Override
+    String description() {
+        return "  -login        [user] [password]   login with user and password";
+    }
 
 
 }
