@@ -54,9 +54,6 @@ public class HTTPCaller {
 
             }
 
-            // TODO - commonException in thread "main" java.lang.IllegalArgumentException: protocol = http host = null
-
-
             try{
                 connection.connect();
 

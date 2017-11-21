@@ -55,7 +55,7 @@ public class Quests extends Command {
 
     @Override
     String description() {
-        return "  -quests                           displays all avialable quests";
+        return "  -quests                                        displays all avialable quests";
     }
 
 

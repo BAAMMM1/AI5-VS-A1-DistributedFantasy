@@ -86,7 +86,7 @@ public class Whoami extends Command {
 
     @Override
     String description() {
-        return "  -whoami                           indicates if you are athentificated";
+        return "  -whoami                                        indicates if you are athentificated";
     }
 
 }

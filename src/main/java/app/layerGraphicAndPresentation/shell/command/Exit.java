@@ -31,6 +31,6 @@ public class Exit extends Command {
 
     @Override
     String description() {
-        return "  -exit                             terminates the application";
+        return "  -exit                                          terminates the application";
     }
 }

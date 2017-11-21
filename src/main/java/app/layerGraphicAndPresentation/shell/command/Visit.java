@@ -81,6 +81,6 @@ public class Visit extends Command {
 
     @Override
     String description() {
-        return "  -visit        [ip] [port]         visit a host based on a ip and port";
+        return "  -visit        [ip] [port] [/ressource]         visit a host based on a ip and port";
     }
 }

@@ -72,6 +72,6 @@ public class Task extends Command {
 
     @Override
     String description() {
-        return "  -task         [task-id]           displays a task based on a id";
+        return "  -task         [task-id]                        displays a task based on a id";
     }
 }

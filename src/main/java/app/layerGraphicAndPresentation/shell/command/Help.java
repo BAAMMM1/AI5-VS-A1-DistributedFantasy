@@ -20,7 +20,7 @@ public class Help extends Command {
     State instruction() {
 
         System.out.println("");
-        System.out.println("# command --- # parameter ------- # description -------------------------------------- # accepted State -------");
+        System.out.println("# command --- # parameter -------------------- # description --------------------------------------");
 
         for (Command command : this.getInterpreter().getRegisterCommands()) {
             System.out.println(command.description());
@@ -38,7 +38,7 @@ public class Help extends Command {
 
     @Override
     String description() {
-        return "  -help                             displays all possible commands";
+        return "  -help                                          displays all possible commands";
     }
 
 

@@ -75,6 +75,6 @@ public class Map extends Command {
 
     @Override
     String description() {
-        return "  -map          [/location]         visit the map based on a location";
+        return "  -map          [/location]                      visit the map based on a location";
     }
 }

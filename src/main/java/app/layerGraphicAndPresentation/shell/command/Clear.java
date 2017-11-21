@@ -44,7 +44,7 @@ public class Clear extends Command {
 
     @Override
     String description() {
-        return "  -clear                            clear the console";
+        return "  -clear                                         clear the console";
     }
 
 }

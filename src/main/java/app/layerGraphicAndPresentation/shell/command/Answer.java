@@ -82,6 +82,6 @@ public class Answer extends Command {
 
     @Override
     String description() {
-        return "  -answer          [ip] [port] [ressource] [body]         answer to a quest"; // TODO - richtigen Text hier
+        return "  -answer       [ip] [port] [/ressource] [body]  answer to a quest"; // TODO - richtigen Text hier
     }
 }

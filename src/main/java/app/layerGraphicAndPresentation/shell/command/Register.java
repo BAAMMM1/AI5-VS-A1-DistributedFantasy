@@ -73,7 +73,7 @@ public class Register extends Command {
 
     @Override
     String description() {
-        return "  -register     [user] [password]   registered a new user";
+        return "  -register     [user] [password]                registered a new user";
     }
 
 

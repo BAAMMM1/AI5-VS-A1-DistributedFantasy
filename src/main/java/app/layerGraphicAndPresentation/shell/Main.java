@@ -49,6 +49,7 @@ public class Main {
 
 
 
+        /*
 
         listener.receive();
 
@@ -65,11 +66,13 @@ public class Main {
 
         }
 
+        */
 
 
 
 
-        /*
+
+
         listener.receive();
 
         //handler.handleCommand("register MeinSuperTestUser test1234");
@@ -79,7 +82,7 @@ public class Main {
 
         //handler.handleCommand("login MeinSufqfqwfqwfqwperTestUser test1234");
         System.out.println();
-        handler.handleCommand("login MeinSuperTestUser test1234");
+        //handler.handleCommand("login MeinSuperTestUser test1234");
         System.out.println();
         //handler.handleCommand("whoami");
         System.out.println();
@@ -89,18 +92,18 @@ public class Main {
         System.out.println();
         //handler.handleCommand("task 1");
         System.out.println();
-        handler.handleCommand("map /map/Throneroom");
+        //handler.handleCommand("map /map/Throneroom");
         System.out.println();
         //handler.handleCommand("map map/Throneroom");
         System.out.println();
-        handler.handleCommand("visit 172.19.0.32 5000");
+        //handler.handleCommand("visit 172.19.0.32 5000");
         System.out.println();
         //handler.handleCommand("visit 172.19.0.4 5000"); // TODO - Fehler abfangen, wenn host nicht bekannt
         System.out.println();
-        //handler.handleCommand("help");
+        handler.handleCommand("help");
         System.out.println();
         handler.handleCommand("exit");
-        */
+
 
 
 
