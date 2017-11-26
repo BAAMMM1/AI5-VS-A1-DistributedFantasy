@@ -42,11 +42,6 @@ public class Map extends Command {
             throw new ParameterIncorrectException("size of parameter incorrect");
         }
 
-        if(!Pattern.matches("/.*", param.get(0))){
-            throw new ParameterIncorrectException("location must be started with '/'");
-        }
-
-
     }
 
     @Override

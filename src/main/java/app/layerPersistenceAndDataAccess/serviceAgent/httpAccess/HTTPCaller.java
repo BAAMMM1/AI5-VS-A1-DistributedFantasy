@@ -11,7 +11,7 @@ import java.util.Base64;
  */
 public class HTTPCaller {
 
-    private static final int BUFFER_LENGHT = 8192;
+    private static final int BUFFER_LENGHT = 819200;
     private static final String MEDIA_TYPE_APPLICATION_JSON = "application/json";
 
     public HTTPResponse call(HTTPRequest request) {
@@ -90,7 +90,7 @@ public class HTTPCaller {
             String Body = new String(responeBody, 0, responeLen);
 
             //System.out.println(responeCode);
-            //System.out.println(Body.toString());
+            System.out.println(Body.toString());
 
             HTTPResponse response = new HTTPResponse(responeCode, Body);
 

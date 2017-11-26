@@ -22,7 +22,7 @@ public class Answer extends Command {
 
     private IQuestService client;
 
-    private static final int PARAMETER_SIZE = 4;
+    private static final int PARAMETER_SIZE = 1;
 
     private List<State> acceptedStates = new ArrayList<State>(Arrays.asList(State.LOGIN));
 
@@ -43,11 +43,6 @@ public class Answer extends Command {
         }
 
 
-        if(!Pattern.matches("/.*", param.get(2))){
-            throw new ParameterIncorrectException("ressource must be started with '/'");
-        }
-
-
     }
 
     @Override
@@ -63,10 +58,7 @@ public class Answer extends Command {
     State instruction() throws ErrorCodeException, IOException, InterruptedException {
 
         AnswerDTO dto = this.client.post(
-                this.getParameter().get(0),
-                Integer.valueOf(this.getParameter().get(1)),
-                this.getParameter().get(2),
-                this.getParameter().get(3)
+                this.getParameter().get(0)
         );
 
         System.out.println(dto.toString());

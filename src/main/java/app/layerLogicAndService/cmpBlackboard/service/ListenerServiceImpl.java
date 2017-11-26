@@ -9,11 +9,12 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 
-public class ListenerServiceImpl implements IListenerService {
+public class ListenerServiceImpl extends Thread implements IListenerService {
 
     private int udpPort;
     private static final int BUFFER_LENGHT = 1024;
     private boolean run = false;
+    private boolean isFirstSet = false;
 
     private DatagramSocket socket;
 
@@ -37,7 +38,8 @@ public class ListenerServiceImpl implements IListenerService {
     /**
      * Lauscht auf dem Port
      */
-    public void receive() {
+    @Override
+    public void run() {
         System.out.println("listen to udp_port: " + this.udpPort);
 
         try {
@@ -46,11 +48,21 @@ public class ListenerServiceImpl implements IListenerService {
 
             while (run) {
 
-                this.reciveDatagramPacket();
+                try {
+
+                    this.reciveDatagramPacket();
+
+                    // Behandlung der Fehler, die beim Empfangen entstehen
+                } catch (Exception e) {
+                    // TODO - Logger log fehler
+                    //System.out.println("listen failed: " + e.getMessage());
+
+                }
 
             }
 
-        } catch (IOException e) {
+            // Behandlung der Fehler die durch den Socket im Initialize enstehen
+        } catch (SocketException e) {
             e.printStackTrace();
 
         } finally {
@@ -71,19 +83,14 @@ public class ListenerServiceImpl implements IListenerService {
         // Auf Anfrage warten
         DatagramPacket packet = new DatagramPacket(new byte[BUFFER_LENGHT], BUFFER_LENGHT);
 
-        System.out.println("wait for datagrampacket");
+        // TODO - Logger
+        //System.out.println("wait for datagrampacket");
 
-        socket.setSoTimeout(10000);
-
-        try{
-            socket.receive(packet);
-
-        } catch (Exception e){
-            throw new IllegalArgumentException("listen failed");
-        }
+        socket.setSoTimeout(5000);
 
 
-        this.run = false;
+        socket.receive(packet);
+
 
         // Empfänger auslesen
         InetAddress sourceIp = packet.getAddress();
@@ -91,16 +98,26 @@ public class ListenerServiceImpl implements IListenerService {
         int len = packet.getLength();
         byte[] data = packet.getData();
 
-        System.out.printf("recive request \n - IP: %s\n - form port: %d\n - lenght: %d %n - %s%n",
-                sourceIp, port, len, new String(data, 0, len));
+        // TODO - Logger
+        //System.out.printf("recive request \n - IP: %s\n - form port: %d\n - lenght: %d %n - %s%n",
+                //sourceIp, port, len, new String(data, 0, len));
 
         AnnouncementResponeDTO responeDTO = gson.fromJson(new String(data, 0, len), AnnouncementResponeDTO.class);
 
-        Blackboard.getInstance().setIP(sourceIp);
-        Blackboard.getInstance().setBlackboardPort(responeDTO.getBlackboard_port());
+        // TODO - Frage wie wird geprüft, ob das Packet vom Well-Known Server kommt?
+        if (Blackboard.getInstance().getBlackboardIp() != sourceIp) {
+            Blackboard.getInstance().setBlackboardIp(sourceIp);
+        }
 
-        System.out.println(" - " + Blackboard.getInstance().getUrl() + "\n");
+        if (responeDTO.getBlackboard_port() != 0) {
+            if (Blackboard.getInstance().getBlackboardPort() != responeDTO.getBlackboard_port()) {
+                Blackboard.getInstance().setBlackboardPort(responeDTO.getBlackboard_port());
+                this.isFirstSet = true;
+            }
+        }
 
+        // TODO - Für den Logger. Log bitte wenn sich etwas ändert
+        //System.out.println(" - " + Blackboard.getInstance().getUrl() + "\n");
 
 
     }
@@ -117,7 +134,6 @@ public class ListenerServiceImpl implements IListenerService {
             return blackboard_port;
         }
     }
-
 
 
 

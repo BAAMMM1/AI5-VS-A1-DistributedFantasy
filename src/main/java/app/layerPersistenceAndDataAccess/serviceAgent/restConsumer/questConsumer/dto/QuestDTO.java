@@ -38,19 +38,19 @@ public class QuestDTO {
 
      */
 
-    private Quest object;
+    private app.layerLogicAndService.cmpQuest.entity.Quest object;
     private String status;
 
-    public QuestDTO(Quest object, String status) {
+    public QuestDTO(app.layerLogicAndService.cmpQuest.entity.Quest object, String status) {
         this.object = object;
         this.status = status;
     }
 
-    public Quest getObject() {
+    public app.layerLogicAndService.cmpQuest.entity.Quest getObject() {
         return object;
     }
 
-    public void setObject(Quest object) {
+    public void setObject(app.layerLogicAndService.cmpQuest.entity.Quest object) {
         this.object = object;
     }
 

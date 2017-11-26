@@ -20,14 +20,24 @@ public class Link{
 
      */
 
+    private String encryption_key;
     private String deliveries;
     private String self;
     private String tasks;
 
-    public Link(String deliveries, String self, String tasks) {
+    public Link(String encryption_key, String deliveries, String self, String tasks) {
+        this.encryption_key = encryption_key;
         this.deliveries = deliveries;
         this.self = self;
         this.tasks = tasks;
+    }
+
+    public String getEncryption_key() {
+        return encryption_key;
+    }
+
+    public void setEncryption_key(String encryption_key) {
+        this.encryption_key = encryption_key;
     }
 
     public String getDeliveries() {
@@ -56,8 +66,9 @@ public class Link{
 
     @Override
     public String toString() {
-        return "\nLink{" +
-                "\ndeliveries='" + deliveries + '\'' +
+        return "Link{" +
+                "\nencryption_key='" + encryption_key + '\'' +
+                ", \ndeliveries='" + deliveries + '\'' +
                 ", \nself='" + self + '\'' +
                 ", \ntasks='" + tasks + '\'' +
                 '}';

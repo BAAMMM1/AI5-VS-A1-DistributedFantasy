@@ -1,5 +1,6 @@
 package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer;
 
+import app.layerLogicAndService.cmpQuest.entity.Task;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.ErrorDeliverCodeException;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.dto.*;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.ErrorCodeException;
@@ -13,10 +14,12 @@ public interface IQuestConsumer {
     QuestDTO getQuest(int index) throws ErrorCodeException;
     TaskDTO getTask(int index) throws ErrorCodeException;
     MapDTO lookAtTheMap(String location) throws ErrorCodeException;
-    VisitDTO visitHost(String ip, int port, String ressource) throws ErrorCodeException;
-    AnswerDTO post(String ip, int port, String ressource, String body) throws ErrorCodeException;
+    VisitDTO visitHost(String ipPort, String ressource) throws ErrorCodeException;
+    AnswerDTO post(String ipPort, String ressource, String body) throws ErrorCodeException;
 
     // TODO - Nicht task-uri sinder taskId
-    DeliverDTO deliver(int questId, String taskUri, String token) throws ErrorCodeException, ErrorDeliverCodeException;
+    DeliverDTO deliver(Task task) throws ErrorCodeException, ErrorDeliverCodeException;
+
+    DeliverDTO deliverStepToken(Task task) throws ErrorCodeException, ErrorDeliverCodeException;
 
 }

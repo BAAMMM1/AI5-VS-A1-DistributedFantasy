@@ -12,7 +12,7 @@ import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.blackboardCon
 public interface IBlackboardService {
 
     RegisterUserDTO registerUser(String name, String password) throws ErrorCodeException;
-    LoginTokenDTO getAuthenticationToken(String name, String password) throws ErrorCodeException;
+    LoginTokenDTO login(String name, String password) throws ErrorCodeException;
     WhoamiDTO checkLogin(String Token) throws ErrorCodeException, NotAuthenticatedException;
 
 }

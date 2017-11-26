@@ -1,6 +1,7 @@
 package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer;
 
 import app.layerLogicAndService.cmpBlackboard.entity.Blackboard;
+import app.layerLogicAndService.cmpQuest.entity.Task;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.dto.ErrorDTO;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.dto.ErrorDelivorDTO;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.ErrorDeliverCodeException;
@@ -28,7 +29,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
     @Override
     public QuestsDTO getQuests() throws ErrorCodeException {
 
-        String token = Blackboard.getInstance().getUserToken();
+        String token = Blackboard.getInstance().getUser().getUserToken();
 
 
         // Erstellen der Anfrage
@@ -62,7 +63,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
     @Override
     public QuestDTO getQuest(int index) throws ErrorCodeException {
 
-        String token = Blackboard.getInstance().getUserToken();
+        String token = Blackboard.getInstance().getUser().getUserToken();
 
 
         // Erstellen der Anfrage
@@ -95,7 +96,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
 
     @Override
     public TaskDTO getTask(int index) throws ErrorCodeException {
-        String token = Blackboard.getInstance().getUserToken();
+        String token = Blackboard.getInstance().getUser().getUserToken();
 
         // /blackboard/quests/2/tasks
         // Erstellen der Anfrage
@@ -129,12 +130,12 @@ public class QuestConsumerImpl implements IQuestConsumer {
     @Override
     public MapDTO lookAtTheMap(String location) throws ErrorCodeException {
 
-        String token = Blackboard.getInstance().getUserToken();
+        String token = Blackboard.getInstance().getUser().getUserToken();
 
         // Erstellen der Anfrage
         HTTPRequest httpRequest =
                 new HTTPRequest(
-                        Blackboard.getInstance().getUrl().toString() + location,
+                        Blackboard.getInstance().getUrl().toString() + "/map/" + location,
                         EnumHTTPMethod.GET
                 );
         httpRequest.setAuthorizationToken(token);
@@ -160,14 +161,14 @@ public class QuestConsumerImpl implements IQuestConsumer {
     }
 
     @Override
-    public VisitDTO visitHost(String ip, int port, String ressource) throws ErrorCodeException {
+    public VisitDTO visitHost(String ipPort, String ressource) throws ErrorCodeException {
 
-        String token = Blackboard.getInstance().getUserToken();
+        String token = Blackboard.getInstance().getUser().getUserToken();
 
         // Erstellen der Anfrage
         HTTPRequest httpRequest =
                 new HTTPRequest(
-                        "http://" + ip + ":" + port + ressource,
+                        "http://" + ipPort + ressource,
                         EnumHTTPMethod.GET
                 );
         httpRequest.setAuthorizationToken(token);
@@ -193,14 +194,14 @@ public class QuestConsumerImpl implements IQuestConsumer {
     }
 
     @Override
-    public AnswerDTO post(String ip, int port, String ressource, String body) throws ErrorCodeException {
+    public AnswerDTO post(String ipPort, String ressource, String body) throws ErrorCodeException {
 
-        String token = Blackboard.getInstance().getUserToken();
+        String token = Blackboard.getInstance().getUser().getUserToken();
 
         // Erstellen der Anfrage
         HTTPRequest httpRequest =
                 new HTTPRequest(
-                        "http://" + ip + ":" + port + ressource,
+                        "http://" + ipPort + ressource,
                         EnumHTTPMethod.POST,
                         body
                 );
@@ -227,18 +228,61 @@ public class QuestConsumerImpl implements IQuestConsumer {
     }
 
     @Override
-    public DeliverDTO deliver(int questId, String taskUri, String token) throws ErrorCodeException, ErrorDeliverCodeException {
+    public DeliverDTO deliver(Task task) throws ErrorCodeException, ErrorDeliverCodeException {
 
-        String authToken = Blackboard.getInstance().getUserToken();
+        String authToken = Blackboard.getInstance().getUser().getUserToken();
 
         //System.out.println(Blackboard.getInstance().getUrl().toString() + "/blackboard/quests/" + questId + "/deliveries");
 
         // Erstellen der Anfrage
         HTTPRequest httpRequest =
                 new HTTPRequest(
-                        Blackboard.getInstance().getUrl().toString() + "/blackboard/quests/" + questId + "/deliveries",
+                        Blackboard.getInstance().getUrl().toString() + "/blackboard/quests/" + task.getQuest() + "/deliveries",
                         EnumHTTPMethod.POST,
-                        "{ \"tokens\": { \""+ taskUri + "\": \""+ token +"\" } }"
+                        "{ \"tokens\": { \""+ Blackboard.getInstance().getUrl() + task.get_links().getSelf() + "\": \""+ task.getToken() +"\" } }"
+                );
+        httpRequest.setAuthorizationToken(authToken);
+
+        //System.out.println(httpRequest.getBody().toString());
+
+        // Aufrufen des API´s Pfad
+        HTTPResponse response = this.httpCaller.call(httpRequest);
+
+        //System.out.println(response.toString());
+
+        // Antwort prüfen
+
+        if (response.getCode() != 201) {
+            ErrorDelivorDTO errorDTODeliver = gson.fromJson(response.getBody(), ErrorDelivorDTO.class);
+
+            throw new ErrorDeliverCodeException(errorDTODeliver);
+
+        } else {
+            DeliverDTO dto = gson.fromJson(response.getBody(), DeliverDTO.class);
+
+            return dto;
+
+        }
+    }
+
+    @Override
+    public DeliverDTO deliverStepToken(Task task) throws ErrorCodeException, ErrorDeliverCodeException {
+        String authToken = Blackboard.getInstance().getUser().getUserToken();
+
+        //System.out.println(Blackboard.getInstance().getUrl().toString() + "/blackboard/quests/" + questId + "/deliveries");
+
+        //TODO - Modular für verschiedene Anzahl an Tokens
+        String tokens = "{\"tokens\":[ " + task.getStep_tokens().get(0) + "," + task.getStep_tokens().get(1) + "," +
+                task.getStep_tokens().get(2) + "]}";
+
+        System.out.println(tokens);
+
+        // Erstellen der Anfrage
+        HTTPRequest httpRequest =
+                new HTTPRequest(
+                        Blackboard.getInstance().getUrl().toString() + "/blackboard/quests/" + task.getQuest() + "/deliveries",
+                        EnumHTTPMethod.POST,
+                        tokens
                 );
         httpRequest.setAuthorizationToken(authToken);
 

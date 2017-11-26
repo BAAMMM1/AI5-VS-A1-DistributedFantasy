@@ -5,6 +5,6 @@ package app.layerLogicAndService.cmpBlackboard.service;
  */
 public interface IListenerService {
 
-    void receive();
+    void start();
 
 }

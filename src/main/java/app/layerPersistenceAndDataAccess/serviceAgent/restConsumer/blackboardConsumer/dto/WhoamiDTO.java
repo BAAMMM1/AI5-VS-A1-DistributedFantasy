@@ -1,5 +1,7 @@
 package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.blackboardConsumer.dto;
 
+import app.layerLogicAndService.cmpQuest.entity.Link;
+
 import java.util.List;
 
 /**
@@ -113,41 +115,6 @@ public class WhoamiDTO {
                     ", ip='" + ip + '\'' +
                     ", location='" + location + '\'' +
                     ", name='" + name + '\'' +
-                    '}';
-        }
-    }
-
-    public class Link{
-
-        private String encryption_key;
-        private String self;
-
-        public Link(String encryption_key, String self) {
-            this.encryption_key = encryption_key;
-            this.self = self;
-        }
-
-        public String getEncryption_key() {
-            return encryption_key;
-        }
-
-        public void setEncryption_key(String encryption_key) {
-            this.encryption_key = encryption_key;
-        }
-
-        public String getSelf() {
-            return self;
-        }
-
-        public void setSelf(String self) {
-            this.self = self;
-        }
-
-        @Override
-        public String toString() {
-            return "Link{" +
-                    "encryption_key='" + encryption_key + '\'' +
-                    ", self='" + self + '\'' +
                     '}';
         }
     }

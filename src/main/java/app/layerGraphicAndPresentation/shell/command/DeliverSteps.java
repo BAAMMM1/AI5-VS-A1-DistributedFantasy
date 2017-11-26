@@ -1,13 +1,14 @@
 package app.layerGraphicAndPresentation.shell.command;
 
 import app.layerGraphicAndPresentation.shell.InputInterpreter;
-import app.layerGraphicAndPresentation.shell.exception.ParameterIncorrectException;
-import app.layerGraphicAndPresentation.shell.exception.UnAcceptedStateException;
 import app.layerGraphicAndPresentation.shell.context.Context;
 import app.layerGraphicAndPresentation.shell.context.State;
+import app.layerGraphicAndPresentation.shell.exception.ParameterIncorrectException;
+import app.layerGraphicAndPresentation.shell.exception.UnAcceptedStateException;
 import app.layerLogicAndService.cmpQuest.service.IQuestService;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.ErrorCodeException;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.dto.QuestDTO;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.ErrorDeliverCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.dto.DeliverDTO;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,11 +18,12 @@ import java.util.List;
 /**
  * @author Chris on 20.11.2017
  */
-public class Quest extends Command {
+public class DeliverSteps extends Command {
 
     private IQuestService client;
 
-    private static final int PARAMETER_SIZE = 1;
+    // TODO - Deliveries funktioniert noch nicht
+    private static final int PARAMETER_SIZE = 0;
 
     private List<State> acceptedStates = new ArrayList<State>(Arrays.asList(State.LOGIN));
 
@@ -30,18 +32,18 @@ public class Quest extends Command {
      *
      * @param inputInterpreter
      */
-    public Quest(InputInterpreter inputInterpreter, IQuestService client) {
+    public DeliverSteps(InputInterpreter inputInterpreter, IQuestService client) {
         super(inputInterpreter);
         this.client = client;
     }
 
-    public void checkParam(List<String> param) throws ParameterIncorrectException, NumberFormatException  {
+    public void checkParam(List<String> param) throws ParameterIncorrectException, NumberFormatException {
 
         if (param.size() != this.getNumberOfParameter()) {
             throw new ParameterIncorrectException("size of parameter incorrect");
         }
 
-        Integer.parseInt(param.get(0));
+
 
     }
 
@@ -55,9 +57,9 @@ public class Quest extends Command {
     }
 
     @Override
-    State instruction() throws ErrorCodeException, IOException, InterruptedException {
+    State instruction() throws ErrorCodeException, IOException, InterruptedException, ErrorDeliverCodeException {
 
-        app.layerLogicAndService.cmpQuest.entity.Quest dto = this.client.getQuest(Integer.valueOf(this.getParameter().get(0)));
+        DeliverDTO dto = this.client.deliverStepToken();
 
         System.out.println(dto.toString());
 
@@ -71,6 +73,6 @@ public class Quest extends Command {
 
     @Override
     String description() {
-        return "  -quest        [quest-id]                       displays a quest based on a id";
+        return "  -deliver      [quest-id] [task-uri] [token]    deliver a token for a quest";
     }
 }

@@ -23,7 +23,7 @@ public class Deliver extends Command {
     private IQuestService client;
 
     // TODO - Deliveries funktioniert noch nicht
-    private static final int PARAMETER_SIZE = 3;
+    private static final int PARAMETER_SIZE = 0;
 
     private List<State> acceptedStates = new ArrayList<State>(Arrays.asList(State.LOGIN));
 
@@ -43,7 +43,7 @@ public class Deliver extends Command {
             throw new ParameterIncorrectException("size of parameter incorrect");
         }
 
-        Integer.parseInt(param.get(0));
+
 
     }
 
@@ -59,11 +59,7 @@ public class Deliver extends Command {
     @Override
     State instruction() throws ErrorCodeException, IOException, InterruptedException, ErrorDeliverCodeException {
 
-        DeliverDTO dto = this.client.deliver(
-                Integer.valueOf(this.getParameter().get(0)),
-                this.getParameter().get(1),
-                this.getParameter().get(2)
-        );
+        DeliverDTO dto = this.client.deliver();
 
         System.out.println(dto.toString());
 

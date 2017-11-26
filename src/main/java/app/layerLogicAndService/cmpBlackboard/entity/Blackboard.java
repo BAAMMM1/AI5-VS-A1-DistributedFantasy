@@ -8,10 +8,7 @@ public class Blackboard {
 
 	private int blackboardPort;
 	private InetAddress blackboardIp;
-	private String userName;
-	private String userPassword;
-	private String userToken;
-	private String userTokenValidTime;
+	private User user;
 
 	private static Blackboard instance;
 
@@ -34,7 +31,7 @@ public class Blackboard {
 		this.blackboardPort = blackboardPort;
 	}
 
-	public void setIP(InetAddress ip) {
+	public void setBlackboardIp(InetAddress ip) {
 		this.blackboardIp = ip;
 	}
 
@@ -48,36 +45,19 @@ public class Blackboard {
 		return null;
 	}
 
-	public String getUserName() {
-		return userName;
+	public int getBlackboardPort() {
+		return blackboardPort;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public InetAddress getBlackboardIp() {
+		return blackboardIp;
 	}
 
-	public String getUserPassword() {
-		return userPassword;
+	public void setUser(String name, String userToken, String userTokenValidTime){
+		this.user = new User(name, userToken, userTokenValidTime);
 	}
 
-	public void setUserPassword(String userPassword) {
-		this.userPassword = userPassword;
+	public User getUser() {
+		return user;
 	}
-
-	public String getUserToken() {
-		return userToken;
-	}
-
-	public void setUserToken(String userToken) {
-		this.userToken = userToken;
-	}
-
-	public String getUserTokenValidTime() {
-		return userTokenValidTime;
-	}
-
-	public void setUserTokenValidTime(String userTokenValidTime) {
-		this.userTokenValidTime = userTokenValidTime;
-	}
-
 }

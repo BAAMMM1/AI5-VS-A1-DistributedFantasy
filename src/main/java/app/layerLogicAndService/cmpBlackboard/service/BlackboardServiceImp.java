@@ -29,17 +29,16 @@ public class BlackboardServiceImp implements IBlackboardService {
     }
 
     @Override
-    public LoginTokenDTO getAuthenticationToken(String name, String password) throws ErrorCodeException {
+    public LoginTokenDTO login(String name, String password) throws ErrorCodeException {
 
         LoginTokenDTO dto = this.registerConsumer.getAuthenticationToken(name, password);
 
         // Username, Password und Token im System hinterlegen
 
         // TODO - IlegalArgument, falls dto variablen null
-        Blackboard.getInstance().setUserName(name);
-        Blackboard.getInstance().setUserPassword(password);
-        Blackboard.getInstance().setUserToken(dto.getToken());
-        Blackboard.getInstance().setUserTokenValidTime(dto.getValid_till());
+        Blackboard.getInstance().setUser(name, dto.getToken(),dto.getValid_till());
+
+        System.out.println(Blackboard.getInstance().getUser().toString());
 
         return dto;
 
@@ -55,6 +54,14 @@ public class BlackboardServiceImp implements IBlackboardService {
         try {
             dto = this.registerConsumer.checkLogin(Token);
 
+            Blackboard.getInstance().getUser().set_links(dto.getUser().get_links());
+            Blackboard.getInstance().getUser().setDeliverables_done(dto.getUser().getDeliverables_done());
+            Blackboard.getInstance().getUser().setDelivered(dto.getUser().getDelivered());
+            Blackboard.getInstance().getUser().setIp(dto.getUser().getIp());
+            Blackboard.getInstance().getUser().setLocation(dto.getUser().getLocation());
+
+            System.out.println(Blackboard.getInstance().getUser().toString());
+
             if (dto.getMessage().equals("You are authenticated")) {
                 // TODO - Hinterlegen der Deliveries
 
@@ -66,20 +73,14 @@ public class BlackboardServiceImp implements IBlackboardService {
             WhoamiDTO{message='You are not authenticated / logged in', deliverables_done='null', delivered='null', ip='null', location='null', name='null'}
             */
 
-                Blackboard.getInstance().setUserName(null);
-                Blackboard.getInstance().setUserPassword(null);
-                Blackboard.getInstance().setUserToken(null);
-                Blackboard.getInstance().setUserTokenValidTime(null);
+                Blackboard.getInstance().setUser(null, null, null);
 
                 throw new NotAuthenticatedException(dto.getMessage());
 
             }
 
         } catch (ErrorCodeException e) {
-            Blackboard.getInstance().setUserName(null);
-            Blackboard.getInstance().setUserPassword(null);
-            Blackboard.getInstance().setUserToken(null);
-            Blackboard.getInstance().setUserTokenValidTime(null);
+            Blackboard.getInstance().setUser(null, null, null);
 
             throw new ErrorCodeException(e.getErrorDTO());
 

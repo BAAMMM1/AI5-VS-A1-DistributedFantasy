@@ -17,7 +17,7 @@ public class MapDTO {
         this.status = status;
     }
 
-    public Object getObject() {
+    public Map getObject() {
         return object;
     }
 

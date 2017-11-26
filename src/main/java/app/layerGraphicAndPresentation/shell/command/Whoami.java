@@ -52,7 +52,7 @@ public class Whoami extends Command {
     State instruction() {
 
         try {
-            WhoamiDTO dto = this.client.checkLogin(Blackboard.getInstance().getUserToken());
+            WhoamiDTO dto = this.client.checkLogin(Blackboard.getInstance().getUser().getUserToken());
 
             System.out.println("message: " + dto.getMessage());
             System.out.println("encryption_key:" + dto.getUser().get_links().getEncryption_key());

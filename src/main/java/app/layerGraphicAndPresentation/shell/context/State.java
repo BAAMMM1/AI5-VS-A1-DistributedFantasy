@@ -6,8 +6,7 @@ package app.layerGraphicAndPresentation.shell.context;
 public enum State {
 
     NOT_LOGIN("not login"),
-    LOGIN("login"),
-    UNCONNECTED("unconnected");
+    LOGIN("login");
 
     private String name;
 

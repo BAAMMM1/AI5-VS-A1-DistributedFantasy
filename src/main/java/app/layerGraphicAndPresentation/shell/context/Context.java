@@ -19,7 +19,7 @@ public class Context {
     public static Context getInstance () {
 
         if (Context.instance == null) {
-            Context.instance = new Context(State.UNCONNECTED);
+            Context.instance = new Context(State.NOT_LOGIN);
 
         }
 
@@ -40,7 +40,7 @@ public class Context {
 
         if(state.equals(State.LOGIN)){
 
-            return ">> Distributed Fantasy@" + Blackboard.getInstance().getUserName() +" >> ";
+            return ">> Distributed Fantasy@" + Blackboard.getInstance().getUser().getName() +" >> ";
 
         } else {
             return ">> Distributed Fantasy >> ";

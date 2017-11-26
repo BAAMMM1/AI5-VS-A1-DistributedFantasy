@@ -1,12 +1,12 @@
 package app.layerGraphicAndPresentation.shell.command;
 
 import app.layerGraphicAndPresentation.shell.InputInterpreter;
-import app.layerGraphicAndPresentation.shell.exception.UnAcceptedStateException;
 import app.layerGraphicAndPresentation.shell.context.Context;
 import app.layerGraphicAndPresentation.shell.context.State;
+import app.layerGraphicAndPresentation.shell.exception.UnAcceptedStateException;
 import app.layerLogicAndService.cmpBlackboard.service.IBlackboardService;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.ErrorCodeException;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.blackboardConsumer.dto.LoginTokenDTO;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.ErrorCodeException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,16 +15,16 @@ import java.util.List;
 /**
  * @author Christian G. on 17.11.2017
  */
-public class Login extends Command {
+public class L extends Command {
 
     private IBlackboardService client;
 
     private List<State> acceptedStates = new ArrayList<State>(Arrays.asList(State.NOT_LOGIN));
 
-    private static final int PARAMETER_SIZE = 2;
+    private static final int PARAMETER_SIZE = 0;
 
 
-    public Login(InputInterpreter inputInterpreter, IBlackboardService client) {
+    public L(InputInterpreter inputInterpreter, IBlackboardService client) {
         super(inputInterpreter);
         this.client = client;
     }
@@ -45,7 +45,7 @@ public class Login extends Command {
 
         // Je nachdem was hier zurück kommt, entweder Ok oder nicht ok, ändere Status
 
-        LoginTokenDTO dto = this.client.login(this.getParameter().get(0), this.getParameter().get(1));
+        LoginTokenDTO dto = this.client.login("MeinSuperTestUser", "test1234");
 
         // Prompt-Ausgabe
         System.out.println("message: " + dto.getMessage());
