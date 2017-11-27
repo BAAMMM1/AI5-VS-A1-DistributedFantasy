@@ -1,7 +1,5 @@
 package app.layerLogicAndService.cmpQuest.entity;
 
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.dto.QuestsDTO;
-
 import java.util.List;
 
 /**

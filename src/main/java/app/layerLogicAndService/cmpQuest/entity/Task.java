@@ -1,8 +1,5 @@
 package app.layerLogicAndService.cmpQuest.entity;
 
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.dto.TaskDTO;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,14 +18,6 @@ public class Task{
     private String resource;
     private String token;
 
-    // Hinzugefügt - TODO - Neues Object, Besuch mit Task, host, next usw.
-    private String host;
-    private String next;
-    // Wenn Steps wieder Steps haben, dann hier ein Objekt draus machen
-    private List<String> steps_todo;
-    private List<String> step_tokens;
-    private String currentUri;
-    private String stepTokensDeliver;
 
     public Task(Link _links, List<Integer> deliverables, String description, int id, String location, String name, int quest, int required_players, String resource, String token) {
         this._links = _links;
@@ -121,63 +110,6 @@ public class Task{
 
     public void setToken(String token) {
         this.token = token;
-    }
-
-    public String getHost() {
-        return host;
-    }
-
-    public void setHost(String host) {
-        this.host = host;
-    }
-
-    public String getNext() {
-        return next;
-    }
-
-    public void setNext(String next) {
-        this.next = next;
-    }
-
-    public List<String> getSteps_todo() {
-        return steps_todo;
-    }
-
-    public void setSteps_todo(List<String> steps_todo) {
-        this.steps_todo = steps_todo;
-    }
-
-    public String getCurrentUri() {
-        return currentUri;
-    }
-
-    public void setCurrentUri(String currentUri) {
-        this.currentUri = currentUri;
-    }
-
-    public List<String> getStep_tokens() {
-        return step_tokens;
-    }
-
-    public void setStep_tokens(List<String> step_tokens) {
-        this.step_tokens = step_tokens;
-    }
-
-    public String getStepTokensDeliver() {
-        return stepTokensDeliver;
-    }
-
-    public void setStepTokensDeliver(String stepTokensDeliver) {
-        this.stepTokensDeliver = stepTokensDeliver;
-    }
-
-    public void addStepToken(String token){
-
-        if(this.step_tokens == null){
-            this.step_tokens = new ArrayList<String>();
-        }
-
-        this.step_tokens.add(token);
     }
 
     @Override

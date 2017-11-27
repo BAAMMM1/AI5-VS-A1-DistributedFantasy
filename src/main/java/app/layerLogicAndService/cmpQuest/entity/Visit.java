@@ -1,11 +1,11 @@
-package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.dto;
+package app.layerLogicAndService.cmpQuest.entity;
 
 import java.util.List;
 
 /**
  * @author Chris on 19.11.2017
  */
-public class VisitDTO {
+public class Visit {
 
     /*
 
@@ -16,7 +16,7 @@ public class VisitDTO {
 
 
 {
-  "message": "\nYou approach the rats and they obviously do not fear you.\nRemember you are not done until all rats are gone or you are gone.\n(Resolve all steps and post the tokens here afterwards)\n        ",
+  "message": "\nYou approach the rats and they obviously do not fear you.\nRemember you are not done until all rats are gone or you are gone.\n(Resolve all steps and answerToCurrentUri the tokens here afterwards)\n        ",
   "required_players": 1,
   "required_tokens": [
     "Token:Rat Tail",
@@ -41,7 +41,7 @@ public class VisitDTO {
     private List<String> required_tokens;
     private List<String> steps_todo;
 
-    public VisitDTO(String message, String next, int required_players, List<String> required_tokens, List<String> steps_todo) {
+    public Visit(String message, String next, int required_players, List<String> required_tokens, List<String> steps_todo) {
         this.message = message;
         this.next = next;
         this.required_players = required_players;
@@ -91,7 +91,7 @@ public class VisitDTO {
 
     @Override
     public String toString() {
-        return "VisitDTO{" +
+        return "Visit{" +
                 "\nmessage='" + message + '\'' +
                 ", \nnext='" + next + '\'' +
                 ", \nrequired_players=" + required_players +

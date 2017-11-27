@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * @author Chris on 20.11.2017
  */
-public class DeliverDTO {
+public class DeliverTaskDTO {
 
         /*
 
@@ -33,7 +33,7 @@ public class DeliverDTO {
     private List<Delivery> object;
     private String status;
 
-    public DeliverDTO(String message, List<Delivery> object, String status) {
+    public DeliverTaskDTO(String message, List<Delivery> object, String status) {
         this.message = message;
         this.object = object;
         this.status = status;
@@ -65,7 +65,7 @@ public class DeliverDTO {
 
     @Override
     public String toString() {
-        return "DeliverDTO{" +
+        return "DeliverTaskDTO{" +
                 "\nmessage='" + message + '\'' +
                 ", \nobject=" + object +
                 ", \nstatus='" + status + '\'' +

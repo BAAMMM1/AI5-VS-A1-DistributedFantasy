@@ -5,7 +5,7 @@ import app.layerGraphicAndPresentation.shell.context.State;
 import app.layerLogicAndService.cmpQuest.service.IQuestService;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.ErrorCodeException;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.ErrorDeliverCodeException;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.dto.VisitDTO;
+import app.layerLogicAndService.cmpQuest.entity.Visit;
 
 import java.io.IOException;
 
@@ -31,7 +31,7 @@ public class Next extends Command{
     @Override
     State instruction() throws ErrorCodeException, IOException, InterruptedException, ErrorDeliverCodeException {
 
-        VisitDTO dto = this.client.next();
+        Visit dto = this.client.next();
 
         System.out.println(dto.toString());
 

@@ -7,7 +7,6 @@ import app.layerGraphicAndPresentation.shell.context.Context;
 import app.layerGraphicAndPresentation.shell.context.State;
 import app.layerLogicAndService.cmpQuest.service.IQuestService;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.ErrorCodeException;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.dto.TaskDTO;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -57,9 +56,13 @@ public class Task extends Command {
     @Override
     State instruction() throws ErrorCodeException, IOException, InterruptedException {
 
-        TaskDTO dto = this.client.getTask(Integer.valueOf(this.getParameter().get(0)));
+        app.layerLogicAndService.cmpQuest.entity.Task task = this.client.getTask(Integer.valueOf(this.getParameter().get(0)));
 
-        System.out.println(dto.toString());
+        System.out.println(task.getId());
+        System.out.println(task.getQuest());
+        System.out.println(task.getName().toString());
+        System.out.println(task.getLocation().toString());
+        System.out.println(task.getRequired_players());
 
         return null;
     }

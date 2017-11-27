@@ -1,4 +1,4 @@
-package app.layerLogicAndService.cmpQuest.entity.besuch;
+package app.layerLogicAndService.cmpQuest.entity.questing;
 
 /**
  * @author Chris on 26.11.2017
@@ -22,5 +22,13 @@ public class Step {
 
     public void setToken(Token token) {
         this.token = token;
+    }
+
+    @Override
+    public String toString() {
+        return "Step{" +
+                "\nuri='" + uri + '\'' +
+                ", \ntoken=" + token +
+                '}';
     }
 }

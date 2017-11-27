@@ -7,13 +7,11 @@ import app.layerGraphicAndPresentation.shell.context.Context;
 import app.layerGraphicAndPresentation.shell.context.State;
 import app.layerLogicAndService.cmpQuest.service.IQuestService;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.ErrorCodeException;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.dto.AnswerDTO;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Pattern;
 
 /**
  * @author Chris on 20.11.2017
@@ -57,7 +55,7 @@ public class Answer extends Command {
     @Override
     State instruction() throws ErrorCodeException, IOException, InterruptedException {
 
-        AnswerDTO dto = this.client.post(
+        app.layerLogicAndService.cmpQuest.entity.Answer dto = this.client.answerToCurrentUri(
                 this.getParameter().get(0)
         );
 

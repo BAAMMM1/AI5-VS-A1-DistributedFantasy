@@ -8,7 +8,7 @@ import app.layerGraphicAndPresentation.shell.exception.UnAcceptedStateException;
 import app.layerLogicAndService.cmpQuest.service.IQuestService;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.ErrorCodeException;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.ErrorDeliverCodeException;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.dto.DeliverDTO;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.dto.DeliverTaskPartDTO;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -59,7 +59,7 @@ public class DeliverSteps extends Command {
     @Override
     State instruction() throws ErrorCodeException, IOException, InterruptedException, ErrorDeliverCodeException {
 
-        DeliverDTO dto = this.client.deliverStepToken();
+        DeliverTaskPartDTO dto = this.client.deliverStepToken();
 
         System.out.println(dto.toString());
 
@@ -73,6 +73,6 @@ public class DeliverSteps extends Command {
 
     @Override
     String description() {
-        return "  -deliver      [quest-id] [task-uri] [token]    deliver a token for a quest";
+        return "  -deliverTask      [quest-id] [task-uri] [token]    deliverTask a token for a quest";
     }
 }

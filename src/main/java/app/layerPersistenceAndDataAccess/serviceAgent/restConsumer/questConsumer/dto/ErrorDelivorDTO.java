@@ -1,9 +1,6 @@
 package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.dto;
 
 import app.layerLogicAndService.cmpQuest.entity.Task;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.dto.TaskDTO;
-
-import java.util.List;
 
 /**
  * @author Christian G. on 02.11.2017

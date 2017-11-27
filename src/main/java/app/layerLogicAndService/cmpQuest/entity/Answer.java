@@ -1,16 +1,18 @@
-package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.dto;
+package app.layerLogicAndService.cmpQuest.entity;
 
 /**
  * @author Chris on 20.11.2017
  */
-public class AnswerDTO {
+public class Answer {
 
     String message;
     String token;
+    String token_name;
 
-    public AnswerDTO(String message, String token) {
+    public Answer(String message, String token, String token_name) {
         this.message = message;
         this.token = token;
+        this.token_name = token_name;
     }
 
     public String getMessage() {
@@ -29,11 +31,20 @@ public class AnswerDTO {
         this.token = token;
     }
 
+    public String getToken_name() {
+        return token_name;
+    }
+
+    public void setToken_name(String token_name) {
+        this.token_name = token_name;
+    }
+
     @Override
     public String toString() {
-        return "AnswerDTO{" +
+        return "Answer{" +
                 "\nmessage='" + message + '\'' +
                 ", \ntoken='" + token + '\'' +
+                ", \ntoken_name='" + token_name + '\'' +
                 '}';
     }
 }

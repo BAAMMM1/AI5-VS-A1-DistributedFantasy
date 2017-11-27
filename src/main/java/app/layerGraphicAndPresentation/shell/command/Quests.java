@@ -6,7 +6,6 @@ import app.layerGraphicAndPresentation.shell.context.Context;
 import app.layerGraphicAndPresentation.shell.context.State;
 import app.layerLogicAndService.cmpQuest.service.IQuestService;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.ErrorCodeException;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.dto.QuestsDTO;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,9 +39,17 @@ public class Quests extends Command {
     @Override
     State instruction() throws ErrorCodeException {
 
-        QuestsDTO dto = this.client.getQuests();
+        List<app.layerLogicAndService.cmpQuest.entity.Quest> quests = this.client.getQuests();
 
-        System.out.println(dto.toString());
+        for(app.layerLogicAndService.cmpQuest.entity.Quest quest : quests){
+            System.out.println(quest.getId());
+            System.out.println(quest.getName().toString());
+            System.out.println(quest.getDescription().toString());
+            System.out.println(quest.getTasks().toString());
+            System.out.println(quest.getPrerequisites().toString());
+            System.out.println(quest.getFollowups());
+            System.out.println(quest.getReward());
+        }
 
         return null;
 

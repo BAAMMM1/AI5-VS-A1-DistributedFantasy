@@ -1,4 +1,4 @@
-package app.layerLogicAndService.cmpQuest.entity.besuch;
+package app.layerLogicAndService.cmpQuest.entity.questing;
 
 /**
  * @author Chris on 26.11.2017
@@ -19,5 +19,13 @@ public class Token {
 
     public String getToken() {
         return token;
+    }
+
+    @Override
+    public String toString() {
+        return "Token{" +
+                "\nname='" + name + '\'' +
+                ", \ntoken='" + token + '\'' +
+                '}';
     }
 }

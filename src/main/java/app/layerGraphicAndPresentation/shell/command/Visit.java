@@ -7,13 +7,11 @@ import app.layerGraphicAndPresentation.shell.context.Context;
 import app.layerGraphicAndPresentation.shell.context.State;
 import app.layerLogicAndService.cmpQuest.service.IQuestService;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.ErrorCodeException;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.dto.VisitDTO;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Pattern;
 
 /**
  * @author Chris on 20.11.2017
@@ -63,7 +61,7 @@ public class Visit extends Command {
 
         System.out.println(Context.getInstance().getState());
 
-        VisitDTO dto = this.client.visitHost(this.getParameter().get(0), Integer.valueOf(this.getParameter().get(1)));
+        app.layerLogicAndService.cmpQuest.entity.Visit dto = this.client.visitHost(this.getParameter().get(0), Integer.valueOf(this.getParameter().get(1)));
 
         System.out.println(dto.toString());
 

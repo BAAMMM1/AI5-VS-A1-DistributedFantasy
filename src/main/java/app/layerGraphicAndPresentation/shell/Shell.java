@@ -78,11 +78,11 @@ public class Shell {
         System.out.println();
         //handler.handleCommand("task 1");
         System.out.println();
-        handler.handleCommand("deliver 1 1 1");
+        handler.handleCommand("deliverTask 1 1 1");
         System.out.println();
-        //handler.handleCommand("deliver 2 1 1");
+        //handler.handleCommand("deliverTask 2 1 1");
         System.out.println();
-        //handler.handleCommand("deliver 3 1 1");
+        //handler.handleCommand("deliverTask 3 1 1");
         System.out.println();
         //handler.handleCommand("map /map/Throneroom");
         System.out.println();
