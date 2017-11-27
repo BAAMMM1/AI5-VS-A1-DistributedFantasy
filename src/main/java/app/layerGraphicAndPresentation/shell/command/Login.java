@@ -44,10 +44,10 @@ public class Login extends Command {
 
         // Je nachdem was hier zurück kommt, entweder Ok oder nicht ok, ändere Status
 
-        app.layerLogicAndService.cmpBlackboard.entity.Login dto = this.client.login(this.getParameter().get(0), this.getParameter().get(1));
+        app.layerLogicAndService.cmpBlackboard.entity.Login login = this.client.login(this.getParameter().get(0), this.getParameter().get(1));
 
         // Prompt-Ausgabe
-        System.out.println("message: " + dto.getMessage());
+        System.out.println("message: " + login.getMessage());
 
 
         return State.LOGIN;

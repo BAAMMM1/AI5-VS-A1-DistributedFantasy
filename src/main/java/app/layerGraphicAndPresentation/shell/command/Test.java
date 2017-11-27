@@ -45,12 +45,10 @@ public class Test extends Command {
 
         // Je nachdem was hier zurück kommt, entweder Ok oder nicht ok, ändere Status
 
-        Login dto = this.client.login("MeinSuperTestUser", "test1234");
+        app.layerLogicAndService.cmpBlackboard.entity.Login login = this.client.login("MeinSuperTestUser", "test1234");
 
         // Prompt-Ausgabe
-        System.out.println("message: " + dto.getMessage());
-        System.out.println("token: " + dto.getToken());
-        System.out.println("valid till: " + dto.getValid_till());
+        System.out.println("message: " + login.getMessage());
 
         return State.LOGIN;
 

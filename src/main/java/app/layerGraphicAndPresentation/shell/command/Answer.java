@@ -62,7 +62,7 @@ public class Answer extends Command {
         System.out.println("message: " + answer.getMessage());
 
         if(answer.getToken_name() != null){
-            System.out.println("tokenname: " + answer.getToken_name());
+            System.out.println("token_name: " + answer.getToken_name());
         }
 
 
@@ -76,6 +76,6 @@ public class Answer extends Command {
 
     @Override
     String description() {
-        return "  -answer       [ip] [port] [/ressource] [body]  answer to a quest"; // TODO - richtigen Text hier
+        return "  -answer                               answer to the current questing"; // TODO - richtigen Text hier
     }
 }

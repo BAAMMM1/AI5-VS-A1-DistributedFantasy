@@ -42,11 +42,6 @@ public class User {
     private String ip;
     private String location;
 
-    // Keine Duplikate
-    private List<Quest> knownQuests = new ArrayList<Quest>();
-    private List<Task> knownTasks = new ArrayList<Task>();
-    private List<Map> knownMaps = new ArrayList<Map>();
-
     // TODO - Hard bis wir wissen wo es herkommt
     private String heroclass = "WiZzArD";
     private List<String> capabilities = new ArrayList<String>();
@@ -122,30 +117,6 @@ public class User {
         this.location = location;
     }
 
-    public List<Quest> getKnownQuests() {
-        return knownQuests;
-    }
-
-    public void setKnownQuests(List<Quest> knownQuests) {
-        this.knownQuests = knownQuests;
-    }
-
-    public List<Task> getKnownTasks() {
-        return knownTasks;
-    }
-
-    public void setKnownTasks(List<Task> knownTasks) {
-        this.knownTasks = knownTasks;
-    }
-
-    public List<Map> getKnownMaps() {
-        return knownMaps;
-    }
-
-    public void setKnownMaps(List<Map> knownMaps) {
-        this.knownMaps = knownMaps;
-    }
-
     public String getHeroclass() {
         return heroclass;
     }
@@ -170,17 +141,6 @@ public class User {
         this.url = url;
     }
 
-    public void addQuest(Quest quest){
-        this.knownQuests.add(quest);
-    }
-
-    public void addTask(Task task){
-        this.knownTasks.add(task);
-    }
-
-    public void addMap(Map map){
-        this.knownMaps.add(map);
-    }
 
     @Override
     public String toString() {
@@ -193,9 +153,6 @@ public class User {
                 ", \ndelivered=" + delivered +
                 ", \nip='" + ip + '\'' +
                 ", \nlocation='" + location + '\'' +
-                ", \nknownQuests=" + knownQuests +
-                ", \nknownTasks=" + knownTasks +
-                ", \nknownMaps=" + knownMaps +
                 ", \nheroclass='" + heroclass + '\'' +
                 ", \ncapabilities=" + capabilities +
                 ", \nurl='" + url + '\'' +

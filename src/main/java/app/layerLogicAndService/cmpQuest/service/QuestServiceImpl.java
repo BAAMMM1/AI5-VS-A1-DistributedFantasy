@@ -141,11 +141,11 @@ public class QuestServiceImpl implements IQuestService {
     public Visit deliverStepToken() throws ErrorCodeException {
 
         if (this.currentQuesting.getPart() == null) {
-            throw new IllegalArgumentException("no part to deliverTask");
+            throw new IllegalArgumentException("no part to deliver");
         }
 
         if (this.currentQuesting.getPart().getStepList() == null) {
-            throw new IllegalArgumentException("no steps to deliverTask");
+            throw new IllegalArgumentException("no steps to deliver");
         }
 
         for (int i = 0; i < this.currentQuesting.getPart().getStepList().size(); i++){
@@ -169,39 +169,35 @@ public class QuestServiceImpl implements IQuestService {
     @Override
     public Answer answerToCurrentUri(String body) throws ErrorCodeException {
 
-
-
         if (this.currentQuesting == null) {
             throw new IllegalArgumentException("no to answer task");
         }
 
-        Answer dto = this.questConsumer.post(this.currentQuesting.getMap().getHost(), this.currentQuesting.getCurrentUri(), body);
+        Answer answer = this.questConsumer.post(this.currentQuesting.getMap().getHost(), this.currentQuesting.getCurrentUri(), body);
 
 
-        if (dto.getToken() != null) {
+        if (answer.getToken() != null) {
 
             if(this.currentQuesting.getPart() != null){
                 Step step = this.currentQuesting.getPart().getStepList().stream().filter(s -> s.getUri().equals(this.currentQuesting.getCurrentUri())).findFirst().orElse(null);
 
                 if (step != null) {
 
-                    step.setToken(new Token(dto.getToken_name(), dto.getToken()));
+                    step.setToken(new Token(answer.getToken_name(), answer.getToken()));
                 } else {
 
-                    this.currentQuesting.getTask().setToken(dto.getToken());
+                    this.currentQuesting.getTask().setToken(answer.getToken());
                 }
-                System.out.println(3);
 
             } else {
 
-                this.currentQuesting.getTask().setToken(dto.getToken());
+                this.currentQuesting.getTask().setToken(answer.getToken());
             }
 
 
         }
 
-        System.out.println(dto.toString());
-        return dto;
+        return answer;
     }
 
     @Override
@@ -209,7 +205,7 @@ public class QuestServiceImpl implements IQuestService {
 
 
         if (this.currentQuesting.getTask().getToken() == null) {
-            throw new IllegalArgumentException("no token at this point for deliverTask");
+            throw new IllegalArgumentException("no token at this point to deliver");
         }
 
 

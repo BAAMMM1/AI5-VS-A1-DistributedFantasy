@@ -40,9 +40,13 @@ public class Register extends Command {
     @Override
     State instruction() throws ErrorCodeException {
 
-        app.layerLogicAndService.cmpBlackboard.entity.Register dto = this.client.registerUser(this.getParameter().get(0), this.getParameter().get(1));
+        app.layerLogicAndService.cmpBlackboard.entity.Register register = this.client.registerUser(this.getParameter().get(0), this.getParameter().get(1));
 
-        System.out.println(dto.toString());
+        System.out.println("name: " + register.getObject().get(0).getName());
+        System.out.println("location: " + register.getObject().get(0).getLocation());
+        System.out.println("ip: " + register.getObject().get(0).getIp());
+        System.out.println("deliverables_done: " + register.getObject().get(0).getDeliverables_done());
+        System.out.println("delivered: " + register.getObject().get(0).getDelivered());
 
 
         return null;

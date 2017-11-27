@@ -63,8 +63,6 @@ public class BlackboardServiceImp implements IBlackboardService {
             Blackboard.getInstance().getUser().setIp(user.getIp());
             Blackboard.getInstance().getUser().setLocation(user.getLocation());
 
-            System.out.println(Blackboard.getInstance().getUser().toString());
-
 
 
         } catch (ErrorCodeException e) {
