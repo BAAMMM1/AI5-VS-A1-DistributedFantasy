@@ -1,9 +1,8 @@
 package app.layerLogicAndService.cmpQuest.service;
 
 import app.layerLogicAndService.cmpQuest.entity.*;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.ErrorCodeException;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.ErrorDeliverCodeException;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.dto.*;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
+
 
 import java.util.List;
 
@@ -23,7 +22,7 @@ public interface IQuestService {
     Visit next() throws ErrorCodeException;
     Visit step(int step) throws ErrorCodeException;
 
-    DeliverTaskDTO deliver() throws ErrorCodeException, ErrorDeliverCodeException;
-    DeliverTaskPartDTO deliverStepToken() throws ErrorCodeException, ErrorDeliverCodeException;
+    List<Delivery> deliver() throws ErrorCodeException;
+    Visit deliverStepToken() throws ErrorCodeException;
 
 }

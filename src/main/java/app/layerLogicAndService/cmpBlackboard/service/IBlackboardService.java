@@ -1,18 +1,17 @@
 package app.layerLogicAndService.cmpBlackboard.service;
 
-import app.layerLogicAndService.cmpBlackboard.Exception.NotAuthenticatedException;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.blackboardConsumer.dto.RegisterUserDTO;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.blackboardConsumer.dto.WhoamiDTO;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.ErrorCodeException;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.blackboardConsumer.dto.LoginTokenDTO;
+import app.layerLogicAndService.cmpBlackboard.entity.User;
+import app.layerLogicAndService.cmpBlackboard.entity.Login;
+import app.layerLogicAndService.cmpBlackboard.entity.Register;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
 
 /**
  * @author Christian G. on 01.11.2017
  */
 public interface IBlackboardService {
 
-    RegisterUserDTO registerUser(String name, String password) throws ErrorCodeException;
-    LoginTokenDTO login(String name, String password) throws ErrorCodeException;
-    WhoamiDTO checkLogin(String Token) throws ErrorCodeException, NotAuthenticatedException;
+    Register registerUser(String name, String password) throws ErrorCodeException;
+    Login login(String name, String password) throws ErrorCodeException;
+    User checkLogin(String Token) throws ErrorCodeException;
 
 }

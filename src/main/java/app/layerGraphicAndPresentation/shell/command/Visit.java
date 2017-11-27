@@ -6,7 +6,7 @@ import app.layerGraphicAndPresentation.shell.exception.UnAcceptedStateException;
 import app.layerGraphicAndPresentation.shell.context.Context;
 import app.layerGraphicAndPresentation.shell.context.State;
 import app.layerLogicAndService.cmpQuest.service.IQuestService;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.ErrorCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -61,9 +61,24 @@ public class Visit extends Command {
 
         System.out.println(Context.getInstance().getState());
 
-        app.layerLogicAndService.cmpQuest.entity.Visit dto = this.client.visitHost(this.getParameter().get(0), Integer.valueOf(this.getParameter().get(1)));
+        app.layerLogicAndService.cmpQuest.entity.Visit visit = this.client.visitHost(this.getParameter().get(0), Integer.valueOf(this.getParameter().get(1)));
 
-        System.out.println(dto.toString());
+        System.out.println("message:" + visit.getMessage());
+
+        if (visit.getNext() != null) {
+            System.out.println("next: " + visit.getNext());
+        }
+
+        if (visit.getSteps_todo() != null) {
+            System.out.println("steps_todo: " + visit.getSteps_todo());
+        }
+
+        System.out.println("required_players: " + visit.getRequired_players());
+        System.out.println("required_tokens: " + visit.getRequired_tokens());
+
+        if (visit.getToken_name() != null) {
+            System.out.println("token_name: " + visit.getToken_name());
+        }
 
         return null;
     }

@@ -1,12 +1,11 @@
 package app.layerLogicAndService.cmpBlackboard.service;
 
-import app.layerLogicAndService.cmpBlackboard.Exception.NotAuthenticatedException;
 import app.layerLogicAndService.cmpBlackboard.entity.Blackboard;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.blackboardConsumer.dto.RegisterUserDTO;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.blackboardConsumer.dto.LoginTokenDTO;
+import app.layerLogicAndService.cmpBlackboard.entity.User;
+import app.layerLogicAndService.cmpBlackboard.entity.Register;
+import app.layerLogicAndService.cmpBlackboard.entity.Login;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.blackboardConsumer.IBlackboardConsumer;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.blackboardConsumer.dto.WhoamiDTO;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.ErrorCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
 
 /**
  * @author Christian G. on 02.11.2017
@@ -20,18 +19,18 @@ public class BlackboardServiceImp implements IBlackboardService {
     }
 
     @Override
-    public RegisterUserDTO registerUser(String name, String password) throws ErrorCodeException {
+    public Register registerUser(String name, String password) throws ErrorCodeException {
 
-        RegisterUserDTO dto = this.registerConsumer.registerUser(name, password);
+        Register dto = this.registerConsumer.registerUser(name, password);
 
         return dto;
 
     }
 
     @Override
-    public LoginTokenDTO login(String name, String password) throws ErrorCodeException {
+    public Login login(String name, String password) throws ErrorCodeException {
 
-        LoginTokenDTO dto = this.registerConsumer.getAuthenticationToken(name, password);
+        Login dto = this.registerConsumer.getAuthenticationToken(name, password);
 
         // Username, Password und Token im System hinterlegen
 
@@ -46,47 +45,36 @@ public class BlackboardServiceImp implements IBlackboardService {
     }
 
     @Override
-    public WhoamiDTO checkLogin(String Token) throws ErrorCodeException, NotAuthenticatedException {
+    public User checkLogin(String Token) throws ErrorCodeException {
 
         // 200 mit eingeloggt
-        WhoamiDTO dto = null;
+        User user = null;
 
         try {
-            dto = this.registerConsumer.checkLogin(Token);
+            user = this.registerConsumer.checkLogin(Token);
 
-            Blackboard.getInstance().getUser().set_links(dto.getUser().get_links());
-            Blackboard.getInstance().getUser().setDeliverables_done(dto.getUser().getDeliverables_done());
-            Blackboard.getInstance().getUser().setDelivered(dto.getUser().getDelivered());
-            Blackboard.getInstance().getUser().setIp(dto.getUser().getIp());
-            Blackboard.getInstance().getUser().setLocation(dto.getUser().getLocation());
+            if(user == null){
+                throw new IllegalArgumentException("user is null");
+            }
+
+            Blackboard.getInstance().getUser().set_links(user.get_links());
+            Blackboard.getInstance().getUser().setDeliverables_done(user.getDeliverables_done());
+            Blackboard.getInstance().getUser().setDelivered(user.getDelivered());
+            Blackboard.getInstance().getUser().setIp(user.getIp());
+            Blackboard.getInstance().getUser().setLocation(user.getLocation());
 
             System.out.println(Blackboard.getInstance().getUser().toString());
 
-            if (dto.getMessage().equals("You are authenticated")) {
-                // TODO - Hinterlegen der Deliveries
 
-            } else {
-
-                // TODO - Warum 200 als Antwort obwohl man nicht eingeloggt ist?
-            /*
-            200 - Wenn nicht eingeloggt :/
-            WhoamiDTO{message='You are not authenticated / logged in', deliverables_done='null', delivered='null', ip='null', location='null', name='null'}
-            */
-
-                Blackboard.getInstance().setUser(null, null, null);
-
-                throw new NotAuthenticatedException(dto.getMessage());
-
-            }
 
         } catch (ErrorCodeException e) {
             Blackboard.getInstance().setUser(null, null, null);
 
-            throw new ErrorCodeException(e.getErrorDTO());
+            throw new ErrorCodeException(e.getErrorCodeDTO());
 
         }
 
 
-        return dto;
+        return user;
     }
 }

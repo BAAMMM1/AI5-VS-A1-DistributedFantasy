@@ -1,15 +1,15 @@
 package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.blackboardConsumer;
 
 import app.layerLogicAndService.cmpBlackboard.entity.Blackboard;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.blackboardConsumer.dto.LoginTokenDTO;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.ErrorCodeException;
+import app.layerLogicAndService.cmpBlackboard.entity.User;
+import app.layerLogicAndService.cmpBlackboard.entity.Login;
+import app.layerLogicAndService.cmpBlackboard.entity.Register;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeDTO;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
 import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.EnumHTTPMethod;
 import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.HTTPCaller;
 import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.HTTPRequest;
 import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.HTTPResponse;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.dto.ErrorDTO;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.blackboardConsumer.dto.RegisterUserDTO;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.blackboardConsumer.dto.WhoamiDTO;
 import com.google.gson.Gson;
 
 /**
@@ -33,7 +33,7 @@ public class BlackboardConsumer implements IBlackboardConsumer {
     }
 
     @Override
-    public RegisterUserDTO registerUser(String name, String password) throws ErrorCodeException {
+    public Register registerUser(String name, String password) throws ErrorCodeException {
 
         // preconditions-check
         if (name == null) {
@@ -60,12 +60,12 @@ public class BlackboardConsumer implements IBlackboardConsumer {
         // Antwort prüfen
 
         if (response.getCode() != 201 || response == null) {
-            ErrorDTO errorDTO = gson.fromJson(response.getBody(), ErrorDTO.class);
+            ErrorCodeDTO errorCodeDTO = gson.fromJson(response.getBody(), ErrorCodeDTO.class);
 
-            throw new ErrorCodeException(errorDTO);
+            throw new ErrorCodeException(errorCodeDTO);
 
         } else {
-            RegisterUserDTO dto = gson.fromJson(response.getBody(), RegisterUserDTO.class);
+            Register dto = gson.fromJson(response.getBody(), Register.class);
 
             return dto;
 
@@ -74,7 +74,7 @@ public class BlackboardConsumer implements IBlackboardConsumer {
     }
 
     @Override
-    public LoginTokenDTO getAuthenticationToken(String name, String password) throws ErrorCodeException {
+    public Login getAuthenticationToken(String name, String password) throws ErrorCodeException {
 
         // preconditions-check
         if (name == null) {
@@ -102,12 +102,12 @@ public class BlackboardConsumer implements IBlackboardConsumer {
         // Antwort prüfen
 
         if (response.getCode() != 200 || response == null) {
-            ErrorDTO errorDTO = gson.fromJson(response.getBody(), ErrorDTO.class);
+            ErrorCodeDTO errorCodeDTO = gson.fromJson(response.getBody(), ErrorCodeDTO.class);
 
-            throw new ErrorCodeException(errorDTO);
+            throw new ErrorCodeException(errorCodeDTO);
 
         } else {
-            LoginTokenDTO userTokenDTO = gson.fromJson(response.getBody(), LoginTokenDTO.class);
+            Login userTokenDTO = gson.fromJson(response.getBody(), Login.class);
 
             return userTokenDTO;
 
@@ -117,7 +117,7 @@ public class BlackboardConsumer implements IBlackboardConsumer {
     }
 
     @Override
-    public WhoamiDTO checkLogin(String token) throws ErrorCodeException {
+    public User checkLogin(String token) throws ErrorCodeException {
 
         // preconditions-check
         if (token == null) {
@@ -140,18 +140,56 @@ public class BlackboardConsumer implements IBlackboardConsumer {
         // Antwort prüfen
 
         if (response.getCode() != 200) {
-            ErrorDTO errorDTO = gson.fromJson(response.getBody(), ErrorDTO.class);
+            ErrorCodeDTO errorCodeDTO = gson.fromJson(response.getBody(), ErrorCodeDTO.class);
 
-            throw new ErrorCodeException(errorDTO);
+            throw new ErrorCodeException(errorCodeDTO);
 
         } else {
             WhoamiDTO whoamiDTO = gson.fromJson(response.getBody(), WhoamiDTO.class);
 
-            return whoamiDTO;
+            return whoamiDTO.getUser();
 
         }
 
     }
+
+    private class WhoamiDTO {
+
+        String message;
+        User user;
+
+        public WhoamiDTO(String message, User user) {
+            this.message = message;
+            this.user = user;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
+
+        public User getUser() {
+            return user;
+        }
+
+        public void setUser(User user) {
+            this.user = user;
+        }
+
+        @Override
+        public String toString() {
+            return "WhoamiDTO{" +
+                    "message='" + message + '\'' +
+                    ", user=" + user +
+                    '}';
+        }
+
+
+    }
+
 
 
 }

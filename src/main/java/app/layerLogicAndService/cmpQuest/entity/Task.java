@@ -17,9 +17,10 @@ public class Task{
     private int required_players;
     private String resource;
     private String token;
+    private String requirements;
 
 
-    public Task(Link _links, List<Integer> deliverables, String description, int id, String location, String name, int quest, int required_players, String resource, String token) {
+    public Task(Link _links, List<Integer> deliverables, String description, int id, String location, String name, int quest, int required_players, String resource, String token, String requirements) {
         this._links = _links;
         this.deliverables = deliverables;
         this.description = description;
@@ -30,6 +31,15 @@ public class Task{
         this.required_players = required_players;
         this.resource = resource;
         this.token = token;
+        this.requirements = requirements;
+    }
+
+    public String getRequirements() {
+        return requirements;
+    }
+
+    public void setRequirements(String requirements) {
+        this.requirements = requirements;
     }
 
     public Link get_links() {
@@ -114,17 +124,18 @@ public class Task{
 
     @Override
     public String toString() {
-        return "\nTask{" +
+        return "Task{" +
                 "\n_links=" + _links +
                 ", \ndeliverables=" + deliverables +
                 ", \ndescription='" + description + '\'' +
                 ", \nid=" + id +
                 ", \nlocation='" + location + '\'' +
-                ", \nname='" + name + '\'' +
+                ", \name='" + name + '\'' +
                 ", \nquest=" + quest +
                 ", \nrequired_players=" + required_players +
                 ", \nresource='" + resource + '\'' +
                 ", \ntoken='" + token + '\'' +
+                ", \nrequirements='" + requirements + '\'' +
                 '}';
     }
 }

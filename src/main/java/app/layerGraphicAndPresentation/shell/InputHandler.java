@@ -3,8 +3,7 @@ package app.layerGraphicAndPresentation.shell;
 import app.layerGraphicAndPresentation.shell.command.Command;
 import app.layerGraphicAndPresentation.shell.exception.*;
 import app.layerGraphicAndPresentation.shell.context.Context;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.ErrorCodeException;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.ErrorDeliverCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
 
 import java.util.List;
 
@@ -36,10 +35,10 @@ public class InputHandler {
             System.out.println(Context.getInstance().getPromptState() + e.getMessage());
 
         } catch (ErrorCodeException e) {
-            System.out.println("message: " + e.getErrorDTO().getMessage());
-
-        } catch (ErrorDeliverCodeException e) {
-            System.out.println("message: " + e.getErrorDelivorDTO().toString());
+            if(e.getErrorCodeDTO().getError() != null){
+                System.out.println("error: " + e.getErrorCodeDTO().getError());
+            }
+            System.out.println("message: " + e.getErrorCodeDTO().getMessage());
 
         } catch (Exception e){
             System.out.println("message: " + e.getMessage());

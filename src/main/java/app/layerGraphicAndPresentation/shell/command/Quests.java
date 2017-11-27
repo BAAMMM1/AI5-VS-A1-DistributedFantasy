@@ -5,7 +5,7 @@ import app.layerGraphicAndPresentation.shell.exception.UnAcceptedStateException;
 import app.layerGraphicAndPresentation.shell.context.Context;
 import app.layerGraphicAndPresentation.shell.context.State;
 import app.layerLogicAndService.cmpQuest.service.IQuestService;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.ErrorCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,13 +42,14 @@ public class Quests extends Command {
         List<app.layerLogicAndService.cmpQuest.entity.Quest> quests = this.client.getQuests();
 
         for(app.layerLogicAndService.cmpQuest.entity.Quest quest : quests){
-            System.out.println(quest.getId());
-            System.out.println(quest.getName().toString());
-            System.out.println(quest.getDescription().toString());
-            System.out.println(quest.getTasks().toString());
-            System.out.println(quest.getPrerequisites().toString());
-            System.out.println(quest.getFollowups());
-            System.out.println(quest.getReward());
+            System.out.println("quest-id: " + quest.getId());
+            System.out.println("name: " + quest.getName().toString());
+            System.out.println("description: " + quest.getDescription().toString());
+            System.out.println("tasks: " + quest.getTasks().toString());
+            System.out.println("prerequisites: " + quest.getPrerequisites().toString());
+            System.out.println("followups: " + quest.getFollowups());
+            System.out.println("reward: " + quest.getReward());
+            System.out.println("\n######################################################################\n");
         }
 
         return null;

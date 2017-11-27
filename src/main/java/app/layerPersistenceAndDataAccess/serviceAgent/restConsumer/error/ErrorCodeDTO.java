@@ -1,20 +1,16 @@
-package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.dto;
-
-import app.layerLogicAndService.cmpQuest.entity.Task;
+package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error;
 
 /**
  * @author Christian G. on 02.11.2017
  */
-public class ErrorDelivorDTO {
+public class ErrorCodeDTO {
 
     private String error;
     private String message;
-    private Task object;
 
-    public ErrorDelivorDTO(String error, String message, Task object) {
+    public ErrorCodeDTO(String error, String message) {
         this.error = error;
         this.message = message;
-        this.object = object;
     }
 
     public String getError() {
@@ -33,24 +29,11 @@ public class ErrorDelivorDTO {
         this.message = message;
     }
 
-    public Object getObject() {
-        return object;
-    }
-
-    public void setObject(Task object) {
-        this.object = object;
-    }
-
     @Override
     public String toString() {
-        return "ErrorDelivorDTO{" +
+        return "ErrorCodeDTO{" +
                 "\nerror='" + error + '\'' +
                 ", \nmessage='" + message + '\'' +
-                ", \nobject=" + object +
                 '}';
     }
-
-
-
-
 }

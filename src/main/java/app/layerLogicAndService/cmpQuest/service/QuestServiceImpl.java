@@ -5,11 +5,9 @@ import app.layerLogicAndService.cmpQuest.entity.questing.Questing;
 import app.layerLogicAndService.cmpQuest.entity.questing.Step;
 import app.layerLogicAndService.cmpQuest.entity.questing.TaskPart;
 import app.layerLogicAndService.cmpQuest.entity.questing.Token;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.ErrorCodeException;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.ErrorDeliverCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.IQuestConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.QuestConsumerImpl;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.dto.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -140,7 +138,7 @@ public class QuestServiceImpl implements IQuestService {
     }
 
     @Override
-    public DeliverTaskPartDTO deliverStepToken() throws ErrorCodeException, ErrorDeliverCodeException {
+    public Visit deliverStepToken() throws ErrorCodeException {
 
         if (this.currentQuesting.getPart() == null) {
             throw new IllegalArgumentException("no part to deliverTask");
@@ -158,14 +156,14 @@ public class QuestServiceImpl implements IQuestService {
             }
         }
 
-        DeliverTaskPartDTO dto = this.questConsumer.deliverTaskPart(this.currentQuesting.getPart());
+        Visit visit = this.questConsumer.deliverTaskPart(this.currentQuesting.getPart());
 
         this.currentQuesting.setCurrentUri(this.currentQuesting.getPart().getDeliverUri());
 
-        this.currentQuesting.getTask().setToken(dto.getToken());
+        this.currentQuesting.getTask().setToken(visit.getToken());
 
 
-        return dto;
+        return visit;
     }
 
     @Override
@@ -207,7 +205,7 @@ public class QuestServiceImpl implements IQuestService {
     }
 
     @Override
-    public DeliverTaskDTO deliver() throws ErrorCodeException, ErrorDeliverCodeException {
+    public List<Delivery> deliver() throws ErrorCodeException {
 
 
         if (this.currentQuesting.getTask().getToken() == null) {
@@ -215,12 +213,12 @@ public class QuestServiceImpl implements IQuestService {
         }
 
 
-        DeliverTaskDTO dto = this.questConsumer.deliverTask(this.currentQuesting.getTask());
+        List<Delivery> list = this.questConsumer.deliverTask(this.currentQuesting.getTask());
         this.currentQuesting.setCurrentUri(this.currentQuesting.getTask().getResource());
 
 
 
-        return dto;
+        return list;
     }
 
 

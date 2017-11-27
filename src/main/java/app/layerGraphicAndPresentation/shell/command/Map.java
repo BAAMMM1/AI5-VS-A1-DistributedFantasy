@@ -6,7 +6,7 @@ import app.layerGraphicAndPresentation.shell.exception.UnAcceptedStateException;
 import app.layerGraphicAndPresentation.shell.context.Context;
 import app.layerGraphicAndPresentation.shell.context.State;
 import app.layerLogicAndService.cmpQuest.service.IQuestService;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.ErrorCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -56,9 +56,9 @@ public class Map extends Command {
 
         app.layerLogicAndService.cmpQuest.entity.Map map = this.client.lookAtTheMap(this.getParameter().get(0));
 
-        System.out.println(map.getName());
-        System.out.println(map.getTasks());
-        System.out.println(map.getVisitors());
+        System.out.println("map: " + map.getName());
+        System.out.println("tasks: " + map.getTasks());
+        System.out.println("visitors: " + map.getVisitors());
 
         return null;
     }

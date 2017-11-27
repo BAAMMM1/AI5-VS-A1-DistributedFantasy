@@ -5,8 +5,8 @@ import app.layerGraphicAndPresentation.shell.context.Context;
 import app.layerGraphicAndPresentation.shell.context.State;
 import app.layerGraphicAndPresentation.shell.exception.UnAcceptedStateException;
 import app.layerLogicAndService.cmpBlackboard.service.IBlackboardService;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.blackboardConsumer.dto.LoginTokenDTO;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.ErrorCodeException;
+import app.layerLogicAndService.cmpBlackboard.entity.Login;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * @author Christian G. on 17.11.2017
  */
-public class L extends Command {
+public class Test extends Command {
 
     private IBlackboardService client;
 
@@ -24,7 +24,7 @@ public class L extends Command {
     private static final int PARAMETER_SIZE = 0;
 
 
-    public L(InputInterpreter inputInterpreter, IBlackboardService client) {
+    public Test(InputInterpreter inputInterpreter, IBlackboardService client) {
         super(inputInterpreter);
         this.client = client;
     }
@@ -45,7 +45,7 @@ public class L extends Command {
 
         // Je nachdem was hier zurück kommt, entweder Ok oder nicht ok, ändere Status
 
-        LoginTokenDTO dto = this.client.login("MeinSuperTestUser", "test1234");
+        Login dto = this.client.login("MeinSuperTestUser", "test1234");
 
         // Prompt-Ausgabe
         System.out.println("message: " + dto.getMessage());

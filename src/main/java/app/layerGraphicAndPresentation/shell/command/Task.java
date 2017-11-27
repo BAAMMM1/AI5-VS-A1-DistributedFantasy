@@ -6,7 +6,7 @@ import app.layerGraphicAndPresentation.shell.exception.UnAcceptedStateException;
 import app.layerGraphicAndPresentation.shell.context.Context;
 import app.layerGraphicAndPresentation.shell.context.State;
 import app.layerLogicAndService.cmpQuest.service.IQuestService;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.ErrorCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -58,11 +58,13 @@ public class Task extends Command {
 
         app.layerLogicAndService.cmpQuest.entity.Task task = this.client.getTask(Integer.valueOf(this.getParameter().get(0)));
 
-        System.out.println(task.getId());
-        System.out.println(task.getQuest());
-        System.out.println(task.getName().toString());
-        System.out.println(task.getLocation().toString());
-        System.out.println(task.getRequired_players());
+        System.out.println("task-id: " + task.getId());
+        System.out.println("quest-id: " + task.getQuest());
+        System.out.println("name: " + task.getName().toString());
+        System.out.println("name: " + task.getDescription().toString());
+        System.out.println("location: " + task.getLocation().toString());
+        System.out.println("required_players: " + task.getRequired_players());
+        System.out.println("required_players: " + task.getRequirements());
 
         return null;
     }

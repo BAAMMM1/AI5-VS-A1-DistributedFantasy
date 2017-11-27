@@ -115,7 +115,7 @@ public class Shell {
         new Visit(inputInterpreter, questService);
         new Answer(inputInterpreter, questService);
         new Deliver(inputInterpreter, questService);
-        new L(inputInterpreter, blackboardService);
+        new Test(inputInterpreter, blackboardService);
         new Next(inputInterpreter, questService);
         new Step(inputInterpreter, questService);
         new DeliverSteps(inputInterpreter, questService);

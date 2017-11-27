@@ -5,8 +5,7 @@ import app.layerGraphicAndPresentation.shell.exception.UnAcceptedStateException;
 import app.layerGraphicAndPresentation.shell.context.Context;
 import app.layerGraphicAndPresentation.shell.context.State;
 import app.layerLogicAndService.cmpBlackboard.service.IBlackboardService;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.ErrorCodeException;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.blackboardConsumer.dto.LoginTokenDTO;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,16 +44,13 @@ public class Login extends Command {
 
         // Je nachdem was hier zurück kommt, entweder Ok oder nicht ok, ändere Status
 
-        LoginTokenDTO dto = this.client.login(this.getParameter().get(0), this.getParameter().get(1));
+        app.layerLogicAndService.cmpBlackboard.entity.Login dto = this.client.login(this.getParameter().get(0), this.getParameter().get(1));
 
         // Prompt-Ausgabe
         System.out.println("message: " + dto.getMessage());
-        System.out.println("token: " + dto.getToken());
-        System.out.println("valid till: " + dto.getValid_till());
+
 
         return State.LOGIN;
-
-
     }
 
     @Override

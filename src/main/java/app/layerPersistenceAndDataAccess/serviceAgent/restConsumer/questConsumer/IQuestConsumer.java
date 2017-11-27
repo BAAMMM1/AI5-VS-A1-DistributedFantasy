@@ -1,10 +1,9 @@
 package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer;
 
+
 import app.layerLogicAndService.cmpQuest.entity.*;
 import app.layerLogicAndService.cmpQuest.entity.questing.TaskPart;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.ErrorDeliverCodeException;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.dto.*;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.ErrorCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
 
 import java.util.List;
 
@@ -21,8 +20,8 @@ public interface IQuestConsumer {
     Answer post(String ipPort, String ressource, String body) throws ErrorCodeException;
 
     // TODO - Nicht task-uri sinder taskId
-    DeliverTaskDTO deliverTask(Task task) throws ErrorCodeException, ErrorDeliverCodeException;
+    List<Delivery> deliverTask(Task task) throws ErrorCodeException;
 
-    DeliverTaskPartDTO deliverTaskPart(TaskPart taskpart) throws ErrorCodeException, ErrorDeliverCodeException;
+    Visit deliverTaskPart(TaskPart taskpart) throws ErrorCodeException;
 
 }

@@ -5,10 +5,9 @@ import app.layerGraphicAndPresentation.shell.exception.ParameterIncorrectExcepti
 import app.layerGraphicAndPresentation.shell.exception.UnAcceptedStateException;
 import app.layerGraphicAndPresentation.shell.context.Context;
 import app.layerGraphicAndPresentation.shell.context.State;
+import app.layerLogicAndService.cmpQuest.entity.Delivery;
 import app.layerLogicAndService.cmpQuest.service.IQuestService;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.ErrorCodeException;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.ErrorDeliverCodeException;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.dto.DeliverTaskDTO;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -57,11 +56,15 @@ public class Deliver extends Command {
     }
 
     @Override
-    State instruction() throws ErrorCodeException, IOException, InterruptedException, ErrorDeliverCodeException {
+    State instruction() throws ErrorCodeException, IOException, InterruptedException {
 
-        DeliverTaskDTO dto = this.client.deliver();
+        List<Delivery> list = this.client.deliver();
 
-        System.out.println(dto.toString());
+        for(Delivery delivery: list){
+            System.out.println("id: " + delivery.getId());
+            System.out.println("quest-id: " + delivery.getQuest());
+            System.out.println("user: " + delivery.getUser());
+        }
 
         return null;
     }

@@ -6,9 +6,7 @@ import app.layerGraphicAndPresentation.shell.context.State;
 import app.layerGraphicAndPresentation.shell.exception.ParameterIncorrectException;
 import app.layerGraphicAndPresentation.shell.exception.UnAcceptedStateException;
 import app.layerLogicAndService.cmpQuest.service.IQuestService;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.ErrorCodeException;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.ErrorDeliverCodeException;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.dto.DeliverTaskPartDTO;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -44,7 +42,6 @@ public class DeliverSteps extends Command {
         }
 
 
-
     }
 
     @Override
@@ -57,11 +54,27 @@ public class DeliverSteps extends Command {
     }
 
     @Override
-    State instruction() throws ErrorCodeException, IOException, InterruptedException, ErrorDeliverCodeException {
+    State instruction() throws ErrorCodeException, IOException, InterruptedException {
 
-        DeliverTaskPartDTO dto = this.client.deliverStepToken();
+        app.layerLogicAndService.cmpQuest.entity.Visit visit = this.client.deliverStepToken();
 
-        System.out.println(dto.toString());
+        System.out.println("message:" + visit.getMessage());
+
+        if (visit.getNext() != null) {
+            System.out.println("next: " + visit.getNext());
+        }
+
+        if (visit.getSteps_todo() != null) {
+            System.out.println("steps_todo: " + visit.getSteps_todo());
+        }
+
+        System.out.println("required_players: " + visit.getRequired_players());
+        System.out.println("required_tokens: " + visit.getRequired_tokens());
+
+        if (visit.getToken_name() != null) {
+            System.out.println("token_name: " + visit.getToken_name());
+        }
+
 
         return null;
     }

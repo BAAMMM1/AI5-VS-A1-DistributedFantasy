@@ -40,13 +40,17 @@ public class Visit {
     private int required_players;
     private List<String> required_tokens;
     private List<String> steps_todo;
+    private String token;
+    private String token_name;
 
-    public Visit(String message, String next, int required_players, List<String> required_tokens, List<String> steps_todo) {
+    public Visit(String message, String next, int required_players, List<String> required_tokens, List<String> steps_todo, String token, String token_name) {
         this.message = message;
         this.next = next;
         this.required_players = required_players;
         this.required_tokens = required_tokens;
         this.steps_todo = steps_todo;
+        this.token = token;
+        this.token_name = token_name;
     }
 
     public String getMessage() {
@@ -89,6 +93,22 @@ public class Visit {
         this.steps_todo = steps_todo;
     }
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getToken_name() {
+        return token_name;
+    }
+
+    public void setToken_name(String token_name) {
+        this.token_name = token_name;
+    }
+
     @Override
     public String toString() {
         return "Visit{" +
@@ -97,6 +117,8 @@ public class Visit {
                 ", \nrequired_players=" + required_players +
                 ", \nrequired_tokens=" + required_tokens +
                 ", \nsteps_todo=" + steps_todo +
+                ", \ntoken='" + token + '\'' +
+                ", \ntoken_name='" + token_name + '\'' +
                 '}';
     }
 }

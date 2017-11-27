@@ -1,9 +1,9 @@
-package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.blackboardConsumer.dto;
+package app.layerLogicAndService.cmpBlackboard.entity;
 
 /**
  * @author Christian G. on 02.11.2017
  */
-public class LoginTokenDTO {
+public class Login {
 
     private String message;
     private String token;
@@ -11,7 +11,7 @@ public class LoginTokenDTO {
     // TODO - private Date? Was ist das für ein Dateformat?
     private String valid_till;
 
-    public LoginTokenDTO(String message, String token, String valid_till) {
+    public Login(String message, String token, String valid_till) {
         this.message = message;
         this.token = token;
         this.valid_till = valid_till;
@@ -31,7 +31,7 @@ public class LoginTokenDTO {
 
     @Override
     public String toString() {
-        return "LoginTokenDTO{" +
+        return "Login{" +
                 "message='" + message + '\'' +
                 ", token='" + token + '\'' +
                 ", valid_till='" + valid_till + '\'' +

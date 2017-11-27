@@ -6,7 +6,7 @@ import app.layerGraphicAndPresentation.shell.exception.UnAcceptedStateException;
 import app.layerGraphicAndPresentation.shell.context.Context;
 import app.layerGraphicAndPresentation.shell.context.State;
 import app.layerLogicAndService.cmpQuest.service.IQuestService;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.ErrorCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -55,11 +55,16 @@ public class Answer extends Command {
     @Override
     State instruction() throws ErrorCodeException, IOException, InterruptedException {
 
-        app.layerLogicAndService.cmpQuest.entity.Answer dto = this.client.answerToCurrentUri(
+        app.layerLogicAndService.cmpQuest.entity.Answer answer = this.client.answerToCurrentUri(
                 this.getParameter().get(0)
         );
 
-        System.out.println(dto.toString());
+        System.out.println("message: " + answer.getMessage());
+
+        if(answer.getToken_name() != null){
+            System.out.println("tokenname: " + answer.getToken_name());
+        }
+
 
         return null;
     }

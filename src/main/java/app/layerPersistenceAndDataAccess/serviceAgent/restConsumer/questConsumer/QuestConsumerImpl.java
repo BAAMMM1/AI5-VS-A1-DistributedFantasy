@@ -4,15 +4,12 @@ import app.layerLogicAndService.cmpBlackboard.entity.Blackboard;
 import app.layerLogicAndService.cmpQuest.entity.*;
 import app.layerLogicAndService.cmpQuest.entity.questing.Step;
 import app.layerLogicAndService.cmpQuest.entity.questing.TaskPart;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.dto.ErrorDTO;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.dto.ErrorDelivorDTO;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.ErrorDeliverCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeDTO;
 import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.EnumHTTPMethod;
 import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.HTTPCaller;
 import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.HTTPRequest;
 import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.HTTPResponse;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.dto.*;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.ErrorCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -52,9 +49,9 @@ public class QuestConsumerImpl implements IQuestConsumer {
         // Antwort prüfen
 
         if (response.getCode() != 200) {
-            ErrorDTO errorDTO = gson.fromJson(response.getBody(), ErrorDTO.class);
+            ErrorCodeDTO errorCodeDTO = gson.fromJson(response.getBody(), ErrorCodeDTO.class);
 
-            throw new ErrorCodeException(errorDTO);
+            throw new ErrorCodeException(errorCodeDTO);
 
         } else {
             QuestsDTO dto = gson.fromJson(response.getBody(), QuestsDTO.class);
@@ -86,9 +83,9 @@ public class QuestConsumerImpl implements IQuestConsumer {
         // Antwort prüfen
 
         if (response.getCode() != 200) {
-            ErrorDTO errorDTO = gson.fromJson(response.getBody(), ErrorDTO.class);
+            ErrorCodeDTO errorCodeDTO = gson.fromJson(response.getBody(), ErrorCodeDTO.class);
 
-            throw new ErrorCodeException(errorDTO);
+            throw new ErrorCodeException(errorCodeDTO);
 
         } else {
             QuestDTO dto = gson.fromJson(response.getBody(), QuestDTO.class);
@@ -119,9 +116,9 @@ public class QuestConsumerImpl implements IQuestConsumer {
         // Antwort prüfen
 
         if (response.getCode() != 200) {
-            ErrorDTO errorDTO = gson.fromJson(response.getBody(), ErrorDTO.class);
+            ErrorCodeDTO errorCodeDTO = gson.fromJson(response.getBody(), ErrorCodeDTO.class);
 
-            throw new ErrorCodeException(errorDTO);
+            throw new ErrorCodeException(errorCodeDTO);
 
         } else {
             TaskDTO dto = gson.fromJson(response.getBody(), TaskDTO.class);
@@ -152,9 +149,9 @@ public class QuestConsumerImpl implements IQuestConsumer {
         // Antwort prüfen
 
         if (response.getCode() != 200) {
-            ErrorDTO errorDTO = gson.fromJson(response.getBody(), ErrorDTO.class);
+            ErrorCodeDTO errorCodeDTO = gson.fromJson(response.getBody(), ErrorCodeDTO.class);
 
-            throw new ErrorCodeException(errorDTO);
+            throw new ErrorCodeException(errorCodeDTO);
 
         } else {
             MapDTO dto = gson.fromJson(response.getBody(), MapDTO.class);
@@ -185,14 +182,14 @@ public class QuestConsumerImpl implements IQuestConsumer {
         // Antwort prüfen
 
         if (response.getCode() != 200) {
-            ErrorDTO errorDTO = gson.fromJson(response.getBody(), ErrorDTO.class);
+            ErrorCodeDTO errorCodeDTO = gson.fromJson(response.getBody(), ErrorCodeDTO.class);
 
-            throw new ErrorCodeException(errorDTO);
+            throw new ErrorCodeException(errorCodeDTO);
 
         } else {
-            Visit dto = gson.fromJson(response.getBody(), Visit.class);
+            Visit visit = gson.fromJson(response.getBody(), Visit.class);
 
-            return dto;
+            return visit;
 
         }
     }
@@ -219,9 +216,9 @@ public class QuestConsumerImpl implements IQuestConsumer {
         // Antwort prüfen
 
         if (response.getCode() != 200) {
-            ErrorDTO errorDTO = gson.fromJson(response.getBody(), ErrorDTO.class);
+            ErrorCodeDTO errorCodeDTO = gson.fromJson(response.getBody(), ErrorCodeDTO.class);
 
-            throw new ErrorCodeException(errorDTO);
+            throw new ErrorCodeException(errorCodeDTO);
 
         } else {
             Answer dto = gson.fromJson(response.getBody(), Answer.class);
@@ -232,7 +229,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
     }
 
     @Override
-    public DeliverTaskDTO deliverTask(Task task) throws ErrorCodeException, ErrorDeliverCodeException {
+    public List<Delivery> deliverTask(Task task) throws ErrorCodeException {
 
         String authToken = Blackboard.getInstance().getUser().getUserToken();
 
@@ -257,20 +254,20 @@ public class QuestConsumerImpl implements IQuestConsumer {
         // Antwort prüfen
 
         if (response.getCode() != 201) {
-            ErrorDelivorDTO errorDTODeliver = gson.fromJson(response.getBody(), ErrorDelivorDTO.class);
+            ErrorCodeDTO errorCodeDTO = gson.fromJson(response.getBody(), ErrorCodeDTO.class);
 
-            throw new ErrorDeliverCodeException(errorDTODeliver);
+            throw new ErrorCodeException(errorCodeDTO);
 
         } else {
             DeliverTaskDTO dto = gson.fromJson(response.getBody(), DeliverTaskDTO.class);
 
-            return dto;
+            return dto.getObject();
 
         }
     }
 
     @Override
-    public DeliverTaskPartDTO deliverTaskPart(TaskPart taskpart) throws ErrorCodeException, ErrorDeliverCodeException {
+    public Visit deliverTaskPart(TaskPart taskpart) throws ErrorCodeException {
         String authToken = Blackboard.getInstance().getUser().getUserToken();
 
 
@@ -305,21 +302,21 @@ public class QuestConsumerImpl implements IQuestConsumer {
         // Antwort prüfen
 
         if (response.getCode() != 200) {
-            ErrorDelivorDTO errorDTODeliver = gson.fromJson(response.getBody(), ErrorDelivorDTO.class);
+            ErrorCodeDTO errorCodeDTO = gson.fromJson(response.getBody(), ErrorCodeDTO.class);
 
-            throw new ErrorDeliverCodeException(errorDTODeliver);
+            throw new ErrorCodeException(errorCodeDTO);
 
             // TODO - DeliverTaskPartDTO
 
         } else {
-            DeliverTaskPartDTO dto = gson.fromJson(response.getBody(), DeliverTaskPartDTO.class);
+            Visit visit = gson.fromJson(response.getBody(), Visit.class);
 
-            return dto;
+            return visit;
 
         }
     }
 
-    public class QuestDTO {
+    private class QuestDTO {
 
         // TODO - requires_tokens fehlt noch
     /*
@@ -386,7 +383,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
     }
 
 
-    public class QuestsDTO {
+    private class QuestsDTO {
 
         List<Quest> objects;
         String status;
@@ -423,7 +420,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
     }
 
 
-    public class TaskDTO {
+    private class TaskDTO {
 
         private Task object;
         private String status;
@@ -494,6 +491,75 @@ public class QuestConsumerImpl implements IQuestConsumer {
                     ", \nstatus='" + status + '\'' +
                     '}';
         }
+
+    }
+
+    private class DeliverTaskDTO {
+
+        /*
+
+{
+  "message": "Created Delivery",
+  "object": [
+    {
+      "deliverables": [
+        193
+      ],
+      "id": 434,
+      "quest": 1,
+      "timestamp": "2017-11-21T16:11:39.834529+00:00",
+      "user": "x2"
+    }
+  ],
+  "status": "success"
+}
+
+     */
+
+        private String message;
+        private List<Delivery> object;
+        private String status;
+
+        public DeliverTaskDTO(String message, List<Delivery> object, String status) {
+            this.message = message;
+            this.object = object;
+            this.status = status;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
+
+        public List<Delivery> getObject() {
+            return object;
+        }
+
+        public void setObject(List<Delivery> object) {
+            this.object = object;
+        }
+
+        public String getStatus() {
+            return status;
+        }
+
+        public void setStatus(String status) {
+            this.status = status;
+        }
+
+        @Override
+        public String toString() {
+            return "DeliverTaskDTO{" +
+                    "\nmessage='" + message + '\'' +
+                    ", \nobject=" + object +
+                    ", \nstatus='" + status + '\'' +
+                    '}';
+        }
+
+
 
     }
 }

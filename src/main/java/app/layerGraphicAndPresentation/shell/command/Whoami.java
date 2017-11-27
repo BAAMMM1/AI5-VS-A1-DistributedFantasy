@@ -4,12 +4,11 @@ import app.layerGraphicAndPresentation.shell.InputInterpreter;
 import app.layerGraphicAndPresentation.shell.exception.UnAcceptedStateException;
 import app.layerGraphicAndPresentation.shell.context.Context;
 import app.layerGraphicAndPresentation.shell.context.State;
+import app.layerLogicAndService.cmpBlackboard.entity.User;
 import app.layerLogicAndService.cmpBlackboard.service.IBlackboardService;
-import app.layerLogicAndService.cmpBlackboard.Exception.NotAuthenticatedException;
 import app.layerLogicAndService.cmpBlackboard.entity.Blackboard;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.blackboardConsumer.dto.WhoamiDTO;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.dto.ErrorDTO;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.ErrorCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeDTO;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,28 +51,22 @@ public class Whoami extends Command {
     State instruction() {
 
         try {
-            WhoamiDTO dto = this.client.checkLogin(Blackboard.getInstance().getUser().getUserToken());
+            User user = this.client.checkLogin(Blackboard.getInstance().getUser().getUserToken());
 
-            System.out.println("message: " + dto.getMessage());
-            System.out.println("encryption_key:" + dto.getUser().get_links().getEncryption_key());
-            System.out.println("self: " + dto.getUser().get_links().getSelf());
-            System.out.println("deliverables_done: " + dto.getUser().getDeliverables_done());
-            System.out.println("delivered: " + dto.getUser().getDelivered());
-            System.out.println("ip: " + dto.getUser().getIp());
-            System.out.println("location: " + dto.getUser().getLocation());
-            System.out.println("name: " + dto.getUser().getName());
+            System.out.println("name: " + user.getName());
+            System.out.println("location: " + user.getLocation());
+            System.out.println("ip: " + user.getIp());
+            System.out.println("deliverables_done: " + user.getDeliverables_done());
+            System.out.println("delivered: " + user.getDelivered());
 
             return null;
+
         } catch (ErrorCodeException e) {
-            ErrorDTO dto = e.getErrorDTO();
+            ErrorCodeDTO dto = e.getErrorCodeDTO();
 
             System.out.println("message: " + dto.getMessage());
             return State.NOT_LOGIN;
 
-        } catch (NotAuthenticatedException e) {
-
-            System.out.println("message: " + e.getMessage());
-            return State.NOT_LOGIN;
         }
 
 

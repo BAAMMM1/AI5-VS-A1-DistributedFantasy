@@ -5,8 +5,7 @@ import app.layerGraphicAndPresentation.shell.exception.UnAcceptedStateException;
 import app.layerGraphicAndPresentation.shell.context.Context;
 import app.layerGraphicAndPresentation.shell.context.State;
 import app.layerLogicAndService.cmpBlackboard.service.IBlackboardService;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.blackboardConsumer.dto.RegisterUserDTO;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.ErrorCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,7 +40,7 @@ public class Register extends Command {
     @Override
     State instruction() throws ErrorCodeException {
 
-        RegisterUserDTO dto = this.client.registerUser(this.getParameter().get(0), this.getParameter().get(1));
+        app.layerLogicAndService.cmpBlackboard.entity.Register dto = this.client.registerUser(this.getParameter().get(0), this.getParameter().get(1));
 
         System.out.println(dto.toString());
 
