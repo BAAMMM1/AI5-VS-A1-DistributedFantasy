@@ -44,15 +44,15 @@ public class QuestServiceImpl implements IQuestService {
     }
 
     @Override
-    public Map lookAtTheMap(String location) throws ErrorCodeException {
+    public Map getMap(String location) throws ErrorCodeException {
 
         return this.questConsumer.lookAtTheMap(location);
     }
 
     @Override
-    public Visit visitHost(String location, int taskId) throws ErrorCodeException {
+    public Visit visitLocationForTask(String location, int taskId) throws ErrorCodeException {
 
-        Map map = this.lookAtTheMap(location);
+        Map map = this.getMap(location);
 
         Task task = this.getTask(taskId);
 
@@ -138,14 +138,14 @@ public class QuestServiceImpl implements IQuestService {
     }
 
     @Override
-    public Visit deliverStepToken() throws ErrorCodeException {
+    public Visit deliverTaskPart() throws ErrorCodeException {
 
         if (this.currentQuesting.getPart() == null) {
-            throw new IllegalArgumentException("no part to deliver");
+            throw new IllegalArgumentException("no part to deliverTask");
         }
 
         if (this.currentQuesting.getPart().getStepList() == null) {
-            throw new IllegalArgumentException("no steps to deliver");
+            throw new IllegalArgumentException("no steps to deliverTask");
         }
 
         for (int i = 0; i < this.currentQuesting.getPart().getStepList().size(); i++){
@@ -194,18 +194,19 @@ public class QuestServiceImpl implements IQuestService {
                 this.currentQuesting.getTask().setToken(answer.getToken());
             }
 
-
         }
+
+        System.out.println(this.currentQuesting.toString());
 
         return answer;
     }
 
     @Override
-    public List<Delivery> deliver() throws ErrorCodeException {
+    public List<Delivery> deliverTask() throws ErrorCodeException {
 
 
         if (this.currentQuesting.getTask().getToken() == null) {
-            throw new IllegalArgumentException("no token at this point to deliver");
+            throw new IllegalArgumentException("no token at this point to deliverTask");
         }
 
 

@@ -56,7 +56,7 @@ public class DeliverSteps extends Command {
     @Override
     State instruction() throws ErrorCodeException, IOException, InterruptedException {
 
-        app.layerLogicAndService.cmpQuest.entity.Visit visit = this.client.deliverStepToken();
+        app.layerLogicAndService.cmpQuest.entity.Visit visit = this.client.deliverTaskPart();
 
         System.out.println("message:" + visit.getMessage());
 

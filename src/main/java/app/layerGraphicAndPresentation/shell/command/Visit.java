@@ -61,7 +61,7 @@ public class Visit extends Command {
 
         System.out.println(Context.getInstance().getState());
 
-        app.layerLogicAndService.cmpQuest.entity.Visit visit = this.client.visitHost(this.getParameter().get(0), Integer.valueOf(this.getParameter().get(1)));
+        app.layerLogicAndService.cmpQuest.entity.Visit visit = this.client.visitLocationForTask(this.getParameter().get(0), Integer.valueOf(this.getParameter().get(1)));
 
         System.out.println("message:" + visit.getMessage());
 

@@ -14,15 +14,15 @@ public interface IQuestService {
     List<Quest> getQuests() throws ErrorCodeException;
     Quest getQuest(int index) throws ErrorCodeException;
     Task getTask(int index) throws ErrorCodeException;
-    Map lookAtTheMap(String location) throws ErrorCodeException;
+    Map getMap(String location) throws ErrorCodeException;
 
     // TODO - Im moment für currentQuesting, später für übergebenen Questing
-    Visit visitHost(String location, int taskId) throws ErrorCodeException;
+    Visit visitLocationForTask(String location, int taskId) throws ErrorCodeException;
     Answer answerToCurrentUri(String body) throws ErrorCodeException;
     Visit next() throws ErrorCodeException;
     Visit step(int step) throws ErrorCodeException;
 
-    List<Delivery> deliver() throws ErrorCodeException;
-    Visit deliverStepToken() throws ErrorCodeException;
+    List<Delivery> deliverTask() throws ErrorCodeException;
+    Visit deliverTaskPart() throws ErrorCodeException;
 
 }

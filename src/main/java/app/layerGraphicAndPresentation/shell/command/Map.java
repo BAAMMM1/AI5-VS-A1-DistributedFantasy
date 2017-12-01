@@ -54,7 +54,7 @@ public class Map extends Command {
     @Override
     State instruction() throws ErrorCodeException, IOException, InterruptedException {
 
-        app.layerLogicAndService.cmpQuest.entity.Map map = this.client.lookAtTheMap(this.getParameter().get(0));
+        app.layerLogicAndService.cmpQuest.entity.Map map = this.client.getMap(this.getParameter().get(0));
 
         System.out.println("map: " + map.getName());
         System.out.println("tasks: " + map.getTasks());

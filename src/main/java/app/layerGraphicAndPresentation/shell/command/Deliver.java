@@ -58,7 +58,7 @@ public class Deliver extends Command {
     @Override
     State instruction() throws ErrorCodeException, IOException, InterruptedException {
 
-        List<Delivery> list = this.client.deliver();
+        List<Delivery> list = this.client.deliverTask();
 
         for(Delivery delivery: list){
             System.out.println("id: " + delivery.getId());
