@@ -74,7 +74,11 @@ public class TavernaConsumer implements ITavernaConsumer {
         HTTPResponse response = this.httpCaller.call(httpRequest);
 
 
-        if (response.getCode() != 201) {
+        if (response.getCode() >= 500) {
+
+            throw new ErrorCodeException(new ErrorCodeDTO("server error >= 500", "operation could not be performend"));
+
+        } else if (response.getCode() != 201) {
             ErrorCodeDTO errorCodeDTO = gson.fromJson(response.getBody(), ErrorCodeDTO.class);
 
             throw new ErrorCodeException(errorCodeDTO);
@@ -102,7 +106,11 @@ public class TavernaConsumer implements ITavernaConsumer {
 
         // TODO - Wenn 500 Fehler, dann nehme nicht als ErrorCodeDTO, bzw erstelle es selber
 
-        if (response.getCode() != 200) {
+        if (response.getCode() >= 500) {
+
+            throw new ErrorCodeException(new ErrorCodeDTO("server error >= 500", "operation could not be performend"));
+
+        } else if (response.getCode() != 200) {
             ErrorCodeDTO errorCodeDTO = gson.fromJson(response.getBody(), ErrorCodeDTO.class);
 
             throw new ErrorCodeException(errorCodeDTO);
@@ -112,9 +120,10 @@ public class TavernaConsumer implements ITavernaConsumer {
 
             return dto.getMessage();
         }
+
     }
 
-    private class AdventurerDTO{
+    private class AdventurerDTO {
 
         private String message;
         private List<Adventurer> object;
@@ -133,7 +142,7 @@ public class TavernaConsumer implements ITavernaConsumer {
     }
 
 
-    private class GroupDTO{
+    private class GroupDTO {
 
         private String message;
         private List<Group> object;
@@ -149,7 +158,6 @@ public class TavernaConsumer implements ITavernaConsumer {
             return object;
         }
     }
-
 
 
 }
