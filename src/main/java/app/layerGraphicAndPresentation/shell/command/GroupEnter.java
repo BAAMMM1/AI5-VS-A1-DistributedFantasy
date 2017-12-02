@@ -42,14 +42,18 @@ public class GroupEnter extends Command{
     @Override
     State instruction() throws ErrorCodeException, IOException, InterruptedException {
 
-        List<Adventurer> adventurerList = this.tavernaService.enterGroup(Integer.parseInt(this.getParameter().get(0)));
+        String response = this.tavernaService.enterGroup(Integer.parseInt(this.getParameter().get(0)));
 
+        /*
         for(Adventurer adventurer: adventurerList){
             System.out.println(adventurer.getUser());
             System.out.println(adventurer.getHeroclass());
             System.out.println(adventurer.getCapabilities());
             System.out.println(adventurer.getUrl());
         }
+        */
+
+        System.out.println(response);
 
 
         return null;

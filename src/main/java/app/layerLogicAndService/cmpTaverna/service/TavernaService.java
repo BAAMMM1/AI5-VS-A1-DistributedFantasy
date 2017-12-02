@@ -61,7 +61,7 @@ public class TavernaService implements ITavernaService {
     }
 
     @Override
-    public List<Adventurer> enterGroup(int id) throws ErrorCodeException {
+    public String enterGroup(int id) throws ErrorCodeException {
         return this.tavernaConsumer.enterGroup(id);
     }
 

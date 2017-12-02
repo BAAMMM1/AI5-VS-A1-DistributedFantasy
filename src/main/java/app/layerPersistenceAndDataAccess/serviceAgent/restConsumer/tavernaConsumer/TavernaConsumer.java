@@ -192,7 +192,7 @@ public class TavernaConsumer implements ITavernaConsumer {
     }
 
     @Override
-    public List<Adventurer> enterGroup(int id) throws ErrorCodeException {
+    public String enterGroup(int id) throws ErrorCodeException {
         // Erstellen der Anfrage
         HTTPRequest httpRequest =
                 new HTTPRequest(
@@ -215,7 +215,7 @@ public class TavernaConsumer implements ITavernaConsumer {
         } else {
             GroupEnterDTO dto = gson.fromJson(response.getBody(), GroupEnterDTO.class);
 
-            return dto.objects;
+            return dto.getMessage();
         }
     }
 
@@ -253,6 +253,9 @@ public class TavernaConsumer implements ITavernaConsumer {
             return objects;
         }
 
+        public String getMessage() {
+            return message;
+        }
     }
 
 
