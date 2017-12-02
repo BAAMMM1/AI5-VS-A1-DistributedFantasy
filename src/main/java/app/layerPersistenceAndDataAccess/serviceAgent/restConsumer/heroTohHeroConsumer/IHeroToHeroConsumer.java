@@ -1,5 +1,6 @@
 package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.heroTohHeroConsumer;
 
+import app.layerLogicAndService.cmpHero.entity.Hiring;
 import app.layerLogicAndService.cmpHero.entity.Service;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
 
@@ -8,6 +9,8 @@ import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCo
  */
 public interface IHeroToHeroConsumer {
 
-    Service getHeroService(String heroName, int groupId, String heroServiceUrl) throws ErrorCodeException;
+    // For invite heroService to group
+    Service getHeroService(String heroServiceUrl) throws ErrorCodeException;
+    String hiringHero(Hiring hiring, String herHiringUrl) throws ErrorCodeException;
 
 }

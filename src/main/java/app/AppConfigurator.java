@@ -59,7 +59,7 @@ public class AppConfigurator {
         tavernaService = new TavernaService(tavernaConsumer);
 
         this.heroToHeroConsumer = new HeroToHeroConsumer();
-        this.heroToHeroService = new HeroToHeroService(heroToHeroConsumer);
+        this.heroToHeroService = new HeroToHeroService(heroToHeroConsumer, tavernaService, questService);
 
         this.shell = new Shell(blackboardService, questService, tavernaService, heroToHeroService);
     }

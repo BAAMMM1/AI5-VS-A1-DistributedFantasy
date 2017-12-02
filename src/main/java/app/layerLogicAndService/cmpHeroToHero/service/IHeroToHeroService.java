@@ -8,7 +8,7 @@ import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCo
  */
 public interface IHeroToHeroService {
 
-    // getHeroService(String heroName, int groupId) throws ErrorCodeException;
-    Service getHeroService(String heroName, int groupId, String heroServiceUrl) throws ErrorCodeException;
+    String invite(String heroName, int groupId, int questId, String messageToHero) throws ErrorCodeException;
+
 
 }

@@ -1,6 +1,7 @@
 package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.heroTohHeroConsumer;
 
 import app.layerLogicAndService.cmpBlackboard.entity.Blackboard;
+import app.layerLogicAndService.cmpHero.entity.Hiring;
 import app.layerLogicAndService.cmpHero.entity.Service;
 import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.EnumHTTPMethod;
 import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.HTTPCaller;
@@ -26,7 +27,7 @@ public class HeroToHeroConsumer implements IHeroToHeroConsumer {
     }
 
     @Override
-    public Service getHeroService(String heroName, int groupId, String heroServiceUrl) throws ErrorCodeException {
+    public Service getHeroService(String heroServiceUrl) throws ErrorCodeException {
 
         // Erstellen der Anfrage
         HTTPRequest httpRequest =
@@ -50,6 +51,30 @@ public class HeroToHeroConsumer implements IHeroToHeroConsumer {
             return service;
         }
 
+    }
+
+    @Override
+    public String hiringHero(Hiring hiring, String herHiringUrl) throws ErrorCodeException {
+
+
+        HTTPRequest httpRequest =
+                new HTTPRequest(
+                        herHiringUrl,
+                        EnumHTTPMethod.POST,
+                        gson.toJson(hiring)
+                );
+
+        HTTPResponse response = this.httpCaller.call(httpRequest);
+
+
+        if (response.getCode() < 200 || response.getCode() >= 300) {
+
+            throw new ErrorCodeException(new ErrorCodeDTO("error", response.getBody()));
+
+        } else {
+
+            return response.getBody();
+        }
     }
 
 }

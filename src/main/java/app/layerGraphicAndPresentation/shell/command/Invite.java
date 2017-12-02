@@ -11,11 +11,11 @@ import java.io.IOException;
 /**
  * @author Chris on 02.12.2017
  */
-public class HeroService extends Command {
+public class Invite extends Command {
 
     IHeroToHeroService heroToHeroService;
 
-    public HeroService(InputInterpreter inputInterpreter, IHeroToHeroService heroToHeroService) {
+    public Invite(InputInterpreter inputInterpreter, IHeroToHeroService heroToHeroService) {
         super(inputInterpreter);
         this.heroToHeroService = heroToHeroService;
     }
@@ -23,16 +23,19 @@ public class HeroService extends Command {
     @Override
     State instruction() throws ErrorCodeException, IOException, InterruptedException {
 
-        Service service = this.heroToHeroService.getHeroService(this.getParameter().get(0),
+        String invite = this.heroToHeroService.invite(this.getParameter().get(0),
                 Integer.valueOf(this.getParameter().get(1)),
-                this.getParameter().get(2));
+                Integer.valueOf(this.getParameter().get(2)),
+                this.getParameter().get(3))
+                ;
+        System.out.print(invite);
 
         return null;
     }
 
     @Override
     int parameterSize() {
-        return 3;
+        return 4;
     }
 
     @Override

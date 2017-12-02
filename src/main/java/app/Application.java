@@ -15,6 +15,7 @@ public class Application {
 
         //SpringApplication.run(Application.class, args);
 
+
         System.out.println(java.net.InetAddress.getLocalHost().getHostAddress().toString());
         System.out.print(System.getenv("TEST_ENV"));
 

@@ -140,7 +140,7 @@ public class Shell {
         new GroupMembers(inputInterpreter, tavernaService);
         new Adventurers(inputInterpreter, tavernaService);
         new Adventurer(inputInterpreter, tavernaService);
-        new HeroService(inputInterpreter, heroToHeroService);
+        new Invite(inputInterpreter, heroToHeroService);
 
     }
 }
