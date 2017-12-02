@@ -240,16 +240,16 @@ public class TavernaConsumer implements ITavernaConsumer {
     private class GroupEnterDTO {
 
         private String message;
-        private List<Adventurer> objects;
+        private String objects;
         private String status;
 
-        public GroupEnterDTO(String message, List<Adventurer> object, String status) {
+        public GroupEnterDTO(String message, String object, String status) {
             this.message = message;
             this.objects = object;
             this.status = status;
         }
 
-        public List<Adventurer> getObject() {
+        public String getObject() {
             return objects;
         }
 
