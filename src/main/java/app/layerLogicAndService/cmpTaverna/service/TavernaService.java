@@ -24,7 +24,7 @@ public class TavernaService implements ITavernaService {
     @Override
     public Adventurer addHeroServiceToTaverna() throws ErrorCodeException, UnknownHostException {
 
-        Hero hero = new Hero(Blackboard.getInstance().getUser().getHeroclass(), Blackboard.getInstance().getUser().getCapabilities(), "http://" + java.net.InetAddress.getLocalHost().getHostAddress().toString() + ":22/services");
+        Hero hero = new Hero(Blackboard.getInstance().getUser().getHeroclass(), Blackboard.getInstance().getUser().getCapabilities(), "http://" + java.net.InetAddress.getLocalHost().getHostAddress().toString() + ":8080/services");
 
         // TODO - Was machen wir mit den erhaltenen Daten? Irgendwo hinterlegen?
         /*

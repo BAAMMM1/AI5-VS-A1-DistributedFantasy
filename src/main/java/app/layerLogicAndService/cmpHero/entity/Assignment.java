@@ -1,9 +1,9 @@
-package app.layerLogicAndService.cmpHeroService.dto;
+package app.layerLogicAndService.cmpHero.entity;
 
 /**
  * @author Chris on 01.12.2017
  */
-public class AssignmentRequest {
+public class Assignment {
 
     private int id;
     private String task;
@@ -13,7 +13,7 @@ public class AssignmentRequest {
     private String callback;
     private String message;
 
-    public AssignmentRequest(int id, String task, String resource, String method, String data, String callback, String message) {
+    public Assignment(int id, String task, String resource, String method, String data, String callback, String message) {
         this.id = id;
         this.task = task;
         this.resource = resource;
@@ -81,7 +81,7 @@ public class AssignmentRequest {
 
     @Override
     public String toString() {
-        return "AssignmentRequest{" +
+        return "Assignment{" +
                 "id=" + id +
                 ", task='" + task + '\'' +
                 ", resource='" + resource + '\'' +

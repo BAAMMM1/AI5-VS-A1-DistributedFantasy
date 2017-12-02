@@ -1,15 +1,15 @@
-package app.layerLogicAndService.cmpHeroService.dto;
+package app.layerLogicAndService.cmpHero.entity;
 
 /**
  * @author Chris on 01.12.2017
  */
-public class HiringRequest {
+public class Hiring {
 
     private String group;
     private String quest;
     private String message;
 
-    public HiringRequest(String group, String quest, String message) {
+    public Hiring(String group, String quest, String message) {
         this.group = group;
         this.quest = quest;
         this.message = message;
@@ -41,7 +41,7 @@ public class HiringRequest {
 
     @Override
     public String toString() {
-        return "HiringRequest{" +
+        return "Hiring{" +
                 "group='" + group + '\'' +
                 ", quest='" + quest + '\'' +
                 ", message='" + message + '\'' +

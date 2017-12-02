@@ -13,7 +13,7 @@ import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.HTTPResponse;
 import com.google.gson.Gson;
 
 /**
- * Erstellt die HTTPAnfrage, ruft die Pfade der API auf und erhält die HTTPResponse, welche JSON Objekte als dto´s
+ * Erstellt die HTTPAnfrage, ruft die Pfade der API auf und erhält die HTTPResponse, welche JSON Objekte als entity´s
  * im Body enhalten
  *
  * @author Christian G. on 01.11.2017

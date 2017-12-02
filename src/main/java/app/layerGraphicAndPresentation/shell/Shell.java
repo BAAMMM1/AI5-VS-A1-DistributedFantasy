@@ -3,6 +3,8 @@ package app.layerGraphicAndPresentation.shell;
 import app.layerGraphicAndPresentation.shell.command.*;
 import app.layerGraphicAndPresentation.shell.context.Context;
 import app.layerLogicAndService.cmpBlackboard.service.IBlackboardService;
+import app.layerLogicAndService.cmpHeroToHero.service.HeroToHeroService;
+import app.layerLogicAndService.cmpHeroToHero.service.IHeroToHeroService;
 import app.layerLogicAndService.cmpQuest.service.IQuestService;
 import app.layerLogicAndService.cmpTaverna.service.ITavernaService;
 
@@ -23,6 +25,8 @@ public class Shell {
 
     private ITavernaService tavernaService;
 
+    private IHeroToHeroService heroToHeroService;
+
     /**
      * Standard Shell-Constructor ohne Programmabhängigkeiten
      */
@@ -38,11 +42,15 @@ public class Shell {
      * @param blackboardService
      * @param questService
      */
-    public Shell(IBlackboardService blackboardService, IQuestService questService, ITavernaService tavernaService) {
+    public Shell(IBlackboardService blackboardService,
+                 IQuestService questService,
+                 ITavernaService tavernaService,
+                 IHeroToHeroService heroToHeroService) {
         this();
         this.blackboardService = blackboardService;
         this.questService = questService;
         this.tavernaService = tavernaService;
+        this.heroToHeroService = heroToHeroService;
 
     }
 
@@ -132,6 +140,7 @@ public class Shell {
         new GroupMembers(inputInterpreter, tavernaService);
         new Adventurers(inputInterpreter, tavernaService);
         new Adventurer(inputInterpreter, tavernaService);
+        new HeroService(inputInterpreter, heroToHeroService);
 
     }
 }

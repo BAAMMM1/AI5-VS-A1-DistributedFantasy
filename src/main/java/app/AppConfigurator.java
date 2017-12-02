@@ -5,12 +5,16 @@ import app.layerLogicAndService.cmpBlackboard.service.BlackboardServiceImp;
 import app.layerLogicAndService.cmpBlackboard.service.IBlackboardService;
 import app.layerLogicAndService.cmpBlackboard.service.IListenerService;
 import app.layerLogicAndService.cmpBlackboard.service.ListenerServiceImpl;
+import app.layerLogicAndService.cmpHeroToHero.service.HeroToHeroService;
+import app.layerLogicAndService.cmpHeroToHero.service.IHeroToHeroService;
 import app.layerLogicAndService.cmpQuest.service.IQuestService;
 import app.layerLogicAndService.cmpQuest.service.QuestServiceImpl;
 import app.layerLogicAndService.cmpTaverna.service.ITavernaService;
 import app.layerLogicAndService.cmpTaverna.service.TavernaService;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.blackboardConsumer.BlackboardConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.blackboardConsumer.IBlackboardConsumer;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.heroTohHeroConsumer.HeroToHeroConsumer;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.heroTohHeroConsumer.IHeroToHeroConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.IQuestConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.QuestConsumerImpl;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.tavernaConsumer.ITavernaConsumer;
@@ -32,6 +36,9 @@ public class AppConfigurator {
     private ITavernaConsumer tavernaConsumer;
     private ITavernaService tavernaService;
 
+    private IHeroToHeroConsumer heroToHeroConsumer;
+    private IHeroToHeroService heroToHeroService;
+
     private IListenerService listener;
     private Shell shell;
 
@@ -51,7 +58,10 @@ public class AppConfigurator {
         tavernaConsumer = new TavernaConsumer();
         tavernaService = new TavernaService(tavernaConsumer);
 
-        this.shell = new Shell(blackboardService, questService, tavernaService);
+        this.heroToHeroConsumer = new HeroToHeroConsumer();
+        this.heroToHeroService = new HeroToHeroService(heroToHeroConsumer);
+
+        this.shell = new Shell(blackboardService, questService, tavernaService, heroToHeroService);
     }
 
     public void configure() {

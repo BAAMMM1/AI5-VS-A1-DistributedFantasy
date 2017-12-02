@@ -34,7 +34,7 @@ public class BlackboardServiceImp implements IBlackboardService {
 
         // Username, Password und Token im System hinterlegen
 
-        // TODO - IlegalArgument, falls dto variablen null
+        // TODO - IlegalArgument, falls entity variablen null
         Blackboard.getInstance().setUser(name, dto.getToken(),dto.getValid_till());
 
         System.out.println(Blackboard.getInstance().getUser().toString());

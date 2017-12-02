@@ -1,15 +1,15 @@
-package app.layerLogicAndService.cmpHeroService.dto;
+package app.layerLogicAndService.cmpHero.entity;
 
 /**
  * @author Chris on 01.12.2017
  */
-public class MessageRequest {
+public class Message {
 
     private String message;
     private String status;
     private String typ;
 
-    public MessageRequest(String message, String status, String typ) {
+    public Message(String message, String status, String typ) {
         this.message = message;
         this.status = status;
         this.typ = typ;
@@ -41,7 +41,7 @@ public class MessageRequest {
 
     @Override
     public String toString() {
-        return "MessageRequest{" +
+        return "Message{" +
                 "message='" + message + '\'' +
                 ", status='" + status + '\'' +
                 ", typ='" + typ + '\'' +

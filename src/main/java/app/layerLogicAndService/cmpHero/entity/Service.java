@@ -1,9 +1,9 @@
-package app.layerLogicAndService.cmpHeroService.dto;
+package app.layerLogicAndService.cmpHero.entity;
 
 /**
  * @author Chris on 01.12.2017
  */
-public class ServiceResponse {
+public class Service {
 
     private String user;
     private boolean idle;
@@ -12,7 +12,7 @@ public class ServiceResponse {
     private String assignments;
     private String messages;
 
-    public ServiceResponse(String user, boolean idle, String group, String hirings, String assignments, String messages) {
+    public Service(String user, boolean idle, String group, String hirings, String assignments, String messages) {
         this.user = user;
         this.idle = idle;
         this.group = group;
@@ -71,7 +71,7 @@ public class ServiceResponse {
 
     @Override
     public String toString() {
-        return "ServiceResponse{" +
+        return "service{" +
                 "user='" + user + '\'' +
                 ", idle=" + idle +
                 ", group='" + group + '\'' +
