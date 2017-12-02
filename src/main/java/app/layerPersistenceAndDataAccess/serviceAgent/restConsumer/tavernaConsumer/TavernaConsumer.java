@@ -196,7 +196,7 @@ public class TavernaConsumer implements ITavernaConsumer {
         // Erstellen der Anfrage
         HTTPRequest httpRequest =
                 new HTTPRequest(
-                        Blackboard.getInstance().getUrl().toString() + PathTaverna.GROUPS + "/" + id,
+                        Blackboard.getInstance().getUrl().toString() + PathTaverna.GROUPS + "/" + id + "/members",
                         EnumHTTPMethod.POST,
                         ""
                 );
