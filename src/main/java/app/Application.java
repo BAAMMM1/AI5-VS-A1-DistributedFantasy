@@ -1,6 +1,7 @@
 package app;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.net.UnknownHostException;
@@ -9,6 +10,7 @@ import java.net.UnknownHostException;
  * @author Christian G. on 17.11.2017
  */
 @SpringBootApplication
+@EnableAutoConfiguration
 public class Application {
 
     public static void main(String[] args) throws UnknownHostException {
