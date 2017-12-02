@@ -44,8 +44,7 @@ public class User {
 
     // TODO - Hard bis wir wissen wo es herkommt
     private String heroclass = "WiZzArD";
-    private List<String> capabilities = new ArrayList<String>();
-    private String url = "";
+    private String capabilities ="";
 
     public User(String name, String userToken, String userTokenValidTime) {
         this.name = name;
@@ -125,20 +124,12 @@ public class User {
         this.heroclass = heroclass;
     }
 
-    public List<String> getCapabilities() {
+    public String getCapabilities() {
         return capabilities;
     }
 
-    public void setCapabilities(List<String> capabilities) {
+    public void setCapabilities(String capabilities) {
         this.capabilities = capabilities;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
 
@@ -155,7 +146,6 @@ public class User {
                 ", \nlocation='" + location + '\'' +
                 ", \nheroclass='" + heroclass + '\'' +
                 ", \ncapabilities=" + capabilities +
-                ", \nurl='" + url + '\'' +
                 '}';
     }
 }

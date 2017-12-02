@@ -7,10 +7,14 @@ import app.layerLogicAndService.cmpBlackboard.service.IListenerService;
 import app.layerLogicAndService.cmpBlackboard.service.ListenerServiceImpl;
 import app.layerLogicAndService.cmpQuest.service.IQuestService;
 import app.layerLogicAndService.cmpQuest.service.QuestServiceImpl;
+import app.layerLogicAndService.cmpTaverna.service.ITavernaService;
+import app.layerLogicAndService.cmpTaverna.service.TavernaService;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.blackboardConsumer.BlackboardConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.blackboardConsumer.IBlackboardConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.IQuestConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.QuestConsumerImpl;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.tavernaConsumer.ITavernaConsumer;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.tavernaConsumer.TavernaConsumer;
 
 /**
  * @author Chris on 24.11.2017
@@ -24,6 +28,9 @@ public class AppConfigurator {
 
     private IQuestConsumer questConsumer;
     private IQuestService questService;
+
+    private ITavernaConsumer tavernaConsumer;
+    private ITavernaService tavernaService;
 
     private IListenerService listener;
     private Shell shell;
@@ -41,7 +48,10 @@ public class AppConfigurator {
         questConsumer = new QuestConsumerImpl();
         questService = new QuestServiceImpl(questConsumer);
 
-        this.shell = new Shell(blackboardService, questService);
+        tavernaConsumer = new TavernaConsumer();
+        tavernaService = new TavernaService(tavernaConsumer);
+
+        this.shell = new Shell(blackboardService, questService, tavernaService);
     }
 
     public void configure() {

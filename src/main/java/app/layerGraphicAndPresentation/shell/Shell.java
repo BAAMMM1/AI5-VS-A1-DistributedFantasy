@@ -4,6 +4,7 @@ import app.layerGraphicAndPresentation.shell.command.*;
 import app.layerGraphicAndPresentation.shell.context.Context;
 import app.layerLogicAndService.cmpBlackboard.service.IBlackboardService;
 import app.layerLogicAndService.cmpQuest.service.IQuestService;
+import app.layerLogicAndService.cmpTaverna.service.ITavernaService;
 
 import java.util.Scanner;
 
@@ -20,6 +21,8 @@ public class Shell {
     private IBlackboardService blackboardService;
     private IQuestService questService;
 
+    private ITavernaService tavernaService;
+
     /**
      * Standard Shell-Constructor ohne Programmabhängigkeiten
      */
@@ -35,10 +38,11 @@ public class Shell {
      * @param blackboardService
      * @param questService
      */
-    public Shell(IBlackboardService blackboardService, IQuestService questService) {
+    public Shell(IBlackboardService blackboardService, IQuestService questService, ITavernaService tavernaService) {
         this();
         this.blackboardService = blackboardService;
         this.questService = questService;
+        this.tavernaService = tavernaService;
 
     }
 
@@ -119,6 +123,9 @@ public class Shell {
         new Next(inputInterpreter, questService);
         new Step(inputInterpreter, questService);
         new DeliverSteps(inputInterpreter, questService);
+        new Entertaverna(inputInterpreter, tavernaService);
+        new GroupCreate(inputInterpreter, tavernaService);
+        new GroupDelete(inputInterpreter, tavernaService);
 
     }
 }
