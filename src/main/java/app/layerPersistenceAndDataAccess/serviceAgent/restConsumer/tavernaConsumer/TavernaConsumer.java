@@ -85,7 +85,7 @@ public class TavernaConsumer implements ITavernaConsumer {
 
         } else {
 
-            GroupsDTO dto = gson.fromJson(response.getBody(), GroupsDTO.class);
+            GroupsGetDTO dto = gson.fromJson(response.getBody(), GroupsGetDTO.class);
 
             return dto.getObject();
         }
@@ -118,9 +118,9 @@ public class TavernaConsumer implements ITavernaConsumer {
 
         } else {
 
-            GroupDTO dto = gson.fromJson(response.getBody(), GroupDTO.class);
+            GroupGetDTO dto = gson.fromJson(response.getBody(), GroupGetDTO.class);
 
-            return dto.getObject().get(0);
+            return dto.getObject();
         }
 
 
@@ -152,7 +152,7 @@ public class TavernaConsumer implements ITavernaConsumer {
             throw new ErrorCodeException(errorCodeDTO);
 
         } else {
-            GroupDTO dto = gson.fromJson(response.getBody(), GroupDTO.class);
+            GroupCreateDTO dto = gson.fromJson(response.getBody(), GroupCreateDTO.class);
 
             return dto.object.get(0);
         }
@@ -184,7 +184,7 @@ public class TavernaConsumer implements ITavernaConsumer {
             throw new ErrorCodeException(errorCodeDTO);
 
         } else {
-            GroupeDeleteDTO dto = gson.fromJson(response.getBody(), GroupeDeleteDTO.class);
+            GroupDeleteDTO dto = gson.fromJson(response.getBody(), GroupDeleteDTO.class);
 
             return dto.getMessage();
         }
@@ -210,13 +210,13 @@ public class TavernaConsumer implements ITavernaConsumer {
     }
 
 
-    private class GroupDTO {
+    private class GroupCreateDTO {
 
         private String message;
         private List<Group> object;
         private String status;
 
-        public GroupDTO(String message, List<Group> object, String status) {
+        public GroupCreateDTO(String message, List<Group> object, String status) {
             this.message = message;
             this.object = object;
             this.status = status;
@@ -227,13 +227,13 @@ public class TavernaConsumer implements ITavernaConsumer {
         }
     }
 
-    private class GroupsDTO {
+    private class GroupsGetDTO {
 
         private String message;
         private List<Group> objects;
         private String status;
 
-        public GroupsDTO(String message, List<Group> object, String status) {
+        public GroupsGetDTO(String message, List<Group> object, String status) {
             this.message = message;
             this.objects = object;
             this.status = status;
@@ -244,18 +244,35 @@ public class TavernaConsumer implements ITavernaConsumer {
         }
     }
 
-    private class GroupeDeleteDTO{
+    private class GroupDeleteDTO {
 
         private String message;
         private String status;
 
-        public GroupeDeleteDTO(String message, String status) {
+        public GroupDeleteDTO(String message, String status) {
             this.message = message;
             this.status = status;
         }
 
         public String getMessage() {
             return message;
+        }
+    }
+
+    private class GroupGetDTO {
+
+        private String message;
+        private Group object;
+        private String status;
+
+        public GroupGetDTO(String message, Group object, String status) {
+            this.message = message;
+            this.object = object;
+            this.status = status;
+        }
+
+        public Group getObject() {
+            return object;
         }
     }
 
