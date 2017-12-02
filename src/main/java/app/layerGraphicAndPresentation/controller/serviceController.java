@@ -4,6 +4,7 @@ import app.layerGraphicAndPresentation.controller.config.PathHeroservice;
 import app.layerLogicAndService.cmpHero.entity.Assignment;
 import app.layerLogicAndService.cmpHero.entity.Hiring;
 import app.layerLogicAndService.cmpHero.entity.Message;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class serviceController {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getServices() {
-        return null;
+        return new ResponseEntity<String>("Test", HttpStatus.OK);
     }
 
 
