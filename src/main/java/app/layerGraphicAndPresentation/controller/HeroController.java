@@ -36,11 +36,8 @@ public class HeroController {
             return new ResponseEntity<Service>(service, HttpStatus.OK);
 
         } catch (Exception e){
-
-            System.out.println(e.getStackTrace());
-
-
             return new ResponseEntity<String>("error", HttpStatus.BAD_REQUEST);
+
         }
 
 

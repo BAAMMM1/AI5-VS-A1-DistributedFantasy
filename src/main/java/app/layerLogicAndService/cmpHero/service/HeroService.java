@@ -28,7 +28,7 @@ public class HeroService implements IHeroService {
         Service service = new Service(Blackboard.getInstance().getUser().get_links().getSelf(),
                 false,
                 null,
-                self + PathHeroservice.SERVICES,
+                self + PathHeroservice.HIRINGS,
                 self + PathHeroservice.ASSIGNMENTS,
                 self + PathHeroservice.MESSAGES);
 

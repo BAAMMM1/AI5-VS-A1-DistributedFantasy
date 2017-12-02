@@ -15,6 +15,7 @@ public class Application {
 
     public static void main(String[] args) throws UnknownHostException {
 
+        // TODO - Spring Boot erst nach dem Login starten
         SpringApplication.run(Application.class, args);
 
 
