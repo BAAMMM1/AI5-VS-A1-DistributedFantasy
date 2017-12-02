@@ -65,4 +65,9 @@ public class TavernaService implements ITavernaService {
         return this.tavernaConsumer.enterGroup(id);
     }
 
+    @Override
+    public List<Adventurer> getGroupMembers(int id) throws ErrorCodeException {
+        return this.tavernaConsumer.getGroupMembers(id);
+    }
+
 }

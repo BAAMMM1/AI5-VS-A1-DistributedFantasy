@@ -53,7 +53,7 @@ public class TavernaConsumer implements ITavernaConsumer {
         } else {
             AdventurerDTO dto = gson.fromJson(response.getBody(), AdventurerDTO.class);
 
-            return dto.object.get(0);
+            return dto.getObject().get(0);
         }
 
     }
@@ -154,7 +154,7 @@ public class TavernaConsumer implements ITavernaConsumer {
         } else {
             GroupCreateDTO dto = gson.fromJson(response.getBody(), GroupCreateDTO.class);
 
-            return dto.object.get(0);
+            return dto.getObject().get(0);
         }
     }
 
@@ -219,6 +219,33 @@ public class TavernaConsumer implements ITavernaConsumer {
         }
     }
 
+    @Override
+    public List<Adventurer> getGroupMembers(int id) throws ErrorCodeException {
+        // Erstellen der Anfrage
+        HTTPRequest httpRequest =
+                new HTTPRequest(
+                        Blackboard.getInstance().getUrl().toString() + PathTaverna.GROUPS + "/" + id + "/members",
+                        EnumHTTPMethod.GET
+                );
+        httpRequest.setAuthorizationToken(Blackboard.getInstance().getUser().getUserToken());
+
+
+        // Aufrufen des API´s Pfad
+        HTTPResponse response = this.httpCaller.call(httpRequest);
+
+
+        if (response.getCode() != 200) {
+            ErrorCodeDTO errorCodeDTO = gson.fromJson(response.getBody(), ErrorCodeDTO.class);
+
+            throw new ErrorCodeException(errorCodeDTO);
+
+        } else {
+            GroupGetMembersDTO dto = gson.fromJson(response.getBody(), GroupGetMembersDTO.class);
+
+            return dto.getObjects();
+        }
+    }
+
     private class AdventurerDTO {
 
         private String message;
@@ -233,6 +260,22 @@ public class TavernaConsumer implements ITavernaConsumer {
 
         public List<Adventurer> getObject() {
             return object;
+        }
+
+    }
+
+    private class GroupGetMembersDTO {
+
+        private List<Adventurer> objects;
+        private String status;
+
+        public GroupGetMembersDTO(List<Adventurer> objects, String status) {
+            this.objects = objects;
+            this.status = status;
+        }
+
+        public List<Adventurer> getObjects() {
+            return objects;
         }
 
     }
