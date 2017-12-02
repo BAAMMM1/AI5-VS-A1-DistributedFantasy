@@ -3,6 +3,9 @@ package app.layerLogicAndService.cmpHero.service;
 
 import app.layerGraphicAndPresentation.controller.config.PathHeroservice;
 import app.layerLogicAndService.cmpBlackboard.entity.Blackboard;
+import app.layerLogicAndService.cmpHero.entity.Assignment;
+import app.layerLogicAndService.cmpHero.entity.Hiring;
+import app.layerLogicAndService.cmpHero.entity.Message;
 import app.layerLogicAndService.cmpHero.entity.Service;
 
 import java.net.UnknownHostException;
@@ -33,5 +36,26 @@ public class HeroService implements IHeroService {
                 self + PathHeroservice.MESSAGES);
 
         return service;
+    }
+
+    @Override
+    public void addHiring(Hiring hiring) {
+
+        // TODO - Do here something with the Hiring
+
+    }
+
+    @Override
+    public void addAssignment(Assignment assignment) {
+
+        // TODO - Do here something with the assignment
+
+    }
+
+    @Override
+    public void addMessage(Message message) {
+
+        // TODO - Store the Message, tell the User the Message?
+
     }
 }

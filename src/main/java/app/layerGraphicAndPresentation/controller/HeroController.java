@@ -51,7 +51,16 @@ public class HeroController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addHiring(@RequestBody Hiring request){
-        return null;
+
+        try{
+            this.service.addHiring(request);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+
+        } catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        }
+
     }
 
 
@@ -61,7 +70,16 @@ public class HeroController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addAssignment(@RequestBody Assignment request){
-        return null;
+
+        try{
+            this.service.addAssignment(request);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+
+        } catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        }
+
     }
 
 
@@ -71,7 +89,15 @@ public class HeroController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addMessage(@RequestBody Message request){
-        return null;
+
+        try{
+            this.service.addMessage(request);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+
+        } catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        }
     }
 
 }
