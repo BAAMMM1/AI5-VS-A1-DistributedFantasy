@@ -130,6 +130,8 @@ public class Shell {
         new Group(inputInterpreter, tavernaService);
         new GroupEnter(inputInterpreter, tavernaService);
         new GroupMembers(inputInterpreter, tavernaService);
+        new Adventurers(inputInterpreter, tavernaService);
+        new Adventurer(inputInterpreter, tavernaService);
 
     }
 }

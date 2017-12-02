@@ -41,6 +41,16 @@ public class TavernaService implements ITavernaService {
     }
 
     @Override
+    public List<Adventurer> getAdventurers() throws ErrorCodeException {
+        return this.tavernaConsumer.getAdventurers();
+    }
+
+    @Override
+    public Adventurer getAdventure(String name) throws ErrorCodeException {
+        return this.tavernaConsumer.getAdventure(name);
+    }
+
+    @Override
     public List<Group> getGroups() throws ErrorCodeException {
         return this.tavernaConsumer.getGroups();
     }

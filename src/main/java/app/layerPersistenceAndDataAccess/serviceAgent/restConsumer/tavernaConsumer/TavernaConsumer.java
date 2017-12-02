@@ -59,6 +59,60 @@ public class TavernaConsumer implements ITavernaConsumer {
     }
 
     @Override
+    public List<Adventurer> getAdventurers() throws ErrorCodeException {
+        // Erstellen der Anfrage
+        HTTPRequest httpRequest =
+                new HTTPRequest(
+                        Blackboard.getInstance().getUrl().toString() + PathTaverna.ADVENTURERS,
+                        EnumHTTPMethod.GET
+                );
+        httpRequest.setAuthorizationToken(Blackboard.getInstance().getUser().getUserToken());
+
+
+        // Aufrufen des API´s Pfad
+        HTTPResponse response = this.httpCaller.call(httpRequest);
+
+
+        if (response.getCode() != 200) {
+            ErrorCodeDTO errorCodeDTO = gson.fromJson(response.getBody(), ErrorCodeDTO.class);
+
+            throw new ErrorCodeException(errorCodeDTO);
+
+        } else {
+            GroupGetMembersDTO dto = gson.fromJson(response.getBody(), GroupGetMembersDTO.class);
+
+            return dto.getObjects();
+        }
+    }
+
+    @Override
+    public Adventurer getAdventure(String name) throws ErrorCodeException {
+        // Erstellen der Anfrage
+        HTTPRequest httpRequest =
+                new HTTPRequest(
+                        Blackboard.getInstance().getUrl().toString() + PathTaverna.ADVENTURERS + "/" + name,
+                        EnumHTTPMethod.GET
+                );
+        httpRequest.setAuthorizationToken(Blackboard.getInstance().getUser().getUserToken());
+
+
+        // Aufrufen des API´s Pfad
+        HTTPResponse response = this.httpCaller.call(httpRequest);
+
+
+        if (response.getCode() != 200) {
+            ErrorCodeDTO errorCodeDTO = gson.fromJson(response.getBody(), ErrorCodeDTO.class);
+
+            throw new ErrorCodeException(errorCodeDTO);
+
+        } else {
+            AdventurerGetDTO dto = gson.fromJson(response.getBody(), AdventurerGetDTO.class);
+
+            return dto.getObject();
+        }
+    }
+
+    @Override
     public List<Group> getGroups() throws ErrorCodeException {
         // Erstellen der Anfrage
         HTTPRequest httpRequest =
@@ -259,6 +313,22 @@ public class TavernaConsumer implements ITavernaConsumer {
         }
 
         public List<Adventurer> getObject() {
+            return object;
+        }
+
+    }
+
+    private class AdventurerGetDTO {
+
+        private Adventurer object;
+        private String status;
+
+        public AdventurerGetDTO(Adventurer object, String status) {
+            this.object = object;
+            this.status = status;
+        }
+
+        public Adventurer getObject() {
             return object;
         }
 

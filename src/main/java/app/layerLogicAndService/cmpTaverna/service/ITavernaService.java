@@ -15,6 +15,8 @@ public interface ITavernaService {
 
     // TODO - updateAdventurer
     Adventurer addHeroServiceToTaverna() throws ErrorCodeException, UnknownHostException;
+    List<Adventurer> getAdventurers() throws ErrorCodeException;
+    Adventurer getAdventure(String name) throws ErrorCodeException;
 
     List<Group> getGroups() throws ErrorCodeException;
     Group getGroup(int id) throws ErrorCodeException;

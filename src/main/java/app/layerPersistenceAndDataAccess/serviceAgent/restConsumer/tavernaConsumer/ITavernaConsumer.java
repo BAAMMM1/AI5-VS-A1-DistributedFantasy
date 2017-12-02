@@ -14,6 +14,8 @@ public interface ITavernaConsumer {
 
     // TODO - updateAdventurer
     Adventurer addHeroService(Hero hero) throws ErrorCodeException;
+    List<Adventurer> getAdventurers() throws ErrorCodeException;
+    Adventurer getAdventure(String name) throws ErrorCodeException;
 
     List<Group> getGroups() throws ErrorCodeException;
     Group getGroup(int id) throws ErrorCodeException;
@@ -21,6 +23,8 @@ public interface ITavernaConsumer {
     String deleteGroup(int id) throws ErrorCodeException;
     String enterGroup(int id) throws ErrorCodeException;
     List<Adventurer> getGroupMembers(int id) throws ErrorCodeException;
+
+    //String invite(String heroname, int groupId) throws ErrorCodeException;
 
 
 
