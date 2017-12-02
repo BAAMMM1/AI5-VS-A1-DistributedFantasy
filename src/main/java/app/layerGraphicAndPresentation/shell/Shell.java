@@ -126,6 +126,8 @@ public class Shell {
         new Entertaverna(inputInterpreter, tavernaService);
         new GroupCreate(inputInterpreter, tavernaService);
         new GroupDelete(inputInterpreter, tavernaService);
+        new Groups(inputInterpreter, tavernaService);
+        new Group(inputInterpreter, tavernaService);
 
     }
 }

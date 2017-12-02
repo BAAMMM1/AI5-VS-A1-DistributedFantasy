@@ -59,6 +59,74 @@ public class TavernaConsumer implements ITavernaConsumer {
     }
 
     @Override
+    public List<Group> getGroups() throws ErrorCodeException {
+        // Erstellen der Anfrage
+        HTTPRequest httpRequest =
+                new HTTPRequest(
+                        Blackboard.getInstance().getUrl().toString() + PathTaverna.GROUPS,
+                        EnumHTTPMethod.GET
+                );
+        httpRequest.setAuthorizationToken(Blackboard.getInstance().getUser().getUserToken());
+
+
+        // Aufrufen des API´s Pfad
+        HTTPResponse response = this.httpCaller.call(httpRequest);
+
+        // TODO - Wenn 500 Fehler, dann nehme nicht als ErrorCodeDTO, bzw erstelle es selber
+
+        if (response.getCode() >= 500) {
+
+            throw new ErrorCodeException(new ErrorCodeDTO("server error >= 500", "operation could not be performend"));
+
+        } else if (response.getCode() != 200) {
+            ErrorCodeDTO errorCodeDTO = gson.fromJson(response.getBody(), ErrorCodeDTO.class);
+
+            throw new ErrorCodeException(errorCodeDTO);
+
+        } else {
+
+            GroupDTO dto = gson.fromJson(response.getBody(), GroupDTO.class);
+
+            return dto.getObject();
+        }
+    }
+
+    @Override
+    public Group getGroup(int id) throws ErrorCodeException {
+        // Erstellen der Anfrage
+        HTTPRequest httpRequest =
+                new HTTPRequest(
+                        Blackboard.getInstance().getUrl().toString() + PathTaverna.GROUPS + "/" + id,
+                        EnumHTTPMethod.GET
+                );
+        httpRequest.setAuthorizationToken(Blackboard.getInstance().getUser().getUserToken());
+
+
+        // Aufrufen des API´s Pfad
+        HTTPResponse response = this.httpCaller.call(httpRequest);
+
+        // TODO - Wenn 500 Fehler, dann nehme nicht als ErrorCodeDTO, bzw erstelle es selber
+
+        if (response.getCode() >= 500) {
+
+            throw new ErrorCodeException(new ErrorCodeDTO("server error >= 500", "operation could not be performend"));
+
+        } else if (response.getCode() != 200) {
+            ErrorCodeDTO errorCodeDTO = gson.fromJson(response.getBody(), ErrorCodeDTO.class);
+
+            throw new ErrorCodeException(errorCodeDTO);
+
+        } else {
+
+            GroupDTO dto = gson.fromJson(response.getBody(), GroupDTO.class);
+
+            return dto.getObject().get(0);
+        }
+
+
+    }
+
+    @Override
     public Group createGroup() throws ErrorCodeException {
         // Erstellen der Anfrage
         HTTPRequest httpRequest =
@@ -116,7 +184,7 @@ public class TavernaConsumer implements ITavernaConsumer {
             throw new ErrorCodeException(errorCodeDTO);
 
         } else {
-            ErrorCodeDTO dto = gson.fromJson(response.getBody(), ErrorCodeDTO.class);
+            GroupeDeleteDTO dto = gson.fromJson(response.getBody(), GroupeDeleteDTO.class);
 
             return dto.getMessage();
         }
@@ -156,6 +224,21 @@ public class TavernaConsumer implements ITavernaConsumer {
 
         public List<Group> getObject() {
             return object;
+        }
+    }
+
+    private class GroupeDeleteDTO{
+
+        private String message;
+        private String status;
+
+        public GroupeDeleteDTO(String message, String status) {
+            this.message = message;
+            this.status = status;
+        }
+
+        public String getMessage() {
+            return message;
         }
     }
 

@@ -2,33 +2,42 @@ package app.layerGraphicAndPresentation.shell.command;
 
 import app.layerGraphicAndPresentation.shell.InputInterpreter;
 import app.layerGraphicAndPresentation.shell.context.State;
-import app.layerLogicAndService.cmpTaverna.entity.Adventurer;
+import app.layerLogicAndService.cmpTaverna.entity.Group;
 import app.layerLogicAndService.cmpTaverna.service.ITavernaService;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
- * @author Chris on 01.12.2017
+ * @author Chris on 02.12.2017
  */
-public class Entertaverna extends Command{
+public class Groups extends Command{
 
     ITavernaService tavernaService;
 
-    public Entertaverna(InputInterpreter inputInterpreter, ITavernaService tavernaService) {
+    /**
+     * Interepreter muss übergeben werden, damit ein Command weiß, bei wem es sich registrieren soll
+     *
+     * @param inputInterpreter
+     */
+    public Groups(InputInterpreter inputInterpreter, ITavernaService tavernaService) {
         super(inputInterpreter);
         this.tavernaService = tavernaService;
     }
 
+
     @Override
     State instruction() throws ErrorCodeException, IOException, InterruptedException {
 
-        Adventurer response = this.tavernaService.addHeroServiceToTaverna();
+        List<Group> groups = this.tavernaService.getGroups();
 
-        System.out.println("user:" + response.getUser());
-        System.out.println("heroclass: " + response.getHeroclass());
-        System.out.println("capabilities: " + response.getCapabilities());
-        System.out.println("url: " + response.getUrl());
+        for(Group group: groups){
+            System.out.println("id: " + group.getId());
+            System.out.println("owner: " + group.getOwner());
+            System.out.println("members: " + group.getMembers());
+            //System.out.println("links: " + group.get_links());
+        }
 
         return null;
     }

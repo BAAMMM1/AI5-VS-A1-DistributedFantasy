@@ -8,7 +8,7 @@ import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCo
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.tavernaConsumer.ITavernaConsumer;
 
 import java.net.UnknownHostException;
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Chris on 01.12.2017
@@ -22,7 +22,7 @@ public class TavernaService implements ITavernaService {
     }
 
     @Override
-    public Adventurer addHeroService() throws ErrorCodeException, UnknownHostException {
+    public Adventurer addHeroServiceToTaverna() throws ErrorCodeException, UnknownHostException {
 
         Hero hero = new Hero(Blackboard.getInstance().getUser().getHeroclass(), Blackboard.getInstance().getUser().getCapabilities(), "http://" + java.net.InetAddress.getLocalHost().getHostAddress().toString() + ":22/services");
 
@@ -38,6 +38,16 @@ public class TavernaService implements ITavernaService {
         Adventurer adventurer = this.tavernaConsumer.addHeroService(hero);
 
         return adventurer;
+    }
+
+    @Override
+    public List<Group> getGroups() throws ErrorCodeException {
+        return this.tavernaConsumer.getGroups();
+    }
+
+    @Override
+    public Group getGroup(int id) throws ErrorCodeException {
+        return this.getGroup(id);
     }
 
     @Override

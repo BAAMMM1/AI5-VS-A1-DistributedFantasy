@@ -5,6 +5,7 @@ import app.layerLogicAndService.cmpTaverna.entity.Group;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
 
 import java.net.UnknownHostException;
+import java.util.List;
 
 
 /**
@@ -12,10 +13,15 @@ import java.net.UnknownHostException;
  */
 public interface ITavernaService {
 
-    Adventurer addHeroService() throws ErrorCodeException, UnknownHostException;
+    // TODO - updateAdventurer
+    Adventurer addHeroServiceToTaverna() throws ErrorCodeException, UnknownHostException;
+
+    List<Group> getGroups() throws ErrorCodeException;
+    Group getGroup(int id) throws ErrorCodeException;
     Group createGroup() throws ErrorCodeException;
     String deleteGroup(int id) throws ErrorCodeException;
 
-    // TODO - updateAdventurer
-    // TODO - delete Group
+
+
+
 }
