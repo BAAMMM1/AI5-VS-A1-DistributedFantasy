@@ -28,11 +28,12 @@ task fatJar(type: Jar) {
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
 }
+*/
 
 repositories {
     mavenCentral()
 }
-*/
+
 
 
 dependencies {
