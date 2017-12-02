@@ -191,6 +191,34 @@ public class TavernaConsumer implements ITavernaConsumer {
 
     }
 
+    @Override
+    public List<Adventurer> enterGroup(int id) throws ErrorCodeException {
+        // Erstellen der Anfrage
+        HTTPRequest httpRequest =
+                new HTTPRequest(
+                        Blackboard.getInstance().getUrl().toString() + PathTaverna.ADVENTURERS,
+                        EnumHTTPMethod.POST,
+                        ""
+                );
+        httpRequest.setAuthorizationToken(Blackboard.getInstance().getUser().getUserToken());
+
+
+        // Aufrufen des API´s Pfad
+        HTTPResponse response = this.httpCaller.call(httpRequest);
+
+
+        if (response.getCode() != 201) {
+            ErrorCodeDTO errorCodeDTO = gson.fromJson(response.getBody(), ErrorCodeDTO.class);
+
+            throw new ErrorCodeException(errorCodeDTO);
+
+        } else {
+            GroupEnterDTO dto = gson.fromJson(response.getBody(), GroupEnterDTO.class);
+
+            return dto.objects;
+        }
+    }
+
     private class AdventurerDTO {
 
         private String message;
@@ -205,6 +233,24 @@ public class TavernaConsumer implements ITavernaConsumer {
 
         public List<Adventurer> getObject() {
             return object;
+        }
+
+    }
+
+    private class GroupEnterDTO {
+
+        private String message;
+        private List<Adventurer> objects;
+        private String status;
+
+        public GroupEnterDTO(String message, List<Adventurer> object, String status) {
+            this.message = message;
+            this.objects = object;
+            this.status = status;
+        }
+
+        public List<Adventurer> getObject() {
+            return objects;
         }
 
     }

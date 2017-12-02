@@ -60,4 +60,9 @@ public class TavernaService implements ITavernaService {
         return this.tavernaConsumer.deleteGroup(id);
     }
 
+    @Override
+    public List<Adventurer> enterGroup(int id) throws ErrorCodeException {
+        return this.tavernaConsumer.enterGroup(id);
+    }
+
 }

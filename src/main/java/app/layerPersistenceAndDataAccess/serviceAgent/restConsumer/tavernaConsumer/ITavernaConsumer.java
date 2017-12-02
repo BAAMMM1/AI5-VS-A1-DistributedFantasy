@@ -19,6 +19,7 @@ public interface ITavernaConsumer {
     Group getGroup(int id) throws ErrorCodeException;
     Group createGroup() throws ErrorCodeException;
     String deleteGroup(int id) throws ErrorCodeException;
+    List<Adventurer> enterGroup(int id) throws ErrorCodeException;
 
 
 
