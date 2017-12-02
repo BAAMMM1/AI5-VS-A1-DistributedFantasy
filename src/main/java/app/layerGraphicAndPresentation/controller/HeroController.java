@@ -4,6 +4,10 @@ import app.layerGraphicAndPresentation.controller.config.PathHeroservice;
 import app.layerLogicAndService.cmpHero.entity.Assignment;
 import app.layerLogicAndService.cmpHero.entity.Hiring;
 import app.layerLogicAndService.cmpHero.entity.Message;
+import app.layerLogicAndService.cmpHero.entity.Service;
+import app.layerLogicAndService.cmpHero.service.IHeroService;
+import app.layerLogicAndService.cmpHeroToHero.service.IHeroToHeroService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +19,10 @@ import org.springframework.web.bind.annotation.*;
  * @author Chris on 01.12.2017
  */
 @RestController
-public class serviceController {
+public class HeroController {
+
+    @Autowired
+    IHeroService service;
 
 
     @RequestMapping(
@@ -23,7 +30,18 @@ public class serviceController {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getServices() {
-        return new ResponseEntity<String>("Test", HttpStatus.OK);
+
+        try{
+            Service service = this.service.getService();
+            return new ResponseEntity<Service>(service, HttpStatus.OK);
+
+        } catch (Exception e){
+
+            return new ResponseEntity<String>("error", HttpStatus.BAD_REQUEST);
+        }
+
+
+
     }
 
 
