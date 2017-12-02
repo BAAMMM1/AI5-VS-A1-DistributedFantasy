@@ -43,6 +43,8 @@ public class HeroToHeroService implements IHeroToHeroService {
             heroServiceUrl = "http://" + heroServiceUrl;
         }
 
+        System.out.println(heroServiceUrl);
+
         Service heroService = this.heroToHeroConsumer.getHeroService(heroServiceUrl);
 
         String heroHiringUrl = heroService.getHirings();
