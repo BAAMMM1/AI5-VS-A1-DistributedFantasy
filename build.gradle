@@ -5,36 +5,22 @@ apply plugin: 'java'
 
 sourceCompatibility = 1.8
 
-//create a single Jar with all dependencies
+buildscript {
 
-task fatJar(type: Jar) {
-	manifest {
-        attributes 'Implementation-Title': 'AI5-VS-A1-DistributedFantasy Jar File',
-        	'Implementation-Version': version,
-        	'Main-Class': 'app.Application'
+    repositories {
+        mavenCentral()
     }
 
-    archiveName = "vsp_abr227.jar"
-
-    //destinationDir = file("E:/ownCloud/dockerSSH/container")
-    destinationDir = file(".")
-
-    into("lib") {
-        project.subprojects.each { p ->
-            from(p.tasks.withType(Jar)*.outputs)
-        }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.0.0.RELEASE")
     }
-
-    baseName = project.name + '-all'
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
-    with jar
 }
+apply plugin: 'spring-boot'
 
 
 repositories {
     mavenCentral()
 }
-
 
 
 dependencies {
