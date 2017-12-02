@@ -11,7 +11,7 @@ import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCo
 public interface IBlackboardService {
 
     Register registerUser(String name, String password) throws ErrorCodeException;
-    Login login(String name, String password) throws ErrorCodeException;
+    User login(String name, String password) throws ErrorCodeException;
     User checkLogin(String Token) throws ErrorCodeException;
 
 }

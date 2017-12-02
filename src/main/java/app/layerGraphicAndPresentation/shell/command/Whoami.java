@@ -58,6 +58,7 @@ public class Whoami extends Command {
             System.out.println("ip: " + user.getIp());
             System.out.println("deliverables_done: " + user.getDeliverables_done());
             System.out.println("delivered: " + user.getDelivered());
+            System.out.println("_links: " + user.get_links().toString());
 
             return null;
 

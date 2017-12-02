@@ -28,18 +28,16 @@ public class BlackboardServiceImp implements IBlackboardService {
     }
 
     @Override
-    public Login login(String name, String password) throws ErrorCodeException {
+    public User login(String name, String password) throws ErrorCodeException {
 
         Login dto = this.registerConsumer.getAuthenticationToken(name, password);
 
         // Username, Password und Token im System hinterlegen
-
-        // TODO - IlegalArgument, falls entity variablen null
         Blackboard.getInstance().setUser(name, dto.getToken(),dto.getValid_till());
 
-        System.out.println(Blackboard.getInstance().getUser().toString());
+        User user = this.checkLogin(Blackboard.getInstance().getUser().getUserToken());
 
-        return dto;
+        return user;
 
 
     }

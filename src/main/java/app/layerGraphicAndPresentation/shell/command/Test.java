@@ -4,6 +4,7 @@ import app.layerGraphicAndPresentation.shell.InputInterpreter;
 import app.layerGraphicAndPresentation.shell.context.Context;
 import app.layerGraphicAndPresentation.shell.context.State;
 import app.layerGraphicAndPresentation.shell.exception.UnAcceptedStateException;
+import app.layerLogicAndService.cmpBlackboard.entity.User;
 import app.layerLogicAndService.cmpBlackboard.service.IBlackboardService;
 import app.layerLogicAndService.cmpBlackboard.entity.Login;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
@@ -45,10 +46,15 @@ public class Test extends Command {
 
         // Je nachdem was hier zurück kommt, entweder Ok oder nicht ok, ändere Status
 
-        app.layerLogicAndService.cmpBlackboard.entity.Login login = this.client.login("MeinSuperTestUser", "test1234");
+        User user = this.client.login("MeinSuperTestUser", "test1234");
 
         // Prompt-Ausgabe
-        System.out.println("message: " + login.getMessage());
+        System.out.println("name: " + user.getName());
+        System.out.println("location: " + user.getLocation());
+        System.out.println("ip: " + user.getIp());
+        System.out.println("deliverables_done: " + user.getDeliverables_done());
+        System.out.println("delivered: " + user.getDelivered());
+        System.out.println("_links: " + user.get_links().toString());
 
         return State.LOGIN;
 
