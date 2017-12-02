@@ -43,7 +43,7 @@ public class HeroToHeroService implements IHeroToHeroService {
             heroServiceUrl = "http://" + heroServiceUrl;
         }
 
-        Service heroService = this.heroToHeroConsumer.getHeroService(adventurer.getUrl());
+        Service heroService = this.heroToHeroConsumer.getHeroService(heroServiceUrl);
 
         String heroHiringUrl = heroService.getHirings();
 
