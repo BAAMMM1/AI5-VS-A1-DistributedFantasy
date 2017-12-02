@@ -85,7 +85,7 @@ public class TavernaConsumer implements ITavernaConsumer {
 
         } else {
 
-            GroupDTO dto = gson.fromJson(response.getBody(), GroupDTO.class);
+            GroupsDTO dto = gson.fromJson(response.getBody(), GroupsDTO.class);
 
             return dto.getObject();
         }
@@ -224,6 +224,23 @@ public class TavernaConsumer implements ITavernaConsumer {
 
         public List<Group> getObject() {
             return object;
+        }
+    }
+
+    private class GroupsDTO {
+
+        private String message;
+        private List<Group> objects;
+        private String status;
+
+        public GroupsDTO(String message, List<Group> object, String status) {
+            this.message = message;
+            this.objects = object;
+            this.status = status;
+        }
+
+        public List<Group> getObject() {
+            return objects;
         }
     }
 

@@ -47,7 +47,7 @@ public class TavernaService implements ITavernaService {
 
     @Override
     public Group getGroup(int id) throws ErrorCodeException {
-        return this.getGroup(id);
+        return this.tavernaConsumer.getGroup(id);
     }
 
     @Override
