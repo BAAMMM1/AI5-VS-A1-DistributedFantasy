@@ -7,6 +7,7 @@ import app.layerLogicAndService.cmpHero.entity.Message;
 import app.layerLogicAndService.cmpHero.entity.Service;
 import app.layerLogicAndService.cmpHero.service.IHeroService;
 import app.layerLogicAndService.cmpHero.service.exception.AlreadyInGroupException;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 public class HeroController {
+
+    Gson gson = new Gson();
 
     @Autowired
     IHeroService heroService;
@@ -49,8 +52,7 @@ public class HeroController {
     @RequestMapping(
             value = "/hirings",
             method = RequestMethod.POST,
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+            consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addhiring(@RequestBody Hiring request) {
 
         try {
