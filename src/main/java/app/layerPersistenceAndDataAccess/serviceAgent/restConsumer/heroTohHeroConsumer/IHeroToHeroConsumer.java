@@ -1,9 +1,6 @@
 package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.heroTohHeroConsumer;
 
-import app.layerLogicAndService.cmpHero.entity.Assignment;
-import app.layerLogicAndService.cmpHero.entity.Hiring;
-import app.layerLogicAndService.cmpHero.entity.Message;
-import app.layerLogicAndService.cmpHero.entity.Service;
+import app.layerLogicAndService.cmpHero.entity.*;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
 
 /**
@@ -16,6 +13,7 @@ public interface IHeroToHeroConsumer {
     String hiringHero(Hiring hiring, String herHiringUrl) throws ErrorCodeException;
     void sendMessage(Message message, String heroMessageUrl) throws ErrorCodeException;
     void sendAssignment(String heroAssignmentUrl, Assignment assignment) throws ErrorCodeException;
+    void sendAssignmentDeliver(String assignmentDeliverUrl, AssignmentDerliver assignmentDeliver) throws ErrorCodeException;
 
 
 

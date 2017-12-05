@@ -169,7 +169,7 @@ public class HeroToHeroService implements IHeroToHeroService {
 
         System.out.println(data);
 
-        //heroToHeroService.sendAssignmentDeliver(assignmentDerliver);
+        heroToHeroConsumer.sendAssignmentDeliver(Blackboard.getInstance().getUser().getAssignment().getCallback(), assignmentDerliver);
 
     }
 

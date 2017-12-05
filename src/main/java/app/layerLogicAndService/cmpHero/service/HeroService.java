@@ -68,6 +68,7 @@ public class HeroService implements IHeroService {
     public void addAssignment(Assignment assignment) {
 
         Blackboard.getInstance().getUser().setAssignment(assignment);
+        System.out.println("adding assignment");
 
     }
 
@@ -75,6 +76,7 @@ public class HeroService implements IHeroService {
     public void addAssignmentDeliver(AssignmentDerliver assignmentDerliver) {
 
         Blackboard.getInstance().getUser().setAssignmentDerliver(assignmentDerliver);
+        System.out.println("adding assignmentdeliver");
 
     }
 
@@ -82,6 +84,7 @@ public class HeroService implements IHeroService {
     public void addMessage(Message message) {
 
         Blackboard.getInstance().getUser().addMessage(message);
+        System.out.println("adding message");
 
     }
 
