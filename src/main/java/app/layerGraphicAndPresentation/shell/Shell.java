@@ -147,6 +147,8 @@ public class Shell {
         new Adventurer(inputInterpreter, tavernaService);
         new Invite(inputInterpreter, heroToHeroService);
         new Messages(inputInterpreter, heroService);
+        new GroupOwn(inputInterpreter);
+        new GroupLeave(inputInterpreter);
 
     }
 }
