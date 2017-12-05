@@ -21,13 +21,14 @@ public class HeroService implements IHeroService {
     @Override
     public app.layerLogicAndService.cmpHero.entity.Service getService() {
 
+        // TODO IP und Port korrekt rausziehen
         Service service = new Service(
                 Blackboard.getInstance().getUser().get_links().getSelf(),
                 false,
                 Blackboard.getInstance().getUser().getGroup(),
-                "http://" + Application.IP + PathHeroservice.HIRINGS,
-                "http://" + Application.IP + PathHeroservice.ASSIGNMENTS,
-                "http://" + Application.IP + PathHeroservice.MESSAGES);
+                "http://" + Application.IP + ":8080" + PathHeroservice.HIRINGS,
+                "http://" + Application.IP + ":8080" + PathHeroservice.ASSIGNMENTS,
+                "http://" + Application.IP + ":8080" + PathHeroservice.MESSAGES);
 
         return service;
     }
@@ -39,7 +40,9 @@ public class HeroService implements IHeroService {
             throw new AlreadyInGroupException("ehhmm ohh ehmm Nein! oder vlt ehm Nein! Ne doch nicht Nein! Ne Nein!");
         }
 
+        // TODO - Testen ob es die Group auch gibt
         Blackboard.getInstance().getUser().setGroup(hiring.getGroup());
+        // TODO - in die Groupe eintretren in der taverna
 
     }
 
