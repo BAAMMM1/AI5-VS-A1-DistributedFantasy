@@ -45,26 +45,9 @@ public class HeroController {
     }
 
 
-    @RequestMapping(
-            value = PathHeroservice.HIRINGS,
-            method = RequestMethod.POST,
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> addHiring(@RequestBody Hiring request){
-
-        try{
-            this.heroService.addHiring(request);
-            return new ResponseEntity<>(HttpStatus.CREATED);
-
-        } catch (AlreadyInGroupException e) {
-            return new ResponseEntity<>(e.getError(), HttpStatus.BAD_REQUEST);
-        }
-
-    }
-
 
     @RequestMapping(
-            value = "/hring",
+            value = "/hirings",
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
