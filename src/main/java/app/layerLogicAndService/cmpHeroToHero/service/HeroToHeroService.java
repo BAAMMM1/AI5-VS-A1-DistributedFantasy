@@ -61,6 +61,29 @@ public class HeroToHeroService implements IHeroToHeroService {
         return this.heroToHeroConsumer.hiringHero(hiring, heroHiringUrl);
     }
 
+    @Override
+    public void sendMessage(String adventurer, String string) throws ErrorCodeException {
+
+        Adventurer adven = this.tavernaService.getAdventure(adventurer);
+
+        String heroServiceUrl = adven.getUrl();
+
+        if(!heroServiceUrl.substring(0,7).equals("http://")){
+            heroServiceUrl = "http://" + heroServiceUrl;
+        }
+
+        Service heroService = this.heroToHeroConsumer.getHeroService(heroServiceUrl);
+
+        String heroMessageUrl = heroService.getHirings();
+
+        if(!heroMessageUrl.substring(0,7).equals("http://")){
+            heroMessageUrl = "http://" + heroMessageUrl;
+        }
+
+        Message message = new Message(string, "", "message");
+
+        this.heroToHeroConsumer.sendMessage(message, heroMessageUrl);
+    }
 
 
 }

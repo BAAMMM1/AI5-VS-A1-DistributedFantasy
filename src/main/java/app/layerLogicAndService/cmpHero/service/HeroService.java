@@ -47,6 +47,7 @@ public class HeroService implements IHeroService {
             throw new AlreadyInGroupException("ehhmm ohh ehmm Nein! oder vlt ehm Nein! Ne doch nicht Nein! Ne Nein!");
         }
 
+        // TODO - Was ist wenn hiring.getGroup() = http://xxxx:xx/taverna/groups/387 statt /taverna/groups/387
         int groupId;
         try{
             groupId = Integer.valueOf(hiring.getGroup().replace("/taverna/groups/", ""));
