@@ -1,5 +1,7 @@
 package app.layerLogicAndService.cmpBlackboard.entity;
 
+import app.layerLogicAndService.cmpHero.entity.Assignment;
+import app.layerLogicAndService.cmpHero.entity.AssignmentDerliver;
 import app.layerLogicAndService.cmpHero.entity.Message;
 import app.layerLogicAndService.cmpQuest.entity.Link;
 import app.layerLogicAndService.cmpQuest.entity.Map;
@@ -52,6 +54,10 @@ public class User {
     private List<Message> messages;
 
     private Questing currentQuesting;
+
+    private AssignmentDerliver assignmentDerliver;
+
+    private Assignment assignment;
 
     public User(String name, String userToken, String userTokenValidTime) {
         this.name = name;
@@ -166,6 +172,22 @@ public class User {
 
     public void setCurrentQuesting(Questing currentQuesting) {
         this.currentQuesting = currentQuesting;
+    }
+
+    public AssignmentDerliver getAssignmentDerliver() {
+        return assignmentDerliver;
+    }
+
+    public void setAssignmentDerliver(AssignmentDerliver assignmentDerliver) {
+        this.assignmentDerliver = assignmentDerliver;
+    }
+
+    public Assignment getAssignment() {
+        return assignment;
+    }
+
+    public void setAssignment(Assignment assignment) {
+        this.assignment = assignment;
     }
 
     @Override

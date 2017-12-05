@@ -4,10 +4,7 @@ package app.layerLogicAndService.cmpHero.service;
 import app.Application;
 import app.layerGraphicAndPresentation.controller.config.PathHeroservice;
 import app.layerLogicAndService.cmpBlackboard.entity.Blackboard;
-import app.layerLogicAndService.cmpHero.entity.Assignment;
-import app.layerLogicAndService.cmpHero.entity.Hiring;
-import app.layerLogicAndService.cmpHero.entity.Message;
-import app.layerLogicAndService.cmpHero.entity.Service;
+import app.layerLogicAndService.cmpHero.entity.*;
 import app.layerLogicAndService.cmpHero.service.exception.AlreadyInGroupException;
 import app.layerLogicAndService.cmpTaverna.entity.Group;
 import app.layerLogicAndService.cmpTaverna.service.ITavernaService;
@@ -70,7 +67,14 @@ public class HeroService implements IHeroService {
     @Override
     public void addAssignment(Assignment assignment) {
 
-        // TODO - Do here something with the assignment
+        Blackboard.getInstance().getUser().setAssignment(assignment);
+
+    }
+
+    @Override
+    public void addAssignmentDeliver(AssignmentDerliver assignmentDerliver) {
+
+        Blackboard.getInstance().getUser().setAssignmentDerliver(assignmentDerliver);
 
     }
 

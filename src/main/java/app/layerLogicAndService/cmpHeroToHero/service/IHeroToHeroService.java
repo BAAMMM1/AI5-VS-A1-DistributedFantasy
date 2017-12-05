@@ -1,5 +1,6 @@
 package app.layerLogicAndService.cmpHeroToHero.service;
 
+import app.layerLogicAndService.cmpHero.entity.AssignmentDerliver;
 import app.layerLogicAndService.cmpHero.entity.Message;
 import app.layerLogicAndService.cmpHero.entity.Service;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
@@ -12,6 +13,8 @@ public interface IHeroToHeroService {
     String invite(String heroName, int groupId, int questId, String messageToHero) throws ErrorCodeException;
     void sendMessage(String adventurer, String string) throws ErrorCodeException;
     void sendAssignment(String adventurer,  String message) throws ErrorCodeException;
+
+    void sendAssignmentDeliver(AssignmentDerliver derliver) throws ErrorCodeException;
 
 
 

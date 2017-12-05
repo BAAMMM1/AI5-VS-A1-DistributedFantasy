@@ -1,6 +1,8 @@
 package app.layerLogicAndService.cmpHeroToHero.service;
 
+import app.Application;
 import app.layerLogicAndService.cmpBlackboard.entity.Blackboard;
+import app.layerLogicAndService.cmpHero.entity.Assignment;
 import app.layerLogicAndService.cmpHero.entity.Hiring;
 import app.layerLogicAndService.cmpHero.entity.Message;
 import app.layerLogicAndService.cmpHero.entity.Service;
@@ -11,6 +13,8 @@ import app.layerLogicAndService.cmpTaverna.entity.Group;
 import app.layerLogicAndService.cmpTaverna.service.ITavernaService;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.heroTohHeroConsumer.IHeroToHeroConsumer;
+
+import java.util.Random;
 
 /**
  * @author Chris on 02.12.2017
@@ -94,6 +98,34 @@ public class HeroToHeroService implements IHeroToHeroService {
 
     @Override
     public void sendAssignment(String adventurer, String message) throws ErrorCodeException {
+
+        Adventurer adven = this.tavernaService.getAdventure(adventurer);
+
+        String heroServiceUrl = adven.getUrl();
+
+        if(!heroServiceUrl.substring(0,7).equals("http://")){
+            heroServiceUrl = "http://" + heroServiceUrl;
+        }
+
+        Service heroService = this.heroToHeroConsumer.getHeroService(heroServiceUrl);
+
+        String heroAssignmentUrl = heroService.getAssignments();
+
+        if(!heroAssignmentUrl.substring(0,7).equals("http://")){
+            heroAssignmentUrl = "http://" + heroAssignmentUrl;
+        }
+
+        Assignment assignment = new Assignment(
+                Assignment.counter,
+                Blackboard.getInstance().getUser().getCurrentQuesting().getTask().get_links().getSelf(),
+                Blackboard.getInstance().getUser().getCurrentQuesting().getCurrentUri(),
+                "method",
+                "data",
+                "http://" + Application.IP + ":8080/assignments/deliveries",
+                message
+                );
+
+        this.heroToHeroConsumer.sendAssignment(heroAssignmentUrl, assignment);
 
     }
 

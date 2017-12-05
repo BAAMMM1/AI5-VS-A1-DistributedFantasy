@@ -278,6 +278,10 @@ public class QuestConsumerImpl implements IQuestConsumer {
             tokens = tokens + token;
         }
 
+        if(Blackboard.getInstance().getUser().getAssignmentDerliver() != null){
+            tokens = tokens + Blackboard.getInstance().getUser().getAssignmentDerliver().getData();
+        }
+
         tokens = tokens.substring(0, tokens.length()-2) + "]}";
 
         System.out.println("tokens: " + tokens);

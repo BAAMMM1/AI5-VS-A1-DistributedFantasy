@@ -1,14 +1,21 @@
 package app.layerLogicAndService.cmpQuest.service;
 
 import app.layerLogicAndService.cmpBlackboard.entity.Blackboard;
+import app.layerLogicAndService.cmpHero.entity.Assignment;
+import app.layerLogicAndService.cmpHero.entity.AssignmentDerliver;
+import app.layerLogicAndService.cmpHeroToHero.service.HeroToHeroService;
+import app.layerLogicAndService.cmpHeroToHero.service.IHeroToHeroService;
 import app.layerLogicAndService.cmpQuest.entity.*;
 import app.layerLogicAndService.cmpQuest.entity.questing.Questing;
 import app.layerLogicAndService.cmpQuest.entity.questing.Step;
 import app.layerLogicAndService.cmpQuest.entity.questing.TaskPart;
 import app.layerLogicAndService.cmpQuest.entity.questing.Token;
+import app.layerLogicAndService.cmpTaverna.service.TavernaService;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.heroTohHeroConsumer.HeroToHeroConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.IQuestConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.QuestConsumerImpl;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.tavernaConsumer.TavernaConsumer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +26,8 @@ import java.util.List;
 public class QuestServiceImpl implements IQuestService {
 
     private IQuestConsumer questConsumer = new QuestConsumerImpl();
+
+    private IHeroToHeroService heroToHeroService = new HeroToHeroService(new HeroToHeroConsumer(), new TavernaService(new TavernaConsumer()), new QuestServiceImpl(new QuestConsumerImpl()));
 
     public QuestServiceImpl(IQuestConsumer questConsumer) {
         this.questConsumer = questConsumer;
@@ -163,6 +172,101 @@ public class QuestServiceImpl implements IQuestService {
 
 
         return visit;
+    }
+
+    @Override
+    public Visit doAssignment() throws ErrorCodeException {
+
+        if(Blackboard.getInstance().getUser().getAssignment() == null){
+            throw new IllegalArgumentException("no assignment at the moment");
+        }
+
+        Assignment assignment = Blackboard.getInstance().getUser().getAssignment();
+
+        int taskid = Integer.valueOf(assignment.getTask().replace("/blackboard/tasks/", ""));
+
+        Task task = this.getTask(taskid);
+
+        Map map = this.getMap(task.getLocation().replace("/map/", ""));
+
+
+        Visit dto = this.questConsumer.visitHost(map.getHost(), assignment.getResource());
+
+        Blackboard.getInstance().getUser().setCurrentQuesting(new Questing(task, map, assignment.getResource()));
+
+
+
+        if (dto.getNext() != null) {
+            Blackboard.getInstance().getUser().getCurrentQuesting().setNext(dto.getNext()); //
+
+        }
+
+        if (dto.getSteps_todo() != null) {
+
+            List<Step> steps = new ArrayList<Step>();
+            for (int i = 0; i < dto.getSteps_todo().size(); i++) {
+                steps.add(new Step(dto.getSteps_todo().get(i)));
+            }
+
+            Blackboard.getInstance().getUser().getCurrentQuesting().setPart(new TaskPart(Blackboard.getInstance().getUser().getCurrentQuesting().getMap().getHost() + Blackboard.getInstance().getUser().getCurrentQuesting().getCurrentUri(), steps));
+
+
+        }
+
+        System.out.println(Blackboard.getInstance().getUser().getCurrentQuesting().toString());
+
+        return dto;
+    }
+
+
+    @Override
+    public void deliverAssignment() throws ErrorCodeException {
+
+
+        if (Blackboard.getInstance().getUser().getCurrentQuesting().getPart() == null) {
+            throw new IllegalArgumentException("no part to deliverTask");
+        }
+
+        if (Blackboard.getInstance().getUser().getCurrentQuesting().getPart().getStepList() == null) {
+            throw new IllegalArgumentException("no steps to deliverTask");
+        }
+
+
+        for (int i = 0; i < Blackboard.getInstance().getUser().getCurrentQuesting().getPart().getStepList().size(); i++){
+
+            if(Blackboard.getInstance().getUser().getCurrentQuesting().getPart().getStepList().get(i).getToken().getToken() == null){
+
+                throw new IllegalArgumentException("a steptoken is missing");
+            }
+        }
+
+        TaskPart part = Blackboard.getInstance().getUser().getCurrentQuesting().getPart();
+
+        String data = "";
+        for (Step step : part.getStepList()) {
+            String token = "\""+ step.getToken().getToken() +"\", ";
+            data = data + token;
+        }
+
+        data = data.substring(0, data.length()-2);
+
+        AssignmentDerliver assignmentDerliver = new AssignmentDerliver(
+                Blackboard.getInstance().getUser().getAssignment().getId(),
+                Blackboard.getInstance().getUser().getAssignment().getTask(),
+                Blackboard.getInstance().getUser().getAssignment().getResource(),
+                Blackboard.getInstance().getUser().getAssignment().getMethod(),
+                data,
+                Blackboard.getInstance().getUser().get_links().getSelf(),
+                "message");
+
+        heroToHeroService.sendAssignmentDeliver(assignmentDerliver);
+
+        /*
+        Blackboard.getInstance().getUser().getCurrentQuesting().setCurrentUri(Blackboard.getInstance().getUser().getCurrentQuesting().getPart().getDeliverUri());
+
+        Blackboard.getInstance().getUser().getCurrentQuesting().getTask().setToken(visit.getToken());
+        */
+
     }
 
     @Override

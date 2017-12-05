@@ -1,35 +1,31 @@
 package app.layerLogicAndService.cmpHero.entity;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-
 /**
- * @author Chris on 01.12.2017
+ * @author Chris on 05.12.2017
  */
-public class Assignment {
-
-    public static int counter = 0;
+public class AssignmentDerliver {
 
     private int id;
     private String task;
     private String resource;
     private String method;
     private String data;
-    private String callback;
+    private String user;
     private String message;
 
-    public Assignment(int id, String task, String resource, String method, String data, String callback, String message) {
+    public AssignmentDerliver(int id, String task, String resource, String method, String data, String user, String message) {
         this.id = id;
         this.task = task;
         this.resource = resource;
         this.method = method;
         this.data = data;
-        this.callback = callback;
+        this.user = user;
         this.message = message;
 
         Assignment.counter = Assignment.counter + 1;
     }
 
-    public Assignment() {
+    public AssignmentDerliver() {
     }
 
     public int getId() {
@@ -72,12 +68,12 @@ public class Assignment {
         this.data = data;
     }
 
-    public String getCallback() {
-        return callback;
+    public String getUser() {
+        return user;
     }
 
-    public void setCallback(String callback) {
-        this.callback = callback;
+    public void setUser(String callback) {
+        this.user = callback;
     }
 
     public String getMessage() {
@@ -96,7 +92,7 @@ public class Assignment {
                 ", resource='" + resource + '\'' +
                 ", method='" + method + '\'' +
                 ", data='" + data + '\'' +
-                ", callback='" + callback + '\'' +
+                ", user='" + user + '\'' +
                 ", message='" + message + '\'' +
                 '}';
     }

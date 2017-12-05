@@ -103,7 +103,7 @@ public class HeroToHeroConsumer implements IHeroToHeroConsumer {
     }
 
     @Override
-    public void sendAssignment(String adventurer, String heroAssignmentUrl, Assignment assignment) throws ErrorCodeException {
+    public void sendAssignment(String heroAssignmentUrl, Assignment assignment) throws ErrorCodeException {
 
         HTTPRequest httpRequest =
                 new HTTPRequest(

@@ -15,7 +15,7 @@ public interface IHeroToHeroConsumer {
     Service getHeroService(String heroServiceUrl) throws ErrorCodeException;
     String hiringHero(Hiring hiring, String herHiringUrl) throws ErrorCodeException;
     void sendMessage(Message message, String heroMessageUrl) throws ErrorCodeException;
-    void sendAssignment(String adventurer, String heroAssignmentUrl, Assignment assignment) throws ErrorCodeException;
+    void sendAssignment(String heroAssignmentUrl, Assignment assignment) throws ErrorCodeException;
 
 
 

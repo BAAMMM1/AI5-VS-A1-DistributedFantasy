@@ -1,10 +1,7 @@
 package app.layerGraphicAndPresentation.controller;
 
 import app.layerGraphicAndPresentation.controller.config.PathHeroservice;
-import app.layerLogicAndService.cmpHero.entity.Assignment;
-import app.layerLogicAndService.cmpHero.entity.Hiring;
-import app.layerLogicAndService.cmpHero.entity.Message;
-import app.layerLogicAndService.cmpHero.entity.Service;
+import app.layerLogicAndService.cmpHero.entity.*;
 import app.layerLogicAndService.cmpHero.service.IHeroService;
 import app.layerLogicAndService.cmpHero.service.exception.AlreadyInGroupException;
 import app.layerLogicAndService.cmpHero.service.exception.ErrorMessage;
@@ -84,6 +81,24 @@ public class HeroController {
 
         try{
             this.heroService.addAssignment(request);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+
+        } catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        }
+
+    }
+
+    @RequestMapping(
+            value = PathHeroservice.ASSIGNMENTS + "/deliveries",
+            method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> addAssignmentDeliver(@RequestBody AssignmentDerliver request){
+
+        try{
+
+            this.heroService.addAssignmentDeliver(request);
             return new ResponseEntity<>(HttpStatus.CREATED);
 
         } catch (Exception e){
