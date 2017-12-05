@@ -74,7 +74,7 @@ public class HeroToHeroService implements IHeroToHeroService {
 
         Service heroService = this.heroToHeroConsumer.getHeroService(heroServiceUrl);
 
-        String heroMessageUrl = heroService.getHirings();
+        String heroMessageUrl = heroService.getMessages();
 
         if(!heroMessageUrl.substring(0,7).equals("http://")){
             heroMessageUrl = "http://" + heroMessageUrl;
