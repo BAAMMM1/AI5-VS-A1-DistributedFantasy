@@ -1,5 +1,6 @@
 package app.layerLogicAndService.cmpBlackboard.entity;
 
+import app.layerLogicAndService.cmpHero.entity.Message;
 import app.layerLogicAndService.cmpQuest.entity.Link;
 import app.layerLogicAndService.cmpQuest.entity.Map;
 import app.layerLogicAndService.cmpQuest.entity.Quest;
@@ -46,10 +47,13 @@ public class User {
     private String heroclass = "WiZzArD";
     private String capabilities ="";
 
+    private List<Message> messages;
+
     public User(String name, String userToken, String userTokenValidTime) {
         this.name = name;
         this.userToken = userToken;
         this.userTokenValidTime = userTokenValidTime;
+        this.messages = new ArrayList<>();
     }
 
     public String getName() {
@@ -130,6 +134,18 @@ public class User {
 
     public void setCapabilities(String capabilities) {
         this.capabilities = capabilities;
+    }
+
+    public void addMessage(Message message){
+        this.messages.add(message);
+    }
+
+    public void removeMessage(Message message){
+        this.messages.remove(message);
+    }
+
+    public List<Message> getMessages(){
+        return this.messages;
     }
 
 

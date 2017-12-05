@@ -2,6 +2,7 @@ package app.layerLogicAndService.cmpHeroToHero.service;
 
 import app.layerLogicAndService.cmpBlackboard.entity.Blackboard;
 import app.layerLogicAndService.cmpHero.entity.Hiring;
+import app.layerLogicAndService.cmpHero.entity.Message;
 import app.layerLogicAndService.cmpHero.entity.Service;
 import app.layerLogicAndService.cmpQuest.entity.Quest;
 import app.layerLogicAndService.cmpQuest.service.IQuestService;
@@ -33,6 +34,7 @@ public class HeroToHeroService implements IHeroToHeroService {
 
         Adventurer adventurer = this.tavernaService.getAdventure(heroName);
 
+        // TODO - Wenn Grouß nicht da, dann besser response als 404 - Not Found
         Group group = this.tavernaService.getGroup(groupId);
 
         Quest quest = this.questService.getQuest(questId);
@@ -58,6 +60,7 @@ public class HeroToHeroService implements IHeroToHeroService {
 
         return this.heroToHeroConsumer.hiringHero(hiring, heroHiringUrl);
     }
+
 
 
 }

@@ -9,6 +9,7 @@ import app.layerLogicAndService.cmpHero.entity.Message;
 import app.layerLogicAndService.cmpHero.entity.Service;
 
 import java.net.UnknownHostException;
+import java.util.List;
 
 /**
  * @author Chris on 03.12.2017
@@ -55,7 +56,12 @@ public class HeroService implements IHeroService {
     @Override
     public void addMessage(Message message) {
 
-        // TODO - Store the Message, tell the User the Message?
+        Blackboard.getInstance().getUser().addMessage(message);
 
+    }
+
+    @Override
+    public List<Message> getMessages() {
+        return Blackboard.getInstance().getUser().getMessages();
     }
 }

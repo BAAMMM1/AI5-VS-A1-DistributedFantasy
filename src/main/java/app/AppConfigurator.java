@@ -5,6 +5,8 @@ import app.layerLogicAndService.cmpBlackboard.service.BlackboardServiceImp;
 import app.layerLogicAndService.cmpBlackboard.service.IBlackboardService;
 import app.layerLogicAndService.cmpBlackboard.service.IListenerService;
 import app.layerLogicAndService.cmpBlackboard.service.ListenerServiceImpl;
+import app.layerLogicAndService.cmpHero.service.HeroService;
+import app.layerLogicAndService.cmpHero.service.IHeroService;
 import app.layerLogicAndService.cmpHeroToHero.service.HeroToHeroService;
 import app.layerLogicAndService.cmpHeroToHero.service.IHeroToHeroService;
 import app.layerLogicAndService.cmpQuest.service.IQuestService;
@@ -39,6 +41,8 @@ public class AppConfigurator {
     private IHeroToHeroConsumer heroToHeroConsumer;
     private IHeroToHeroService heroToHeroService;
 
+    private IHeroService heroService;
+
     private IListenerService listener;
     private Shell shell;
 
@@ -61,7 +65,9 @@ public class AppConfigurator {
         this.heroToHeroConsumer = new HeroToHeroConsumer();
         this.heroToHeroService = new HeroToHeroService(heroToHeroConsumer, tavernaService, questService);
 
-        this.shell = new Shell(blackboardService, questService, tavernaService, heroToHeroService);
+        this.heroService = new HeroService();
+
+        this.shell = new Shell(blackboardService, questService, tavernaService, heroToHeroService, heroService);
     }
 
     public void configure() {

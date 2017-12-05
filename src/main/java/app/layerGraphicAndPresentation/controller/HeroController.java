@@ -6,7 +6,6 @@ import app.layerLogicAndService.cmpHero.entity.Hiring;
 import app.layerLogicAndService.cmpHero.entity.Message;
 import app.layerLogicAndService.cmpHero.entity.Service;
 import app.layerLogicAndService.cmpHero.service.IHeroService;
-import app.layerLogicAndService.cmpHeroToHero.service.IHeroToHeroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * Diese Klasse repräsentiert den service Endpoint unseres hero-service
+ * Diese Klasse repräsentiert den heroService Endpoint unseres hero-heroService
  *
  * @author Chris on 01.12.2017
  */
@@ -22,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 public class HeroController {
 
     @Autowired
-    IHeroService service;
+    IHeroService heroService;
 
 
     @RequestMapping(
@@ -32,7 +31,7 @@ public class HeroController {
     public ResponseEntity<?> getServices() {
 
         try{
-            Service service = this.service.getService();
+            Service service = this.heroService.getService();
             return new ResponseEntity<Service>(service, HttpStatus.OK);
 
         } catch (Exception e){
@@ -53,7 +52,7 @@ public class HeroController {
     public ResponseEntity<?> addHiring(@RequestBody Hiring request){
 
         try{
-            this.service.addHiring(request);
+            this.heroService.addHiring(request);
             return new ResponseEntity<>(HttpStatus.CREATED);
 
         } catch (Exception e){
@@ -72,7 +71,7 @@ public class HeroController {
     public ResponseEntity<?> addAssignment(@RequestBody Assignment request){
 
         try{
-            this.service.addAssignment(request);
+            this.heroService.addAssignment(request);
             return new ResponseEntity<>(HttpStatus.CREATED);
 
         } catch (Exception e){
@@ -91,7 +90,7 @@ public class HeroController {
     public ResponseEntity<?> addMessage(@RequestBody Message request){
 
         try{
-            this.service.addMessage(request);
+            this.heroService.addMessage(request);
             return new ResponseEntity<>(HttpStatus.CREATED);
 
         } catch (Exception e){

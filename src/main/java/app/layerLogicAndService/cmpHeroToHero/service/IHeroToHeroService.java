@@ -1,5 +1,6 @@
 package app.layerLogicAndService.cmpHeroToHero.service;
 
+import app.layerLogicAndService.cmpHero.entity.Message;
 import app.layerLogicAndService.cmpHero.entity.Service;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
 
@@ -9,6 +10,7 @@ import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCo
 public interface IHeroToHeroService {
 
     String invite(String heroName, int groupId, int questId, String messageToHero) throws ErrorCodeException;
+
 
 
 }
