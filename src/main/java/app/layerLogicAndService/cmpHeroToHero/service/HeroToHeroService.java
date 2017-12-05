@@ -56,7 +56,7 @@ public class HeroToHeroService implements IHeroToHeroService {
         }
 
         // TODO - Ist das Hiring hier mit den richtigen Daten befüllt?
-        Hiring hiring = new Hiring(Blackboard.getInstance().getUrl() + group.get_links().getSelf(), quest.getName(),  messageToHero);
+        Hiring hiring = new Hiring(group.get_links().getSelf(), quest.getName(),  messageToHero);
 
         return this.heroToHeroConsumer.hiringHero(hiring, heroHiringUrl);
     }
