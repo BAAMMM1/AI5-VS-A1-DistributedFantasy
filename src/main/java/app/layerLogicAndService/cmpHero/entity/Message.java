@@ -9,6 +9,10 @@ public class Message {
     private String status;
     private String typ;
 
+    public Message() {
+
+    }
+
     public Message(String message, String status, String typ) {
         this.message = message;
         this.status = status;

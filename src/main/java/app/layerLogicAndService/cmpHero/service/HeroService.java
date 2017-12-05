@@ -20,7 +20,7 @@ public class HeroService implements IHeroService {
     @Override
     public app.layerLogicAndService.cmpHero.entity.Service getService() {
 
-        String self = null;
+        String self = "";
 
         // TODO - Self bestimmung auslagern in die Config und die URL der Services als Konstante rausziehen
         try {
