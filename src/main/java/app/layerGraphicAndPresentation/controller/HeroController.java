@@ -64,6 +64,26 @@ public class HeroController {
 
 
     @RequestMapping(
+            value = "/hring",
+            method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> addhiring(@RequestBody Hiring request) {
+
+        try {
+            System.out.println(request.toString());
+            return new ResponseEntity<>(HttpStatus.CREATED);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        }
+    }
+
+
+
+
+    @RequestMapping(
             value = PathHeroservice.ASSIGNMENTS,
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE,
