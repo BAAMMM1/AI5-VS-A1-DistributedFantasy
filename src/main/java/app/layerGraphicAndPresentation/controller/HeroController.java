@@ -55,10 +55,11 @@ public class HeroController {
 
         try {
             System.out.println(request.toString());
+            this.heroService.addHiring(request);
             return new ResponseEntity<>(HttpStatus.CREATED);
 
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } catch (AlreadyInGroupException e) {
+            return new ResponseEntity<>(e.getError(), HttpStatus.BAD_REQUEST);
 
         }
     }
