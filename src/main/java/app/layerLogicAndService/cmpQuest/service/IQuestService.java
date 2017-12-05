@@ -26,6 +26,5 @@ public interface IQuestService {
     Visit deliverTaskPart() throws ErrorCodeException;
 
     Visit doAssignment() throws ErrorCodeException;
-    void deliverAssignment() throws ErrorCodeException;
 
 }

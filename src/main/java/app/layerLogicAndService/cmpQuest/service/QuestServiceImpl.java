@@ -25,9 +25,7 @@ import java.util.List;
  */
 public class QuestServiceImpl implements IQuestService {
 
-    private IQuestConsumer questConsumer = new QuestConsumerImpl();
-
-    private IHeroToHeroService heroToHeroService = new HeroToHeroService(new HeroToHeroConsumer(), new TavernaService(new TavernaConsumer()), new QuestServiceImpl(new QuestConsumerImpl()));
+    private IQuestConsumer questConsumer;
 
     public QuestServiceImpl(IQuestConsumer questConsumer) {
         this.questConsumer = questConsumer;
@@ -218,56 +216,6 @@ public class QuestServiceImpl implements IQuestService {
         return dto;
     }
 
-
-    @Override
-    public void deliverAssignment() throws ErrorCodeException {
-
-
-        if (Blackboard.getInstance().getUser().getCurrentQuesting().getPart() == null) {
-            throw new IllegalArgumentException("no part to deliverTask");
-        }
-
-        if (Blackboard.getInstance().getUser().getCurrentQuesting().getPart().getStepList() == null) {
-            throw new IllegalArgumentException("no steps to deliverTask");
-        }
-
-
-        for (int i = 0; i < Blackboard.getInstance().getUser().getCurrentQuesting().getPart().getStepList().size(); i++){
-
-            if(Blackboard.getInstance().getUser().getCurrentQuesting().getPart().getStepList().get(i).getToken().getToken() == null){
-
-                throw new IllegalArgumentException("a steptoken is missing");
-            }
-        }
-
-        TaskPart part = Blackboard.getInstance().getUser().getCurrentQuesting().getPart();
-
-        String data = "";
-        for (Step step : part.getStepList()) {
-            String token = "\""+ step.getToken().getToken() +"\", ";
-            data = data + token;
-        }
-
-        data = data.substring(0, data.length()-2);
-
-        AssignmentDerliver assignmentDerliver = new AssignmentDerliver(
-                Blackboard.getInstance().getUser().getAssignment().getId(),
-                Blackboard.getInstance().getUser().getAssignment().getTask(),
-                Blackboard.getInstance().getUser().getAssignment().getResource(),
-                Blackboard.getInstance().getUser().getAssignment().getMethod(),
-                data,
-                Blackboard.getInstance().getUser().get_links().getSelf(),
-                "message");
-
-        heroToHeroService.sendAssignmentDeliver(assignmentDerliver);
-
-        /*
-        Blackboard.getInstance().getUser().getCurrentQuesting().setCurrentUri(Blackboard.getInstance().getUser().getCurrentQuesting().getPart().getDeliverUri());
-
-        Blackboard.getInstance().getUser().getCurrentQuesting().getTask().setToken(visit.getToken());
-        */
-
-    }
 
     @Override
     public Answer answerToCurrentUri(String body) throws ErrorCodeException {

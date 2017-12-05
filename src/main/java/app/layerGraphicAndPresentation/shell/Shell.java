@@ -150,6 +150,8 @@ public class Shell {
         new GroupOwn(inputInterpreter);
         new GroupLeave(inputInterpreter);
         new Message(inputInterpreter, heroToHeroService);
+        new Assignment(inputInterpreter, questService);
+        new AssignmentDeliver(inputInterpreter, heroToHeroService);
 
     }
 }

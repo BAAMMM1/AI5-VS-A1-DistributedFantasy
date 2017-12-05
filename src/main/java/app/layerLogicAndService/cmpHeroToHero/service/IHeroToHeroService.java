@@ -14,7 +14,7 @@ public interface IHeroToHeroService {
     void sendMessage(String adventurer, String string) throws ErrorCodeException;
     void sendAssignment(String adventurer,  String message) throws ErrorCodeException;
 
-    void sendAssignmentDeliver(AssignmentDerliver derliver) throws ErrorCodeException;
+    void sendAssignmentDeliver() throws ErrorCodeException;
 
 
 
