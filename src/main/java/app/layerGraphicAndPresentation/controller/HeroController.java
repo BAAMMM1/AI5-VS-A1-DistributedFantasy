@@ -52,8 +52,7 @@ public class HeroController {
     @RequestMapping(
             value = "/hirings",
             method = RequestMethod.POST,
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+            consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addhiring(@RequestBody Hiring request) {
 
         try {
