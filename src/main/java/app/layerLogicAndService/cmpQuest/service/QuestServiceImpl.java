@@ -162,7 +162,7 @@ public class QuestServiceImpl implements IQuestService {
             if(Blackboard.getInstance().getUser().getAssignmentDerliver() == null){
                 throw new IllegalArgumentException("assignment not delivered");
             } else {
-                if(Blackboard.getInstance().getUser().getAssignment().getId() != Blackboard.getInstance().getUser().getAssignmentDerliver().getId()){
+                if(Blackboard.getInstance().getUser().getAssignmentDerliver().getId() != Blackboard.getInstance().getUser().getAssignmentDerliver().getId()){
                     throw new IllegalArgumentException("assignment id != assignmentdeliver id");
                 }
             }
