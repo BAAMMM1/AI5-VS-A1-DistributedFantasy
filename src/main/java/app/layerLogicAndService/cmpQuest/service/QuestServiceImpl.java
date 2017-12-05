@@ -157,7 +157,7 @@ public class QuestServiceImpl implements IQuestService {
 
 
         // Prüfen ob alle Assignments abgeliefert
-        if(Blackboard.getInstance().getUser().getAssignment() != null){
+        if(Blackboard.getInstance().getUser().getSendetAssignment() != null){
 
             if(Blackboard.getInstance().getUser().getAssignmentDerliver() == null){
                 throw new IllegalArgumentException("assignment not delivered");

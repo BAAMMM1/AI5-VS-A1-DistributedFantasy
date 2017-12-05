@@ -62,6 +62,8 @@ public class User {
 
     private Assignment assignment;
 
+    private Assignment sendetAssignment;
+
     public User(String name, String userToken, String userTokenValidTime) {
         this.name = name;
         this.userToken = userToken;
@@ -199,6 +201,14 @@ public class User {
 
     public void setCurrentGroup(Group currentGroup) {
         this.currentGroup = currentGroup;
+    }
+
+    public Assignment getSendetAssignment() {
+        return sendetAssignment;
+    }
+
+    public void setSendetAssignment(Assignment sendetAssignment) {
+        this.sendetAssignment = sendetAssignment;
     }
 
     @Override

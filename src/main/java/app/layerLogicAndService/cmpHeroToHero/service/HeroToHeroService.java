@@ -135,6 +135,8 @@ public class HeroToHeroService implements IHeroToHeroService {
                 message
                 );
 
+        Blackboard.getInstance().getUser().setSendetAssignment(assignment);
+
         this.heroToHeroConsumer.sendAssignment(heroAssignmentUrl, assignment);
 
     }
