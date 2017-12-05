@@ -5,22 +5,16 @@ package app.layerLogicAndService.cmpHero.service.exception;
  */
 public class AlreadyInGroupException extends Throwable {
 
-    Error error;
+    ErrorMessage error;
 
     public AlreadyInGroupException(String s) {
         super(s);
-        error = new Error(s);
+        error = new ErrorMessage(s);
     }
 
-    public Error getError() {
+    public ErrorMessage getError() {
         return error;
     }
 
-    public class Error{
-        String message;
 
-        public Error(String message) {
-            this.message = message;
-        }
-    }
 }

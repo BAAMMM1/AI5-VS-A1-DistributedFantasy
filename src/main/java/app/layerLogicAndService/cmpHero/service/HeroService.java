@@ -9,6 +9,11 @@ import app.layerLogicAndService.cmpHero.entity.Hiring;
 import app.layerLogicAndService.cmpHero.entity.Message;
 import app.layerLogicAndService.cmpHero.entity.Service;
 import app.layerLogicAndService.cmpHero.service.exception.AlreadyInGroupException;
+import app.layerLogicAndService.cmpTaverna.entity.Group;
+import app.layerLogicAndService.cmpTaverna.service.ITavernaService;
+import app.layerLogicAndService.cmpTaverna.service.TavernaService;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.tavernaConsumer.TavernaConsumer;
 
 import java.util.List;
 
@@ -17,6 +22,8 @@ import java.util.List;
  */
 @org.springframework.stereotype.Service
 public class HeroService implements IHeroService {
+
+    private ITavernaService tavernaService = new TavernaService(new TavernaConsumer());
 
     @Override
     public app.layerLogicAndService.cmpHero.entity.Service getService() {
@@ -34,15 +41,22 @@ public class HeroService implements IHeroService {
     }
 
     @Override
-    public void addHiring(Hiring hiring) throws AlreadyInGroupException {
+    public void addHiring(Hiring hiring) throws AlreadyInGroupException, ErrorCodeException {
 
         if(Blackboard.getInstance().getUser().getGroup() != null){
             throw new AlreadyInGroupException("ehhmm ohh ehmm Nein! oder vlt ehm Nein! Ne doch nicht Nein! Ne Nein!");
         }
 
-        // TODO - Testen ob es die Group auch gibt
+        String groupId = hiring.getGroup().replace("/taverna/groups/", "");
+        // Testen ob es die Group auch gibt, ansonsten throw exception
+        Group group = this.tavernaService.getGroup(Integer.valueOf(groupId));
+
+        // Wenn es sie gibt, beitreten
+        // in die Groupe eintretren in der taverna
+        this.tavernaService.enterGroup(Integer.valueOf(groupId));
+
         Blackboard.getInstance().getUser().setGroup(hiring.getGroup());
-        // TODO - in die Groupe eintretren in der taverna
+
 
     }
 

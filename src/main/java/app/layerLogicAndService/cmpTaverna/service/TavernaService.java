@@ -6,6 +6,7 @@ import app.layerLogicAndService.cmpTaverna.entity.Group;
 import app.layerLogicAndService.cmpTaverna.entity.Hero;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.tavernaConsumer.ITavernaConsumer;
+import org.springframework.stereotype.Service;
 
 import java.net.UnknownHostException;
 import java.util.List;

@@ -5,6 +5,7 @@ import app.layerLogicAndService.cmpHero.entity.Hiring;
 import app.layerLogicAndService.cmpHero.entity.Message;
 import app.layerLogicAndService.cmpHero.entity.Service;
 import app.layerLogicAndService.cmpHero.service.exception.AlreadyInGroupException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ import java.util.List;
 public interface IHeroService {
 
     Service getService();
-    void addHiring(Hiring hiring) throws AlreadyInGroupException;
+    void addHiring(Hiring hiring) throws AlreadyInGroupException, ErrorCodeException;
     void addAssignment(Assignment assignment);
     void addMessage(Message message);
     List<Message> getMessages();
