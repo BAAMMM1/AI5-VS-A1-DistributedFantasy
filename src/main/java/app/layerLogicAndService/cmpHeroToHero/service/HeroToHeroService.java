@@ -99,6 +99,7 @@ public class HeroToHeroService implements IHeroToHeroService {
     @Override
     public void sendAssignment(String adventurer, String message) throws ErrorCodeException {
 
+        /*
         if(Blackboard.getInstance().getUser().getCurrentGroup().getOwner()== null){
             throw new IllegalArgumentException("no group");
         }
@@ -106,6 +107,7 @@ public class HeroToHeroService implements IHeroToHeroService {
         if(Blackboard.getInstance().getUser().getCurrentGroup().getOwner() != Blackboard.getInstance().getUser().getName()){
             throw new IllegalArgumentException("no group");
         }
+        */
 
         Adventurer adven = this.tavernaService.getAdventure(adventurer);
 
