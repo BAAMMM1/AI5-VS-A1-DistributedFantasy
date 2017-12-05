@@ -8,6 +8,7 @@ import app.layerLogicAndService.cmpQuest.entity.Map;
 import app.layerLogicAndService.cmpQuest.entity.Quest;
 import app.layerLogicAndService.cmpQuest.entity.Task;
 import app.layerLogicAndService.cmpQuest.entity.questing.Questing;
+import app.layerLogicAndService.cmpTaverna.entity.Group;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +51,8 @@ public class User {
     private String heroclass = "WiZzArD";
     private String capabilities ="";
     private String group = null;
+
+    private Group currentGroup;
 
     private List<Message> messages;
 
@@ -188,6 +191,14 @@ public class User {
 
     public void setAssignment(Assignment assignment) {
         this.assignment = assignment;
+    }
+
+    public Group getCurrentGroup() {
+        return currentGroup;
+    }
+
+    public void setCurrentGroup(Group currentGroup) {
+        this.currentGroup = currentGroup;
     }
 
     @Override

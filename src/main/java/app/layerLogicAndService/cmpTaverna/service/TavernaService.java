@@ -73,6 +73,10 @@ public class TavernaService implements ITavernaService {
 
     @Override
     public String enterGroup(int id) throws ErrorCodeException {
+        Group group = this.getGroup(id);
+
+        Blackboard.getInstance().getUser().setCurrentGroup(group);
+
         return this.tavernaConsumer.enterGroup(id);
     }
 

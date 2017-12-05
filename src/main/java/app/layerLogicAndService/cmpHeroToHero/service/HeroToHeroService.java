@@ -4,6 +4,7 @@ import app.Application;
 import app.layerLogicAndService.cmpBlackboard.entity.Blackboard;
 import app.layerLogicAndService.cmpHero.entity.*;
 import app.layerLogicAndService.cmpQuest.entity.Quest;
+import app.layerLogicAndService.cmpQuest.entity.Task;
 import app.layerLogicAndService.cmpQuest.entity.questing.Step;
 import app.layerLogicAndService.cmpQuest.entity.questing.TaskPart;
 import app.layerLogicAndService.cmpQuest.service.IQuestService;
@@ -33,7 +34,7 @@ public class HeroToHeroService implements IHeroToHeroService {
     }
 
     @Override
-    public String invite(String heroName, int groupId, int questId, String messageToHero) throws ErrorCodeException {
+    public String invite(String heroName, int groupId, int taskid, String messageToHero) throws ErrorCodeException {
 
         // TODO - Benutzer über invite benachrichten
 
@@ -42,7 +43,7 @@ public class HeroToHeroService implements IHeroToHeroService {
         // TODO - Wenn Grouß nicht da, dann besser response als 404 - Not Found
         Group group = this.tavernaService.getGroup(groupId);
 
-        Quest quest = this.questService.getQuest(questId);
+        Task task = this.questService.getTask(taskid);
 
         String heroServiceUrl = adventurer.getUrl();
 
@@ -61,7 +62,7 @@ public class HeroToHeroService implements IHeroToHeroService {
         }
 
         // TODO - Ist das Hiring hier mit den richtigen Daten befüllt?
-        Hiring hiring = new Hiring(group.get_links().getSelf(), quest.getName(),  messageToHero);
+        Hiring hiring = new Hiring(group.get_links().getSelf(), task.getName(),  messageToHero);
 
         return this.heroToHeroConsumer.hiringHero(hiring, heroHiringUrl);
     }
@@ -97,6 +98,14 @@ public class HeroToHeroService implements IHeroToHeroService {
 
     @Override
     public void sendAssignment(String adventurer, String message) throws ErrorCodeException {
+
+        if(Blackboard.getInstance().getUser().getCurrentGroup().getOwner()== null){
+            throw new IllegalArgumentException("no group");
+        }
+
+        if(Blackboard.getInstance().getUser().getCurrentGroup().getOwner() != Blackboard.getInstance().getUser().getName()){
+            throw new IllegalArgumentException("no group");
+        }
 
         Adventurer adven = this.tavernaService.getAdventure(adventurer);
 

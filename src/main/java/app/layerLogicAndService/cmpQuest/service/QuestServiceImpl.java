@@ -16,6 +16,7 @@ import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.heroTohHeroCo
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.IQuestConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.QuestConsumerImpl;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.tavernaConsumer.TavernaConsumer;
+import jdk.nashorn.internal.ir.IfNode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -153,6 +154,23 @@ public class QuestServiceImpl implements IQuestService {
         if (Blackboard.getInstance().getUser().getCurrentQuesting().getPart().getStepList() == null) {
             throw new IllegalArgumentException("no steps to deliverTask");
         }
+
+
+        // Prüfen ob alle Assignments abgeliefert
+        if(Blackboard.getInstance().getUser().getAssignment() != null){
+
+            if(Blackboard.getInstance().getUser().getAssignmentDerliver() == null){
+                throw new IllegalArgumentException("assignment not delivered");
+            } else {
+                if(Blackboard.getInstance().getUser().getAssignment().getId() != Blackboard.getInstance().getUser().getAssignmentDerliver().getId()){
+                    throw new IllegalArgumentException("assignment id != assignmentdeliver id");
+                }
+            }
+
+
+        }
+
+
 
         for (int i = 0; i < Blackboard.getInstance().getUser().getCurrentQuesting().getPart().getStepList().size(); i++){
 
