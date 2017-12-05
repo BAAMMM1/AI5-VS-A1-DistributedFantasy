@@ -8,8 +8,8 @@ import app.layerLogicAndService.cmpHero.entity.Assignment;
 import app.layerLogicAndService.cmpHero.entity.Hiring;
 import app.layerLogicAndService.cmpHero.entity.Message;
 import app.layerLogicAndService.cmpHero.entity.Service;
+import app.layerLogicAndService.cmpHero.service.exception.AlreadyInGroupException;
 
-import java.net.UnknownHostException;
 import java.util.List;
 
 /**
@@ -24,7 +24,7 @@ public class HeroService implements IHeroService {
         Service service = new Service(
                 Blackboard.getInstance().getUser().get_links().getSelf(),
                 false,
-                null,
+                Blackboard.getInstance().getUser().getGroup(),
                 "http://" + Application.IP + PathHeroservice.HIRINGS,
                 "http://" + Application.IP + PathHeroservice.ASSIGNMENTS,
                 "http://" + Application.IP + PathHeroservice.MESSAGES);
@@ -33,9 +33,13 @@ public class HeroService implements IHeroService {
     }
 
     @Override
-    public void addHiring(Hiring hiring) {
+    public void addHiring(Hiring hiring) throws AlreadyInGroupException {
 
-        // TODO - Do here something with the Hiring
+        if(Blackboard.getInstance().getUser().getGroup() == null){
+            throw new AlreadyInGroupException("ehhmm ohh ehmm Nein! oder vlt ehm Nein! Ne doch nicht Nein! Ne Nein!");
+        }
+
+        Blackboard.getInstance().getUser().setGroup(hiring.getGroup());
 
     }
 

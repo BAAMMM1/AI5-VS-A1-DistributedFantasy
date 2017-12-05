@@ -6,6 +6,7 @@ import app.layerLogicAndService.cmpHero.entity.Hiring;
 import app.layerLogicAndService.cmpHero.entity.Message;
 import app.layerLogicAndService.cmpHero.entity.Service;
 import app.layerLogicAndService.cmpHero.service.IHeroService;
+import app.layerLogicAndService.cmpHero.service.exception.AlreadyInGroupException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -55,9 +56,8 @@ public class HeroController {
             this.heroService.addHiring(request);
             return new ResponseEntity<>(HttpStatus.CREATED);
 
-        } catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-
+        } catch (AlreadyInGroupException e) {
+            return new ResponseEntity<>(e.getError(), HttpStatus.BAD_REQUEST);
         }
 
     }

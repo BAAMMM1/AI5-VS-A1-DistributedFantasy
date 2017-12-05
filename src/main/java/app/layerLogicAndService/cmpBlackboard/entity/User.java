@@ -46,6 +46,7 @@ public class User {
     // TODO - Hard bis wir wissen wo es herkommt
     private String heroclass = "WiZzArD";
     private String capabilities ="";
+    private String group = null;
 
     private List<Message> messages;
 
@@ -148,6 +149,13 @@ public class User {
         return this.messages;
     }
 
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
+    }
 
     @Override
     public String toString() {
