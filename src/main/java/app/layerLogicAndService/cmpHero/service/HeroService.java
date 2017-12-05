@@ -47,7 +47,13 @@ public class HeroService implements IHeroService {
             throw new AlreadyInGroupException("ehhmm ohh ehmm Nein! oder vlt ehm Nein! Ne doch nicht Nein! Ne Nein!");
         }
 
-        String groupId = hiring.getGroup().replace("/taverna/groups/", "");
+        String groupId = null;
+        try{
+            groupId = hiring.getGroup().replace("/taverna/groups/", "");
+        } catch (Exception e){
+            throw new IllegalArgumentException("group link incorrect");
+        }
+
         // Testen ob es die Group auch gibt, ansonsten throw exception
         Group group = this.tavernaService.getGroup(Integer.valueOf(groupId));
 

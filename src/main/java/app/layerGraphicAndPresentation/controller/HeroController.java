@@ -67,6 +67,9 @@ public class HeroController {
 
         } catch (ErrorCodeException e) {
             return new ResponseEntity<>(this.gson.toJson(new ErrorMessage(e.getMessage())), HttpStatus.BAD_REQUEST);
+
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(this.gson.toJson(new ErrorMessage(e.getMessage())), HttpStatus.BAD_REQUEST);
         }
     }
 
