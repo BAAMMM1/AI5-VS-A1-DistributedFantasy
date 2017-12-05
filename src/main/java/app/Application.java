@@ -13,13 +13,16 @@ import java.net.UnknownHostException;
 @EnableAutoConfiguration
 public class Application {
 
+    public static String IP;
+
     public static void main(String[] args) throws UnknownHostException {
 
         // TODO - Spring Boot erst nach dem Login starten
         SpringApplication.run(Application.class, args);
 
+        IP = java.net.InetAddress.getLocalHost().getHostAddress();
 
-        System.out.println(java.net.InetAddress.getLocalHost().getHostAddress().toString());
+        System.out.println(java.net.InetAddress.getLocalHost().getHostAddress());
         System.out.print(System.getenv("TEST_ENV"));
 
         AppConfigurator appConfig = new AppConfigurator();
