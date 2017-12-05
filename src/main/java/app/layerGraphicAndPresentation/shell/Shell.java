@@ -152,6 +152,7 @@ public class Shell {
         new Message(inputInterpreter, heroToHeroService);
         new Assignment(inputInterpreter, questService);
         new AssignmentDeliver(inputInterpreter, heroToHeroService);
+        new AssignmentSend(inputInterpreter,heroToHeroService);
 
     }
 }
