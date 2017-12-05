@@ -47,19 +47,19 @@ public class HeroService implements IHeroService {
             throw new AlreadyInGroupException("ehhmm ohh ehmm Nein! oder vlt ehm Nein! Ne doch nicht Nein! Ne Nein!");
         }
 
-        String groupId = null;
+        int groupId;
         try{
-            groupId = hiring.getGroup().replace("/taverna/groups/", "");
+            groupId = Integer.valueOf(hiring.getGroup().replace("/taverna/groups/", ""));
         } catch (Exception e){
             throw new IllegalArgumentException("group link incorrect");
         }
 
         // Testen ob es die Group auch gibt, ansonsten throw exception
-        Group group = this.tavernaService.getGroup(Integer.valueOf(groupId));
+        Group group = this.tavernaService.getGroup(groupId);
 
         // Wenn es sie gibt, beitreten
         // in die Groupe eintretren in der taverna
-        this.tavernaService.enterGroup(Integer.valueOf(groupId));
+        this.tavernaService.enterGroup(groupId);
 
         Blackboard.getInstance().getUser().setGroup(hiring.getGroup());
 
