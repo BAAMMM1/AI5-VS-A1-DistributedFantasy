@@ -52,7 +52,8 @@ public class HeroController {
     @RequestMapping(
             value = "/hirings",
             method = RequestMethod.POST,
-            consumes = MediaType.APPLICATION_JSON_VALUE)
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addhiring(@RequestBody Hiring request) {
 
         try {
@@ -61,7 +62,7 @@ public class HeroController {
             return new ResponseEntity<>(HttpStatus.CREATED);
 
         } catch (AlreadyInGroupException e) {
-            return new ResponseEntity<>(e.getError(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(this.gson.toJson(e.getError()), HttpStatus.BAD_REQUEST);
 
         }
     }
