@@ -27,7 +27,7 @@ public class Messages extends Command{
         List<Message> messageList = this.heroService.getMessages();
 
         for(Message message: messageList){
-            System.out.print(message.getMessage());
+            System.out.println(message.getMessage());
         }
 
         return null;
