@@ -72,8 +72,7 @@ public class HeroController {
     @RequestMapping(
             value = PathHeroservice.ASSIGNMENTS,
             method = RequestMethod.POST,
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+            consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addAssignment(@RequestBody Assignment request){
 
         try{
@@ -91,8 +90,7 @@ public class HeroController {
     @RequestMapping(
             value = PathHeroservice.MESSAGES,
             method = RequestMethod.POST,
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+            consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addMessage(@RequestBody Message request){
 
         try{
