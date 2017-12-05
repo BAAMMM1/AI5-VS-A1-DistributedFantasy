@@ -149,6 +149,7 @@ public class Shell {
         new Messages(inputInterpreter, heroService);
         new GroupOwn(inputInterpreter);
         new GroupLeave(inputInterpreter);
+        new Message(inputInterpreter, heroToHeroService);
 
     }
 }
