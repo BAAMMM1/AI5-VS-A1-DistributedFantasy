@@ -55,6 +55,10 @@ public class HeroService implements IHeroService {
 
     @Override
     public List<Message> getMessages() {
-        return Blackboard.getInstance().getUser().getMessages();
+
+        List<Message> messages = Blackboard.getInstance().getUser().getMessages();
+        Blackboard.getInstance().getUser().removeMessage();
+
+        return messages;
     }
 }

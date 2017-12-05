@@ -23,6 +23,9 @@ public class Assignment {
         this.message = message;
     }
 
+    public Assignment() {
+    }
+
     public int getId() {
         return id;
     }

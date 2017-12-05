@@ -15,6 +15,9 @@ public class Hiring {
         this.message = message;
     }
 
+    public Hiring() {
+    }
+
     public String getGroup() {
         return group;
     }

@@ -140,8 +140,8 @@ public class User {
         this.messages.add(message);
     }
 
-    public void removeMessage(Message message){
-        this.messages.remove(message);
+    public void removeMessage(){
+        this.messages = new ArrayList<>();
     }
 
     public List<Message> getMessages(){
