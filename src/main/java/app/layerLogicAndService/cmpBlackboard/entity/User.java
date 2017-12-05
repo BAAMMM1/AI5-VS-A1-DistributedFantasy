@@ -5,6 +5,7 @@ import app.layerLogicAndService.cmpQuest.entity.Link;
 import app.layerLogicAndService.cmpQuest.entity.Map;
 import app.layerLogicAndService.cmpQuest.entity.Quest;
 import app.layerLogicAndService.cmpQuest.entity.Task;
+import app.layerLogicAndService.cmpQuest.entity.questing.Questing;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +50,8 @@ public class User {
     private String group = null;
 
     private List<Message> messages;
+
+    private Questing currentQuesting;
 
     public User(String name, String userToken, String userTokenValidTime) {
         this.name = name;
@@ -155,6 +158,14 @@ public class User {
 
     public void setGroup(String group) {
         this.group = group;
+    }
+
+    public Questing getCurrentQuesting() {
+        return currentQuesting;
+    }
+
+    public void setCurrentQuesting(Questing currentQuesting) {
+        this.currentQuesting = currentQuesting;
     }
 
     @Override

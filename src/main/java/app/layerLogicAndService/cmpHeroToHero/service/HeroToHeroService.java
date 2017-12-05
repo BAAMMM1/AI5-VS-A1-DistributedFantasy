@@ -32,6 +32,8 @@ public class HeroToHeroService implements IHeroToHeroService {
     @Override
     public String invite(String heroName, int groupId, int questId, String messageToHero) throws ErrorCodeException {
 
+        // TODO - Benutzer über invite benachrichten
+
         Adventurer adventurer = this.tavernaService.getAdventure(heroName);
 
         // TODO - Wenn Grouß nicht da, dann besser response als 404 - Not Found
@@ -64,6 +66,8 @@ public class HeroToHeroService implements IHeroToHeroService {
     @Override
     public void sendMessage(String adventurer, String string) throws ErrorCodeException {
 
+        // TODO - Benutzer über Message income benachrichtigen
+
         Adventurer adven = this.tavernaService.getAdventure(adventurer);
 
         String heroServiceUrl = adven.getUrl();
@@ -80,9 +84,17 @@ public class HeroToHeroService implements IHeroToHeroService {
             heroMessageUrl = "http://" + heroMessageUrl;
         }
 
+        // TODO - User über fehlgeschlagene Zustellung informieren
+
+        // TODO - User übererfolgreiche zustellung informieren
         Message message = new Message(string, "", "message");
 
         this.heroToHeroConsumer.sendMessage(message, heroMessageUrl);
+    }
+
+    @Override
+    public void sendAssignment(String adventurer, String message) throws ErrorCodeException {
+
     }
 
 

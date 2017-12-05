@@ -11,6 +11,9 @@ public interface IHeroToHeroService {
 
     String invite(String heroName, int groupId, int questId, String messageToHero) throws ErrorCodeException;
     void sendMessage(String adventurer, String string) throws ErrorCodeException;
+    void sendAssignment(String adventurer,  String message) throws ErrorCodeException;
+
+
 
 
 }

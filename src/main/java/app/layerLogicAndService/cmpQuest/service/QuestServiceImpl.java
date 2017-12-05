@@ -1,5 +1,6 @@
 package app.layerLogicAndService.cmpQuest.service;
 
+import app.layerLogicAndService.cmpBlackboard.entity.Blackboard;
 import app.layerLogicAndService.cmpQuest.entity.*;
 import app.layerLogicAndService.cmpQuest.entity.questing.Questing;
 import app.layerLogicAndService.cmpQuest.entity.questing.Step;
@@ -18,8 +19,6 @@ import java.util.List;
 public class QuestServiceImpl implements IQuestService {
 
     private IQuestConsumer questConsumer = new QuestConsumerImpl();
-
-    private Questing currentQuesting;
 
     public QuestServiceImpl(IQuestConsumer questConsumer) {
         this.questConsumer = questConsumer;
@@ -58,11 +57,11 @@ public class QuestServiceImpl implements IQuestService {
 
         Visit dto = this.questConsumer.visitHost(map.getHost(), task.getResource());
 
-        this.currentQuesting = new Questing(task, map, task.getResource()); //
+        Blackboard.getInstance().getUser().setCurrentQuesting(new Questing(task, map, task.getResource()));
 
 
         if (dto.getNext() != null) {
-            this.currentQuesting.setNext(dto.getNext()); //
+            Blackboard.getInstance().getUser().getCurrentQuesting().setNext(dto.getNext()); //
 
         }
 
@@ -73,12 +72,12 @@ public class QuestServiceImpl implements IQuestService {
                 steps.add(new Step(dto.getSteps_todo().get(i)));
             }
 
-            this.currentQuesting.setPart(new TaskPart(this.currentQuesting.getMap().getHost() + this.currentQuesting.getCurrentUri(), steps));
+            Blackboard.getInstance().getUser().getCurrentQuesting().setPart(new TaskPart(Blackboard.getInstance().getUser().getCurrentQuesting().getMap().getHost() + Blackboard.getInstance().getUser().getCurrentQuesting().getCurrentUri(), steps));
 
 
         }
 
-        System.out.println(this.currentQuesting.toString());
+        System.out.println(Blackboard.getInstance().getUser().getCurrentQuesting().toString());
 
         return dto;
     }
@@ -86,15 +85,15 @@ public class QuestServiceImpl implements IQuestService {
     @Override
     public Visit next() throws ErrorCodeException {
 
-        if (this.currentQuesting.getNext() == null) {
+        if (Blackboard.getInstance().getUser().getCurrentQuesting().getNext() == null) {
             throw new IllegalArgumentException("no next");
         }
 
-        Visit dto = this.questConsumer.visitHost(this.currentQuesting.getMap().getHost(), this.currentQuesting.getNext());
-        this.currentQuesting.setCurrentUri(this.currentQuesting.getNext());
+        Visit dto = this.questConsumer.visitHost(Blackboard.getInstance().getUser().getCurrentQuesting().getMap().getHost(), Blackboard.getInstance().getUser().getCurrentQuesting().getNext());
+        Blackboard.getInstance().getUser().getCurrentQuesting().setCurrentUri(Blackboard.getInstance().getUser().getCurrentQuesting().getNext());
 
         if (dto.getNext() != null) {
-            this.currentQuesting.setNext(dto.getNext());
+            Blackboard.getInstance().getUser().getCurrentQuesting().setNext(dto.getNext());
 
         }
 
@@ -105,10 +104,10 @@ public class QuestServiceImpl implements IQuestService {
                 steps.add(new Step(dto.getSteps_todo().get(i)));
             }
 
-            this.currentQuesting.setPart(new TaskPart(this.currentQuesting.getMap().getHost() + this.currentQuesting.getCurrentUri(), steps));
+            Blackboard.getInstance().getUser().getCurrentQuesting().setPart(new TaskPart(Blackboard.getInstance().getUser().getCurrentQuesting().getMap().getHost() + Blackboard.getInstance().getUser().getCurrentQuesting().getCurrentUri(), steps));
         }
 
-        System.out.println(this.currentQuesting.toString());
+        System.out.println(Blackboard.getInstance().getUser().getCurrentQuesting().toString());
         return dto;
     }
 
@@ -116,51 +115,51 @@ public class QuestServiceImpl implements IQuestService {
     public Visit step(int step) throws ErrorCodeException {
 
 
-        if (this.currentQuesting.getPart() == null) {
+        if (Blackboard.getInstance().getUser().getCurrentQuesting().getPart() == null) {
             throw new IllegalArgumentException("no part");
         }
 
-        if (this.currentQuesting.getPart().getStepList() == null) {
+        if (Blackboard.getInstance().getUser().getCurrentQuesting().getPart().getStepList() == null) {
             throw new IllegalArgumentException("no steps");
         }
 
-        if (this.currentQuesting.getPart().getStepList().get(step - 1) == null) {
+        if (Blackboard.getInstance().getUser().getCurrentQuesting().getPart().getStepList().get(step - 1) == null) {
             throw new IllegalArgumentException("no step");
         }
 
 
-        Visit dto = this.questConsumer.visitHost(this.currentQuesting.getMap().getHost(), this.currentQuesting.getPart().getStepList().get(step - 1).getUri());
-        this.currentQuesting.setCurrentUri(this.currentQuesting.getPart().getStepList().get(step - 1).getUri());
+        Visit dto = this.questConsumer.visitHost(Blackboard.getInstance().getUser().getCurrentQuesting().getMap().getHost(), Blackboard.getInstance().getUser().getCurrentQuesting().getPart().getStepList().get(step - 1).getUri());
+        Blackboard.getInstance().getUser().getCurrentQuesting().setCurrentUri(Blackboard.getInstance().getUser().getCurrentQuesting().getPart().getStepList().get(step - 1).getUri());
 
 
-        System.out.println(this.currentQuesting.toString());
+        System.out.println(Blackboard.getInstance().getUser().getCurrentQuesting().toString());
         return dto;
     }
 
     @Override
     public Visit deliverTaskPart() throws ErrorCodeException {
 
-        if (this.currentQuesting.getPart() == null) {
+        if (Blackboard.getInstance().getUser().getCurrentQuesting().getPart() == null) {
             throw new IllegalArgumentException("no part to deliverTask");
         }
 
-        if (this.currentQuesting.getPart().getStepList() == null) {
+        if (Blackboard.getInstance().getUser().getCurrentQuesting().getPart().getStepList() == null) {
             throw new IllegalArgumentException("no steps to deliverTask");
         }
 
-        for (int i = 0; i < this.currentQuesting.getPart().getStepList().size(); i++){
+        for (int i = 0; i < Blackboard.getInstance().getUser().getCurrentQuesting().getPart().getStepList().size(); i++){
 
-            if(this.currentQuesting.getPart().getStepList().get(i).getToken().getToken() == null){
+            if(Blackboard.getInstance().getUser().getCurrentQuesting().getPart().getStepList().get(i).getToken().getToken() == null){
 
                 throw new IllegalArgumentException("a steptoken is missing");
             }
         }
 
-        Visit visit = this.questConsumer.deliverTaskPart(this.currentQuesting.getPart());
+        Visit visit = this.questConsumer.deliverTaskPart(Blackboard.getInstance().getUser().getCurrentQuesting().getPart());
 
-        this.currentQuesting.setCurrentUri(this.currentQuesting.getPart().getDeliverUri());
+        Blackboard.getInstance().getUser().getCurrentQuesting().setCurrentUri(Blackboard.getInstance().getUser().getCurrentQuesting().getPart().getDeliverUri());
 
-        this.currentQuesting.getTask().setToken(visit.getToken());
+        Blackboard.getInstance().getUser().getCurrentQuesting().getTask().setToken(visit.getToken());
 
 
         return visit;
@@ -169,34 +168,34 @@ public class QuestServiceImpl implements IQuestService {
     @Override
     public Answer answerToCurrentUri(String body) throws ErrorCodeException {
 
-        if (this.currentQuesting == null) {
+        if (Blackboard.getInstance().getUser().getCurrentQuesting() == null) {
             throw new IllegalArgumentException("no to answer task");
         }
 
-        Answer answer = this.questConsumer.post(this.currentQuesting.getMap().getHost(), this.currentQuesting.getCurrentUri(), body);
+        Answer answer = this.questConsumer.post(Blackboard.getInstance().getUser().getCurrentQuesting().getMap().getHost(), Blackboard.getInstance().getUser().getCurrentQuesting().getCurrentUri(), body);
 
 
         if (answer.getToken() != null) {
 
-            if(this.currentQuesting.getPart() != null){
-                Step step = this.currentQuesting.getPart().getStepList().stream().filter(s -> s.getUri().equals(this.currentQuesting.getCurrentUri())).findFirst().orElse(null);
+            if(Blackboard.getInstance().getUser().getCurrentQuesting().getPart() != null){
+                Step step = Blackboard.getInstance().getUser().getCurrentQuesting().getPart().getStepList().stream().filter(s -> s.getUri().equals(Blackboard.getInstance().getUser().getCurrentQuesting().getCurrentUri())).findFirst().orElse(null);
 
                 if (step != null) {
 
                     step.setToken(new Token(answer.getToken_name(), answer.getToken()));
                 } else {
 
-                    this.currentQuesting.getTask().setToken(answer.getToken());
+                    Blackboard.getInstance().getUser().getCurrentQuesting().getTask().setToken(answer.getToken());
                 }
 
             } else {
 
-                this.currentQuesting.getTask().setToken(answer.getToken());
+                Blackboard.getInstance().getUser().getCurrentQuesting().getTask().setToken(answer.getToken());
             }
 
         }
 
-        System.out.println(this.currentQuesting.toString());
+        System.out.println(Blackboard.getInstance().getUser().getCurrentQuesting().toString());
 
         return answer;
     }
@@ -205,13 +204,13 @@ public class QuestServiceImpl implements IQuestService {
     public List<Delivery> deliverTask() throws ErrorCodeException {
 
 
-        if (this.currentQuesting.getTask().getToken() == null) {
+        if (Blackboard.getInstance().getUser().getCurrentQuesting().getTask().getToken() == null) {
             throw new IllegalArgumentException("no token at this point to deliverTask");
         }
 
 
-        List<Delivery> list = this.questConsumer.deliverTask(this.currentQuesting.getTask());
-        this.currentQuesting.setCurrentUri(this.currentQuesting.getTask().getResource());
+        List<Delivery> list = this.questConsumer.deliverTask(Blackboard.getInstance().getUser().getCurrentQuesting().getTask());
+        Blackboard.getInstance().getUser().getCurrentQuesting().setCurrentUri(Blackboard.getInstance().getUser().getCurrentQuesting().getTask().getResource());
 
 
 
