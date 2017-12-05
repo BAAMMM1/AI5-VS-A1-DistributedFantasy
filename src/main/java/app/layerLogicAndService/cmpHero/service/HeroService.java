@@ -36,7 +36,7 @@ public class HeroService implements IHeroService {
     @Override
     public void addHiring(Hiring hiring) throws AlreadyInGroupException {
 
-        if(Blackboard.getInstance().getUser().getGroup() == null){
+        if(Blackboard.getInstance().getUser().getGroup() != null){
             throw new AlreadyInGroupException("ehhmm ohh ehmm Nein! oder vlt ehm Nein! Ne doch nicht Nein! Ne Nein!");
         }
 
