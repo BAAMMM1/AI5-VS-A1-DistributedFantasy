@@ -1,7 +1,10 @@
 package app.layerPersistenceAndDataAccess.serviceAgent.httpAccess;
 
 import app.layerLogicAndService.cmpBlackboard.entity.Blackboard;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeDTO;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.UnexpectedResponseCodeException;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.tavernaConsumer.PathTaverna;
+import com.google.gson.Gson;
 
 import javax.el.MethodNotFoundException;
 import java.io.IOException;
@@ -19,11 +22,71 @@ public class HTTPCaller {
     private static final int BUFFER_LENGHT = 819200;
     private static final String MEDIA_TYPE_APPLICATION_JSON = "application/json";
 
-    public HTTPResponse doGET(String url){
+    private Gson gson = new Gson();
+
+    public HTTPResponse doDELETE(String url) throws UnexpectedResponseCodeException {
+        return this.doDELETE(url, null);
+    }
+
+    public HTTPResponse doDELETE(String url, String token) throws UnexpectedResponseCodeException {
+
+        HTTPRequest httpRequest =
+                new HTTPRequest(
+                        url,
+                        EnumHTTPMethod.DELETE
+                );
+
+        if(token != null){
+            httpRequest.setAuthorizationToken(token);
+        }
+
+        HTTPResponse result = this.call(httpRequest);
+
+        if (result.getCode() != 200) {
+            ErrorCodeDTO errorCodeDTO = gson.fromJson(result.getBody(), ErrorCodeDTO.class);
+
+            throw new UnexpectedResponseCodeException(errorCodeDTO);
+
+        }
+
+
+        return result;
+    }
+
+    public HTTPResponse doPOST(String url, String body) throws UnexpectedResponseCodeException {
+        return this.doPOST(url, null, body);
+    }
+
+    public HTTPResponse doPOST(String url, String token, String body) throws UnexpectedResponseCodeException {
+
+        HTTPRequest httpRequest =
+                new HTTPRequest(
+                        url,
+                        EnumHTTPMethod.POST,
+                        body
+                );
+
+        if (token != null) {
+            httpRequest.setAuthorizationToken(token);
+        }
+
+        HTTPResponse result = this.call(httpRequest);
+
+        if (result.getCode() != 201) {
+            ErrorCodeDTO errorCodeDTO = gson.fromJson(result.getBody(), ErrorCodeDTO.class);
+
+            throw new UnexpectedResponseCodeException(errorCodeDTO);
+
+        }
+
+        return result;
+    }
+
+    public HTTPResponse doGET(String url) throws UnexpectedResponseCodeException {
         return doGET(url, null);
     }
 
-    public HTTPResponse doGET(String url, String token){
+    public HTTPResponse doGET(String url, String token) throws UnexpectedResponseCodeException {
 
         HTTPRequest httpRequest =
                 new HTTPRequest(
@@ -31,11 +94,20 @@ public class HTTPCaller {
                         EnumHTTPMethod.GET
                 );
 
-        if(token != null){
+        if (token != null) {
             httpRequest.setAuthorizationToken(token);
         }
 
-        return call(httpRequest);
+        HTTPResponse result = this.call(httpRequest);
+
+        if (result.getCode() != 200) {
+            ErrorCodeDTO errorCodeDTO = gson.fromJson(result.getBody(), ErrorCodeDTO.class);
+
+            throw new UnexpectedResponseCodeException(errorCodeDTO);
+
+        }
+
+        return result;
     }
 
     public HTTPResponse call(HTTPRequest request) {
@@ -50,7 +122,6 @@ public class HTTPCaller {
 
             connection = (HttpURLConnection) url.openConnection();
             connection.setConnectTimeout(10000);
-
 
 
             connection.setRequestMethod(request.getMethod().toString());
@@ -77,10 +148,10 @@ public class HTTPCaller {
 
             }
 
-            try{
+            try {
                 connection.connect();
 
-            } catch (Exception e){
+            } catch (Exception e) {
                 throw new IllegalArgumentException(e.getMessage());
 
             }
@@ -93,12 +164,12 @@ public class HTTPCaller {
             byte[] responeBody = new byte[BUFFER_LENGHT];
 
 
-            if(responeCode >= 500){
+            if (responeCode >= 500) {
                 throw new ServerException("code: " + responeCode);
             }
 
-            if(responeCode == 404){
-                throw new MethodNotFoundException();
+            if (responeCode == 404) {
+                throw new MethodNotFoundException("method " + request.getMethod() + " could not be found for " + request.getUrl());
             }
 
 
@@ -118,6 +189,12 @@ public class HTTPCaller {
 
             String Body = new String(responeBody, 0, responeLen);
 
+            /* TODO - Falls eine Anfrage durch ging aber keinen Body enthält
+            if(Body.equals("")){
+                throw BodyIsEmptyException();
+            }
+            */
+
             System.out.println(responeCode);
             System.out.println(Body.toString());
 
@@ -130,39 +207,6 @@ public class HTTPCaller {
         } catch (IOException e) {
             throw new IllegalArgumentException(e.getMessage());
         }
-    }
-
-
-    public static void main(String[] args) throws IOException {
-
-        HTTPCaller caller = new HTTPCaller();
-        HTTPResponse response;
-
-        response = caller.call(
-                new HTTPRequest(
-                        "http://127.0.0.1:8080/appoints/1",
-                        EnumHTTPMethod.GET,
-                        null
-                ));
-
-        System.out.println(response.toString());
-
-        response = caller.call(
-                new HTTPRequest(
-                        "http://127.0.0.1:8080/appoints/10",
-                        EnumHTTPMethod.GET
-                ));
-
-        System.out.println(response.toString());
-
-        response = caller.call(
-                new HTTPRequest(
-                        "http://127.0.0.1:8080/appoints/1",
-                        EnumHTTPMethod.GET
-                ));
-
-        System.out.println(response.toString());
-
     }
 
 }
