@@ -54,13 +54,8 @@ public class TavernaConsumer implements ITavernaConsumer {
             throw new ErrorCodeException(errorCodeDTO);
 
         } else {
-            AdventurerDTO dto = gson.fromJson(response.getBody(), AdventurerDTO.class);
 
-            Adventurer adventurer = gson.fromJson(new JSONObject(response.getBody()).getJSONArray("object").get(0).toString(), Adventurer.class);
-
-            System.out.println("->\n" + adventurer.toString());
-
-            return dto.getObject().get(0);
+            return gson.fromJson(new JSONObject(response.getBody()).getJSONArray("object").get(0).toString(), Adventurer.class);
         }
 
     }
@@ -86,9 +81,15 @@ public class TavernaConsumer implements ITavernaConsumer {
             throw new ErrorCodeException(errorCodeDTO);
 
         } else {
-            GroupGetMembersDTO dto = gson.fromJson(response.getBody(), GroupGetMembersDTO.class);
 
-            return dto.getObjects();
+            List<Adventurer> adventurerList = new ArrayList<Adventurer>();
+            JSONArray jsonArray = new JSONObject(response.getBody()).getJSONArray("objects");
+
+            for (int i = 0; i < jsonArray.length(); i++){
+                adventurerList.add(gson.fromJson(jsonArray.get(i).toString(), Adventurer.class));
+            }
+
+            return adventurerList;
         }
     }
 
@@ -145,9 +146,16 @@ public class TavernaConsumer implements ITavernaConsumer {
 
         } else {
 
-            GroupsGetDTO dto = gson.fromJson(response.getBody(), GroupsGetDTO.class);
 
-            return dto.getObject();
+            List<Group> groupList = new ArrayList<Group>();
+            JSONArray jsonArray = new JSONObject(response.getBody()).getJSONArray("objects");
+
+            for (int i = 0; i < jsonArray.length(); i++){
+                groupList.add(gson.fromJson(jsonArray.get(i).toString(), Group.class));
+            }
+
+            return groupList;
+
         }
     }
 
@@ -178,9 +186,7 @@ public class TavernaConsumer implements ITavernaConsumer {
 
         } else {
 
-            GroupGetDTO dto = gson.fromJson(response.getBody(), GroupGetDTO.class);
-
-            return dto.getObject();
+            return gson.fromJson(new JSONObject(response.getBody()).get("object").toString(), Group.class);
         }
 
 
@@ -212,9 +218,8 @@ public class TavernaConsumer implements ITavernaConsumer {
             throw new ErrorCodeException(errorCodeDTO);
 
         } else {
-            GroupCreateDTO dto = gson.fromJson(response.getBody(), GroupCreateDTO.class);
 
-            return dto.getObject().get(0);
+            return gson.fromJson(new JSONObject(response.getBody()).getJSONArray("object").get(0).toString(), Group.class);
         }
     }
 
@@ -244,9 +249,8 @@ public class TavernaConsumer implements ITavernaConsumer {
             throw new ErrorCodeException(errorCodeDTO);
 
         } else {
-            GroupDeleteDTO dto = gson.fromJson(response.getBody(), GroupDeleteDTO.class);
 
-            return dto.getMessage();
+            return new JSONObject(response.getBody()).get("message").toString();
         }
 
     }
@@ -273,9 +277,8 @@ public class TavernaConsumer implements ITavernaConsumer {
             throw new ErrorCodeException(errorCodeDTO);
 
         } else {
-            GroupEnterDTO dto = gson.fromJson(response.getBody(), GroupEnterDTO.class);
 
-            return dto.getMessage();
+            return new JSONObject(response.getBody()).get("message").toString();
         }
     }
 
@@ -300,7 +303,6 @@ public class TavernaConsumer implements ITavernaConsumer {
             throw new ErrorCodeException(errorCodeDTO);
 
         } else {
-            GroupGetMembersDTO dto = gson.fromJson(response.getBody(), GroupGetMembersDTO.class);
 
             List<Adventurer> adventurerList = new ArrayList<Adventurer>();
             JSONArray jsonArray = new JSONObject(response.getBody()).getJSONArray("objects");
@@ -309,136 +311,10 @@ public class TavernaConsumer implements ITavernaConsumer {
                 adventurerList.add(gson.fromJson(jsonArray.get(i).toString(), Adventurer.class));
             }
 
-
-            System.out.println("--#>\n" + adventurerList.toString());
-
-            return dto.getObjects();
+            return adventurerList;
         }
     }
 
-    private class AdventurerDTO {
-
-        private String message;
-        private List<Adventurer> object;
-        private String status;
-
-        public AdventurerDTO(String message, List<Adventurer> object, String status) {
-            this.message = message;
-            this.object = object;
-            this.status = status;
-        }
-
-        public List<Adventurer> getObject() {
-            return object;
-        }
-
-    }
-
-
-
-    private class GroupGetMembersDTO {
-
-        private List<Adventurer> objects;
-        private String status;
-
-        public GroupGetMembersDTO(List<Adventurer> objects, String status) {
-            this.objects = objects;
-            this.status = status;
-        }
-
-        public List<Adventurer> getObjects() {
-            return objects;
-        }
-
-    }
-
-    private class GroupEnterDTO {
-
-        private String message;
-        private String objects;
-        private String status;
-
-        public GroupEnterDTO(String message, String object, String status) {
-            this.message = message;
-            this.objects = object;
-            this.status = status;
-        }
-
-        public String getObject() {
-            return objects;
-        }
-
-        public String getMessage() {
-            return message;
-        }
-    }
-
-
-    private class GroupCreateDTO {
-
-        private String message;
-        private List<Group> object;
-        private String status;
-
-        public GroupCreateDTO(String message, List<Group> object, String status) {
-            this.message = message;
-            this.object = object;
-            this.status = status;
-        }
-
-        public List<Group> getObject() {
-            return object;
-        }
-    }
-
-    private class GroupsGetDTO {
-
-        private String message;
-        private List<Group> objects;
-        private String status;
-
-        public GroupsGetDTO(String message, List<Group> object, String status) {
-            this.message = message;
-            this.objects = object;
-            this.status = status;
-        }
-
-        public List<Group> getObject() {
-            return objects;
-        }
-    }
-
-    private class GroupDeleteDTO {
-
-        private String message;
-        private String status;
-
-        public GroupDeleteDTO(String message, String status) {
-            this.message = message;
-            this.status = status;
-        }
-
-        public String getMessage() {
-            return message;
-        }
-    }
-
-    private class GroupGetDTO {
-
-        private String message;
-        private Group object;
-        private String status;
-
-        public GroupGetDTO(String message, Group object, String status) {
-            this.message = message;
-            this.object = object;
-            this.status = status;
-        }
-
-        public Group getObject() {
-            return object;
-        }
-    }
 
 
 }
