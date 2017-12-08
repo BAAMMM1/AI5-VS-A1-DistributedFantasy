@@ -38,10 +38,10 @@ public class InputHandler {
             if(e.getErrorCodeDTO().getError() != null){
                 System.out.println("error: " + e.getErrorCodeDTO().getError());
             }
-            System.out.println("message: " + e.getErrorCodeDTO().getMessage());
+            System.out.println(e.getClass().getSimpleName() + ": " + e.getErrorCodeDTO().getMessage());
 
         } catch (Exception e){
-            System.out.println("message: " + e.getMessage());
+            System.out.println(e.getClass().getSimpleName() + ": " + e.getMessage());
         }
     }
 }

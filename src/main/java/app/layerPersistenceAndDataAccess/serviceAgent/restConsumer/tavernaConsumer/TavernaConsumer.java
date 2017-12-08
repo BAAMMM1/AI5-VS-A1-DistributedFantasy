@@ -300,6 +300,10 @@ public class TavernaConsumer implements ITavernaConsumer {
         } else {
             GroupGetMembersDTO dto = gson.fromJson(response.getBody(), GroupGetMembersDTO.class);
 
+            List<Adventurer> adventurerList = gson.fromJson(new JSONObject(response.getBody()).getJSONObject("objects").toString(), List.class);
+
+            System.out.println("--#>\n" + adventurerList.toString());
+
             return dto.getObjects();
         }
     }
@@ -322,21 +326,7 @@ public class TavernaConsumer implements ITavernaConsumer {
 
     }
 
-    private class AdventurerGetDTO {
 
-        private Adventurer object;
-        private String status;
-
-        public AdventurerGetDTO(Adventurer object, String status) {
-            this.object = object;
-            this.status = status;
-        }
-
-        public Adventurer getObject() {
-            return object;
-        }
-
-    }
 
     private class GroupGetMembersDTO {
 
