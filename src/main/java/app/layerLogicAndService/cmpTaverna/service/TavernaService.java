@@ -4,9 +4,8 @@ import app.layerLogicAndService.cmpBlackboard.entity.Blackboard;
 import app.layerLogicAndService.cmpTaverna.entity.Adventurer;
 import app.layerLogicAndService.cmpTaverna.entity.Group;
 import app.layerLogicAndService.cmpTaverna.entity.Hero;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.UnexpectedResponseCodeException;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.tavernaConsumer.ITavernaConsumer;
-import org.springframework.stereotype.Service;
 
 import java.net.UnknownHostException;
 import java.util.List;
@@ -23,7 +22,7 @@ public class TavernaService implements ITavernaService {
     }
 
     @Override
-    public Adventurer addHeroServiceToTaverna() throws ErrorCodeException, UnknownHostException {
+    public Adventurer addHeroServiceToTaverna() throws UnexpectedResponseCodeException, UnknownHostException {
 
         Hero hero = new Hero(Blackboard.getInstance().getUser().getHeroclass(), Blackboard.getInstance().getUser().getCapabilities(), "http://" + java.net.InetAddress.getLocalHost().getHostAddress().toString() + ":8080/services");
 
@@ -42,37 +41,37 @@ public class TavernaService implements ITavernaService {
     }
 
     @Override
-    public List<Adventurer> getAdventurers() throws ErrorCodeException {
+    public List<Adventurer> getAdventurers() throws UnexpectedResponseCodeException {
         return this.tavernaConsumer.getAdventurers();
     }
 
     @Override
-    public Adventurer getAdventure(String name) throws ErrorCodeException {
+    public Adventurer getAdventure(String name) throws UnexpectedResponseCodeException {
         return this.tavernaConsumer.getAdventure(name);
     }
 
     @Override
-    public List<Group> getGroups() throws ErrorCodeException {
+    public List<Group> getGroups() throws UnexpectedResponseCodeException {
         return this.tavernaConsumer.getGroups();
     }
 
     @Override
-    public Group getGroup(int id) throws ErrorCodeException {
+    public Group getGroup(int id) throws UnexpectedResponseCodeException {
         return this.tavernaConsumer.getGroup(id);
     }
 
     @Override
-    public Group createGroup() throws ErrorCodeException {
+    public Group createGroup() throws UnexpectedResponseCodeException {
         return this.tavernaConsumer.createGroup();
     }
 
     @Override
-    public String deleteGroup(int id) throws ErrorCodeException {
+    public String deleteGroup(int id) throws UnexpectedResponseCodeException {
         return this.tavernaConsumer.deleteGroup(id);
     }
 
     @Override
-    public String enterGroup(int id) throws ErrorCodeException {
+    public String enterGroup(int id) throws UnexpectedResponseCodeException {
         Group group = this.getGroup(id);
 
         Blackboard.getInstance().getUser().setCurrentGroup(group);
@@ -81,7 +80,7 @@ public class TavernaService implements ITavernaService {
     }
 
     @Override
-    public List<Adventurer> getGroupMembers(int id) throws ErrorCodeException {
+    public List<Adventurer> getGroupMembers(int id) throws UnexpectedResponseCodeException {
         return this.tavernaConsumer.getGroupMembers(id);
     }
 

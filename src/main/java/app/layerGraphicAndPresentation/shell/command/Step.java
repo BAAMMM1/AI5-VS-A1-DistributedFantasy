@@ -3,7 +3,7 @@ package app.layerGraphicAndPresentation.shell.command;
 import app.layerGraphicAndPresentation.shell.InputInterpreter;
 import app.layerGraphicAndPresentation.shell.context.State;
 import app.layerLogicAndService.cmpQuest.service.IQuestService;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.UnexpectedResponseCodeException;
 import app.layerLogicAndService.cmpQuest.entity.Visit;
 
 import java.io.IOException;
@@ -28,7 +28,7 @@ public class Step extends Command{
     }
 
     @Override
-    State instruction() throws ErrorCodeException, IOException, InterruptedException {
+    State instruction() throws UnexpectedResponseCodeException, IOException, InterruptedException {
 
         Visit visit = this.client.step(Integer.valueOf(this.getParameter().get(0)));
 

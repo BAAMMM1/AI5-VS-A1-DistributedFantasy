@@ -3,7 +3,6 @@ package app.layerLogicAndService.cmpHeroToHero.service;
 import app.Application;
 import app.layerLogicAndService.cmpBlackboard.entity.Blackboard;
 import app.layerLogicAndService.cmpHero.entity.*;
-import app.layerLogicAndService.cmpQuest.entity.Quest;
 import app.layerLogicAndService.cmpQuest.entity.Task;
 import app.layerLogicAndService.cmpQuest.entity.questing.Step;
 import app.layerLogicAndService.cmpQuest.entity.questing.TaskPart;
@@ -11,10 +10,8 @@ import app.layerLogicAndService.cmpQuest.service.IQuestService;
 import app.layerLogicAndService.cmpTaverna.entity.Adventurer;
 import app.layerLogicAndService.cmpTaverna.entity.Group;
 import app.layerLogicAndService.cmpTaverna.service.ITavernaService;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.UnexpectedResponseCodeException;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.heroTohHeroConsumer.IHeroToHeroConsumer;
-
-import java.util.Random;
 
 /**
  * @author Chris on 02.12.2017
@@ -34,7 +31,7 @@ public class HeroToHeroService implements IHeroToHeroService {
     }
 
     @Override
-    public String invite(String heroName, int groupId, int taskid, String messageToHero) throws ErrorCodeException {
+    public String invite(String heroName, int groupId, int taskid, String messageToHero) throws UnexpectedResponseCodeException {
 
         // TODO - Benutzer über invite benachrichten
 
@@ -68,7 +65,7 @@ public class HeroToHeroService implements IHeroToHeroService {
     }
 
     @Override
-    public void sendMessage(String adventurer, String string) throws ErrorCodeException {
+    public void sendMessage(String adventurer, String string) throws UnexpectedResponseCodeException {
 
         // TODO - Benutzer über Message income benachrichtigen
 
@@ -97,7 +94,7 @@ public class HeroToHeroService implements IHeroToHeroService {
     }
 
     @Override
-    public void sendAssignment(String adventurer, String message) throws ErrorCodeException {
+    public void sendAssignment(String adventurer, String message) throws UnexpectedResponseCodeException {
 
         /*
         if(Blackboard.getInstance().getUser().getCurrentGroup().getOwner()== null){
@@ -142,7 +139,7 @@ public class HeroToHeroService implements IHeroToHeroService {
     }
 
     @Override
-    public void sendAssignmentDeliver() throws ErrorCodeException {
+    public void sendAssignmentDeliver() throws UnexpectedResponseCodeException {
 
         if (Blackboard.getInstance().getUser().getCurrentQuesting().getPart() == null) {
             throw new IllegalArgumentException("no part to deliverTask");

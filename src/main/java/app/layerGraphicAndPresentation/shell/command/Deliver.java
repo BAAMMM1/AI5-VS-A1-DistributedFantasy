@@ -7,7 +7,7 @@ import app.layerGraphicAndPresentation.shell.context.Context;
 import app.layerGraphicAndPresentation.shell.context.State;
 import app.layerLogicAndService.cmpQuest.entity.Delivery;
 import app.layerLogicAndService.cmpQuest.service.IQuestService;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.UnexpectedResponseCodeException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -56,7 +56,7 @@ public class Deliver extends Command {
     }
 
     @Override
-    State instruction() throws ErrorCodeException, IOException, InterruptedException {
+    State instruction() throws UnexpectedResponseCodeException, IOException, InterruptedException {
 
         List<Delivery> list = this.client.deliverTask();
 

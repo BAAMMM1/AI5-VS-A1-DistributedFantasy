@@ -3,9 +3,8 @@ package app.layerGraphicAndPresentation.shell.command;
 import app.layerGraphicAndPresentation.shell.InputInterpreter;
 import app.layerGraphicAndPresentation.shell.context.State;
 import app.layerLogicAndService.cmpTaverna.entity.Adventurer;
-import app.layerLogicAndService.cmpTaverna.entity.Group;
 import app.layerLogicAndService.cmpTaverna.service.ITavernaService;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.UnexpectedResponseCodeException;
 
 import java.io.IOException;
 import java.util.List;
@@ -29,7 +28,7 @@ public class Adventurers extends Command{
 
 
     @Override
-    State instruction() throws ErrorCodeException, IOException, InterruptedException {
+    State instruction() throws UnexpectedResponseCodeException, IOException, InterruptedException {
 
         List<Adventurer>  adventurers = this.tavernaService.getAdventurers();
 

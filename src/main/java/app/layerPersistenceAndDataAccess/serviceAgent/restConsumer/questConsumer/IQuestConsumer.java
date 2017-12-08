@@ -3,7 +3,7 @@ package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsume
 
 import app.layerLogicAndService.cmpQuest.entity.*;
 import app.layerLogicAndService.cmpQuest.entity.questing.TaskPart;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.UnexpectedResponseCodeException;
 
 import java.util.List;
 
@@ -12,16 +12,16 @@ import java.util.List;
  */
 public interface IQuestConsumer {
 
-    List<Quest> getQuests() throws ErrorCodeException;
-    Quest getQuest(int index) throws ErrorCodeException;
-    Task getTask(int index) throws ErrorCodeException;
-    Map lookAtTheMap(String location) throws ErrorCodeException;
-    Visit visitHost(String ipPort, String ressource) throws ErrorCodeException;
-    Answer post(String ipPort, String ressource, String body) throws ErrorCodeException;
+    List<Quest> getQuests() throws UnexpectedResponseCodeException;
+    Quest getQuest(int index) throws UnexpectedResponseCodeException;
+    Task getTask(int index) throws UnexpectedResponseCodeException;
+    Map lookAtTheMap(String location) throws UnexpectedResponseCodeException;
+    Visit visitHost(String ipPort, String ressource) throws UnexpectedResponseCodeException;
+    Answer post(String ipPort, String ressource, String body) throws UnexpectedResponseCodeException;
 
     // TODO - Nicht task-uri sinder taskId
-    List<Delivery> deliverTask(Task task) throws ErrorCodeException;
+    List<Delivery> deliverTask(Task task) throws UnexpectedResponseCodeException;
 
-    Visit deliverTaskPart(TaskPart taskpart) throws ErrorCodeException;
+    Visit deliverTaskPart(TaskPart taskpart) throws UnexpectedResponseCodeException;
 
 }

@@ -5,7 +5,7 @@ import app.layerLogicAndService.cmpBlackboard.entity.User;
 import app.layerLogicAndService.cmpBlackboard.entity.Register;
 import app.layerLogicAndService.cmpBlackboard.entity.Login;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.blackboardConsumer.IBlackboardConsumer;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.UnexpectedResponseCodeException;
 
 /**
  * @author Christian G. on 02.11.2017
@@ -19,7 +19,7 @@ public class BlackboardServiceImp implements IBlackboardService {
     }
 
     @Override
-    public Register registerUser(String name, String password) throws ErrorCodeException {
+    public Register registerUser(String name, String password) throws UnexpectedResponseCodeException {
 
         Register dto = this.registerConsumer.registerUser(name, password);
 
@@ -28,7 +28,7 @@ public class BlackboardServiceImp implements IBlackboardService {
     }
 
     @Override
-    public User login(String name, String password) throws ErrorCodeException {
+    public User login(String name, String password) throws UnexpectedResponseCodeException {
 
         Login dto = this.registerConsumer.getAuthenticationToken(name, password);
 
@@ -43,7 +43,7 @@ public class BlackboardServiceImp implements IBlackboardService {
     }
 
     @Override
-    public User checkLogin(String Token) throws ErrorCodeException {
+    public User checkLogin(String Token) throws UnexpectedResponseCodeException {
 
         // 200 mit eingeloggt
         User user = null;
@@ -63,10 +63,10 @@ public class BlackboardServiceImp implements IBlackboardService {
 
 
 
-        } catch (ErrorCodeException e) {
+        } catch (UnexpectedResponseCodeException e) {
             Blackboard.getInstance().setUser(null, null, null);
 
-            throw new ErrorCodeException(e.getErrorCodeDTO());
+            throw new UnexpectedResponseCodeException(e.getErrorCodeDTO());
 
         }
 

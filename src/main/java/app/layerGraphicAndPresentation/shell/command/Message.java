@@ -2,12 +2,10 @@ package app.layerGraphicAndPresentation.shell.command;
 
 import app.layerGraphicAndPresentation.shell.InputInterpreter;
 import app.layerGraphicAndPresentation.shell.context.State;
-import app.layerLogicAndService.cmpHero.service.IHeroService;
 import app.layerLogicAndService.cmpHeroToHero.service.IHeroToHeroService;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.UnexpectedResponseCodeException;
 
 import java.io.IOException;
-import java.util.List;
 
 /**
  * @author Chris on 05.12.2017
@@ -22,7 +20,7 @@ public class Message extends Command{
     }
 
     @Override
-    State instruction() throws ErrorCodeException, IOException, InterruptedException {
+    State instruction() throws UnexpectedResponseCodeException, IOException, InterruptedException {
 
         this.heroToHeroService.sendMessage(this.getParameter().get(0), this.getParameter().get(1));
 

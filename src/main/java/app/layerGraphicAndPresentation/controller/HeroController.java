@@ -5,7 +5,7 @@ import app.layerLogicAndService.cmpHero.entity.*;
 import app.layerLogicAndService.cmpHero.service.IHeroService;
 import app.layerLogicAndService.cmpHero.service.exception.AlreadyInGroupException;
 import app.layerLogicAndService.cmpHero.service.exception.ErrorMessage;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.UnexpectedResponseCodeException;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -62,7 +62,7 @@ public class HeroController {
         } catch (AlreadyInGroupException e) {
             return new ResponseEntity<>(this.gson.toJson(e.getError()), HttpStatus.BAD_REQUEST);
 
-        } catch (ErrorCodeException e) {
+        } catch (UnexpectedResponseCodeException e) {
             return new ResponseEntity<>(this.gson.toJson(new ErrorMessage(e.getMessage())), HttpStatus.BAD_REQUEST);
 
         } catch (IllegalArgumentException e) {

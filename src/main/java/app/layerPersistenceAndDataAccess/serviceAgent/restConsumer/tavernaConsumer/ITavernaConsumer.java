@@ -3,7 +3,7 @@ package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.tavernaConsu
 import app.layerLogicAndService.cmpTaverna.entity.Adventurer;
 import app.layerLogicAndService.cmpTaverna.entity.Group;
 import app.layerLogicAndService.cmpTaverna.entity.Hero;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.UnexpectedResponseCodeException;
 
 import java.util.List;
 
@@ -13,18 +13,18 @@ import java.util.List;
 public interface ITavernaConsumer {
 
     // TODO - updateAdventurer
-    Adventurer addHeroService(Hero hero) throws ErrorCodeException;
-    List<Adventurer> getAdventurers() throws ErrorCodeException;
-    Adventurer getAdventure(String name) throws ErrorCodeException;
+    Adventurer addHeroService(Hero hero) throws UnexpectedResponseCodeException;
+    List<Adventurer> getAdventurers() throws UnexpectedResponseCodeException;
+    Adventurer getAdventure(String name) throws UnexpectedResponseCodeException;
 
-    List<Group> getGroups() throws ErrorCodeException;
-    Group getGroup(int id) throws ErrorCodeException;
-    Group createGroup() throws ErrorCodeException;
-    String deleteGroup(int id) throws ErrorCodeException;
-    String enterGroup(int id) throws ErrorCodeException;
-    List<Adventurer> getGroupMembers(int id) throws ErrorCodeException;
+    List<Group> getGroups() throws UnexpectedResponseCodeException;
+    Group getGroup(int id) throws UnexpectedResponseCodeException;
+    Group createGroup() throws UnexpectedResponseCodeException;
+    String deleteGroup(int id) throws UnexpectedResponseCodeException;
+    String enterGroup(int id) throws UnexpectedResponseCodeException;
+    List<Adventurer> getGroupMembers(int id) throws UnexpectedResponseCodeException;
 
-    //String invite(String heroname, int groupId) throws ErrorCodeException;
+    //String invite(String heroname, int groupId) throws UnexpectedResponseCodeException;
 
 
 

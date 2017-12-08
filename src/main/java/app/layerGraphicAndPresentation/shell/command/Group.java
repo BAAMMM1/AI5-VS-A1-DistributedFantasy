@@ -4,7 +4,7 @@ import app.layerGraphicAndPresentation.shell.InputInterpreter;
 import app.layerGraphicAndPresentation.shell.context.State;
 import app.layerGraphicAndPresentation.shell.exception.ParameterIncorrectException;
 import app.layerLogicAndService.cmpTaverna.service.ITavernaService;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.UnexpectedResponseCodeException;
 
 import java.io.IOException;
 import java.util.List;
@@ -39,7 +39,7 @@ public class Group extends Command{
 
 
     @Override
-    State instruction() throws ErrorCodeException, IOException, InterruptedException {
+    State instruction() throws UnexpectedResponseCodeException, IOException, InterruptedException {
 
         app.layerLogicAndService.cmpTaverna.entity.Group group = this.tavernaService.getGroup(Integer.parseInt(this.getParameter().get(0)));
 

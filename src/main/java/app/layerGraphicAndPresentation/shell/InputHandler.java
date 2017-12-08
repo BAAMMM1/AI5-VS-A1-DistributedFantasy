@@ -3,7 +3,7 @@ package app.layerGraphicAndPresentation.shell;
 import app.layerGraphicAndPresentation.shell.command.Command;
 import app.layerGraphicAndPresentation.shell.exception.*;
 import app.layerGraphicAndPresentation.shell.context.Context;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.UnexpectedResponseCodeException;
 
 import java.util.List;
 
@@ -34,7 +34,7 @@ public class InputHandler {
         } catch (CommandNotExistsException | UnAcceptedStateException | ParameterIncorrectException | IllegalArgumentException e) {
             System.out.println(Context.getInstance().getPromptState() + e.getMessage());
 
-        } catch (ErrorCodeException e) {
+        } catch (UnexpectedResponseCodeException e) {
             if(e.getErrorCodeDTO().getError() != null){
                 System.out.println("error: " + e.getErrorCodeDTO().getError());
             }

@@ -8,7 +8,7 @@ import app.layerLogicAndService.cmpBlackboard.entity.User;
 import app.layerLogicAndService.cmpBlackboard.service.IBlackboardService;
 import app.layerLogicAndService.cmpBlackboard.entity.Blackboard;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeDTO;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.UnexpectedResponseCodeException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,7 +43,7 @@ public class Whoami extends Command {
 
 
     /**
-     * Falls Whoami einen ErrorCodeException wirft, wird hier der Application-Context zurück gesetzt.
+     * Falls Whoami einen UnexpectedResponseCodeException wirft, wird hier der Application-Context zurück gesetzt.
      *
      * @return
      */
@@ -62,7 +62,7 @@ public class Whoami extends Command {
 
             return null;
 
-        } catch (ErrorCodeException e) {
+        } catch (UnexpectedResponseCodeException e) {
             ErrorCodeDTO dto = e.getErrorCodeDTO();
 
             System.out.println("message: " + dto.getMessage());

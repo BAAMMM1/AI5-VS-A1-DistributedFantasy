@@ -2,21 +2,13 @@ package app.layerLogicAndService.cmpQuest.service;
 
 import app.layerLogicAndService.cmpBlackboard.entity.Blackboard;
 import app.layerLogicAndService.cmpHero.entity.Assignment;
-import app.layerLogicAndService.cmpHero.entity.AssignmentDerliver;
-import app.layerLogicAndService.cmpHeroToHero.service.HeroToHeroService;
-import app.layerLogicAndService.cmpHeroToHero.service.IHeroToHeroService;
 import app.layerLogicAndService.cmpQuest.entity.*;
 import app.layerLogicAndService.cmpQuest.entity.questing.Questing;
 import app.layerLogicAndService.cmpQuest.entity.questing.Step;
 import app.layerLogicAndService.cmpQuest.entity.questing.TaskPart;
 import app.layerLogicAndService.cmpQuest.entity.questing.Token;
-import app.layerLogicAndService.cmpTaverna.service.TavernaService;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.heroTohHeroConsumer.HeroToHeroConsumer;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.UnexpectedResponseCodeException;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.IQuestConsumer;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.QuestConsumerImpl;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.tavernaConsumer.TavernaConsumer;
-import jdk.nashorn.internal.ir.IfNode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,31 +25,31 @@ public class QuestServiceImpl implements IQuestService {
     }
 
     @Override
-    public List<Quest> getQuests() throws ErrorCodeException {
+    public List<Quest> getQuests() throws UnexpectedResponseCodeException {
 
         return questConsumer.getQuests();
     }
 
     @Override
-    public Quest getQuest(int index) throws ErrorCodeException {
+    public Quest getQuest(int index) throws UnexpectedResponseCodeException {
 
         return this.questConsumer.getQuest(index);
     }
 
     @Override
-    public Task getTask(int index) throws ErrorCodeException {
+    public Task getTask(int index) throws UnexpectedResponseCodeException {
 
         return this.questConsumer.getTask(index);
     }
 
     @Override
-    public Map getMap(String location) throws ErrorCodeException {
+    public Map getMap(String location) throws UnexpectedResponseCodeException {
 
         return this.questConsumer.lookAtTheMap(location);
     }
 
     @Override
-    public Visit visitLocationForTask(String location, int taskId) throws ErrorCodeException {
+    public Visit visitLocationForTask(String location, int taskId) throws UnexpectedResponseCodeException {
 
         Map map = this.getMap(location);
 
@@ -91,7 +83,7 @@ public class QuestServiceImpl implements IQuestService {
     }
 
     @Override
-    public Visit next() throws ErrorCodeException {
+    public Visit next() throws UnexpectedResponseCodeException {
 
         if (Blackboard.getInstance().getUser().getCurrentQuesting().getNext() == null) {
             throw new IllegalArgumentException("no next");
@@ -120,7 +112,7 @@ public class QuestServiceImpl implements IQuestService {
     }
 
     @Override
-    public Visit step(int step) throws ErrorCodeException {
+    public Visit step(int step) throws UnexpectedResponseCodeException {
 
 
         if (Blackboard.getInstance().getUser().getCurrentQuesting().getPart() == null) {
@@ -145,7 +137,7 @@ public class QuestServiceImpl implements IQuestService {
     }
 
     @Override
-    public Visit deliverTaskPart() throws ErrorCodeException {
+    public Visit deliverTaskPart() throws UnexpectedResponseCodeException {
 
         if (Blackboard.getInstance().getUser().getCurrentQuesting().getPart() == null) {
             throw new IllegalArgumentException("no part to deliverTask");
@@ -191,7 +183,7 @@ public class QuestServiceImpl implements IQuestService {
     }
 
     @Override
-    public Visit doAssignment() throws ErrorCodeException {
+    public Visit doAssignment() throws UnexpectedResponseCodeException {
 
         if(Blackboard.getInstance().getUser().getAssignment() == null){
             throw new IllegalArgumentException("no assignment at the moment");
@@ -236,7 +228,7 @@ public class QuestServiceImpl implements IQuestService {
 
 
     @Override
-    public Answer answerToCurrentUri(String body) throws ErrorCodeException {
+    public Answer answerToCurrentUri(String body) throws UnexpectedResponseCodeException {
 
         if (Blackboard.getInstance().getUser().getCurrentQuesting() == null) {
             throw new IllegalArgumentException("no to answer task");
@@ -271,7 +263,7 @@ public class QuestServiceImpl implements IQuestService {
     }
 
     @Override
-    public List<Delivery> deliverTask() throws ErrorCodeException {
+    public List<Delivery> deliverTask() throws UnexpectedResponseCodeException {
 
 
         if (Blackboard.getInstance().getUser().getCurrentQuesting().getTask().getToken() == null) {

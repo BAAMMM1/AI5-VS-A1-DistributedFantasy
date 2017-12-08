@@ -1,15 +1,12 @@
 package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.heroTohHeroConsumer;
 
-import app.layerLogicAndService.cmpBlackboard.entity.Blackboard;
 import app.layerLogicAndService.cmpHero.entity.*;
 import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.EnumHTTPMethod;
 import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.HTTPCaller;
 import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.HTTPRequest;
 import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.HTTPResponse;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeDTO;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.tavernaConsumer.PathTaverna;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.tavernaConsumer.TavernaConsumer;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.UnexpectedResponseCodeException;
 import com.google.gson.Gson;
 
 /**
@@ -26,7 +23,7 @@ public class HeroToHeroConsumer implements IHeroToHeroConsumer {
     }
 
     @Override
-    public Service getHeroService(String heroServiceUrl) throws ErrorCodeException {
+    public Service getHeroService(String heroServiceUrl) throws UnexpectedResponseCodeException {
 
         // Erstellen der Anfrage
         HTTPRequest httpRequest =
@@ -42,7 +39,7 @@ public class HeroToHeroConsumer implements IHeroToHeroConsumer {
         if (response.getCode() != 200) {
             ErrorCodeDTO errorCodeDTO = gson.fromJson(response.getBody(), ErrorCodeDTO.class);
 
-            throw new ErrorCodeException(errorCodeDTO);
+            throw new UnexpectedResponseCodeException(errorCodeDTO);
 
         } else {
             Service service = gson.fromJson(response.getBody(), Service.class);
@@ -53,7 +50,7 @@ public class HeroToHeroConsumer implements IHeroToHeroConsumer {
     }
 
     @Override
-    public String hiringHero(Hiring hiring, String herHiringUrl) throws ErrorCodeException {
+    public String hiringHero(Hiring hiring, String herHiringUrl) throws UnexpectedResponseCodeException {
 
 
         HTTPRequest httpRequest =
@@ -68,7 +65,7 @@ public class HeroToHeroConsumer implements IHeroToHeroConsumer {
 
         if (response.getCode() < 200 || response.getCode() >= 300) {
 
-            throw new ErrorCodeException(new ErrorCodeDTO("error", response.getBody()));
+            throw new UnexpectedResponseCodeException(new ErrorCodeDTO("error", response.getBody()));
 
         } else {
 
@@ -77,7 +74,7 @@ public class HeroToHeroConsumer implements IHeroToHeroConsumer {
     }
 
     @Override
-    public void sendMessage(Message message, String heroMessageUrl) throws ErrorCodeException {
+    public void sendMessage(Message message, String heroMessageUrl) throws UnexpectedResponseCodeException {
 
         HTTPRequest httpRequest =
                 new HTTPRequest(
@@ -91,7 +88,7 @@ public class HeroToHeroConsumer implements IHeroToHeroConsumer {
 
         if (response.getCode() < 200 || response.getCode() >= 300) {
 
-            throw new ErrorCodeException(new ErrorCodeDTO("error", response.getBody()));
+            throw new UnexpectedResponseCodeException(new ErrorCodeDTO("error", response.getBody()));
 
         } else {
 
@@ -100,7 +97,7 @@ public class HeroToHeroConsumer implements IHeroToHeroConsumer {
     }
 
     @Override
-    public void sendAssignment(String heroAssignmentUrl, Assignment assignment) throws ErrorCodeException {
+    public void sendAssignment(String heroAssignmentUrl, Assignment assignment) throws UnexpectedResponseCodeException {
 
         HTTPRequest httpRequest =
                 new HTTPRequest(
@@ -114,7 +111,7 @@ public class HeroToHeroConsumer implements IHeroToHeroConsumer {
 
         if (response.getCode() < 200 || response.getCode() >= 300) {
 
-            throw new ErrorCodeException(new ErrorCodeDTO("error", response.getBody()));
+            throw new UnexpectedResponseCodeException(new ErrorCodeDTO("error", response.getBody()));
 
         } else {
 
@@ -123,7 +120,7 @@ public class HeroToHeroConsumer implements IHeroToHeroConsumer {
     }
 
     @Override
-    public void sendAssignmentDeliver(String assignmentDeliverUrl, AssignmentDerliver assignmentDeliver) throws ErrorCodeException {
+    public void sendAssignmentDeliver(String assignmentDeliverUrl, AssignmentDerliver assignmentDeliver) throws UnexpectedResponseCodeException {
 
         HTTPRequest httpRequest =
                 new HTTPRequest(
@@ -137,7 +134,7 @@ public class HeroToHeroConsumer implements IHeroToHeroConsumer {
 
         if (response.getCode() < 200 || response.getCode() >= 300) {
 
-            throw new ErrorCodeException(new ErrorCodeDTO("error", response.getBody()));
+            throw new UnexpectedResponseCodeException(new ErrorCodeDTO("error", response.getBody()));
 
         } else {
 

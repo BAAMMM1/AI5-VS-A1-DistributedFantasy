@@ -9,7 +9,7 @@ import app.layerLogicAndService.cmpHero.service.exception.AlreadyInGroupExceptio
 import app.layerLogicAndService.cmpTaverna.entity.Group;
 import app.layerLogicAndService.cmpTaverna.service.ITavernaService;
 import app.layerLogicAndService.cmpTaverna.service.TavernaService;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.UnexpectedResponseCodeException;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.tavernaConsumer.TavernaConsumer;
 
 import java.util.List;
@@ -38,7 +38,7 @@ public class HeroService implements IHeroService {
     }
 
     @Override
-    public void addHiring(Hiring hiring) throws AlreadyInGroupException, ErrorCodeException {
+    public void addHiring(Hiring hiring) throws AlreadyInGroupException, UnexpectedResponseCodeException {
 
         if(Blackboard.getInstance().getUser().getGroup() != null){
             throw new AlreadyInGroupException("ehhmm ohh ehmm Nein! oder vlt ehm Nein! Ne doch nicht Nein! Ne Nein!");

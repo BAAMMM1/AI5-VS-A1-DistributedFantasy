@@ -9,7 +9,7 @@ import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.EnumHTTPMethod;
 import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.HTTPCaller;
 import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.HTTPRequest;
 import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.HTTPResponse;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.UnexpectedResponseCodeException;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -28,7 +28,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
     }
 
     @Override
-    public List<Quest> getQuests() throws ErrorCodeException {
+    public List<Quest> getQuests() throws UnexpectedResponseCodeException {
 
         String token = Blackboard.getInstance().getUser().getUserToken();
 
@@ -51,7 +51,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
         if (response.getCode() != 200) {
             ErrorCodeDTO errorCodeDTO = gson.fromJson(response.getBody(), ErrorCodeDTO.class);
 
-            throw new ErrorCodeException(errorCodeDTO);
+            throw new UnexpectedResponseCodeException(errorCodeDTO);
 
         } else {
             QuestsDTO dto = gson.fromJson(response.getBody(), QuestsDTO.class);
@@ -62,7 +62,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
     }
 
     @Override
-    public Quest getQuest(int index) throws ErrorCodeException {
+    public Quest getQuest(int index) throws UnexpectedResponseCodeException {
 
         String token = Blackboard.getInstance().getUser().getUserToken();
 
@@ -85,7 +85,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
         if (response.getCode() != 200) {
             ErrorCodeDTO errorCodeDTO = gson.fromJson(response.getBody(), ErrorCodeDTO.class);
 
-            throw new ErrorCodeException(errorCodeDTO);
+            throw new UnexpectedResponseCodeException(errorCodeDTO);
 
         } else {
             QuestDTO dto = gson.fromJson(response.getBody(), QuestDTO.class);
@@ -96,7 +96,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
     }
 
     @Override
-    public Task getTask(int index) throws ErrorCodeException {
+    public Task getTask(int index) throws UnexpectedResponseCodeException {
         String token = Blackboard.getInstance().getUser().getUserToken();
 
         // /blackboard/quests/2/tasks
@@ -118,7 +118,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
         if (response.getCode() != 200) {
             ErrorCodeDTO errorCodeDTO = gson.fromJson(response.getBody(), ErrorCodeDTO.class);
 
-            throw new ErrorCodeException(errorCodeDTO);
+            throw new UnexpectedResponseCodeException(errorCodeDTO);
 
         } else {
             TaskDTO dto = gson.fromJson(response.getBody(), TaskDTO.class);
@@ -129,7 +129,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
     }
 
     @Override
-    public Map lookAtTheMap(String location) throws ErrorCodeException {
+    public Map lookAtTheMap(String location) throws UnexpectedResponseCodeException {
 
         String token = Blackboard.getInstance().getUser().getUserToken();
 
@@ -151,7 +151,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
         if (response.getCode() != 200) {
             ErrorCodeDTO errorCodeDTO = gson.fromJson(response.getBody(), ErrorCodeDTO.class);
 
-            throw new ErrorCodeException(errorCodeDTO);
+            throw new UnexpectedResponseCodeException(errorCodeDTO);
 
         } else {
             MapDTO dto = gson.fromJson(response.getBody(), MapDTO.class);
@@ -162,7 +162,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
     }
 
     @Override
-    public Visit visitHost(String ipPort, String ressource) throws ErrorCodeException {
+    public Visit visitHost(String ipPort, String ressource) throws UnexpectedResponseCodeException {
 
         String token = Blackboard.getInstance().getUser().getUserToken();
 
@@ -184,7 +184,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
         if (response.getCode() != 200) {
             ErrorCodeDTO errorCodeDTO = gson.fromJson(response.getBody(), ErrorCodeDTO.class);
 
-            throw new ErrorCodeException(errorCodeDTO);
+            throw new UnexpectedResponseCodeException(errorCodeDTO);
 
         } else {
             Visit visit = gson.fromJson(response.getBody(), Visit.class);
@@ -195,7 +195,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
     }
 
     @Override
-    public Answer post(String ipPort, String ressource, String body) throws ErrorCodeException {
+    public Answer post(String ipPort, String ressource, String body) throws UnexpectedResponseCodeException {
 
         String token = Blackboard.getInstance().getUser().getUserToken();
 
@@ -218,7 +218,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
         if (response.getCode() != 200) {
             ErrorCodeDTO errorCodeDTO = gson.fromJson(response.getBody(), ErrorCodeDTO.class);
 
-            throw new ErrorCodeException(errorCodeDTO);
+            throw new UnexpectedResponseCodeException(errorCodeDTO);
 
         } else {
             Answer dto = gson.fromJson(response.getBody(), Answer.class);
@@ -229,7 +229,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
     }
 
     @Override
-    public List<Delivery> deliverTask(Task task) throws ErrorCodeException {
+    public List<Delivery> deliverTask(Task task) throws UnexpectedResponseCodeException {
 
         String authToken = Blackboard.getInstance().getUser().getUserToken();
 
@@ -256,7 +256,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
         if (response.getCode() != 201) {
             ErrorCodeDTO errorCodeDTO = gson.fromJson(response.getBody(), ErrorCodeDTO.class);
 
-            throw new ErrorCodeException(errorCodeDTO);
+            throw new UnexpectedResponseCodeException(errorCodeDTO);
 
         } else {
             DeliverTaskDTO dto = gson.fromJson(response.getBody(), DeliverTaskDTO.class);
@@ -267,7 +267,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
     }
 
     @Override
-    public Visit deliverTaskPart(TaskPart taskpart) throws ErrorCodeException {
+    public Visit deliverTaskPart(TaskPart taskpart) throws UnexpectedResponseCodeException {
         String authToken = Blackboard.getInstance().getUser().getUserToken();
 
 
@@ -311,7 +311,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
         if (response.getCode() != 200) {
             ErrorCodeDTO errorCodeDTO = gson.fromJson(response.getBody(), ErrorCodeDTO.class);
 
-            throw new ErrorCodeException(errorCodeDTO);
+            throw new UnexpectedResponseCodeException(errorCodeDTO);
 
             // TODO - DeliverTaskPartDTO
 

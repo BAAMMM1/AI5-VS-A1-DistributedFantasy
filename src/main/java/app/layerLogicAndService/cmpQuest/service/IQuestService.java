@@ -1,7 +1,7 @@
 package app.layerLogicAndService.cmpQuest.service;
 
 import app.layerLogicAndService.cmpQuest.entity.*;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.UnexpectedResponseCodeException;
 
 
 import java.util.List;
@@ -11,20 +11,20 @@ import java.util.List;
  */
 public interface IQuestService {
 
-    List<Quest> getQuests() throws ErrorCodeException;
-    Quest getQuest(int index) throws ErrorCodeException;
-    Task getTask(int index) throws ErrorCodeException;
-    Map getMap(String location) throws ErrorCodeException;
+    List<Quest> getQuests() throws UnexpectedResponseCodeException;
+    Quest getQuest(int index) throws UnexpectedResponseCodeException;
+    Task getTask(int index) throws UnexpectedResponseCodeException;
+    Map getMap(String location) throws UnexpectedResponseCodeException;
 
     // TODO - Im moment für currentQuesting, später für übergebenen Questing
-    Visit visitLocationForTask(String location, int taskId) throws ErrorCodeException;
-    Answer answerToCurrentUri(String body) throws ErrorCodeException;
-    Visit next() throws ErrorCodeException;
-    Visit step(int step) throws ErrorCodeException;
+    Visit visitLocationForTask(String location, int taskId) throws UnexpectedResponseCodeException;
+    Answer answerToCurrentUri(String body) throws UnexpectedResponseCodeException;
+    Visit next() throws UnexpectedResponseCodeException;
+    Visit step(int step) throws UnexpectedResponseCodeException;
 
-    List<Delivery> deliverTask() throws ErrorCodeException;
-    Visit deliverTaskPart() throws ErrorCodeException;
+    List<Delivery> deliverTask() throws UnexpectedResponseCodeException;
+    Visit deliverTaskPart() throws UnexpectedResponseCodeException;
 
-    Visit doAssignment() throws ErrorCodeException;
+    Visit doAssignment() throws UnexpectedResponseCodeException;
 
 }

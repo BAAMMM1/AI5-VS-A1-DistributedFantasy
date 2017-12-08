@@ -5,7 +5,7 @@ import app.layerLogicAndService.cmpBlackboard.entity.User;
 import app.layerLogicAndService.cmpBlackboard.entity.Login;
 import app.layerLogicAndService.cmpBlackboard.entity.Register;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeDTO;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.UnexpectedResponseCodeException;
 import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.EnumHTTPMethod;
 import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.HTTPCaller;
 import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.HTTPRequest;
@@ -33,7 +33,7 @@ public class BlackboardConsumer implements IBlackboardConsumer {
     }
 
     @Override
-    public Register registerUser(String name, String password) throws ErrorCodeException {
+    public Register registerUser(String name, String password) throws UnexpectedResponseCodeException {
 
         // preconditions-check
         if (name == null) {
@@ -62,7 +62,7 @@ public class BlackboardConsumer implements IBlackboardConsumer {
         if (response.getCode() != 201 || response == null) {
             ErrorCodeDTO errorCodeDTO = gson.fromJson(response.getBody(), ErrorCodeDTO.class);
 
-            throw new ErrorCodeException(errorCodeDTO);
+            throw new UnexpectedResponseCodeException(errorCodeDTO);
 
         } else {
             Register dto = gson.fromJson(response.getBody(), Register.class);
@@ -74,7 +74,7 @@ public class BlackboardConsumer implements IBlackboardConsumer {
     }
 
     @Override
-    public Login getAuthenticationToken(String name, String password) throws ErrorCodeException {
+    public Login getAuthenticationToken(String name, String password) throws UnexpectedResponseCodeException {
 
         // preconditions-check
         if (name == null) {
@@ -104,7 +104,7 @@ public class BlackboardConsumer implements IBlackboardConsumer {
         if (response.getCode() != 200 || response == null) {
             ErrorCodeDTO errorCodeDTO = gson.fromJson(response.getBody(), ErrorCodeDTO.class);
 
-            throw new ErrorCodeException(errorCodeDTO);
+            throw new UnexpectedResponseCodeException(errorCodeDTO);
 
         } else {
             Login userTokenDTO = gson.fromJson(response.getBody(), Login.class);
@@ -117,7 +117,7 @@ public class BlackboardConsumer implements IBlackboardConsumer {
     }
 
     @Override
-    public User checkLogin(String token) throws ErrorCodeException {
+    public User checkLogin(String token) throws UnexpectedResponseCodeException {
 
         // preconditions-check
         if (token == null) {
@@ -142,7 +142,7 @@ public class BlackboardConsumer implements IBlackboardConsumer {
         if (response.getCode() != 200) {
             ErrorCodeDTO errorCodeDTO = gson.fromJson(response.getBody(), ErrorCodeDTO.class);
 
-            throw new ErrorCodeException(errorCodeDTO);
+            throw new UnexpectedResponseCodeException(errorCodeDTO);
 
         } else {
             WhoamiDTO whoamiDTO = gson.fromJson(response.getBody(), WhoamiDTO.class);

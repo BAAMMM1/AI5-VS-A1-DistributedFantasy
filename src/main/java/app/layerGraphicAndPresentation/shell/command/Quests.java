@@ -5,7 +5,7 @@ import app.layerGraphicAndPresentation.shell.exception.UnAcceptedStateException;
 import app.layerGraphicAndPresentation.shell.context.Context;
 import app.layerGraphicAndPresentation.shell.context.State;
 import app.layerLogicAndService.cmpQuest.service.IQuestService;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.UnexpectedResponseCodeException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,7 +37,7 @@ public class Quests extends Command {
     }
 
     @Override
-    State instruction() throws ErrorCodeException {
+    State instruction() throws UnexpectedResponseCodeException {
 
         List<app.layerLogicAndService.cmpQuest.entity.Quest> quests = this.client.getQuests();
 

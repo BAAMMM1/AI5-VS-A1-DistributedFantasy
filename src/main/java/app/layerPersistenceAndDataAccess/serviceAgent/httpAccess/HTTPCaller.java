@@ -1,9 +1,14 @@
 package app.layerPersistenceAndDataAccess.serviceAgent.httpAccess;
 
+import app.layerLogicAndService.cmpBlackboard.entity.Blackboard;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.tavernaConsumer.PathTaverna;
+
+import javax.el.MethodNotFoundException;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.rmi.ServerException;
 import java.util.Base64;
 
 /**
@@ -13,6 +18,25 @@ public class HTTPCaller {
 
     private static final int BUFFER_LENGHT = 819200;
     private static final String MEDIA_TYPE_APPLICATION_JSON = "application/json";
+
+    public HTTPResponse doGET(String url){
+        return doGET(url, null);
+    }
+
+    public HTTPResponse doGET(String url, String token){
+
+        HTTPRequest httpRequest =
+                new HTTPRequest(
+                        url,
+                        EnumHTTPMethod.GET
+                );
+
+        if(token != null){
+            httpRequest.setAuthorizationToken(token);
+        }
+
+        return call(httpRequest);
+    }
 
     public HTTPResponse call(HTTPRequest request) {
 
@@ -69,14 +93,19 @@ public class HTTPCaller {
             byte[] responeBody = new byte[BUFFER_LENGHT];
 
 
+            if(responeCode >= 500){
+                throw new ServerException("code: " + responeCode);
+            }
+
+            if(responeCode == 404){
+                throw new MethodNotFoundException();
+            }
+
+
             // Which stream is available depends on the return code...
             if (responeCode < 400) {
                 responeLen = connection.getInputStream().available();
                 connection.getInputStream().read(responeBody);
-
-            } else if(responeCode == 404){
-                    throw new IllegalArgumentException("404 - method not found");
-
 
             } else {
                 responeLen = connection.getErrorStream().available();
