@@ -11,8 +11,10 @@ import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.HTTPResponse;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeDTO;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
 import com.google.gson.Gson;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -300,7 +302,13 @@ public class TavernaConsumer implements ITavernaConsumer {
         } else {
             GroupGetMembersDTO dto = gson.fromJson(response.getBody(), GroupGetMembersDTO.class);
 
-            List<Adventurer> adventurerList = gson.fromJson(new JSONObject(response.getBody()).getJSONObject("objects").toString(), List.class);
+            List<Adventurer> adventurerList = new ArrayList<Adventurer>();
+            JSONArray jsonArray = new JSONObject(response.getBody()).getJSONArray("objects");
+
+            for (int i = 0; i < jsonArray.length(); i++){
+                adventurerList.add(gson.fromJson(jsonArray.get(i).toString(), Adventurer.class));
+            }
+
 
             System.out.println("--#>\n" + adventurerList.toString());
 
