@@ -102,9 +102,14 @@ public class TavernaConsumer implements ITavernaConsumer {
                 Blackboard.getInstance().getUser().getUserToken()
         );
 
-        return gson.fromJson(new JSONObject(response.getBody()).get("object").toString(), Group.class);
+        return this.getObject(response.getBody(), "object", Group.class);
 
 
+    }
+
+    public <T>T getObject(String body, String field, Class<T> klass){
+
+        return gson.fromJson(new JSONObject(body).get(field).toString(), klass);
     }
 
     @Override

@@ -7,9 +7,9 @@ import app.layerLogicAndService.cmpBlackboard.entity.Blackboard;
  */
 public class URLTaverna {
 
-    private static final String BLACKBOARD = Blackboard.URL;
+    public static final String BLACKBOARD = Blackboard.URL;
 
-    private static final String TAVERNA = BLACKBOARD + "/taverna";
+    public static final String TAVERNA = BLACKBOARD + "/taverna";
     public static final String TAVERNA_ADVENTURERS = TAVERNA + "/adventurers";
     public static final String TAVERNA_GROUPS = TAVERNA + "/groups";
 
