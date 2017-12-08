@@ -1,9 +1,7 @@
 package app.layerPersistenceAndDataAccess.serviceAgent.httpAccess;
 
-import app.layerLogicAndService.cmpBlackboard.entity.Blackboard;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeDTO;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.UnexpectedResponseCodeException;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.tavernaConsumer.PathTaverna;
 import com.google.gson.Gson;
 
 import javax.el.MethodNotFoundException;

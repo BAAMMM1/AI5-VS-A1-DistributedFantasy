@@ -116,9 +116,7 @@ public class ListenerServiceImpl extends Thread implements IListenerService {
             }
         }
 
-        Blackboard.BLACKBOARD = "http:/" + sourceIp + ":" + responeDTO.getBlackboard_port();
-        System.out.println(Blackboard.BLACKBOARD);
-
+        Blackboard.URL = "http:/" + sourceIp + ":" + responeDTO.getBlackboard_port();
 
         // TODO - Für den Logger. Log bitte wenn sich etwas ändert
         //System.out.println(" - " + Blackboard.getInstance().getUrl() + "\n");
