@@ -6,6 +6,8 @@ import java.net.URL;
 
 public class Blackboard {
 
+	public static String BLACKBOARD;
+	
 	private int blackboardPort;
 	private InetAddress blackboardIp;
 	private User user;
