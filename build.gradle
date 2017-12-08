@@ -30,4 +30,6 @@ dependencies {
 
     compile("org.springframework.boot:spring-boot-starter-web:1.5.9.RELEASE")
 
+    compile 'org.json:json:20160212'
+
 }

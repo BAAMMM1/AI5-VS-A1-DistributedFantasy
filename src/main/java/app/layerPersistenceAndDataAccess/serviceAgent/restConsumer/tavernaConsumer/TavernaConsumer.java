@@ -11,6 +11,7 @@ import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.HTTPResponse;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeDTO;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeException;
 import com.google.gson.Gson;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -107,6 +108,10 @@ public class TavernaConsumer implements ITavernaConsumer {
 
         } else {
             AdventurerGetDTO dto = gson.fromJson(response.getBody(), AdventurerGetDTO.class);
+
+            Adventurer adventurer = gson.fromJson(new JSONObject(response.getBody()).get("object").toString(), Adventurer.class);
+            System.out.println("-------------->: ");
+            System.out.println(adventurer.toString());
 
             return dto.getObject();
         }
