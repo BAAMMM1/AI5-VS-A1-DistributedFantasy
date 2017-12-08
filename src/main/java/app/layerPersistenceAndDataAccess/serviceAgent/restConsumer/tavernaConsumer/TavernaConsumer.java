@@ -54,6 +54,10 @@ public class TavernaConsumer implements ITavernaConsumer {
         } else {
             AdventurerDTO dto = gson.fromJson(response.getBody(), AdventurerDTO.class);
 
+            Adventurer adventurer = gson.fromJson(new JSONObject(response.getBody()).getJSONArray("object").get(0).toString(), Adventurer.class);
+
+            System.out.println("->\n" + adventurer.toString());
+
             return dto.getObject().get(0);
         }
 
@@ -107,13 +111,8 @@ public class TavernaConsumer implements ITavernaConsumer {
             throw new ErrorCodeException(errorCodeDTO);
 
         } else {
-            AdventurerGetDTO dto = gson.fromJson(response.getBody(), AdventurerGetDTO.class);
 
-            Adventurer adventurer = gson.fromJson(new JSONObject(response.getBody()).get("object").toString(), Adventurer.class);
-            System.out.println("-------------->: ");
-            System.out.println(adventurer.toString());
-
-            return dto.getObject();
+            return gson.fromJson(new JSONObject(response.getBody()).get("object").toString(), Adventurer.class);
         }
     }
 
