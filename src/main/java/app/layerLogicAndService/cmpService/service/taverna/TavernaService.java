@@ -4,6 +4,7 @@ import app.layerLogicAndService.cmpService.entity.blackboard.Blackboard;
 import app.layerLogicAndService.cmpService.entity.taverna.Adventurer;
 import app.layerLogicAndService.cmpService.entity.taverna.Group;
 import app.layerLogicAndService.cmpService.entity.taverna.Hero;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.TavernaConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.ITavernaConsumer;
 
@@ -15,11 +16,8 @@ import java.util.List;
  */
 public class TavernaService implements ITavernaService {
 
-    ITavernaConsumer tavernaConsumer;
+    ITavernaConsumer tavernaConsumer = new TavernaConsumer();
 
-    public TavernaService(ITavernaConsumer tavernaConsumer) {
-        this.tavernaConsumer = tavernaConsumer;
-    }
 
     @Override
     public Adventurer addHeroServiceToTaverna() throws UnexpectedResponseCodeException, UnknownHostException {

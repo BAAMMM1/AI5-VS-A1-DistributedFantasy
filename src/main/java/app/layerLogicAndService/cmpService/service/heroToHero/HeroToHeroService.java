@@ -9,7 +9,10 @@ import app.layerLogicAndService.cmpService.service.quest.IQuestService;
 import app.layerLogicAndService.cmpService.entity.hero.*;
 import app.layerLogicAndService.cmpService.entity.taverna.Adventurer;
 import app.layerLogicAndService.cmpService.entity.taverna.Group;
+import app.layerLogicAndService.cmpService.service.quest.QuestServiceImpl;
 import app.layerLogicAndService.cmpService.service.taverna.ITavernaService;
+import app.layerLogicAndService.cmpService.service.taverna.TavernaService;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.HeroToHeroConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.IHeroToHeroConsumer;
 
@@ -18,17 +21,11 @@ import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.IHeroToHeroCo
  */
 public class HeroToHeroService implements IHeroToHeroService {
 
-    IHeroToHeroConsumer heroToHeroConsumer;
+    IHeroToHeroConsumer heroToHeroConsumer = new HeroToHeroConsumer();
 
-    ITavernaService tavernaService;
+    ITavernaService tavernaService = new TavernaService();
 
-    IQuestService questService;
-
-    public HeroToHeroService(IHeroToHeroConsumer heroToHeroConsumer, ITavernaService tavernaService, IQuestService questService) {
-        this.heroToHeroConsumer = heroToHeroConsumer;
-        this.tavernaService = tavernaService;
-        this.questService = questService;
-    }
+    IQuestService questService = new QuestServiceImpl();
 
     @Override
     public String invite(String heroName, int groupId, int taskid, String messageToHero) throws UnexpectedResponseCodeException {

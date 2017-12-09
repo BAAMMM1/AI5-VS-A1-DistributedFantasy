@@ -7,6 +7,7 @@ import app.layerLogicAndService.cmpService.entity.quest.questing.Questing;
 import app.layerLogicAndService.cmpService.entity.quest.questing.Step;
 import app.layerLogicAndService.cmpService.entity.quest.questing.TaskPart;
 import app.layerLogicAndService.cmpService.entity.quest.questing.Token;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.QuestConsumerImpl;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.IQuestConsumer;
 
@@ -18,11 +19,7 @@ import java.util.List;
  */
 public class QuestServiceImpl implements IQuestService {
 
-    private IQuestConsumer questConsumer;
-
-    public QuestServiceImpl(IQuestConsumer questConsumer) {
-        this.questConsumer = questConsumer;
-    }
+    private IQuestConsumer questConsumer = new QuestConsumerImpl();
 
     @Override
     public List<Quest> getQuests() throws UnexpectedResponseCodeException {

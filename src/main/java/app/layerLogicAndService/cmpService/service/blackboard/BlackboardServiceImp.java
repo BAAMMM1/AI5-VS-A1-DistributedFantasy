@@ -3,6 +3,7 @@ package app.layerLogicAndService.cmpService.service.blackboard;
 import app.layerLogicAndService.cmpService.entity.blackboard.Blackboard;
 import app.layerLogicAndService.cmpService.entity.blackboard.User;
 import app.layerLogicAndService.cmpService.entity.blackboard.Login;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.BlackboardConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.IBlackboardConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 
@@ -11,13 +12,7 @@ import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.Une
  */
 public class BlackboardServiceImp implements IBlackboardService {
 
-    private IBlackboardConsumer registerConsumer;
-
-    // ITavernaService tavernaService;
-
-    public BlackboardServiceImp(IBlackboardConsumer registerConsumer) {
-        this.registerConsumer = registerConsumer;
-    }
+    private IBlackboardConsumer registerConsumer = new BlackboardConsumer();
 
     // 1. Register user, 2. login user, 3. führe whoami aus
     @Override

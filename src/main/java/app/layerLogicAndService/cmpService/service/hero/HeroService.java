@@ -20,7 +20,7 @@ import java.util.List;
 @org.springframework.stereotype.Service
 public class HeroService implements IHeroService {
 
-    private ITavernaService tavernaService = new TavernaService(new TavernaConsumer());
+    private ITavernaService tavernaService = new TavernaService();
 
     @Override
     public Service getService() {

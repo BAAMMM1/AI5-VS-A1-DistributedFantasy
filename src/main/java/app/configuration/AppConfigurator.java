@@ -29,16 +29,12 @@ public class AppConfigurator {
 
     private static final int WELL_KNOWN_PORT = 24000;
 
-    private IBlackboardConsumer blackboardConsumer;
     private IBlackboardService blackboardService;
 
-    private IQuestConsumer questConsumer;
     private IQuestService questService;
 
-    private ITavernaConsumer tavernaConsumer;
     private ITavernaService tavernaService;
 
-    private IHeroToHeroConsumer heroToHeroConsumer;
     private IHeroToHeroService heroToHeroService;
 
     private IHeroService heroService;
@@ -53,17 +49,13 @@ public class AppConfigurator {
 
         this.listener = new ListenerServiceImpl(WELL_KNOWN_PORT);
 
-        blackboardConsumer = new BlackboardConsumer();
-        blackboardService = new BlackboardServiceImp(blackboardConsumer);
+        blackboardService = new BlackboardServiceImp();
 
-        questConsumer = new QuestConsumerImpl();
-        questService = new QuestServiceImpl(questConsumer);
+        questService = new QuestServiceImpl();
 
-        tavernaConsumer = new TavernaConsumer();
-        tavernaService = new TavernaService(tavernaConsumer);
+        tavernaService = new TavernaService();
 
-        this.heroToHeroConsumer = new HeroToHeroConsumer();
-        this.heroToHeroService = new HeroToHeroService(heroToHeroConsumer, tavernaService, questService);
+        this.heroToHeroService = new HeroToHeroService();
 
         this.heroService = new HeroService();
 
