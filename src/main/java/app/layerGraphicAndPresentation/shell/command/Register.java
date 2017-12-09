@@ -8,6 +8,7 @@ import app.layerLogicAndService.cmpService.service.blackboard.IBlackboardService
 import app.layerLogicAndService.cmpService.entity.blackboard.User;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -38,7 +39,7 @@ public class Register extends Command {
     }
 
     @Override
-    State instruction() throws UnexpectedResponseCodeException {
+    State instruction() throws UnexpectedResponseCodeException, UnknownHostException {
 
         User user = this.client.registerUser(this.getParameter().get(0), this.getParameter().get(1));
 
