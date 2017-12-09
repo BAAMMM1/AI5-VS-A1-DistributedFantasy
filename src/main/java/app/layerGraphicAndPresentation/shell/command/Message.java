@@ -21,7 +21,13 @@ public class Message extends Command{
     @Override
     State instruction() throws UnexpectedResponseCodeException, IOException, InterruptedException {
 
-        this.heroToHeroService.sendMessage(this.getParameter().get(0), this.getParameter().get(1));
+        String message = "";
+
+        for(int i = 1; i < this.getParameter().size(); i++){
+            message = message + this.getParameter().get(i);
+        }
+
+        this.heroToHeroService.sendMessage(this.getParameter().get(0), message);
 
         return null;
     }

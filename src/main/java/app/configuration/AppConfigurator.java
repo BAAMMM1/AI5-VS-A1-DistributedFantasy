@@ -29,17 +29,8 @@ public class AppConfigurator {
 
     private static final int WELL_KNOWN_PORT = 24000;
 
-    private IBlackboardService blackboardService;
-
-    private IQuestService questService;
-
-    private ITavernaService tavernaService;
-
-    private IHeroToHeroService heroToHeroService;
-
-    private IHeroService heroService;
-
     private IListenerService listener;
+
     private Shell shell;
 
     /**

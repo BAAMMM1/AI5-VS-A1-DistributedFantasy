@@ -24,7 +24,7 @@ public class Application {
         IP = java.net.InetAddress.getLocalHost().getHostAddress();
 
         System.out.println(java.net.InetAddress.getLocalHost().getHostAddress());
-        System.out.print(System.getenv("TEST_ENV"));
+        System.out.println(System.getenv("TEST_ENV"));
 
         AppConfigurator appConfig = new AppConfigurator();
         appConfig.configure();
