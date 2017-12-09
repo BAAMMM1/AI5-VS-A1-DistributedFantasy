@@ -34,8 +34,10 @@ public class Message extends Command{
         String message = "";
 
         for(int i = 1; i < this.getParameter().size(); i++){
-            message = message + this.getParameter().get(i);
+            message = message + this.getParameter().get(i) + " ";
         }
+
+        message.substring(0, message.length()-1);
 
         this.heroToHeroService.sendMessage(this.getParameter().get(0), message);
 
