@@ -12,7 +12,8 @@ public class API {
     public static final String BLACKBOARD = WELL_KNOWN_SERVER + "/blackboard";
     public static final String BLACKBOARD_QUESTS = BLACKBOARD + "/quests";
     public static final String BLACKBOARD_TASKS = BLACKBOARD + "/tasks";
-    public static final String BLACKBOARD_MAPS = BLACKBOARD + "/map";
+
+    public static final String MAP = WELL_KNOWN_SERVER + "/map";
 
     public static final String TAVERNA = WELL_KNOWN_SERVER + "/taverna";
     public static final String TAVERNA_ADVENTURERS = TAVERNA + "/adventurers";
