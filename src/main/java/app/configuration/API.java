@@ -22,10 +22,10 @@ public class API {
     public static final String TAVERNA_ADVENTURERS = TAVERNA + "/adventurers";
     public static final String TAVERNA_GROUPS = TAVERNA + "/groups";
 
-    public static final String PATH_SERVICES     = "/services";
-    public static final String PATH_HIRINGS      = "/hirings";
-    public static final String PATH_ASSIGNMENTS  = "/assignments";
-    public static final String PATH_MESSAGES     = "/messages";
+    public static final String PATH_SERVICES     = Blackboard.getInstance().getUser().getName() + "/services";
+    public static final String PATH_HIRINGS      = Blackboard.getInstance().getUser().getName() + "/hirings";
+    public static final String PATH_ASSIGNMENTS  = Blackboard.getInstance().getUser().getName() + "/assignments";
+    public static final String PATH_MESSAGES     = Blackboard.getInstance().getUser().getName() + "/messages";
 
 
 
