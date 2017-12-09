@@ -46,11 +46,12 @@ public class AppConfigurator {
     public void configure() {
         System.out.println("configure Application");
 
-        System.out.println("starting shell");
-        this.shell.start();
 
         System.out.println("starting listener thread");
         this.listener.start();
+
+        System.out.println("starting shell");
+        this.shell.start();
 
 
 
