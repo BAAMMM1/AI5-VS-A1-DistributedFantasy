@@ -31,15 +31,12 @@ public class TavernaConsumer implements ITavernaConsumer {
     @Override
     public Adventurer addHeroService(Hero hero) throws UnexpectedResponseCodeException {
 
-
         HTTPResponse response = this.httpCaller.doPOST(
                 URLTaverna.TAVERNA_ADVENTURERS,
                 Blackboard.getInstance().getUser().getUserToken(),
                 gson.toJson(hero));
 
-
-        return gson.fromJson(new JSONObject(response.getBody()).getJSONArray("object").get(0).toString(), Adventurer.class);
-
+        return JSONUtil.getObjectFirst(response.getBody(), "object", Adventurer.class);
 
     }
 
@@ -51,14 +48,7 @@ public class TavernaConsumer implements ITavernaConsumer {
                 Blackboard.getInstance().getUser().getUserToken()
         );
 
-        List<Adventurer> adventurerList = new ArrayList<Adventurer>();
-        JSONArray jsonArray = new JSONObject(response.getBody()).getJSONArray("objects");
-
-        for (int i = 0; i < jsonArray.length(); i++) {
-            adventurerList.add(gson.fromJson(jsonArray.get(i).toString(), Adventurer.class));
-        }
-
-        return adventurerList;
+        return JSONUtil.getObjectList(response.getBody(), "objects", Adventurer.class);
 
     }
 
@@ -71,28 +61,18 @@ public class TavernaConsumer implements ITavernaConsumer {
         );
 
         return JSONUtil.getObject(response.getBody(), "object", Adventurer.class);
-        //return gson.fromJson(new JSONObject(response.getBody()).get("object").toString(), Adventurer.class);
 
     }
 
     @Override
     public List<Group> getGroups() throws UnexpectedResponseCodeException {
 
-
         HTTPResponse response = this.httpCaller.doGET(
                 URLTaverna.TAVERNA_GROUPS,
                 Blackboard.getInstance().getUser().getUserToken());
 
 
-        List<Group> groupList = new ArrayList<Group>();
-        JSONArray jsonArray = new JSONObject(response.getBody()).getJSONArray("objects");
-
-        for (int i = 0; i < jsonArray.length(); i++) {
-            groupList.add(gson.fromJson(jsonArray.get(i).toString(), Group.class));
-        }
-
-        return groupList;
-
+        return JSONUtil.getObjectList(response.getBody(), "objects", Group.class);
 
     }
 
@@ -105,7 +85,6 @@ public class TavernaConsumer implements ITavernaConsumer {
         );
 
         return JSONUtil.getObject(response.getBody(), "object", Group.class);
-
     }
 
 
@@ -118,8 +97,7 @@ public class TavernaConsumer implements ITavernaConsumer {
                 "{}"
         );
 
-        return gson.fromJson(new JSONObject(response.getBody()).getJSONArray("object").get(0).toString(), Group.class);
-
+        return JSONUtil.getObjectFirst(response.getBody(), "object", Group.class);
     }
 
     @Override
@@ -132,8 +110,6 @@ public class TavernaConsumer implements ITavernaConsumer {
         );
 
         return JSONUtil.getObject(response.getBody(), "message", String.class);
-        //return new JSONObject(response.getBody()).get("message").toString();
-
 
     }
 
@@ -147,7 +123,6 @@ public class TavernaConsumer implements ITavernaConsumer {
         );
 
         return JSONUtil.getObject(response.getBody(), "message", String.class);
-        //return new JSONObject(response.getBody()).get("message").toString();
 
     }
 
@@ -158,20 +133,9 @@ public class TavernaConsumer implements ITavernaConsumer {
                 URLTaverna.TAVERNA_GROUPS + "/" + groupId + "/members",
                 Blackboard.getInstance().getUser().getUserToken());
 
-        /*
-        List<Adventurer> adventurerList = new ArrayList<Adventurer>();
-        JSONArray jsonArray = new JSONObject(response.getBody()).getJSONArray("objects");
-
-        for (int i = 0; i < jsonArray.length(); i++) {
-            adventurerList.add(gson.fromJson(jsonArray.get(i).toString(), Adventurer.class));
-        }
-
-        return adventurerList;
-        */
 
         return JSONUtil.getObjectList(response.getBody(), "objects", Adventurer.class);
 
     }
-
 
 }

@@ -1,6 +1,7 @@
 package app.layerLogicAndService.cmpBlackboard.util;
 
 import app.layerLogicAndService.cmpTaverna.entity.Adventurer;
+import app.layerLogicAndService.cmpTaverna.entity.Group;
 import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -32,4 +33,11 @@ public class JSONUtil {
         return adventurerList;
 
     }
+
+    public static <T>T getObjectFirst(String body, String field, Class<T> tClass){
+
+        return gson.fromJson(new JSONObject(body).getJSONArray(field).get(0).toString(), tClass);
+
+    }
+
 }
