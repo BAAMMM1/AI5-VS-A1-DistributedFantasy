@@ -2,10 +2,12 @@ package app.layerGraphicAndPresentation.shell.command;
 
 import app.layerGraphicAndPresentation.shell.InputInterpreter;
 import app.layerGraphicAndPresentation.shell.context.State;
+import app.layerGraphicAndPresentation.shell.exception.ParameterIncorrectException;
 import app.layerLogicAndService.cmpService.service.heroToHero.IHeroToHeroService;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @author Chris on 05.12.2017
@@ -16,6 +18,14 @@ public class Message extends Command{
 
     public Message(IHeroToHeroService heroToHeroService) {
         this.heroToHeroService = heroToHeroService;
+    }
+
+    public void checkParam(List<String> param) throws ParameterIncorrectException {
+
+        if (param.size() < this.getNumberOfParameter()) {
+            throw new ParameterIncorrectException("size of parameter incorrect");
+        }
+
     }
 
     @Override
