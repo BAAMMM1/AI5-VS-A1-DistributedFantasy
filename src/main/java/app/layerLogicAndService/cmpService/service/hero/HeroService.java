@@ -3,7 +3,6 @@ package app.layerLogicAndService.cmpService.service.hero;
 
 import app.Application;
 import app.configuration.API;
-import app.layerGraphicAndPresentation.controller.config.PathHeroservice;
 import app.layerLogicAndService.cmpService.entity.blackboard.Blackboard;
 import app.layerLogicAndService.cmpService.exception.AlreadyInGroupException;
 import app.layerLogicAndService.cmpService.entity.hero.*;
