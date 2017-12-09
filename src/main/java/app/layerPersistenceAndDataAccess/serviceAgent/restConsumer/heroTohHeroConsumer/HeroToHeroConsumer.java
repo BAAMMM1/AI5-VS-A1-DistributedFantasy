@@ -26,73 +26,35 @@ public class HeroToHeroConsumer implements IHeroToHeroConsumer {
     @Override
     public Service getHeroService(String heroServiceUrl) throws UnexpectedResponseCodeException {
 
-        // Erstellen der Anfrage
-        HTTPRequest httpRequest =
-                new HTTPRequest(
-                        heroServiceUrl,
-                        EnumHTTPMethod.GET
-                );
-
-
-        HTTPResponse response = this.httpCaller.call(httpRequest);
-
+        HTTPResponse response = this.httpCaller.get(heroServiceUrl);
 
         if (response.getCode() != 200) {
-            ErrorCodeDTO errorCodeDTO = gson.fromJson(response.getBody(), ErrorCodeDTO.class);
-
             throw new UnexpectedResponseCodeException(response);
-
-        } else {
-            Service service = gson.fromJson(response.getBody(), Service.class);
-
-            return service;
         }
+
+        return gson.fromJson(response.getBody(), Service.class);
 
     }
 
     @Override
     public String hiringHero(Hiring hiring, String herHiringUrl) throws UnexpectedResponseCodeException {
 
-
-        HTTPRequest httpRequest =
-                new HTTPRequest(
-                        herHiringUrl,
-                        EnumHTTPMethod.POST,
-                        gson.toJson(hiring)
-                );
-
-        HTTPResponse response = this.httpCaller.call(httpRequest);
-
+        HTTPResponse response = this.httpCaller.post(herHiringUrl, gson.toJson(hiring));
 
         if (response.getCode() < 200 || response.getCode() >= 300) {
-
             throw new UnexpectedResponseCodeException(response);
-
-        } else {
-
-            return response.getBody();
         }
+
+        return response.getBody();
     }
 
     @Override
     public void sendMessage(Message message, String heroMessageUrl) throws UnexpectedResponseCodeException {
 
-        HTTPRequest httpRequest =
-                new HTTPRequest(
-                        heroMessageUrl,
-                        EnumHTTPMethod.POST,
-                        gson.toJson(message)
-                );
-
-        HTTPResponse response = this.httpCaller.call(httpRequest);
-
+        HTTPResponse response = this.httpCaller.post(heroMessageUrl, gson.toJson(message));
 
         if (response.getCode() < 200 || response.getCode() >= 300) {
-
             throw new UnexpectedResponseCodeException(response);
-
-        } else {
-
         }
 
     }
@@ -100,22 +62,10 @@ public class HeroToHeroConsumer implements IHeroToHeroConsumer {
     @Override
     public void sendAssignment(String heroAssignmentUrl, Assignment assignment) throws UnexpectedResponseCodeException {
 
-        HTTPRequest httpRequest =
-                new HTTPRequest(
-                        heroAssignmentUrl,
-                        EnumHTTPMethod.POST,
-                        gson.toJson(assignment)
-                );
-
-        HTTPResponse response = this.httpCaller.call(httpRequest);
-
+        HTTPResponse response = this.httpCaller.post(heroAssignmentUrl, gson.toJson(assignment));
 
         if (response.getCode() < 200 || response.getCode() >= 300) {
-
             throw new UnexpectedResponseCodeException(response);
-
-        } else {
-
         }
 
     }
@@ -123,22 +73,10 @@ public class HeroToHeroConsumer implements IHeroToHeroConsumer {
     @Override
     public void sendAssignmentDeliver(String assignmentDeliverUrl, AssignmentDerliver assignmentDeliver) throws UnexpectedResponseCodeException {
 
-        HTTPRequest httpRequest =
-                new HTTPRequest(
-                        assignmentDeliverUrl,
-                        EnumHTTPMethod.POST,
-                        gson.toJson(assignmentDeliver)
-                );
-
-        HTTPResponse response = this.httpCaller.call(httpRequest);
-
+        HTTPResponse response = this.httpCaller.post(assignmentDeliverUrl, gson.toJson(assignmentDeliver));
 
         if (response.getCode() < 200 || response.getCode() >= 300) {
-
             throw new UnexpectedResponseCodeException(response);
-
-        } else {
-
         }
 
     }
