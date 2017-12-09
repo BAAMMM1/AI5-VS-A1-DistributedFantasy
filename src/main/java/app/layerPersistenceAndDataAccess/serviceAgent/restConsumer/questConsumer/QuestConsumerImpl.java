@@ -71,7 +71,6 @@ public class QuestConsumerImpl implements IQuestConsumer {
                 Blackboard.getInstance().getUser().getUserToken()
         );
 
-
         return JSONUtil.getObject(response.getBody(), "object", Map.class);
 
     }
@@ -84,7 +83,6 @@ public class QuestConsumerImpl implements IQuestConsumer {
                 Blackboard.getInstance().getUser().getUserToken()
         );
 
-
         return gson.fromJson(response.getBody(), Visit.class);
 
     }
@@ -92,35 +90,15 @@ public class QuestConsumerImpl implements IQuestConsumer {
     @Override
     public Answer post(String ipPort, String ressource, String body) throws UnexpectedResponseCodeException {
 
-        String token = Blackboard.getInstance().getUser().getUserToken();
+        HTTPResponse response = this.httpCaller.doPOST(
+                "http://" + ipPort + ressource,
+                Blackboard.getInstance().getUser().getUserToken(),
+                body,
+                200
+        );
 
-        // Erstellen der Anfrage
-        HTTPRequest httpRequest =
-                new HTTPRequest(
-                        "http://" + ipPort + ressource,
-                        EnumHTTPMethod.POST,
-                        body
-                );
-        httpRequest.setAuthorizationToken(token);
+        return gson.fromJson(response.getBody(), Answer.class);
 
-        // Aufrufen des API´s Pfad
-        HTTPResponse response = this.httpCaller.call(httpRequest);
-
-        //System.out.println(response.toString());
-
-        // Antwort prüfen
-
-        if (response.getCode() != 200) {
-            ErrorCodeDTO errorCodeDTO = gson.fromJson(response.getBody(), ErrorCodeDTO.class);
-
-            throw new UnexpectedResponseCodeException(errorCodeDTO);
-
-        } else {
-            Answer dto = gson.fromJson(response.getBody(), Answer.class);
-
-            return dto;
-
-        }
     }
 
     @Override
@@ -139,7 +117,6 @@ public class QuestConsumerImpl implements IQuestConsumer {
 
     @Override
     public Visit deliverTaskPart(TaskPart taskpart) throws UnexpectedResponseCodeException {
-        String authToken = Blackboard.getInstance().getUser().getUserToken();
 
 
         String tokens = "{ \"tokens\":[";
@@ -150,48 +127,26 @@ public class QuestConsumerImpl implements IQuestConsumer {
         }
 
         if (Blackboard.getInstance().getUser().getAssignmentDerliver() != null) {
+
             tokens = tokens + Blackboard.getInstance().getUser().getAssignmentDerliver().getData();
             tokens = tokens + "]}";
+
         } else {
             tokens = tokens.substring(0, tokens.length() - 2) + "]}";
-        }
-
-
-        System.out.println("tokens: " + tokens);
-        System.out.println("url: " + "http://" + taskpart.getDeliverUri());
-
-        // Erstellen der Anfrage
-        HTTPRequest httpRequest =
-                new HTTPRequest(
-                        "http://" + taskpart.getDeliverUri(),
-                        EnumHTTPMethod.POST,
-                        tokens
-                );
-        httpRequest.setAuthorizationToken(authToken);
-
-        //System.out.println(httpRequest.getBody().toString());
-
-        // Aufrufen des API´s Pfad
-        HTTPResponse response = this.httpCaller.call(httpRequest);
-
-        //System.out.println(response.toString());
-
-        // Antwort prüfen
-
-        if (response.getCode() != 200) {
-            ErrorCodeDTO errorCodeDTO = gson.fromJson(response.getBody(), ErrorCodeDTO.class);
-
-            throw new UnexpectedResponseCodeException(errorCodeDTO);
-
-            // TODO - DeliverTaskPartDTO
-
-        } else {
-            Visit visit = gson.fromJson(response.getBody(), Visit.class);
-
-            return visit;
 
         }
+
+        HTTPResponse response = this.httpCaller.doPOST(
+                "http://" + taskpart.getDeliverUri(),
+                Blackboard.getInstance().getUser().getUserToken(),
+                tokens,
+                200
+        );
+
+        return gson.fromJson(response.getBody(), Visit.class);
+
     }
+
 
 
 }

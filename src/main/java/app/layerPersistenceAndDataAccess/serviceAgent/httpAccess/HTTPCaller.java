@@ -80,6 +80,31 @@ public class HTTPCaller {
         return result;
     }
 
+    public HTTPResponse doPOST(String url, String token, String body, int expectedCode) throws UnexpectedResponseCodeException {
+
+        HTTPRequest httpRequest =
+                new HTTPRequest(
+                        url,
+                        EnumHTTPMethod.POST,
+                        body
+                );
+
+        if (token != null) {
+            httpRequest.setAuthorizationToken(token);
+        }
+
+        HTTPResponse result = this.call(httpRequest);
+
+        if (result.getCode() != expectedCode) {
+            ErrorCodeDTO errorCodeDTO = gson.fromJson(result.getBody(), ErrorCodeDTO.class);
+
+            throw new UnexpectedResponseCodeException(errorCodeDTO);
+
+        }
+
+        return result;
+    }
+
     public HTTPResponse doGET(String url) throws UnexpectedResponseCodeException {
         return doGET(url, null);
     }
