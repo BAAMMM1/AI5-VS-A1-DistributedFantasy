@@ -35,10 +35,7 @@ public class InputHandler {
             System.out.println(Context.getInstance().getPromptState() + e.getMessage());
 
         } catch (UnexpectedResponseCodeException e) {
-            if(e.getErrorCodeDTO().getError() != null){
-                System.out.println("error: " + e.getErrorCodeDTO().getError());
-            }
-            System.out.println(e.getClass().getSimpleName() + ": " + e.getErrorCodeDTO().getMessage());
+            System.out.println(e.getClass().getSimpleName() + ": code: " + e.getCode() + " message: " + e.getMessage());
 
         } catch (Exception e){
             System.out.println(e.getClass().getSimpleName() + ": " + e.getMessage());

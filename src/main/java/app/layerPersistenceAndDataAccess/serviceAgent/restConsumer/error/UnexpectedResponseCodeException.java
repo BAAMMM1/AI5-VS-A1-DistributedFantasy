@@ -3,20 +3,16 @@ package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error;
 /**
  * @author Christian G. on 17.11.2017
  */
-public class UnexpectedResponseCodeException extends Throwable {
+public class UnexpectedResponseCodeException extends Exception {
 
-    private ErrorCodeDTO errorCodeDTO;
+    private int code;
 
-    public UnexpectedResponseCodeException(ErrorCodeDTO errorCodeDTO) {
+    public UnexpectedResponseCodeException(int code, String message) {
+        super(message);
 
-        if(errorCodeDTO == null){
-            throw new IllegalArgumentException("errorCodeDTO must not be null");
-        }
-
-        this.errorCodeDTO = errorCodeDTO;
     }
 
-    public ErrorCodeDTO getErrorCodeDTO() {
-        return errorCodeDTO;
+    public int getCode() {
+        return code;
     }
 }

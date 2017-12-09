@@ -35,6 +35,11 @@ public class QuestConsumerImpl implements IQuestConsumer {
                 Blackboard.getInstance().getUrl().toString() + "/blackboard/quests",
                 Blackboard.getInstance().getUser().getUserToken());
 
+
+        if (response.getCode() != 200) {
+            throw new UnexpectedResponseCodeException(response.getCode(), JSONUtil.getObject(response.getBody(), "message", String.class));
+        }
+
         return JSONUtil.getObjectList(response.getBody(), "objects", Quest.class);
 
     }
@@ -46,6 +51,10 @@ public class QuestConsumerImpl implements IQuestConsumer {
                 Blackboard.getInstance().getUrl().toString() + "/blackboard/quests" + "/" + index,
                 Blackboard.getInstance().getUser().getUserToken()
         );
+
+        if (response.getCode() != 200) {
+            throw new UnexpectedResponseCodeException(response.getCode(), JSONUtil.getObject(response.getBody(), "message", String.class));
+        }
 
         return JSONUtil.getObject(response.getBody(), "object", Quest.class);
 
@@ -59,6 +68,10 @@ public class QuestConsumerImpl implements IQuestConsumer {
                 Blackboard.getInstance().getUser().getUserToken()
         );
 
+        if (response.getCode() != 200) {
+            throw new UnexpectedResponseCodeException(response.getCode(), JSONUtil.getObject(response.getBody(), "message", String.class));
+        }
+
         return JSONUtil.getObject(response.getBody(), "object", Task.class);
 
     }
@@ -70,6 +83,10 @@ public class QuestConsumerImpl implements IQuestConsumer {
                 Blackboard.getInstance().getUrl().toString() + "/map/" + location,
                 Blackboard.getInstance().getUser().getUserToken()
         );
+
+        if (response.getCode() != 200) {
+            throw new UnexpectedResponseCodeException(response.getCode(), JSONUtil.getObject(response.getBody(), "message", String.class));
+        }
 
         return JSONUtil.getObject(response.getBody(), "object", Map.class);
 
@@ -83,6 +100,10 @@ public class QuestConsumerImpl implements IQuestConsumer {
                 Blackboard.getInstance().getUser().getUserToken()
         );
 
+        if (response.getCode() != 200) {
+            throw new UnexpectedResponseCodeException(response.getCode(), JSONUtil.getObject(response.getBody(), "message", String.class));
+        }
+
         return gson.fromJson(response.getBody(), Visit.class);
 
     }
@@ -93,9 +114,12 @@ public class QuestConsumerImpl implements IQuestConsumer {
         HTTPResponse response = this.httpCaller.doPOST(
                 "http://" + ipPort + ressource,
                 Blackboard.getInstance().getUser().getUserToken(),
-                body,
-                200
+                body
         );
+
+        if (response.getCode() != 200) {
+            throw new UnexpectedResponseCodeException(response.getCode(), JSONUtil.getObject(response.getBody(), "message", String.class));
+        }
 
         return gson.fromJson(response.getBody(), Answer.class);
 
@@ -110,6 +134,10 @@ public class QuestConsumerImpl implements IQuestConsumer {
                 Blackboard.getInstance().getUser().getUserToken(),
                 "{ \"tokens\": { \"" + Blackboard.getInstance().getUrl() + task.get_links().getSelf() + "\": \"" + task.getToken() + "\" } }"
         );
+
+        if (response.getCode() != 201) {
+            throw new UnexpectedResponseCodeException(response.getCode(), JSONUtil.getObject(response.getBody(), "message", String.class));
+        }
 
         return JSONUtil.getObjectList(response.getBody(), "object", Delivery.class);
 
@@ -139,9 +167,12 @@ public class QuestConsumerImpl implements IQuestConsumer {
         HTTPResponse response = this.httpCaller.doPOST(
                 "http://" + taskpart.getDeliverUri(),
                 Blackboard.getInstance().getUser().getUserToken(),
-                tokens,
-                200
+                tokens
         );
+
+        if (response.getCode() != 200) {
+            throw new UnexpectedResponseCodeException(response.getCode(), JSONUtil.getObject(response.getBody(), "message", String.class));
+        }
 
         return gson.fromJson(response.getBody(), Visit.class);
 

@@ -36,6 +36,10 @@ public class TavernaConsumer implements ITavernaConsumer {
                 Blackboard.getInstance().getUser().getUserToken(),
                 gson.toJson(hero));
 
+        if (response.getCode() != 201) {
+            throw new UnexpectedResponseCodeException(response.getCode(), JSONUtil.getObject(response.getBody(), "message", String.class));
+        }
+
         return JSONUtil.getObjectFirst(response.getBody(), "object", Adventurer.class);
 
     }
@@ -47,6 +51,10 @@ public class TavernaConsumer implements ITavernaConsumer {
                 URLTaverna.TAVERNA_ADVENTURERS,
                 Blackboard.getInstance().getUser().getUserToken()
         );
+
+        if (response.getCode() != 200) {
+            throw new UnexpectedResponseCodeException(response.getCode(), JSONUtil.getObject(response.getBody(), "message", String.class));
+        }
 
         return JSONUtil.getObjectList(response.getBody(), "objects", Adventurer.class);
 
@@ -60,6 +68,10 @@ public class TavernaConsumer implements ITavernaConsumer {
                 Blackboard.getInstance().getUser().getUserToken()
         );
 
+        if (response.getCode() != 200) {
+            throw new UnexpectedResponseCodeException(response.getCode(), JSONUtil.getObject(response.getBody(), "message", String.class));
+        }
+
         return JSONUtil.getObject(response.getBody(), "object", Adventurer.class);
 
     }
@@ -69,8 +81,12 @@ public class TavernaConsumer implements ITavernaConsumer {
 
         HTTPResponse response = this.httpCaller.doGET(
                 URLTaverna.TAVERNA_GROUPS,
-                Blackboard.getInstance().getUser().getUserToken());
+                Blackboard.getInstance().getUser().getUserToken()
+        );
 
+        if (response.getCode() != 200) {
+            throw new UnexpectedResponseCodeException(response.getCode(), JSONUtil.getObject(response.getBody(), "message", String.class));
+        }
 
         return JSONUtil.getObjectList(response.getBody(), "objects", Group.class);
 
@@ -83,6 +99,10 @@ public class TavernaConsumer implements ITavernaConsumer {
                 URLTaverna.TAVERNA_GROUPS + "/" + groupId,
                 Blackboard.getInstance().getUser().getUserToken()
         );
+
+        if (response.getCode() != 200) {
+            throw new UnexpectedResponseCodeException(response.getCode(), JSONUtil.getObject(response.getBody(), "message", String.class));
+        }
 
         return JSONUtil.getObject(response.getBody(), "object", Group.class);
     }
@@ -97,6 +117,10 @@ public class TavernaConsumer implements ITavernaConsumer {
                 "{}"
         );
 
+        if (response.getCode() != 201) {
+            throw new UnexpectedResponseCodeException(response.getCode(), JSONUtil.getObject(response.getBody(), "message", String.class));
+        }
+
         return JSONUtil.getObjectFirst(response.getBody(), "object", Group.class);
     }
 
@@ -108,6 +132,10 @@ public class TavernaConsumer implements ITavernaConsumer {
                 URLTaverna.TAVERNA_GROUPS + "/" + groupId,
                 Blackboard.getInstance().getUser().getUserToken()
         );
+
+        if (response.getCode() != 200) {
+            throw new UnexpectedResponseCodeException(response.getCode(), JSONUtil.getObject(response.getBody(), "message", String.class));
+        }
 
         return JSONUtil.getObject(response.getBody(), "message", String.class);
 
@@ -122,6 +150,10 @@ public class TavernaConsumer implements ITavernaConsumer {
                 ""
         );
 
+        if (response.getCode() != 201) {
+            throw new UnexpectedResponseCodeException(response.getCode(), JSONUtil.getObject(response.getBody(), "message", String.class));
+        }
+
         return JSONUtil.getObject(response.getBody(), "message", String.class);
 
     }
@@ -131,8 +163,12 @@ public class TavernaConsumer implements ITavernaConsumer {
 
         HTTPResponse response = this.httpCaller.doGET(
                 URLTaverna.TAVERNA_GROUPS + "/" + groupId + "/members",
-                Blackboard.getInstance().getUser().getUserToken());
+                Blackboard.getInstance().getUser().getUserToken()
+        );
 
+        if (response.getCode() != 201) {
+            throw new UnexpectedResponseCodeException(response.getCode(), JSONUtil.getObject(response.getBody(), "message", String.class));
+        }
 
         return JSONUtil.getObjectList(response.getBody(), "objects", Adventurer.class);
 
