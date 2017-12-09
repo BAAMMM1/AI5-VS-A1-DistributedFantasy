@@ -68,7 +68,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
     @Override
     public Map lookAtTheMap(String location) throws UnexpectedResponseCodeException {
 
-        HTTPResponse response = this.httpCaller.get(API.BLACKBOARD_MAPS + location, Blackboard.getInstance().getUser().getUserToken());
+        HTTPResponse response = this.httpCaller.get(API.BLACKBOARD_MAPS + "/" + location, Blackboard.getInstance().getUser().getUserToken());
 
         if (response.getCode() != 200) {
             throw new UnexpectedResponseCodeException(response);
