@@ -7,7 +7,7 @@ import app.layerLogicAndService.cmpService.entity.blackboard.Blackboard;
  */
 public class API {
 
-    public static final String WELL_KNOWN_SERVER = Blackboard.URL;
+    public static final String WELL_KNOWN_SERVER = Blackboard.getInstance().getUrl().toString();
 
     public static final String BLACKBOARD = WELL_KNOWN_SERVER + "/blackboard";
     public static final String BLACKBOARD_QUESTS = BLACKBOARD + "/quests";
