@@ -28,10 +28,7 @@ public class TavernaConsumer implements ITavernaConsumer {
     @Override
     public Adventurer addHeroService(Hero hero) throws UnexpectedResponseCodeException {
 
-        HTTPResponse response = this.httpCaller.post(
-                URLTaverna.TAVERNA_ADVENTURERS,
-                Blackboard.getInstance().getUser().getUserToken(),
-                gson.toJson(hero));
+        HTTPResponse response = this.httpCaller.post(API.TAVERNA_ADVENTURERS, Blackboard.getInstance().getUser().getUserToken(), gson.toJson(hero));
 
         if (response.getCode() != 201) {
             throw new UnexpectedResponseCodeException(response);
@@ -44,10 +41,7 @@ public class TavernaConsumer implements ITavernaConsumer {
     @Override
     public List<Adventurer> getAdventurers() throws UnexpectedResponseCodeException {
 
-        HTTPResponse response = this.httpCaller.get(
-                URLTaverna.TAVERNA_ADVENTURERS,
-                Blackboard.getInstance().getUser().getUserToken()
-        );
+        HTTPResponse response = this.httpCaller.get(API.TAVERNA_ADVENTURERS, Blackboard.getInstance().getUser().getUserToken());
 
         if (response.getCode() != 200) {
             throw new UnexpectedResponseCodeException(response);
@@ -60,10 +54,7 @@ public class TavernaConsumer implements ITavernaConsumer {
     @Override
     public Adventurer getAdventure(String name) throws UnexpectedResponseCodeException {
 
-        HTTPResponse response = this.httpCaller.get(
-                URLTaverna.TAVERNA_ADVENTURERS + "/" + name,
-                Blackboard.getInstance().getUser().getUserToken()
-        );
+        HTTPResponse response = this.httpCaller.get(API.TAVERNA_ADVENTURERS + "/" + name, Blackboard.getInstance().getUser().getUserToken());
 
         if (response.getCode() != 200) {
             throw new UnexpectedResponseCodeException(response);
@@ -76,10 +67,7 @@ public class TavernaConsumer implements ITavernaConsumer {
     @Override
     public List<Group> getGroups() throws UnexpectedResponseCodeException {
 
-        HTTPResponse response = this.httpCaller.get(
-                URLTaverna.TAVERNA_GROUPS,
-                Blackboard.getInstance().getUser().getUserToken()
-        );
+        HTTPResponse response = this.httpCaller.get(API.TAVERNA_GROUPS, Blackboard.getInstance().getUser().getUserToken());
 
         if (response.getCode() != 200) {
             throw new UnexpectedResponseCodeException(response);
@@ -92,10 +80,7 @@ public class TavernaConsumer implements ITavernaConsumer {
     @Override
     public Group getGroup(int groupId) throws UnexpectedResponseCodeException {
 
-        HTTPResponse response = this.httpCaller.get(
-                URLTaverna.TAVERNA_GROUPS + "/" + groupId,
-                Blackboard.getInstance().getUser().getUserToken()
-        );
+        HTTPResponse response = this.httpCaller.get(API.TAVERNA_GROUPS + "/" + groupId, Blackboard.getInstance().getUser().getUserToken());
 
         if (response.getCode() != 200) {
             throw new UnexpectedResponseCodeException(response);
@@ -108,11 +93,7 @@ public class TavernaConsumer implements ITavernaConsumer {
     @Override
     public Group createGroup() throws UnexpectedResponseCodeException {
 
-        HTTPResponse response = this.httpCaller.post(
-                URLTaverna.TAVERNA_GROUPS,
-                Blackboard.getInstance().getUser().getUserToken(),
-                "{}"
-        );
+        HTTPResponse response = this.httpCaller.post(API.TAVERNA_GROUPS, Blackboard.getInstance().getUser().getUserToken(), "{}");
 
         if (response.getCode() != 201) {
             throw new UnexpectedResponseCodeException(response);
@@ -124,11 +105,7 @@ public class TavernaConsumer implements ITavernaConsumer {
     @Override
     public String deleteGroup(int groupId) throws UnexpectedResponseCodeException {
 
-
-        HTTPResponse response = this.httpCaller.delete(
-                URLTaverna.TAVERNA_GROUPS + "/" + groupId,
-                Blackboard.getInstance().getUser().getUserToken()
-        );
+        HTTPResponse response = this.httpCaller.delete(API.TAVERNA_GROUPS + "/" + groupId, Blackboard.getInstance().getUser().getUserToken());
 
         if (response.getCode() != 200) {
             throw new UnexpectedResponseCodeException(response);
@@ -141,11 +118,7 @@ public class TavernaConsumer implements ITavernaConsumer {
     @Override
     public String enterGroup(int groupId) throws UnexpectedResponseCodeException {
 
-        HTTPResponse response = this.httpCaller.post(
-                URLTaverna.TAVERNA_GROUPS + "/" + groupId + "/members",
-                Blackboard.getInstance().getUser().getUserToken(),
-                ""
-        );
+        HTTPResponse response = this.httpCaller.post(API.TAVERNA_GROUPS + "/" + groupId + "/members", Blackboard.getInstance().getUser().getUserToken(), "");
 
         if (response.getCode() != 201) {
             throw new UnexpectedResponseCodeException(response);
@@ -158,10 +131,7 @@ public class TavernaConsumer implements ITavernaConsumer {
     @Override
     public List<Adventurer> getGroupMembers(int groupId) throws UnexpectedResponseCodeException {
 
-        HTTPResponse response = this.httpCaller.get(
-                URLTaverna.TAVERNA_GROUPS + "/" + groupId + "/members",
-                Blackboard.getInstance().getUser().getUserToken()
-        );
+        HTTPResponse response = this.httpCaller.get(API.TAVERNA_GROUPS + "/" + groupId + "/members", Blackboard.getInstance().getUser().getUserToken());
 
         if (response.getCode() != 200) {
             throw new UnexpectedResponseCodeException(response);

@@ -8,6 +8,7 @@ import app.layerLogicAndService.cmpQuest.entity.questing.TaskPart;
 import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.HTTPCaller;
 import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.HTTPResponse;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.UnexpectedResponseCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.tavernaConsumer.API;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -28,10 +29,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
     @Override
     public List<Quest> getQuests() throws UnexpectedResponseCodeException {
 
-        HTTPResponse response = this.httpCaller.get(
-                Blackboard.getInstance().getUrl().toString() + "/blackboard/quests",
-                Blackboard.getInstance().getUser().getUserToken());
-
+        HTTPResponse response = this.httpCaller.get(API.BLACKBOARD_QUESTS, Blackboard.getInstance().getUser().getUserToken());
 
         if (response.getCode() != 200) {
             throw new UnexpectedResponseCodeException(response);
@@ -44,10 +42,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
     @Override
     public Quest getQuest(int index) throws UnexpectedResponseCodeException {
 
-        HTTPResponse response = this.httpCaller.get(
-                Blackboard.getInstance().getUrl().toString() + "/blackboard/quests" + "/" + index,
-                Blackboard.getInstance().getUser().getUserToken()
-        );
+        HTTPResponse response = this.httpCaller.get(API.BLACKBOARD_QUESTS + "/" + index, Blackboard.getInstance().getUser().getUserToken());
 
         if (response.getCode() != 200) {
             throw new UnexpectedResponseCodeException(response);
@@ -60,10 +55,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
     @Override
     public Task getTask(int index) throws UnexpectedResponseCodeException {
 
-        HTTPResponse response = this.httpCaller.get(
-                Blackboard.getInstance().getUrl().toString() + "/blackboard/tasks" + "/" + index,
-                Blackboard.getInstance().getUser().getUserToken()
-        );
+        HTTPResponse response = this.httpCaller.get(API.BLACKBOARD_TASKS + "/" + index, Blackboard.getInstance().getUser().getUserToken());
 
         if (response.getCode() != 200) {
             throw new UnexpectedResponseCodeException(response);
@@ -76,10 +68,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
     @Override
     public Map lookAtTheMap(String location) throws UnexpectedResponseCodeException {
 
-        HTTPResponse response = this.httpCaller.get(
-                Blackboard.getInstance().getUrl().toString() + "/map/" + location,
-                Blackboard.getInstance().getUser().getUserToken()
-        );
+        HTTPResponse response = this.httpCaller.get(API.BLACKBOARD_MAPS + location, Blackboard.getInstance().getUser().getUserToken());
 
         if (response.getCode() != 200) {
             throw new UnexpectedResponseCodeException(response);
@@ -92,10 +81,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
     @Override
     public Visit visitHost(String ipPort, String ressource) throws UnexpectedResponseCodeException {
 
-        HTTPResponse response = this.httpCaller.get(
-                "http://" + ipPort + ressource,
-                Blackboard.getInstance().getUser().getUserToken()
-        );
+        HTTPResponse response = this.httpCaller.get("http://" + ipPort + ressource, Blackboard.getInstance().getUser().getUserToken());
 
         if (response.getCode() != 200) {
             throw new UnexpectedResponseCodeException(response);
@@ -108,11 +94,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
     @Override
     public Answer post(String ipPort, String ressource, String body) throws UnexpectedResponseCodeException {
 
-        HTTPResponse response = this.httpCaller.post(
-                "http://" + ipPort + ressource,
-                Blackboard.getInstance().getUser().getUserToken(),
-                body
-        );
+        HTTPResponse response = this.httpCaller.post("http://" + ipPort + ressource, Blackboard.getInstance().getUser().getUserToken(), body);
 
         if (response.getCode() != 200) {
             throw new UnexpectedResponseCodeException(response);
@@ -127,7 +109,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
 
 
         HTTPResponse response = this.httpCaller.post(
-                Blackboard.getInstance().getUrl().toString() + "/blackboard/quests/" + task.getQuest() + "/deliveries",
+                API.BLACKBOARD_QUESTS +"/" + task.getQuest() + "/deliveries",
                 Blackboard.getInstance().getUser().getUserToken(),
                 "{ \"tokens\": { \"" + Blackboard.getInstance().getUrl() + task.get_links().getSelf() + "\": \"" + task.getToken() + "\" } }"
         );
@@ -161,11 +143,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
 
         }
 
-        HTTPResponse response = this.httpCaller.post(
-                "http://" + taskpart.getDeliverUri(),
-                Blackboard.getInstance().getUser().getUserToken(),
-                tokens
-        );
+        HTTPResponse response = this.httpCaller.post("http://" + taskpart.getDeliverUri(), Blackboard.getInstance().getUser().getUserToken(), tokens);
 
         if (response.getCode() != 200) {
             throw new UnexpectedResponseCodeException(response);
@@ -174,7 +152,6 @@ public class QuestConsumerImpl implements IQuestConsumer {
         return gson.fromJson(response.getBody(), Visit.class);
 
     }
-
 
 
 }
