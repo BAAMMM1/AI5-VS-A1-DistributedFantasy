@@ -37,8 +37,6 @@ public class BlackboardServiceImp implements IBlackboardService {
 
         User user = this.checkLogin(Blackboard.getInstance().getUser().getUserToken());
 
-        SpringApplication.run(Application.class);
-
         return user;
 
 
