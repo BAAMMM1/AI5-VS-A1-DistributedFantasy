@@ -5,10 +5,7 @@ import app.layerLogicAndService.cmpBlackboard.util.JSONUtil;
 import app.layerLogicAndService.cmpQuest.entity.*;
 import app.layerLogicAndService.cmpQuest.entity.questing.Step;
 import app.layerLogicAndService.cmpQuest.entity.questing.TaskPart;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeDTO;
-import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.EnumHTTPMethod;
 import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.HTTPCaller;
-import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.HTTPRequest;
 import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.HTTPResponse;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.UnexpectedResponseCodeException;
 import com.google.gson.Gson;
@@ -31,7 +28,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
     @Override
     public List<Quest> getQuests() throws UnexpectedResponseCodeException {
 
-        HTTPResponse response = this.httpCaller.doGET(
+        HTTPResponse response = this.httpCaller.get(
                 Blackboard.getInstance().getUrl().toString() + "/blackboard/quests",
                 Blackboard.getInstance().getUser().getUserToken());
 
@@ -47,7 +44,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
     @Override
     public Quest getQuest(int index) throws UnexpectedResponseCodeException {
 
-        HTTPResponse response = this.httpCaller.doGET(
+        HTTPResponse response = this.httpCaller.get(
                 Blackboard.getInstance().getUrl().toString() + "/blackboard/quests" + "/" + index,
                 Blackboard.getInstance().getUser().getUserToken()
         );
@@ -63,7 +60,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
     @Override
     public Task getTask(int index) throws UnexpectedResponseCodeException {
 
-        HTTPResponse response = this.httpCaller.doGET(
+        HTTPResponse response = this.httpCaller.get(
                 Blackboard.getInstance().getUrl().toString() + "/blackboard/tasks" + "/" + index,
                 Blackboard.getInstance().getUser().getUserToken()
         );
@@ -79,7 +76,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
     @Override
     public Map lookAtTheMap(String location) throws UnexpectedResponseCodeException {
 
-        HTTPResponse response = this.httpCaller.doGET(
+        HTTPResponse response = this.httpCaller.get(
                 Blackboard.getInstance().getUrl().toString() + "/map/" + location,
                 Blackboard.getInstance().getUser().getUserToken()
         );
@@ -95,7 +92,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
     @Override
     public Visit visitHost(String ipPort, String ressource) throws UnexpectedResponseCodeException {
 
-        HTTPResponse response = this.httpCaller.doGET(
+        HTTPResponse response = this.httpCaller.get(
                 "http://" + ipPort + ressource,
                 Blackboard.getInstance().getUser().getUserToken()
         );
@@ -111,7 +108,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
     @Override
     public Answer post(String ipPort, String ressource, String body) throws UnexpectedResponseCodeException {
 
-        HTTPResponse response = this.httpCaller.doPOST(
+        HTTPResponse response = this.httpCaller.post(
                 "http://" + ipPort + ressource,
                 Blackboard.getInstance().getUser().getUserToken(),
                 body
@@ -129,7 +126,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
     public List<Delivery> deliverTask(Task task) throws UnexpectedResponseCodeException {
 
 
-        HTTPResponse response = this.httpCaller.doPOST(
+        HTTPResponse response = this.httpCaller.post(
                 Blackboard.getInstance().getUrl().toString() + "/blackboard/quests/" + task.getQuest() + "/deliveries",
                 Blackboard.getInstance().getUser().getUserToken(),
                 "{ \"tokens\": { \"" + Blackboard.getInstance().getUrl() + task.get_links().getSelf() + "\": \"" + task.getToken() + "\" } }"
@@ -164,7 +161,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
 
         }
 
-        HTTPResponse response = this.httpCaller.doPOST(
+        HTTPResponse response = this.httpCaller.post(
                 "http://" + taskpart.getDeliverUri(),
                 Blackboard.getInstance().getUser().getUserToken(),
                 tokens

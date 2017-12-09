@@ -1,6 +1,5 @@
 package app.layerPersistenceAndDataAccess.serviceAgent.httpAccess;
 
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeDTO;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.UnexpectedResponseCodeException;
 import com.google.gson.Gson;
 
@@ -22,70 +21,6 @@ public class HTTPCaller {
 
     private Gson gson = new Gson();
 
-    public HTTPResponse doDELETE(String url) throws UnexpectedResponseCodeException {
-        return this.doDELETE(url, null);
-    }
-
-    public HTTPResponse doDELETE(String url, String token) throws UnexpectedResponseCodeException {
-
-        HTTPRequest httpRequest =
-                new HTTPRequest(
-                        url,
-                        EnumHTTPMethod.DELETE
-                );
-
-        if(token != null){
-            httpRequest.setAuthorizationToken(token);
-        }
-
-        HTTPResponse result = this.call(httpRequest);
-
-        return result;
-    }
-
-    public HTTPResponse doPOST(String url, String body) throws UnexpectedResponseCodeException {
-        return this.doPOST(url, null, body);
-    }
-
-    public HTTPResponse doPOST(String url, String token, String body) throws UnexpectedResponseCodeException {
-
-        HTTPRequest httpRequest =
-                new HTTPRequest(
-                        url,
-                        EnumHTTPMethod.POST,
-                        body
-                );
-
-        if (token != null) {
-            httpRequest.setAuthorizationToken(token);
-        }
-
-        HTTPResponse result = this.call(httpRequest);
-
-        return result;
-    }
-
-
-    public HTTPResponse doGET(String url) throws UnexpectedResponseCodeException {
-        return doGET(url, null);
-    }
-
-    public HTTPResponse doGET(String url, String token) throws UnexpectedResponseCodeException {
-
-        HTTPRequest httpRequest =
-                new HTTPRequest(
-                        url,
-                        EnumHTTPMethod.GET
-                );
-
-        if (token != null) {
-            httpRequest.setAuthorizationToken(token);
-        }
-
-        HTTPResponse result = this.call(httpRequest);
-
-        return result;
-    }
 
     public HTTPResponse call(HTTPRequest request) {
 
@@ -185,5 +120,59 @@ public class HTTPCaller {
             throw new IllegalArgumentException(e.getMessage());
         }
     }
+
+    public HTTPResponse get(String url) {
+
+        return this.call(this.buildRequest(url, EnumHTTPMethod.GET, null, null));
+
+    }
+
+    public HTTPResponse get(String url, String token) {
+
+        return this.call(this.buildRequest(url, EnumHTTPMethod.GET, token, null));
+
+    }
+
+    public HTTPResponse post(String url, String body) throws UnexpectedResponseCodeException {
+        return this.post(url, null, body);
+    }
+
+    public HTTPResponse post(String url, String token, String body) throws UnexpectedResponseCodeException {
+
+        return this.call(this.buildRequest(url, EnumHTTPMethod.POST, token, body));
+
+    }
+
+    public HTTPResponse delete(String url) throws UnexpectedResponseCodeException {
+
+        return this.call(this.buildRequest(url, EnumHTTPMethod.DELETE, null, null));
+
+    }
+
+    public HTTPResponse delete(String url, String token) throws UnexpectedResponseCodeException {
+
+        return this.call(this.buildRequest(url, EnumHTTPMethod.DELETE, token, null));
+
+    }
+
+
+    private HTTPRequest buildRequest(String url, EnumHTTPMethod method, String token, String body) {
+
+        HTTPRequest request;
+
+        if (body != null) {
+            request = new HTTPRequest(url, method, body);
+        } else {
+            request = new HTTPRequest(url, method);
+        }
+
+        if (token != null) {
+            request.setAuthorizationToken(token);
+        }
+
+
+        return request;
+    }
+
 
 }
