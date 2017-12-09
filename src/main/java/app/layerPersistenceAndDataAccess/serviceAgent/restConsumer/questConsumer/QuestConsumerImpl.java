@@ -10,7 +10,9 @@ import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.HTTPResponse;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.UnexpectedResponseCodeException;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.tavernaConsumer.API;
 import com.google.gson.Gson;
+import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -107,11 +109,20 @@ public class QuestConsumerImpl implements IQuestConsumer {
     @Override
     public List<Delivery> deliverTask(Task task) throws UnexpectedResponseCodeException {
 
+        JSONObject jsonToken = new JSONObject();
+
+        jsonToken.put(Blackboard.getInstance().getUrl() + task.get_links().getSelf(), task.getToken());
+
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("tokens", jsonToken);
+
 
         HTTPResponse response = this.httpCaller.post(
                 API.BLACKBOARD_QUESTS +"/" + task.getQuest() + "/deliveries",
                 Blackboard.getInstance().getUser().getUserToken(),
-                "{ \"tokens\": { \"" + Blackboard.getInstance().getUrl() + task.get_links().getSelf() + "\": \"" + task.getToken() + "\" } }"
+                //"{ \"tokens\": { \"" + Blackboard.getInstance().getUrl() + task.get_links().getSelf() + "\": \"" + task.getToken() + "\" } }"
+                jsonObject.toString()
         );
 
         if (response.getCode() != 201) {
@@ -125,7 +136,18 @@ public class QuestConsumerImpl implements IQuestConsumer {
     @Override
     public Visit deliverTaskPart(TaskPart taskpart) throws UnexpectedResponseCodeException {
 
+        List<String> tokenList = new ArrayList<String>();
+        for (Step step : taskpart.getStepList()) {
+            tokenList.add(step.getToken().getToken());
+        }
 
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("tokens", tokenList);
+
+        String tokens;
+
+        /*
         String tokens = "{ \"tokens\":[";
 
         for (Step step : taskpart.getStepList()) {
@@ -142,6 +164,9 @@ public class QuestConsumerImpl implements IQuestConsumer {
             tokens = tokens.substring(0, tokens.length() - 2) + "]}";
 
         }
+        */
+
+        tokens = jsonObject.toString();
 
         HTTPResponse response = this.httpCaller.post("http://" + taskpart.getDeliverUri(), Blackboard.getInstance().getUser().getUserToken(), tokens);
 
