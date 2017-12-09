@@ -1,6 +1,7 @@
 package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer;
 
 import app.layerLogicAndService.cmpBlackboard.entity.Blackboard;
+import app.layerLogicAndService.cmpBlackboard.util.JSONUtil;
 import app.layerLogicAndService.cmpQuest.entity.*;
 import app.layerLogicAndService.cmpQuest.entity.questing.Step;
 import app.layerLogicAndService.cmpQuest.entity.questing.TaskPart;
@@ -30,35 +31,12 @@ public class QuestConsumerImpl implements IQuestConsumer {
     @Override
     public List<Quest> getQuests() throws UnexpectedResponseCodeException {
 
-        String token = Blackboard.getInstance().getUser().getUserToken();
+        HTTPResponse response = this.httpCaller.doGET(
+                Blackboard.getInstance().getUrl().toString() + "/blackboard/quests",
+                Blackboard.getInstance().getUser().getUserToken());
 
+        return JSONUtil.getObjectList(response.getBody(), "objects", Quest.class);
 
-        // Erstellen der Anfrage
-        HTTPRequest httpRequest =
-                new HTTPRequest(
-                        Blackboard.getInstance().getUrl().toString() + "/blackboard/quests",
-                        EnumHTTPMethod.GET
-                );
-        httpRequest.setAuthorizationToken(token);
-
-        // Aufrufen des API´s Pfad
-        HTTPResponse response = this.httpCaller.call(httpRequest);
-
-        //System.out.println(response.toString());
-
-        // Antwort prüfen
-
-        if (response.getCode() != 200) {
-            ErrorCodeDTO errorCodeDTO = gson.fromJson(response.getBody(), ErrorCodeDTO.class);
-
-            throw new UnexpectedResponseCodeException(errorCodeDTO);
-
-        } else {
-            QuestsDTO dto = gson.fromJson(response.getBody(), QuestsDTO.class);
-
-            return dto.getObjects();
-
-        }
     }
 
     @Override
@@ -274,17 +252,16 @@ public class QuestConsumerImpl implements IQuestConsumer {
         String tokens = "{ \"tokens\":[";
 
         for (Step step : taskpart.getStepList()) {
-            String token = "\""+ step.getToken().getToken() +"\", ";
+            String token = "\"" + step.getToken().getToken() + "\", ";
             tokens = tokens + token;
         }
 
-        if(Blackboard.getInstance().getUser().getAssignmentDerliver() != null){
+        if (Blackboard.getInstance().getUser().getAssignmentDerliver() != null) {
             tokens = tokens + Blackboard.getInstance().getUser().getAssignmentDerliver().getData();
             tokens = tokens + "]}";
         } else {
-            tokens = tokens.substring(0, tokens.length()-2) + "]}";
+            tokens = tokens.substring(0, tokens.length() - 2) + "]}";
         }
-
 
 
         System.out.println("tokens: " + tokens);
@@ -464,7 +441,6 @@ public class QuestConsumerImpl implements IQuestConsumer {
     }
 
 
-
     private class MapDTO {
 
         private Map object;
@@ -565,7 +541,6 @@ public class QuestConsumerImpl implements IQuestConsumer {
                     ", \nstatus='" + status + '\'' +
                     '}';
         }
-
 
 
     }
