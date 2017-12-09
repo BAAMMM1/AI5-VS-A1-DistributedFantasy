@@ -1,6 +1,7 @@
 package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.tavernaConsumer;
 
 import app.layerLogicAndService.cmpBlackboard.entity.Blackboard;
+import app.layerLogicAndService.cmpBlackboard.util.JSONUtil;
 import app.layerLogicAndService.cmpTaverna.entity.Adventurer;
 import app.layerLogicAndService.cmpTaverna.entity.Group;
 import app.layerLogicAndService.cmpTaverna.entity.Hero;
@@ -69,7 +70,8 @@ public class TavernaConsumer implements ITavernaConsumer {
                 Blackboard.getInstance().getUser().getUserToken()
         );
 
-        return gson.fromJson(new JSONObject(response.getBody()).get("object").toString(), Adventurer.class);
+        return JSONUtil.getObject(response.getBody(), "object", Adventurer.class);
+        //return gson.fromJson(new JSONObject(response.getBody()).get("object").toString(), Adventurer.class);
 
     }
 
@@ -102,15 +104,10 @@ public class TavernaConsumer implements ITavernaConsumer {
                 Blackboard.getInstance().getUser().getUserToken()
         );
 
-        return this.getObject(response.getBody(), "object", Group.class);
-
+        return JSONUtil.getObject(response.getBody(), "object", Group.class);
 
     }
 
-    public <T>T getObject(String body, String field, Class<T> klass){
-
-        return gson.fromJson(new JSONObject(body).get(field).toString(), klass);
-    }
 
     @Override
     public Group createGroup() throws UnexpectedResponseCodeException {
@@ -134,7 +131,8 @@ public class TavernaConsumer implements ITavernaConsumer {
                 Blackboard.getInstance().getUser().getUserToken()
         );
 
-        return new JSONObject(response.getBody()).get("message").toString();
+        return JSONUtil.getObject(response.getBody(), "message", String.class);
+        //return new JSONObject(response.getBody()).get("message").toString();
 
 
     }
@@ -148,7 +146,8 @@ public class TavernaConsumer implements ITavernaConsumer {
                 ""
         );
 
-        return new JSONObject(response.getBody()).get("message").toString();
+        return JSONUtil.getObject(response.getBody(), "message", String.class);
+        //return new JSONObject(response.getBody()).get("message").toString();
 
     }
 
@@ -159,6 +158,7 @@ public class TavernaConsumer implements ITavernaConsumer {
                 URLTaverna.TAVERNA_GROUPS + "/" + groupId + "/members",
                 Blackboard.getInstance().getUser().getUserToken());
 
+        /*
         List<Adventurer> adventurerList = new ArrayList<Adventurer>();
         JSONArray jsonArray = new JSONObject(response.getBody()).getJSONArray("objects");
 
@@ -167,6 +167,9 @@ public class TavernaConsumer implements ITavernaConsumer {
         }
 
         return adventurerList;
+        */
+
+        return JSONUtil.getObjectList(response.getBody(), "objects", Adventurer.class);
 
     }
 
