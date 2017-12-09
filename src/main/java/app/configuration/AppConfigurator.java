@@ -23,10 +23,12 @@ import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.QuestConsumer
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.ITavernaConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.TavernaConsumer;
 import org.springframework.boot.SpringApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * @author Chris on 24.11.2017
  */
+@ComponentScan
 public class AppConfigurator {
 
     private static final int WELL_KNOWN_PORT = 24000;
