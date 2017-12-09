@@ -66,7 +66,7 @@ public class BlackboardServiceImp implements IBlackboardService {
         } catch (UnexpectedResponseCodeException e) {
             Blackboard.getInstance().setUser(null, null, null);
 
-            throw new UnexpectedResponseCodeException(e.getErrorCodeDTO());
+            throw new UnexpectedResponseCodeException(e.getResponse());
 
         }
 

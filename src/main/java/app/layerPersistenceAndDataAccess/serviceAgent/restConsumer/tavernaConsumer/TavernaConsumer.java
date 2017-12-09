@@ -37,7 +37,7 @@ public class TavernaConsumer implements ITavernaConsumer {
                 gson.toJson(hero));
 
         if (response.getCode() != 201) {
-            throw new UnexpectedResponseCodeException(response.getCode(), JSONUtil.getObject(response.getBody(), "message", String.class));
+            throw new UnexpectedResponseCodeException(response);
         }
 
         return JSONUtil.getObjectFirst(response.getBody(), "object", Adventurer.class);
@@ -53,7 +53,7 @@ public class TavernaConsumer implements ITavernaConsumer {
         );
 
         if (response.getCode() != 200) {
-            throw new UnexpectedResponseCodeException(response.getCode(), JSONUtil.getObject(response.getBody(), "message", String.class));
+            throw new UnexpectedResponseCodeException(response);
         }
 
         return JSONUtil.getObjectList(response.getBody(), "objects", Adventurer.class);
@@ -69,7 +69,7 @@ public class TavernaConsumer implements ITavernaConsumer {
         );
 
         if (response.getCode() != 200) {
-            throw new UnexpectedResponseCodeException(response.getCode(), JSONUtil.getObject(response.getBody(), "message", String.class));
+            throw new UnexpectedResponseCodeException(response);
         }
 
         return JSONUtil.getObject(response.getBody(), "object", Adventurer.class);
@@ -85,7 +85,7 @@ public class TavernaConsumer implements ITavernaConsumer {
         );
 
         if (response.getCode() != 200) {
-            throw new UnexpectedResponseCodeException(response.getCode(), JSONUtil.getObject(response.getBody(), "message", String.class));
+            throw new UnexpectedResponseCodeException(response);
         }
 
         return JSONUtil.getObjectList(response.getBody(), "objects", Group.class);
@@ -101,7 +101,7 @@ public class TavernaConsumer implements ITavernaConsumer {
         );
 
         if (response.getCode() != 200) {
-            throw new UnexpectedResponseCodeException(response.getCode(), JSONUtil.getObject(response.getBody(), "message", String.class));
+            throw new UnexpectedResponseCodeException(response);
         }
 
         return JSONUtil.getObject(response.getBody(), "object", Group.class);
@@ -118,7 +118,7 @@ public class TavernaConsumer implements ITavernaConsumer {
         );
 
         if (response.getCode() != 201) {
-            throw new UnexpectedResponseCodeException(response.getCode(), JSONUtil.getObject(response.getBody(), "message", String.class));
+            throw new UnexpectedResponseCodeException(response);
         }
 
         return JSONUtil.getObjectFirst(response.getBody(), "object", Group.class);
@@ -134,7 +134,7 @@ public class TavernaConsumer implements ITavernaConsumer {
         );
 
         if (response.getCode() != 200) {
-            throw new UnexpectedResponseCodeException(response.getCode(), JSONUtil.getObject(response.getBody(), "message", String.class));
+            throw new UnexpectedResponseCodeException(response);
         }
 
         return JSONUtil.getObject(response.getBody(), "message", String.class);
@@ -151,7 +151,7 @@ public class TavernaConsumer implements ITavernaConsumer {
         );
 
         if (response.getCode() != 201) {
-            throw new UnexpectedResponseCodeException(response.getCode(), JSONUtil.getObject(response.getBody(), "message", String.class));
+            throw new UnexpectedResponseCodeException(response);
         }
 
         return JSONUtil.getObject(response.getBody(), "message", String.class);
@@ -167,7 +167,7 @@ public class TavernaConsumer implements ITavernaConsumer {
         );
 
         if (response.getCode() != 201) {
-            throw new UnexpectedResponseCodeException(response.getCode(), JSONUtil.getObject(response.getBody(), "message", String.class));
+            throw new UnexpectedResponseCodeException(response);
         }
 
         return JSONUtil.getObjectList(response.getBody(), "objects", Adventurer.class);

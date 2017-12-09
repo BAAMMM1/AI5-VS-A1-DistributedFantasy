@@ -1,5 +1,6 @@
 package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.heroTohHeroConsumer;
 
+import app.layerLogicAndService.cmpBlackboard.util.JSONUtil;
 import app.layerLogicAndService.cmpHero.entity.*;
 import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.EnumHTTPMethod;
 import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.HTTPCaller;
@@ -39,7 +40,7 @@ public class HeroToHeroConsumer implements IHeroToHeroConsumer {
         if (response.getCode() != 200) {
             ErrorCodeDTO errorCodeDTO = gson.fromJson(response.getBody(), ErrorCodeDTO.class);
 
-            throw new UnexpectedResponseCodeException(errorCodeDTO);
+            throw new UnexpectedResponseCodeException(response);
 
         } else {
             Service service = gson.fromJson(response.getBody(), Service.class);
@@ -65,7 +66,7 @@ public class HeroToHeroConsumer implements IHeroToHeroConsumer {
 
         if (response.getCode() < 200 || response.getCode() >= 300) {
 
-            throw new UnexpectedResponseCodeException(new ErrorCodeDTO("error", response.getBody()));
+            throw new UnexpectedResponseCodeException(response);
 
         } else {
 
@@ -88,7 +89,7 @@ public class HeroToHeroConsumer implements IHeroToHeroConsumer {
 
         if (response.getCode() < 200 || response.getCode() >= 300) {
 
-            throw new UnexpectedResponseCodeException(new ErrorCodeDTO("error", response.getBody()));
+            throw new UnexpectedResponseCodeException(response);
 
         } else {
 
@@ -111,7 +112,7 @@ public class HeroToHeroConsumer implements IHeroToHeroConsumer {
 
         if (response.getCode() < 200 || response.getCode() >= 300) {
 
-            throw new UnexpectedResponseCodeException(new ErrorCodeDTO("error", response.getBody()));
+            throw new UnexpectedResponseCodeException(response);
 
         } else {
 
@@ -134,7 +135,7 @@ public class HeroToHeroConsumer implements IHeroToHeroConsumer {
 
         if (response.getCode() < 200 || response.getCode() >= 300) {
 
-            throw new UnexpectedResponseCodeException(new ErrorCodeDTO("error", response.getBody()));
+            throw new UnexpectedResponseCodeException(response);
 
         } else {
 

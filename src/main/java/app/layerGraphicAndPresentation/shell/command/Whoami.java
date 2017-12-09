@@ -48,9 +48,9 @@ public class Whoami extends Command {
      * @return
      */
     @Override
-    State instruction() {
+    State instruction() throws UnexpectedResponseCodeException {
 
-        try {
+
             User user = this.client.checkLogin(Blackboard.getInstance().getUser().getUserToken());
 
             System.out.println("name: " + user.getName());
@@ -62,13 +62,6 @@ public class Whoami extends Command {
 
             return null;
 
-        } catch (UnexpectedResponseCodeException e) {
-            ErrorCodeDTO dto = e.getErrorCodeDTO();
-
-            System.out.println("message: " + dto.getMessage());
-            return State.NOT_LOGIN;
-
-        }
 
 
     }

@@ -4,6 +4,7 @@ import app.layerLogicAndService.cmpBlackboard.entity.Blackboard;
 import app.layerLogicAndService.cmpBlackboard.entity.User;
 import app.layerLogicAndService.cmpBlackboard.entity.Login;
 import app.layerLogicAndService.cmpBlackboard.entity.Register;
+import app.layerLogicAndService.cmpBlackboard.util.JSONUtil;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeDTO;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.UnexpectedResponseCodeException;
 import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.EnumHTTPMethod;
@@ -62,7 +63,7 @@ public class BlackboardConsumer implements IBlackboardConsumer {
         if (response.getCode() != 201 || response == null) {
             ErrorCodeDTO errorCodeDTO = gson.fromJson(response.getBody(), ErrorCodeDTO.class);
 
-            throw new UnexpectedResponseCodeException(errorCodeDTO);
+            throw new UnexpectedResponseCodeException(response);
 
         } else {
             Register dto = gson.fromJson(response.getBody(), Register.class);
@@ -104,7 +105,7 @@ public class BlackboardConsumer implements IBlackboardConsumer {
         if (response.getCode() != 200 || response == null) {
             ErrorCodeDTO errorCodeDTO = gson.fromJson(response.getBody(), ErrorCodeDTO.class);
 
-            throw new UnexpectedResponseCodeException(errorCodeDTO);
+            throw new UnexpectedResponseCodeException(response);
 
         } else {
             Login userTokenDTO = gson.fromJson(response.getBody(), Login.class);
@@ -142,7 +143,7 @@ public class BlackboardConsumer implements IBlackboardConsumer {
         if (response.getCode() != 200) {
             ErrorCodeDTO errorCodeDTO = gson.fromJson(response.getBody(), ErrorCodeDTO.class);
 
-            throw new UnexpectedResponseCodeException(errorCodeDTO);
+            throw new UnexpectedResponseCodeException(response);
 
         } else {
             WhoamiDTO whoamiDTO = gson.fromJson(response.getBody(), WhoamiDTO.class);

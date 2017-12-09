@@ -37,7 +37,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
 
 
         if (response.getCode() != 200) {
-            throw new UnexpectedResponseCodeException(response.getCode(), JSONUtil.getObject(response.getBody(), "message", String.class));
+            throw new UnexpectedResponseCodeException(response);
         }
 
         return JSONUtil.getObjectList(response.getBody(), "objects", Quest.class);
@@ -53,7 +53,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
         );
 
         if (response.getCode() != 200) {
-            throw new UnexpectedResponseCodeException(response.getCode(), JSONUtil.getObject(response.getBody(), "message", String.class));
+            throw new UnexpectedResponseCodeException(response);
         }
 
         return JSONUtil.getObject(response.getBody(), "object", Quest.class);
@@ -69,7 +69,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
         );
 
         if (response.getCode() != 200) {
-            throw new UnexpectedResponseCodeException(response.getCode(), JSONUtil.getObject(response.getBody(), "message", String.class));
+            throw new UnexpectedResponseCodeException(response);
         }
 
         return JSONUtil.getObject(response.getBody(), "object", Task.class);
@@ -85,7 +85,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
         );
 
         if (response.getCode() != 200) {
-            throw new UnexpectedResponseCodeException(response.getCode(), JSONUtil.getObject(response.getBody(), "message", String.class));
+            throw new UnexpectedResponseCodeException(response);
         }
 
         return JSONUtil.getObject(response.getBody(), "object", Map.class);
@@ -101,7 +101,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
         );
 
         if (response.getCode() != 200) {
-            throw new UnexpectedResponseCodeException(response.getCode(), JSONUtil.getObject(response.getBody(), "message", String.class));
+            throw new UnexpectedResponseCodeException(response);
         }
 
         return gson.fromJson(response.getBody(), Visit.class);
@@ -118,7 +118,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
         );
 
         if (response.getCode() != 200) {
-            throw new UnexpectedResponseCodeException(response.getCode(), JSONUtil.getObject(response.getBody(), "message", String.class));
+            throw new UnexpectedResponseCodeException(response);
         }
 
         return gson.fromJson(response.getBody(), Answer.class);
@@ -136,7 +136,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
         );
 
         if (response.getCode() != 201) {
-            throw new UnexpectedResponseCodeException(response.getCode(), JSONUtil.getObject(response.getBody(), "message", String.class));
+            throw new UnexpectedResponseCodeException(response);
         }
 
         return JSONUtil.getObjectList(response.getBody(), "object", Delivery.class);
@@ -171,7 +171,7 @@ public class QuestConsumerImpl implements IQuestConsumer {
         );
 
         if (response.getCode() != 200) {
-            throw new UnexpectedResponseCodeException(response.getCode(), JSONUtil.getObject(response.getBody(), "message", String.class));
+            throw new UnexpectedResponseCodeException(response);
         }
 
         return gson.fromJson(response.getBody(), Visit.class);
