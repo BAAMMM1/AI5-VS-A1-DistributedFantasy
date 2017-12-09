@@ -18,6 +18,10 @@ public class JSONUtil {
 
     public static <T>T getObject(String body, String field, Class<T> tClass){
 
+        if(tClass == String.class){
+            return (T)new JSONObject(body).get(field).toString();
+        }
+
         return gson.fromJson(new JSONObject(body).get(field).toString(), tClass);
     }
 
