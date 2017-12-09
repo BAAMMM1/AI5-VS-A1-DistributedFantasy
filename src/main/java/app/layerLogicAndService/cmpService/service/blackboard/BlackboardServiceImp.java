@@ -4,10 +4,14 @@ import app.Application;
 import app.layerLogicAndService.cmpService.entity.blackboard.Blackboard;
 import app.layerLogicAndService.cmpService.entity.blackboard.User;
 import app.layerLogicAndService.cmpService.entity.blackboard.Login;
+import app.layerLogicAndService.cmpService.service.taverna.ITavernaService;
+import app.layerLogicAndService.cmpService.service.taverna.TavernaService;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.BlackboardConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.IBlackboardConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 import org.springframework.boot.SpringApplication;
+
+import java.net.UnknownHostException;
 
 /**
  * @author Christian G. on 02.11.2017
@@ -16,9 +20,11 @@ public class BlackboardServiceImp implements IBlackboardService {
 
     private IBlackboardConsumer registerConsumer = new BlackboardConsumer();
 
+    private ITavernaService tavernaService = new TavernaService();
+
     // 1. Register user, 2. login user, 3. führe whoami aus
     @Override
-    public User registerUser(String name, String password) throws UnexpectedResponseCodeException {
+    public User registerUser(String name, String password) throws UnexpectedResponseCodeException, UnknownHostException {
 
         this.registerConsumer.registerUser(name, password);
 
@@ -28,7 +34,7 @@ public class BlackboardServiceImp implements IBlackboardService {
 
     // 2. login user, 3. führe whoami aus
     @Override
-    public User login(String name, String password) throws UnexpectedResponseCodeException {
+    public User login(String name, String password) throws UnexpectedResponseCodeException, UnknownHostException {
 
         Login login = this.registerConsumer.getAuthenticationToken(name, password);
 
@@ -36,6 +42,8 @@ public class BlackboardServiceImp implements IBlackboardService {
         Blackboard.getInstance().setUser(name, login.getToken(),login.getValid_till());
 
         User user = this.checkLogin(Blackboard.getInstance().getUser().getUserToken());
+
+        tavernaService.addHeroServiceToTaverna();
 
         return user;
 
