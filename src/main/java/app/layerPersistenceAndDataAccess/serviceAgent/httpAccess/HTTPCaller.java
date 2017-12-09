@@ -123,13 +123,19 @@ public class HTTPCaller {
 
     public HTTPResponse get(String url) {
 
-        return this.call(this.buildRequest(url, EnumHTTPMethod.GET, null, null));
+        return this.call(this.buildRequest(url, EnumHTTPMethod.GET, null, null, null, null));
+
+    }
+
+    public HTTPResponse get(String url, String basicName, String basicPassword) {
+
+        return this.call(this.buildRequest(url, EnumHTTPMethod.GET, null, null, basicName, basicPassword));
 
     }
 
     public HTTPResponse get(String url, String token) {
 
-        return this.call(this.buildRequest(url, EnumHTTPMethod.GET, token, null));
+        return this.call(this.buildRequest(url, EnumHTTPMethod.GET, token, null, null, null));
 
     }
 
@@ -139,24 +145,24 @@ public class HTTPCaller {
 
     public HTTPResponse post(String url, String token, String body) throws UnexpectedResponseCodeException {
 
-        return this.call(this.buildRequest(url, EnumHTTPMethod.POST, token, body));
+        return this.call(this.buildRequest(url, EnumHTTPMethod.POST, token, body, null, null));
 
     }
 
     public HTTPResponse delete(String url) throws UnexpectedResponseCodeException {
 
-        return this.call(this.buildRequest(url, EnumHTTPMethod.DELETE, null, null));
+        return this.call(this.buildRequest(url, EnumHTTPMethod.DELETE, null, null, null, null));
 
     }
 
     public HTTPResponse delete(String url, String token) throws UnexpectedResponseCodeException {
 
-        return this.call(this.buildRequest(url, EnumHTTPMethod.DELETE, token, null));
+        return this.call(this.buildRequest(url, EnumHTTPMethod.DELETE, token, null, null, null));
 
     }
 
 
-    private HTTPRequest buildRequest(String url, EnumHTTPMethod method, String token, String body) {
+    private HTTPRequest buildRequest(String url, EnumHTTPMethod method, String token, String body, String basicName, String basicPassword) {
 
         HTTPRequest request;
 
@@ -168,6 +174,10 @@ public class HTTPCaller {
 
         if (token != null) {
             request.setAuthorizationToken(token);
+        }
+
+        if(basicName != null && basicPassword != null){
+            request.setBasicAuth(basicName, basicPassword);
         }
 
 

@@ -124,7 +124,6 @@ public class Shell {
         new Exit(inputInterpreter);
         new Register(inputInterpreter, blackboardService);
         new Login(inputInterpreter, blackboardService);
-        new Whoami(inputInterpreter, blackboardService);
         new Quests(inputInterpreter, questService);
         new Quest(inputInterpreter, questService);
         new Task(inputInterpreter, questService);

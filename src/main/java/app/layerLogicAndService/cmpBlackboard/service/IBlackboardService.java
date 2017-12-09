@@ -9,7 +9,7 @@ import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.Unexpec
  */
 public interface IBlackboardService {
 
-    Register registerUser(String name, String password) throws UnexpectedResponseCodeException;
+    User registerUser(String name, String password) throws UnexpectedResponseCodeException;
     User login(String name, String password) throws UnexpectedResponseCodeException;
     User checkLogin(String Token) throws UnexpectedResponseCodeException;
 

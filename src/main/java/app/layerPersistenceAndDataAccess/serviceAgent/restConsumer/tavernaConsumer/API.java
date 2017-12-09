@@ -14,6 +14,9 @@ public class API {
     public static final String BLACKBOARD_TASKS = BLACKBOARD + "/tasks";
 
     public static final String MAP = WELL_KNOWN_SERVER + "/map";
+    public static final String LOGIN = WELL_KNOWN_SERVER + "/login";
+    public static final String WHOAMI = WELL_KNOWN_SERVER + "/whoami";
+    public static final String USERS = WELL_KNOWN_SERVER + "/users";
 
     public static final String TAVERNA = WELL_KNOWN_SERVER + "/taverna";
     public static final String TAVERNA_ADVENTURERS = TAVERNA + "/adventurers";

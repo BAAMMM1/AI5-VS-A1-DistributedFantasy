@@ -18,22 +18,24 @@ public class BlackboardServiceImp implements IBlackboardService {
         this.registerConsumer = registerConsumer;
     }
 
+    // 1. Register user, 2. login user, 3. führe whoami aus
     @Override
-    public Register registerUser(String name, String password) throws UnexpectedResponseCodeException {
+    public User registerUser(String name, String password) throws UnexpectedResponseCodeException {
 
-        Register dto = this.registerConsumer.registerUser(name, password);
+        this.registerConsumer.registerUser(name, password);
 
-        return dto;
+        return this.login(name, password);
 
     }
 
+    // 2. login user, 3. führe whoami aus
     @Override
     public User login(String name, String password) throws UnexpectedResponseCodeException {
 
-        Login dto = this.registerConsumer.getAuthenticationToken(name, password);
+        Login login = this.registerConsumer.getAuthenticationToken(name, password);
 
         // Username, Password und Token im System hinterlegen
-        Blackboard.getInstance().setUser(name, dto.getToken(),dto.getValid_till());
+        Blackboard.getInstance().setUser(name, login.getToken(),login.getValid_till());
 
         User user = this.checkLogin(Blackboard.getInstance().getUser().getUserToken());
 
@@ -62,14 +64,12 @@ public class BlackboardServiceImp implements IBlackboardService {
             Blackboard.getInstance().getUser().setLocation(user.getLocation());
 
 
-
         } catch (UnexpectedResponseCodeException e) {
             Blackboard.getInstance().setUser(null, null, null);
 
             throw new UnexpectedResponseCodeException(e.getResponse());
 
         }
-
 
         return user;
     }

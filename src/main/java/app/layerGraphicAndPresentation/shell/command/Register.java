@@ -40,16 +40,17 @@ public class Register extends Command {
     @Override
     State instruction() throws UnexpectedResponseCodeException {
 
-        app.layerLogicAndService.cmpBlackboard.entity.Register register = this.client.registerUser(this.getParameter().get(0), this.getParameter().get(1));
+        app.layerLogicAndService.cmpBlackboard.entity.User user = this.client.registerUser(this.getParameter().get(0), this.getParameter().get(1));
 
-        System.out.println("name: " + register.getObject().get(0).getName());
-        System.out.println("location: " + register.getObject().get(0).getLocation());
-        System.out.println("ip: " + register.getObject().get(0).getIp());
-        System.out.println("deliverables_done: " + register.getObject().get(0).getDeliverables_done());
-        System.out.println("delivered: " + register.getObject().get(0).getDelivered());
+        System.out.println("name: " + user.getName());
+        System.out.println("location: " + user.getLocation());
+        System.out.println("ip: " + user.getIp());
+        System.out.println("deliverables_done: " + user.getDeliverables_done());
+        System.out.println("delivered: " + user.getDelivered());
+        System.out.println("_links: " + user.get_links().toString());
 
 
-        return null;
+        return State.LOGIN;
 
     }
 
