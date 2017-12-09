@@ -51,7 +51,6 @@ public class AppConfigurator {
         this.listener.start();
 
         while(!this.listener.isFirstSet()){
-            System.out.println(!this.listener.isFirstSet());
 
         }
 
