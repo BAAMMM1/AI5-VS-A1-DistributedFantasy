@@ -1,6 +1,6 @@
 package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer;
 
-import app.layerLogicAndService.cmpHero.entity.*;
+import app.layerLogicAndService.cmpService.entity.hero.*;
 import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.service.HttpAccess;
 import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.entity.HttpResponse;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;

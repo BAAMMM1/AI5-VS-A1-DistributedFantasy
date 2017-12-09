@@ -2,12 +2,11 @@ package app.layerGraphicAndPresentation.shell;
 
 import app.layerGraphicAndPresentation.shell.command.*;
 import app.layerGraphicAndPresentation.shell.context.Context;
-import app.layerLogicAndService.cmpBlackboard.service.IBlackboardService;
-import app.layerLogicAndService.cmpHero.service.IHeroService;
-import app.layerLogicAndService.cmpHeroToHero.service.HeroToHeroService;
-import app.layerLogicAndService.cmpHeroToHero.service.IHeroToHeroService;
-import app.layerLogicAndService.cmpQuest.service.IQuestService;
-import app.layerLogicAndService.cmpTaverna.service.ITavernaService;
+import app.layerLogicAndService.cmpService.service.blackboard.IBlackboardService;
+import app.layerLogicAndService.cmpService.service.hero.IHeroService;
+import app.layerLogicAndService.cmpService.service.heroToHero.IHeroToHeroService;
+import app.layerLogicAndService.cmpService.service.quest.IQuestService;
+import app.layerLogicAndService.cmpService.service.taverna.ITavernaService;
 
 import java.util.Scanner;
 

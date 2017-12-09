@@ -1,6 +1,6 @@
 package app.layerGraphicAndPresentation.shell.context;
 
-import app.layerLogicAndService.cmpBlackboard.entity.Blackboard;
+import app.layerLogicAndService.cmpService.entity.blackboard.Blackboard;
 
 /**
  * @author Christian G. on 17.11.2017

@@ -1,9 +1,9 @@
 package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer;
 
-import app.layerLogicAndService.cmpBlackboard.entity.User;
+import app.layerLogicAndService.cmpService.entity.blackboard.User;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
-import app.layerLogicAndService.cmpBlackboard.entity.Register;
-import app.layerLogicAndService.cmpBlackboard.entity.Login;
+import app.layerLogicAndService.cmpService.entity.blackboard.Register;
+import app.layerLogicAndService.cmpService.entity.blackboard.Login;
 
 /**
  * @author Christian G. on 02.11.2017

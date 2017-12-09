@@ -4,7 +4,8 @@ import app.layerGraphicAndPresentation.shell.InputInterpreter;
 import app.layerGraphicAndPresentation.shell.exception.UnAcceptedStateException;
 import app.layerGraphicAndPresentation.shell.context.Context;
 import app.layerGraphicAndPresentation.shell.context.State;
-import app.layerLogicAndService.cmpBlackboard.service.IBlackboardService;
+import app.layerLogicAndService.cmpService.service.blackboard.IBlackboardService;
+import app.layerLogicAndService.cmpService.entity.blackboard.User;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class Register extends Command {
     @Override
     State instruction() throws UnexpectedResponseCodeException {
 
-        app.layerLogicAndService.cmpBlackboard.entity.User user = this.client.registerUser(this.getParameter().get(0), this.getParameter().get(1));
+        User user = this.client.registerUser(this.getParameter().get(0), this.getParameter().get(1));
 
         System.out.println("name: " + user.getName());
         System.out.println("location: " + user.getLocation());

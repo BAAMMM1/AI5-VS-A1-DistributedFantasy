@@ -1,6 +1,6 @@
 package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception;
 
-import app.layerLogicAndService.cmpBlackboard.util.JSONUtil;
+import app.layerLogicAndService.cmpService.util.JSONUtil;
 import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.entity.HttpResponse;
 
 /**

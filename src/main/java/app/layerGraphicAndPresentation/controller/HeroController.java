@@ -1,10 +1,10 @@
 package app.layerGraphicAndPresentation.controller;
 
-import app.layerGraphicAndPresentation.controller.config.PathHeroservice;
-import app.layerLogicAndService.cmpHero.entity.*;
-import app.layerLogicAndService.cmpHero.service.IHeroService;
-import app.layerLogicAndService.cmpHero.service.exception.AlreadyInGroupException;
-import app.layerLogicAndService.cmpHero.service.exception.ErrorMessage;
+import app.configuration.API;
+import app.layerLogicAndService.cmpService.service.hero.IHeroService;
+import app.layerLogicAndService.cmpService.exception.AlreadyInGroupException;
+import app.layerLogicAndService.cmpService.exception.ErrorMessage;
+import app.layerLogicAndService.cmpService.entity.hero.*;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ public class HeroController {
 
 
     @RequestMapping(
-            value = PathHeroservice.SERVICES,
+            value = API.PATH_SERVICES,
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getServices() {
@@ -49,7 +49,7 @@ public class HeroController {
 
 
     @RequestMapping(
-            value = "/hirings",
+            value = API.PATH_HIRINGS,
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addhiring(@RequestBody Hiring request) {
@@ -74,7 +74,7 @@ public class HeroController {
 
 
     @RequestMapping(
-            value = PathHeroservice.ASSIGNMENTS,
+            value = API.PATH_ASSIGNMENTS,
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addAssignment(@RequestBody Assignment request){
@@ -91,7 +91,7 @@ public class HeroController {
     }
 
     @RequestMapping(
-            value = PathHeroservice.ASSIGNMENTS + "/deliveries",
+            value = API.PATH_ASSIGNMENTS + "/deliveries",
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addAssignmentDeliver(@RequestBody AssignmentDerliver request){
@@ -110,7 +110,7 @@ public class HeroController {
 
 
     @RequestMapping(
-            value = PathHeroservice.MESSAGES,
+            value = API.PATH_MESSAGES,
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addMessage(@RequestBody Message request){

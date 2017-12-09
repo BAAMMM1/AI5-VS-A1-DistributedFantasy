@@ -1,14 +1,14 @@
 package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer;
 
-import app.layerLogicAndService.cmpBlackboard.entity.Blackboard;
-import app.layerLogicAndService.cmpBlackboard.util.JSONUtil;
-import app.layerLogicAndService.cmpQuest.entity.*;
-import app.layerLogicAndService.cmpQuest.entity.questing.Step;
-import app.layerLogicAndService.cmpQuest.entity.questing.TaskPart;
+import app.layerLogicAndService.cmpService.entity.blackboard.Blackboard;
+import app.layerLogicAndService.cmpService.entity.quest.*;
+import app.layerLogicAndService.cmpService.util.JSONUtil;
+import app.layerLogicAndService.cmpService.entity.quest.questing.Step;
+import app.layerLogicAndService.cmpService.entity.quest.questing.TaskPart;
 import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.service.HttpAccess;
 import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.entity.HttpResponse;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
-import app.API;
+import app.configuration.API;
 import com.google.gson.Gson;
 import org.json.JSONObject;
 

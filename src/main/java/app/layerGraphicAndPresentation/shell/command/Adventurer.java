@@ -2,7 +2,7 @@ package app.layerGraphicAndPresentation.shell.command;
 
 import app.layerGraphicAndPresentation.shell.InputInterpreter;
 import app.layerGraphicAndPresentation.shell.context.State;
-import app.layerLogicAndService.cmpTaverna.service.ITavernaService;
+import app.layerLogicAndService.cmpService.service.taverna.ITavernaService;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 
 import java.io.IOException;
@@ -28,7 +28,7 @@ public class Adventurer extends Command {
     @Override
     State instruction() throws UnexpectedResponseCodeException, IOException, InterruptedException {
 
-        app.layerLogicAndService.cmpTaverna.entity.Adventurer adventurer = this.tavernaService.getAdventure(this.getParameter().get(0));
+        app.layerLogicAndService.cmpService.entity.taverna.Adventurer adventurer = this.tavernaService.getAdventure(this.getParameter().get(0));
 
         System.out.println(adventurer.getUser());
         System.out.println(adventurer.getHeroclass());

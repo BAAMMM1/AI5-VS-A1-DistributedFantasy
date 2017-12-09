@@ -1,14 +1,14 @@
 package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer;
 
-import app.layerLogicAndService.cmpBlackboard.entity.Blackboard;
-import app.layerLogicAndService.cmpBlackboard.util.JSONUtil;
-import app.layerLogicAndService.cmpTaverna.entity.Adventurer;
-import app.layerLogicAndService.cmpTaverna.entity.Group;
-import app.layerLogicAndService.cmpTaverna.entity.Hero;
+import app.layerLogicAndService.cmpService.entity.blackboard.Blackboard;
+import app.layerLogicAndService.cmpService.util.JSONUtil;
+import app.layerLogicAndService.cmpService.entity.taverna.Adventurer;
+import app.layerLogicAndService.cmpService.entity.taverna.Group;
+import app.layerLogicAndService.cmpService.entity.taverna.Hero;
 import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.service.HttpAccess;
 import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.entity.HttpResponse;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
-import app.API;
+import app.configuration.API;
 import com.google.gson.Gson;
 
 import java.util.List;

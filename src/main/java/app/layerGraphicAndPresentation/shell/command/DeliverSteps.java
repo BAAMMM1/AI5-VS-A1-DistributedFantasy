@@ -5,7 +5,8 @@ import app.layerGraphicAndPresentation.shell.context.Context;
 import app.layerGraphicAndPresentation.shell.context.State;
 import app.layerGraphicAndPresentation.shell.exception.ParameterIncorrectException;
 import app.layerGraphicAndPresentation.shell.exception.UnAcceptedStateException;
-import app.layerLogicAndService.cmpQuest.service.IQuestService;
+import app.layerLogicAndService.cmpService.service.quest.IQuestService;
+import app.layerLogicAndService.cmpService.entity.quest.Visit;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 
 import java.io.IOException;
@@ -56,7 +57,7 @@ public class DeliverSteps extends Command {
     @Override
     State instruction() throws UnexpectedResponseCodeException, IOException, InterruptedException {
 
-        app.layerLogicAndService.cmpQuest.entity.Visit visit = this.client.deliverTaskPart();
+        Visit visit = this.client.deliverTaskPart();
 
         System.out.println("message:" + visit.getMessage());
 

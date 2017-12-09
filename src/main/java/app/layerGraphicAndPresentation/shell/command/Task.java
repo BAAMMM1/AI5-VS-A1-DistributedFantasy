@@ -5,7 +5,7 @@ import app.layerGraphicAndPresentation.shell.exception.ParameterIncorrectExcepti
 import app.layerGraphicAndPresentation.shell.exception.UnAcceptedStateException;
 import app.layerGraphicAndPresentation.shell.context.Context;
 import app.layerGraphicAndPresentation.shell.context.State;
-import app.layerLogicAndService.cmpQuest.service.IQuestService;
+import app.layerLogicAndService.cmpService.service.quest.IQuestService;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 
 import java.io.IOException;
@@ -56,7 +56,7 @@ public class Task extends Command {
     @Override
     State instruction() throws UnexpectedResponseCodeException, IOException, InterruptedException {
 
-        app.layerLogicAndService.cmpQuest.entity.Task task = this.client.getTask(Integer.valueOf(this.getParameter().get(0)));
+        app.layerLogicAndService.cmpService.entity.quest.Task task = this.client.getTask(Integer.valueOf(this.getParameter().get(0)));
 
         System.out.println("task-id: " + task.getId());
         System.out.println("quest-id: " + task.getQuest());

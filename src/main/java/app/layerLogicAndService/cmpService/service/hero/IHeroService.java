@@ -1,0 +1,21 @@
+package app.layerLogicAndService.cmpService.service.hero;
+
+import app.layerLogicAndService.cmpService.exception.AlreadyInGroupException;
+import app.layerLogicAndService.cmpService.entity.hero.*;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
+
+import java.util.List;
+
+/**
+ * @author Chris on 03.12.2017
+ */
+public interface IHeroService {
+
+    Service getService();
+    void addHiring(Hiring hiring) throws AlreadyInGroupException, UnexpectedResponseCodeException;
+    void addAssignment(Assignment assignment);
+    void addAssignmentDeliver(AssignmentDerliver assignmentDerliver);
+    void addMessage(Message message);
+    List<Message> getMessages();
+
+}

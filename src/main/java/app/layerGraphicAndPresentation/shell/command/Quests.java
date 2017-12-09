@@ -4,7 +4,8 @@ import app.layerGraphicAndPresentation.shell.InputInterpreter;
 import app.layerGraphicAndPresentation.shell.exception.UnAcceptedStateException;
 import app.layerGraphicAndPresentation.shell.context.Context;
 import app.layerGraphicAndPresentation.shell.context.State;
-import app.layerLogicAndService.cmpQuest.service.IQuestService;
+import app.layerLogicAndService.cmpService.service.quest.IQuestService;
+import app.layerLogicAndService.cmpService.entity.quest.Quest;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 
 import java.util.ArrayList;
@@ -39,9 +40,9 @@ public class Quests extends Command {
     @Override
     State instruction() throws UnexpectedResponseCodeException {
 
-        List<app.layerLogicAndService.cmpQuest.entity.Quest> quests = this.client.getQuests();
+        List<Quest> quests = this.client.getQuests();
 
-        for(app.layerLogicAndService.cmpQuest.entity.Quest quest : quests){
+        for(Quest quest : quests){
             System.out.println("quest-id: " + quest.getId());
             System.out.println("name: " + quest.getName().toString());
             System.out.println("description: " + quest.getDescription().toString());
