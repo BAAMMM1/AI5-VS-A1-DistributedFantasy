@@ -15,8 +15,7 @@ public class Entertaverna extends Command{
 
     ITavernaService tavernaService;
 
-    public Entertaverna(InputInterpreter inputInterpreter, ITavernaService tavernaService) {
-        super(inputInterpreter);
+    public Entertaverna(ITavernaService tavernaService) {
         this.tavernaService = tavernaService;
     }
 

@@ -1,7 +1,17 @@
 package app.layerGraphicAndPresentation.shell;
 
-import app.layerGraphicAndPresentation.shell.command.Command;
+import app.layerGraphicAndPresentation.shell.command.*;
 import app.layerGraphicAndPresentation.shell.exception.*;
+import app.layerLogicAndService.cmpService.service.blackboard.BlackboardServiceImp;
+import app.layerLogicAndService.cmpService.service.blackboard.IBlackboardService;
+import app.layerLogicAndService.cmpService.service.hero.HeroService;
+import app.layerLogicAndService.cmpService.service.hero.IHeroService;
+import app.layerLogicAndService.cmpService.service.heroToHero.HeroToHeroService;
+import app.layerLogicAndService.cmpService.service.heroToHero.IHeroToHeroService;
+import app.layerLogicAndService.cmpService.service.quest.IQuestService;
+import app.layerLogicAndService.cmpService.service.quest.QuestServiceImpl;
+import app.layerLogicAndService.cmpService.service.taverna.ITavernaService;
+import app.layerLogicAndService.cmpService.service.taverna.TavernaService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +21,24 @@ import java.util.List;
  */
 public class InputInterpreter {
 
+    private IBlackboardService blackboardService;
+    private IQuestService questService;
+    private ITavernaService tavernaService;
+    private IHeroToHeroService heroToHeroService;
+    private IHeroService heroService;
+
     List<Command> registerCommands;
 
     public InputInterpreter() {
+        blackboardService = new BlackboardServiceImp();
+        questService = new QuestServiceImpl();
+        tavernaService = new TavernaService();
+        this.heroToHeroService = new HeroToHeroService();
+        this.heroService = new HeroService();
+
         this.registerCommands = new ArrayList<Command>();
+
+        this.addCommands();
     }
 
 
@@ -76,4 +100,46 @@ public class InputInterpreter {
     public void registerCommand(Command command){
         this.registerCommands.add(command);
     }
+
+
+    private void addCommands(){
+
+        registerCommands.add(new Help(this));
+        registerCommands.add(new Clear());
+        registerCommands.add(new Exit());
+        registerCommands.add(new Register(blackboardService));
+        registerCommands.add(new Login(blackboardService));
+        registerCommands.add(new Quests(questService));
+        registerCommands.add(new Quest(questService));
+        registerCommands.add(new Task(questService));
+        registerCommands.add(new Map(questService));
+        registerCommands.add(new Visit(questService));
+        registerCommands.add(new Answer(questService));
+        registerCommands.add(new Deliver(questService));
+        registerCommands.add(new Test(blackboardService));
+        registerCommands.add(new Next(questService));
+        registerCommands.add(new Step(questService));
+        registerCommands.add(new DeliverSteps(questService));
+        registerCommands.add(new Entertaverna(tavernaService));
+        registerCommands.add(new GroupCreate(tavernaService));
+        registerCommands.add(new GroupDelete(tavernaService));
+        registerCommands.add(new Groups(tavernaService));
+        registerCommands.add(new Group(tavernaService));
+        registerCommands.add(new GroupEnter(tavernaService));
+        registerCommands.add(new GroupMembers(tavernaService));
+        registerCommands.add(new Adventurers(tavernaService));
+        registerCommands.add(new Adventurer(tavernaService));
+        registerCommands.add(new Invite(heroToHeroService));
+        registerCommands.add(new Messages(heroService));
+        registerCommands.add(new GroupOwn());
+        registerCommands.add(new GroupLeave());
+        registerCommands.add(new Message(heroToHeroService));
+        registerCommands.add(new Assignment(questService));
+        registerCommands.add(new AssignmentDeliver(heroToHeroService));
+        registerCommands.add(new AssignmentSend(heroToHeroService));
+
+    }
+
+
+
 }

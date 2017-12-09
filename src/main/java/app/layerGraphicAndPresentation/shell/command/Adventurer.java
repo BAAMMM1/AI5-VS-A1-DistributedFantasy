@@ -14,16 +14,9 @@ public class Adventurer extends Command {
 
     ITavernaService tavernaService;
 
-    /**
-     * Interepreter muss übergeben werden, damit ein Command weiß, bei wem es sich registrieren soll
-     *
-     * @param inputInterpreter
-     */
-    public Adventurer(InputInterpreter inputInterpreter, ITavernaService tavernaService) {
-        super(inputInterpreter);
+    public Adventurer(ITavernaService tavernaService) {
         this.tavernaService = tavernaService;
     }
-
 
     @Override
     State instruction() throws UnexpectedResponseCodeException, IOException, InterruptedException {

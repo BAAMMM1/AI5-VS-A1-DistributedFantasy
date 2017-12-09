@@ -14,8 +14,7 @@ public class AssignmentDeliver extends Command {
 
     IHeroToHeroService heroToHeroService;
 
-    public AssignmentDeliver(InputInterpreter inputInterpreter, IHeroToHeroService heroToHeroService) {
-        super(inputInterpreter);
+    public AssignmentDeliver(IHeroToHeroService heroToHeroService) {
         this.heroToHeroService = heroToHeroService;
     }
 

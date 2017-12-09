@@ -16,8 +16,7 @@ public class GroupDelete extends Command {
 
     ITavernaService tavernaService;
 
-    public GroupDelete(InputInterpreter inputInterpreter, ITavernaService tavernaService) {
-        super(inputInterpreter);
+    public GroupDelete(ITavernaService tavernaService) {
         this.tavernaService = tavernaService;
     }
 

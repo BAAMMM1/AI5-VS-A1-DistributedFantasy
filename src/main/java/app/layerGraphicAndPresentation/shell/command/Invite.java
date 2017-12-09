@@ -14,8 +14,7 @@ public class Invite extends Command {
 
     IHeroToHeroService heroToHeroService;
 
-    public Invite(InputInterpreter inputInterpreter, IHeroToHeroService heroToHeroService) {
-        super(inputInterpreter);
+    public Invite(IHeroToHeroService heroToHeroService) {
         this.heroToHeroService = heroToHeroService;
     }
 

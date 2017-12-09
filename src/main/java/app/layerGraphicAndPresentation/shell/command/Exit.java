@@ -10,11 +10,8 @@ public class Exit extends Command {
 
     private static final int PARAMETER_SIZE = 0;
 
-
-    public Exit(InputInterpreter inputInterpreter) {
-        super(inputInterpreter);
+    public Exit() {
     }
-
 
     @Override
     State instruction() {

@@ -24,8 +24,7 @@ public class Register extends Command {
     private List<State> acceptedStates = new ArrayList<State>(Arrays.asList(State.NOT_LOGIN));
 
 
-    public Register(InputInterpreter inputInterpreter, IBlackboardService client) {
-        super(inputInterpreter);
+    public Register(IBlackboardService client) {
         this.client = client;
     }
 

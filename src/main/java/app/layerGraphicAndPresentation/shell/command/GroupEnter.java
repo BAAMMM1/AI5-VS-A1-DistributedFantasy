@@ -16,13 +16,7 @@ public class GroupEnter extends Command{
 
     ITavernaService tavernaService;
 
-    /**
-     * Interepreter muss übergeben werden, damit ein Command weiß, bei wem es sich registrieren soll
-     *
-     * @param inputInterpreter
-     */
-    public GroupEnter(InputInterpreter inputInterpreter, ITavernaService tavernaService) {
-        super(inputInterpreter);
+    public GroupEnter(ITavernaService tavernaService) {
         this.tavernaService = tavernaService;
     }
 

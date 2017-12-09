@@ -14,10 +14,8 @@ public class Clear extends Command {
     private static final int PARAMETER_SIZE = 0;
 
 
-    public Clear(InputInterpreter inputInterpreter) {
-        super(inputInterpreter);
+    public Clear() {
     }
-
 
     @Override
     State instruction() throws IOException, InterruptedException {

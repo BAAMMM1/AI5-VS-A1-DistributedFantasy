@@ -49,17 +49,7 @@ public class AppConfigurator {
 
         this.listener = new ListenerServiceImpl(WELL_KNOWN_PORT);
 
-        blackboardService = new BlackboardServiceImp();
-
-        questService = new QuestServiceImpl();
-
-        tavernaService = new TavernaService();
-
-        this.heroToHeroService = new HeroToHeroService();
-
-        this.heroService = new HeroService();
-
-        this.shell = new Shell(blackboardService, questService, tavernaService, heroToHeroService, heroService);
+        this.shell = new Shell();
     }
 
     public void configure() {

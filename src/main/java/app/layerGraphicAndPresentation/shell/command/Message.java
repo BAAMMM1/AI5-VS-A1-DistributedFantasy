@@ -14,8 +14,7 @@ public class Message extends Command{
 
     IHeroToHeroService heroToHeroService;
 
-    public Message(InputInterpreter inputInterpreter, IHeroToHeroService heroToHeroService) {
-        super(inputInterpreter);
+    public Message(IHeroToHeroService heroToHeroService) {
         this.heroToHeroService = heroToHeroService;
     }
 

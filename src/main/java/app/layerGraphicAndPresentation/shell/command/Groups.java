@@ -16,16 +16,9 @@ public class Groups extends Command{
 
     ITavernaService tavernaService;
 
-    /**
-     * Interepreter muss übergeben werden, damit ein Command weiß, bei wem es sich registrieren soll
-     *
-     * @param inputInterpreter
-     */
-    public Groups(InputInterpreter inputInterpreter, ITavernaService tavernaService) {
-        super(inputInterpreter);
+    public Groups(ITavernaService tavernaService) {
         this.tavernaService = tavernaService;
     }
-
 
     @Override
     State instruction() throws UnexpectedResponseCodeException, IOException, InterruptedException {

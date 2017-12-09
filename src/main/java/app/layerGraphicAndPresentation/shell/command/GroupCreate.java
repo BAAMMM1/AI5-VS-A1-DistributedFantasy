@@ -15,8 +15,7 @@ public class GroupCreate extends Command {
 
     ITavernaService tavernaService;
 
-    public GroupCreate(InputInterpreter inputInterpreter, ITavernaService tavernaService) {
-        super(inputInterpreter);
+    public GroupCreate(ITavernaService tavernaService) {
         this.tavernaService = tavernaService;
     }
 

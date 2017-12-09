@@ -15,8 +15,7 @@ public class Assignment extends Command {
 
     IQuestService questService;
 
-    public Assignment(InputInterpreter inputInterpreter, IQuestService questService) {
-        super(inputInterpreter);
+    public Assignment(IQuestService questService) {
         this.questService = questService;
     }
 

@@ -11,13 +11,8 @@ import java.io.IOException;
  * @author Chris on 05.12.2017
  */
 public class GroupOwn extends Command {
-    /**
-     * Interepreter muss übergeben werden, damit ein Command weiß, bei wem es sich registrieren soll
-     *
-     * @param inputInterpreter
-     */
-    public GroupOwn(InputInterpreter inputInterpreter) {
-        super(inputInterpreter);
+
+    public GroupOwn() {
     }
 
     @Override

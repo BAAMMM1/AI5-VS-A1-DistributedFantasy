@@ -19,17 +19,11 @@ public abstract class Command {
     private String commandName;
     private int numberOfParameter;
     private List<String> parameter;
-    private InputInterpreter inputInterpreter;
 
-    /**
-     * Interepreter muss übergeben werden, damit ein Command weiß, bei wem es sich registrieren soll
-     * @param inputInterpreter
-     */
-    public Command(InputInterpreter inputInterpreter) {
+
+    public Command() {
         this.commandName = this.getClass().getSimpleName().toLowerCase();
         this.numberOfParameter = this.parameterSize();
-        this.inputInterpreter = inputInterpreter;
-        this.inputInterpreter.registerCommand(this);
     }
 
     /**
@@ -118,9 +112,6 @@ public abstract class Command {
         return parameter;
     }
 
-    public InputInterpreter getInputInterpreter() {
-        return inputInterpreter;
-    }
 
 
     /**

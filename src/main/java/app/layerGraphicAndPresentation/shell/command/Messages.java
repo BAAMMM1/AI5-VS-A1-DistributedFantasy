@@ -16,8 +16,7 @@ public class Messages extends Command{
 
     IHeroService heroService;
 
-    public Messages(InputInterpreter inputInterpreter, IHeroService heroService) {
-        super(inputInterpreter);
+    public Messages(IHeroService heroService) {
         this.heroService = heroService;
     }
 

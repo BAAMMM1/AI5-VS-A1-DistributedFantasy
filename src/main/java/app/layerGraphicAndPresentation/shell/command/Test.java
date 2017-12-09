@@ -24,8 +24,7 @@ public class Test extends Command {
     private static final int PARAMETER_SIZE = 0;
 
 
-    public Test(InputInterpreter inputInterpreter, IBlackboardService client) {
-        super(inputInterpreter);
+    public Test(IBlackboardService client) {
         this.client = client;
     }
 

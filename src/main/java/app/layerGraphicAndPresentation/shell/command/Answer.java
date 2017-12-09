@@ -24,13 +24,7 @@ public class Answer extends Command {
 
     private List<State> acceptedStates = new ArrayList<State>(Arrays.asList(State.LOGIN));
 
-    /**
-     * Interepreter muss übergeben werden, damit ein Command weiß, bei wem es sich registrieren soll
-     *
-     * @param inputInterpreter
-     */
-    public Answer(InputInterpreter inputInterpreter, IQuestService client) {
-        super(inputInterpreter);
+    public Answer(IQuestService client) {
         this.client = client;
     }
 

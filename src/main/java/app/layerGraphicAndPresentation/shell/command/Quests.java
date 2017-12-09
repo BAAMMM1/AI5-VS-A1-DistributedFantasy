@@ -23,8 +23,7 @@ public class Quests extends Command {
 
     private List<State> acceptedStates = new ArrayList<State>(Arrays.asList(State.LOGIN));
 
-    public Quests(InputInterpreter inputInterpreter, IQuestService client) {
-        super(inputInterpreter);
+    public Quests(IQuestService client) {
         this.client = client;
     }
 

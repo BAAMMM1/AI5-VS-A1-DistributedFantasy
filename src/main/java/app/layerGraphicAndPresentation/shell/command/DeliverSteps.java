@@ -26,13 +26,7 @@ public class DeliverSteps extends Command {
 
     private List<State> acceptedStates = new ArrayList<State>(Arrays.asList(State.LOGIN));
 
-    /**
-     * Interepreter muss übergeben werden, damit ein Command weiß, bei wem es sich registrieren soll
-     *
-     * @param inputInterpreter
-     */
-    public DeliverSteps(InputInterpreter inputInterpreter, IQuestService client) {
-        super(inputInterpreter);
+    public DeliverSteps(IQuestService client) {
         this.client = client;
     }
 

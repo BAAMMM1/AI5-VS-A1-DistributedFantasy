@@ -8,11 +8,13 @@ import app.layerGraphicAndPresentation.shell.context.State;
  */
 public class Help extends Command {
 
+    InputInterpreter inputInterpreter;
+
     private static final int PARAMETER_SIZE = 0;
 
 
     public Help(InputInterpreter inputInterpreter) {
-        super(inputInterpreter);
+        this.inputInterpreter = inputInterpreter;
     }
 
 
@@ -22,7 +24,7 @@ public class Help extends Command {
         System.out.println("");
         System.out.println("# command --- # parameter -------------------- # description --------------------------------------");
 
-        for (Command command : this.getInputInterpreter().getRegisterCommands()) {
+        for (Command command : this.inputInterpreter.getRegisterCommands()) {
             System.out.println(command.description());
         }
 

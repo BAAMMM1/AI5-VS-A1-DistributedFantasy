@@ -17,13 +17,8 @@ public class Step extends Command{
 
     private static final int PARAMETER_SIZE = 1;
 
-    /**
-     * Interepreter muss übergeben werden, damit ein Command weiß, bei wem es sich registrieren soll
-     *
-     * @param inputInterpreter
-     */
-    public Step(InputInterpreter inputInterpreter, IQuestService client) {
-        super(inputInterpreter);
+
+    public Step(IQuestService client) {
         this.client = client;
     }
 

@@ -24,8 +24,7 @@ public class Login extends Command {
     private static final int PARAMETER_SIZE = 2;
 
 
-    public Login(InputInterpreter inputInterpreter, IBlackboardService client) {
-        super(inputInterpreter);
+    public Login(IBlackboardService client) {
         this.client = client;
     }
 

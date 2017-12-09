@@ -17,13 +17,7 @@ public class Next extends Command{
 
     private static final int PARAMETER_SIZE = 0;
 
-    /**
-     * Interepreter muss übergeben werden, damit ein Command weiß, bei wem es sich registrieren soll
-     *
-     * @param inputInterpreter
-     */
-    public Next(InputInterpreter inputInterpreter, IQuestService client) {
-        super(inputInterpreter);
+    public Next(IQuestService client) {
         this.client = client;
     }
 
