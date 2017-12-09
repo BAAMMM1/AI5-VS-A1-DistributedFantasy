@@ -1,11 +1,13 @@
 package app.layerLogicAndService.cmpService.service.blackboard;
 
+import app.Application;
 import app.layerLogicAndService.cmpService.entity.blackboard.Blackboard;
 import app.layerLogicAndService.cmpService.entity.blackboard.User;
 import app.layerLogicAndService.cmpService.entity.blackboard.Login;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.BlackboardConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.IBlackboardConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
+import org.springframework.boot.SpringApplication;
 
 /**
  * @author Christian G. on 02.11.2017
@@ -34,6 +36,8 @@ public class BlackboardServiceImp implements IBlackboardService {
         Blackboard.getInstance().setUser(name, login.getToken(),login.getValid_till());
 
         User user = this.checkLogin(Blackboard.getInstance().getUser().getUserToken());
+
+        SpringApplication.run(Application.class);
 
         return user;
 
