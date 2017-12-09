@@ -5,7 +5,7 @@ import app.layerLogicAndService.cmpHero.entity.*;
 import app.layerLogicAndService.cmpHero.service.IHeroService;
 import app.layerLogicAndService.cmpHero.service.exception.AlreadyInGroupException;
 import app.layerLogicAndService.cmpHero.service.exception.ErrorMessage;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.UnexpectedResponseCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

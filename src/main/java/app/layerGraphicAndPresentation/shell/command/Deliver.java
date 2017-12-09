@@ -7,7 +7,7 @@ import app.layerGraphicAndPresentation.shell.context.Context;
 import app.layerGraphicAndPresentation.shell.context.State;
 import app.layerLogicAndService.cmpQuest.entity.Delivery;
 import app.layerLogicAndService.cmpQuest.service.IQuestService;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.UnexpectedResponseCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 
 import java.io.IOException;
 import java.util.ArrayList;

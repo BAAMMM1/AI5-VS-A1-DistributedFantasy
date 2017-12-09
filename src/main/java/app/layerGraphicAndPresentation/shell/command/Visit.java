@@ -6,7 +6,7 @@ import app.layerGraphicAndPresentation.shell.exception.UnAcceptedStateException;
 import app.layerGraphicAndPresentation.shell.context.Context;
 import app.layerGraphicAndPresentation.shell.context.State;
 import app.layerLogicAndService.cmpQuest.service.IQuestService;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.UnexpectedResponseCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -41,7 +41,7 @@ public class Visit extends Command {
         }
 
 
-        // IP wird im HTTPCaller geprüft, Port hier, Ressource wirft 404 falls nicht vorhanden;
+        // IP wird im HttpAccess geprüft, Port hier, Ressource wirft 404 falls nicht vorhanden;
 
         Integer.valueOf(param.get(1));
 

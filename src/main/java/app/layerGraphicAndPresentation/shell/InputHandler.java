@@ -3,7 +3,7 @@ package app.layerGraphicAndPresentation.shell;
 import app.layerGraphicAndPresentation.shell.command.Command;
 import app.layerGraphicAndPresentation.shell.exception.*;
 import app.layerGraphicAndPresentation.shell.context.Context;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.UnexpectedResponseCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 
 import java.util.List;
 

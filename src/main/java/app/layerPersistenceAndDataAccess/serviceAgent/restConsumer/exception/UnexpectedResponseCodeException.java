@@ -1,18 +1,18 @@
-package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error;
+package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception;
 
 import app.layerLogicAndService.cmpBlackboard.util.JSONUtil;
-import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.HTTPResponse;
+import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.entity.HttpResponse;
 
 /**
  * @author Christian G. on 17.11.2017
  */
 public class UnexpectedResponseCodeException extends Exception {
 
-    HTTPResponse response;
+    HttpResponse response;
 
     private int code;
 
-    public UnexpectedResponseCodeException(HTTPResponse response) {
+    public UnexpectedResponseCodeException(HttpResponse response) {
         super(JSONUtil.getObject(response.getBody(), "message", String.class));
         this.response = response;
 
@@ -22,7 +22,7 @@ public class UnexpectedResponseCodeException extends Exception {
         return response.getCode();
     }
 
-    public HTTPResponse getResponse() {
+    public HttpResponse getResponse() {
         return response;
     }
 

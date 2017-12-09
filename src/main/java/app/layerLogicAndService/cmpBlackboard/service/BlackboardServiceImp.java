@@ -2,10 +2,9 @@ package app.layerLogicAndService.cmpBlackboard.service;
 
 import app.layerLogicAndService.cmpBlackboard.entity.Blackboard;
 import app.layerLogicAndService.cmpBlackboard.entity.User;
-import app.layerLogicAndService.cmpBlackboard.entity.Register;
 import app.layerLogicAndService.cmpBlackboard.entity.Login;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.blackboardConsumer.IBlackboardConsumer;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.UnexpectedResponseCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.IBlackboardConsumer;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 
 /**
  * @author Christian G. on 02.11.2017
@@ -13,6 +12,8 @@ import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.Unexpec
 public class BlackboardServiceImp implements IBlackboardService {
 
     private IBlackboardConsumer registerConsumer;
+
+    // ITavernaService tavernaService;
 
     public BlackboardServiceImp(IBlackboardConsumer registerConsumer) {
         this.registerConsumer = registerConsumer;

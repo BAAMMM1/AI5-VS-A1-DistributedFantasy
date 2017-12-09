@@ -7,8 +7,8 @@ import app.layerLogicAndService.cmpQuest.entity.questing.Questing;
 import app.layerLogicAndService.cmpQuest.entity.questing.Step;
 import app.layerLogicAndService.cmpQuest.entity.questing.TaskPart;
 import app.layerLogicAndService.cmpQuest.entity.questing.Token;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.UnexpectedResponseCodeException;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.IQuestConsumer;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.IQuestConsumer;
 
 import java.util.ArrayList;
 import java.util.List;

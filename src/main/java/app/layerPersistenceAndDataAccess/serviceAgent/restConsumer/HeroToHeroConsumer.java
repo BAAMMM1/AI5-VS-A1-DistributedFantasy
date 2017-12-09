@@ -1,13 +1,9 @@
-package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.heroTohHeroConsumer;
+package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer;
 
-import app.layerLogicAndService.cmpBlackboard.util.JSONUtil;
 import app.layerLogicAndService.cmpHero.entity.*;
-import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.EnumHTTPMethod;
-import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.HTTPCaller;
-import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.HTTPRequest;
-import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.HTTPResponse;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeDTO;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.UnexpectedResponseCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.service.HttpAccess;
+import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.entity.HttpResponse;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 import com.google.gson.Gson;
 
 /**
@@ -15,18 +11,18 @@ import com.google.gson.Gson;
  */
 public class HeroToHeroConsumer implements IHeroToHeroConsumer {
 
-    private HTTPCaller httpCaller;
+    private HttpAccess httpAccess;
     private Gson gson;
 
     public HeroToHeroConsumer() {
-        this.httpCaller = new HTTPCaller();
+        this.httpAccess = new HttpAccess();
         this.gson = new Gson();
     }
 
     @Override
     public Service getHeroService(String heroServiceUrl) throws UnexpectedResponseCodeException {
 
-        HTTPResponse response = this.httpCaller.get(heroServiceUrl);
+        HttpResponse response = this.httpAccess.get(heroServiceUrl);
 
         if (response.getCode() != 200) {
             throw new UnexpectedResponseCodeException(response);
@@ -39,7 +35,7 @@ public class HeroToHeroConsumer implements IHeroToHeroConsumer {
     @Override
     public String hiringHero(Hiring hiring, String herHiringUrl) throws UnexpectedResponseCodeException {
 
-        HTTPResponse response = this.httpCaller.post(herHiringUrl, gson.toJson(hiring));
+        HttpResponse response = this.httpAccess.post(herHiringUrl, gson.toJson(hiring));
 
         if (response.getCode() < 200 || response.getCode() >= 300) {
             throw new UnexpectedResponseCodeException(response);
@@ -51,7 +47,7 @@ public class HeroToHeroConsumer implements IHeroToHeroConsumer {
     @Override
     public void sendMessage(Message message, String heroMessageUrl) throws UnexpectedResponseCodeException {
 
-        HTTPResponse response = this.httpCaller.post(heroMessageUrl, gson.toJson(message));
+        HttpResponse response = this.httpAccess.post(heroMessageUrl, gson.toJson(message));
 
         if (response.getCode() < 200 || response.getCode() >= 300) {
             throw new UnexpectedResponseCodeException(response);
@@ -62,7 +58,7 @@ public class HeroToHeroConsumer implements IHeroToHeroConsumer {
     @Override
     public void sendAssignment(String heroAssignmentUrl, Assignment assignment) throws UnexpectedResponseCodeException {
 
-        HTTPResponse response = this.httpCaller.post(heroAssignmentUrl, gson.toJson(assignment));
+        HttpResponse response = this.httpAccess.post(heroAssignmentUrl, gson.toJson(assignment));
 
         if (response.getCode() < 200 || response.getCode() >= 300) {
             throw new UnexpectedResponseCodeException(response);
@@ -73,7 +69,7 @@ public class HeroToHeroConsumer implements IHeroToHeroConsumer {
     @Override
     public void sendAssignmentDeliver(String assignmentDeliverUrl, AssignmentDerliver assignmentDeliver) throws UnexpectedResponseCodeException {
 
-        HTTPResponse response = this.httpCaller.post(assignmentDeliverUrl, gson.toJson(assignmentDeliver));
+        HttpResponse response = this.httpAccess.post(assignmentDeliverUrl, gson.toJson(assignmentDeliver));
 
         if (response.getCode() < 200 || response.getCode() >= 300) {
             throw new UnexpectedResponseCodeException(response);

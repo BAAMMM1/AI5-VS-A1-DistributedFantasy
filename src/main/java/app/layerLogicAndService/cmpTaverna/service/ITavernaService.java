@@ -2,7 +2,7 @@ package app.layerLogicAndService.cmpTaverna.service;
 
 import app.layerLogicAndService.cmpTaverna.entity.Adventurer;
 import app.layerLogicAndService.cmpTaverna.entity.Group;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.UnexpectedResponseCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 
 import java.net.UnknownHostException;
 import java.util.List;

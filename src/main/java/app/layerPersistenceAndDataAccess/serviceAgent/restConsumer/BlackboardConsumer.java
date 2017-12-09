@@ -1,34 +1,29 @@
-package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.blackboardConsumer;
+package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer;
 
-import app.layerLogicAndService.cmpBlackboard.entity.Blackboard;
 import app.layerLogicAndService.cmpBlackboard.entity.User;
 import app.layerLogicAndService.cmpBlackboard.entity.Login;
 import app.layerLogicAndService.cmpBlackboard.entity.Register;
 import app.layerLogicAndService.cmpBlackboard.util.JSONUtil;
-import app.layerLogicAndService.cmpTaverna.entity.Adventurer;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.ErrorCodeDTO;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.UnexpectedResponseCodeException;
-import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.EnumHTTPMethod;
-import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.HTTPCaller;
-import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.HTTPRequest;
-import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.HTTPResponse;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.tavernaConsumer.API;
+import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.service.HttpAccess;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.entity.HttpResponse;
+import app.API;
 import com.google.gson.Gson;
 import org.json.JSONObject;
 
 /**
- * Erstellt die HTTPAnfrage, ruft die Pfade der API auf und erhält die HTTPResponse, welche JSON Objekte als entity´s
+ * Erstellt die HTTPAnfrage, ruft die Pfade der API auf und erhält die HttpResponse, welche JSON Objekte als entity´s
  * im Body enhalten
  *
  * @author Christian G. on 01.11.2017
  */
 public class BlackboardConsumer implements IBlackboardConsumer {
 
-    private HTTPCaller httpCaller;
+    private HttpAccess httpAccess;
     private Gson gson;
 
     public BlackboardConsumer() {
-        this.httpCaller = new HTTPCaller();
+        this.httpAccess = new HttpAccess();
         this.gson = new Gson();
     }
 
@@ -45,7 +40,7 @@ public class BlackboardConsumer implements IBlackboardConsumer {
             throw new IllegalArgumentException("password must not be null");
         }
 
-        HTTPResponse response = this.httpCaller.post(API.USERS, new JSONObject().put("name", name).put("password", password).toString());
+        HttpResponse response = this.httpAccess.post(API.USERS, new JSONObject().put("name", name).put("password", password).toString());
 
         if (response.getCode() != 201) {
             throw new UnexpectedResponseCodeException(response);
@@ -69,7 +64,7 @@ public class BlackboardConsumer implements IBlackboardConsumer {
             throw new IllegalArgumentException("password must not be null");
         }
 
-        HTTPResponse response = this.httpCaller.get(API.LOGIN, name, password);
+        HttpResponse response = this.httpAccess.get(API.LOGIN, name, password);
 
 
         if (response.getCode() != 200 || response == null) {
@@ -88,7 +83,7 @@ public class BlackboardConsumer implements IBlackboardConsumer {
             throw new IllegalArgumentException("token must not be null");
         }
 
-        HTTPResponse response = this.httpCaller.get(API.WHOAMI, token);
+        HttpResponse response = this.httpAccess.get(API.WHOAMI, token);
 
         if (response.getCode() != 200) {
             throw new UnexpectedResponseCodeException(response);

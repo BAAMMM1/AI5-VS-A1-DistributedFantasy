@@ -9,8 +9,8 @@ import app.layerLogicAndService.cmpHero.service.exception.AlreadyInGroupExceptio
 import app.layerLogicAndService.cmpTaverna.entity.Group;
 import app.layerLogicAndService.cmpTaverna.service.ITavernaService;
 import app.layerLogicAndService.cmpTaverna.service.TavernaService;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.UnexpectedResponseCodeException;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.tavernaConsumer.TavernaConsumer;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.TavernaConsumer;
 
 import java.util.List;
 

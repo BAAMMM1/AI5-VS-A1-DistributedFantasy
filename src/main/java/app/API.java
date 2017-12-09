@@ -1,4 +1,4 @@
-package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.tavernaConsumer;
+package app;
 
 import app.layerLogicAndService.cmpBlackboard.entity.Blackboard;
 

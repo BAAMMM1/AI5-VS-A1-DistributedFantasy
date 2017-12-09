@@ -2,7 +2,7 @@ package app.layerLogicAndService.cmpHero.service;
 
 import app.layerLogicAndService.cmpHero.entity.*;
 import app.layerLogicAndService.cmpHero.service.exception.AlreadyInGroupException;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.UnexpectedResponseCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 
 import java.util.List;
 

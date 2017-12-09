@@ -1,9 +1,9 @@
-package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.tavernaConsumer;
+package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer;
 
 import app.layerLogicAndService.cmpTaverna.entity.Adventurer;
 import app.layerLogicAndService.cmpTaverna.entity.Group;
 import app.layerLogicAndService.cmpTaverna.entity.Hero;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.UnexpectedResponseCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package app.layerPersistenceAndDataAccess.serviceAgent.httpAccess;
+package app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.enums;
 
 /**
  * @author Christian G. on 04.11.2017

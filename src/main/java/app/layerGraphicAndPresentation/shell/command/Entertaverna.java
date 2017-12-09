@@ -4,7 +4,7 @@ import app.layerGraphicAndPresentation.shell.InputInterpreter;
 import app.layerGraphicAndPresentation.shell.context.State;
 import app.layerLogicAndService.cmpTaverna.entity.Adventurer;
 import app.layerLogicAndService.cmpTaverna.service.ITavernaService;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.UnexpectedResponseCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 
 import java.io.IOException;
 

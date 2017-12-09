@@ -1,7 +1,7 @@
 package app.layerLogicAndService.cmpQuest.service;
 
 import app.layerLogicAndService.cmpQuest.entity.*;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.UnexpectedResponseCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 
 
 import java.util.List;

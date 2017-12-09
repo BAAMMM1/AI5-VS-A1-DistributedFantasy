@@ -1,7 +1,7 @@
-package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.blackboardConsumer;
+package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer;
 
 import app.layerLogicAndService.cmpBlackboard.entity.User;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.UnexpectedResponseCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 import app.layerLogicAndService.cmpBlackboard.entity.Register;
 import app.layerLogicAndService.cmpBlackboard.entity.Login;
 

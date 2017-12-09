@@ -6,7 +6,7 @@ import app.layerGraphicAndPresentation.shell.context.State;
 import app.layerGraphicAndPresentation.shell.exception.UnAcceptedStateException;
 import app.layerLogicAndService.cmpBlackboard.entity.User;
 import app.layerLogicAndService.cmpBlackboard.service.IBlackboardService;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.UnexpectedResponseCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 
 import java.util.ArrayList;
 import java.util.Arrays;

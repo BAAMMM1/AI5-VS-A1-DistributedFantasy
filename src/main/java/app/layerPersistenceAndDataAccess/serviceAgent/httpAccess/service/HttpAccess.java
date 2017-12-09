@@ -1,6 +1,9 @@
-package app.layerPersistenceAndDataAccess.serviceAgent.httpAccess;
+package app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.service;
 
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.UnexpectedResponseCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.enums.EnumHTTPMethod;
+import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.entity.HttpRequest;
+import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.entity.HttpResponse;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 import com.google.gson.Gson;
 
 import javax.el.MethodNotFoundException;
@@ -14,7 +17,7 @@ import java.util.Base64;
 /**
  * @author Christian G. on 02.11.2017
  */
-public class HTTPCaller {
+public class HttpAccess {
 
     private static final int BUFFER_LENGHT = 819200;
     private static final String MEDIA_TYPE_APPLICATION_JSON = "application/json";
@@ -22,7 +25,7 @@ public class HTTPCaller {
     private Gson gson = new Gson();
 
 
-    public HTTPResponse call(HTTPRequest request) {
+    public HttpResponse call(HttpRequest request) {
 
         if (request.getUrl().contains("null")) {
             throw new IllegalArgumentException("error: no host or port");
@@ -110,7 +113,7 @@ public class HTTPCaller {
             System.out.println(responeCode);
             System.out.println(Body.toString());
 
-            HTTPResponse response = new HTTPResponse(responeCode, Body);
+            HttpResponse response = new HttpResponse(responeCode, Body);
 
             connection.disconnect();
 
@@ -121,55 +124,55 @@ public class HTTPCaller {
         }
     }
 
-    public HTTPResponse get(String url) {
+    public HttpResponse get(String url) {
 
         return this.call(this.buildRequest(url, EnumHTTPMethod.GET, null, null, null, null));
 
     }
 
-    public HTTPResponse get(String url, String basicName, String basicPassword) {
+    public HttpResponse get(String url, String basicName, String basicPassword) {
 
         return this.call(this.buildRequest(url, EnumHTTPMethod.GET, null, null, basicName, basicPassword));
 
     }
 
-    public HTTPResponse get(String url, String token) {
+    public HttpResponse get(String url, String token) {
 
         return this.call(this.buildRequest(url, EnumHTTPMethod.GET, token, null, null, null));
 
     }
 
-    public HTTPResponse post(String url, String body) throws UnexpectedResponseCodeException {
+    public HttpResponse post(String url, String body) throws UnexpectedResponseCodeException {
         return this.post(url, null, body);
     }
 
-    public HTTPResponse post(String url, String token, String body) throws UnexpectedResponseCodeException {
+    public HttpResponse post(String url, String token, String body) throws UnexpectedResponseCodeException {
 
         return this.call(this.buildRequest(url, EnumHTTPMethod.POST, token, body, null, null));
 
     }
 
-    public HTTPResponse delete(String url) throws UnexpectedResponseCodeException {
+    public HttpResponse delete(String url) throws UnexpectedResponseCodeException {
 
         return this.call(this.buildRequest(url, EnumHTTPMethod.DELETE, null, null, null, null));
 
     }
 
-    public HTTPResponse delete(String url, String token) throws UnexpectedResponseCodeException {
+    public HttpResponse delete(String url, String token) throws UnexpectedResponseCodeException {
 
         return this.call(this.buildRequest(url, EnumHTTPMethod.DELETE, token, null, null, null));
 
     }
 
 
-    private HTTPRequest buildRequest(String url, EnumHTTPMethod method, String token, String body, String basicName, String basicPassword) {
+    private HttpRequest buildRequest(String url, EnumHTTPMethod method, String token, String body, String basicName, String basicPassword) {
 
-        HTTPRequest request;
+        HttpRequest request;
 
         if (body != null) {
-            request = new HTTPRequest(url, method, body);
+            request = new HttpRequest(url, method, body);
         } else {
-            request = new HTTPRequest(url, method);
+            request = new HttpRequest(url, method);
         }
 
         if (token != null) {

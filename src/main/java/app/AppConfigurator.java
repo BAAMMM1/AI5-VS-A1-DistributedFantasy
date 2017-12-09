@@ -13,14 +13,14 @@ import app.layerLogicAndService.cmpQuest.service.IQuestService;
 import app.layerLogicAndService.cmpQuest.service.QuestServiceImpl;
 import app.layerLogicAndService.cmpTaverna.service.ITavernaService;
 import app.layerLogicAndService.cmpTaverna.service.TavernaService;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.blackboardConsumer.BlackboardConsumer;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.blackboardConsumer.IBlackboardConsumer;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.heroTohHeroConsumer.HeroToHeroConsumer;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.heroTohHeroConsumer.IHeroToHeroConsumer;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.IQuestConsumer;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.questConsumer.QuestConsumerImpl;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.tavernaConsumer.ITavernaConsumer;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.tavernaConsumer.TavernaConsumer;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.BlackboardConsumer;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.IBlackboardConsumer;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.HeroToHeroConsumer;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.IHeroToHeroConsumer;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.IQuestConsumer;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.QuestConsumerImpl;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.ITavernaConsumer;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.TavernaConsumer;
 
 /**
  * @author Chris on 24.11.2017

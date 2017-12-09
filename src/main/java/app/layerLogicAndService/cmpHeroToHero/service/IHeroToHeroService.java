@@ -1,6 +1,6 @@
 package app.layerLogicAndService.cmpHeroToHero.service;
 
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.UnexpectedResponseCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 
 /**
  * @author Chris on 02.12.2017

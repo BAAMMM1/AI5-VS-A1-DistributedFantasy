@@ -1,9 +1,11 @@
-package app.layerPersistenceAndDataAccess.serviceAgent.httpAccess;
+package app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.entity;
+
+import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.enums.EnumHTTPMethod;
 
 /**
  * @author Christian G. on 04.11.2017
  */
-public class HTTPRequest {
+public class HttpRequest {
 
     private final String url;
     private final EnumHTTPMethod method;
@@ -14,14 +16,14 @@ public class HTTPRequest {
     private boolean authorization = false;
     private String authorizationToken;
 
-    public HTTPRequest(String url, EnumHTTPMethod method, String body) {
+    public HttpRequest(String url, EnumHTTPMethod method, String body) {
         this.url = url;
         this.method = method;
         this.body = body;
         this.basicAuthUser = null;
     }
 
-    public HTTPRequest(String url, EnumHTTPMethod method) {
+    public HttpRequest(String url, EnumHTTPMethod method) {
         this.url = url;
         this.method = method;
         this.body = null;

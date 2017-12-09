@@ -1,7 +1,7 @@
-package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.heroTohHeroConsumer;
+package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer;
 
 import app.layerLogicAndService.cmpHero.entity.*;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.error.UnexpectedResponseCodeException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 
 /**
  * @author Chris on 02.12.2017
