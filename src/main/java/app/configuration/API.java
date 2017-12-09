@@ -26,6 +26,9 @@ public class API {
     public static final String PATH_HIRINGS      = "/hirings";
     public static final String PATH_ASSIGNMENTS  = "/assignments";
     public static final String PATH_MESSAGES     = "/messages";
+    public static final String PATH_ELECTION     = "/election";
+    public static final String PATH_MUTEX     = "/mutex";
+    public static final String PATH_MUTEXSTATE     = "/mutexstate";
 
 
 

@@ -1,6 +1,7 @@
 package app.layerGraphicAndPresentation.controller;
 
 import app.configuration.API;
+import app.layerLogicAndService.cmpService.entity.hero.Election;
 import app.layerLogicAndService.cmpService.service.hero.IHeroService;
 import app.layerLogicAndService.cmpService.exception.AlreadyInGroupException;
 import app.layerLogicAndService.cmpService.exception.ErrorMessage;
@@ -124,5 +125,61 @@ public class HeroController {
 
         }
     }
+
+    @RequestMapping(
+            value = API.PATH_ELECTION,
+            method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> addElection(@RequestBody Election request){
+        // uri to which one sends election messages to>" RequestBody hier ok?
+
+        try{
+
+            // TODO - Serviceaufruf
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        } catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        }
+    }
+
+    @RequestMapping(
+            value = API.PATH_MUTEX,
+            method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> addMutex(@RequestBody Mutex request){
+        // uri to endpoint where one posts mutex algorithm messages>" - RequestBody hier ok?
+
+        try{
+
+            // TODO - Serviceaufruf
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        } catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        }
+    }
+
+    @RequestMapping(
+            value = API.PATH_MUTEXSTATE,
+            method = RequestMethod.GET,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getMutexstate(@RequestBody Mutex request){
+        // uri to endpoint telling the mutex state> ist hier get ok?
+
+        try{
+
+            // TODO - Serviceaufruf
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        } catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        }
+    }
+
+
 
 }
