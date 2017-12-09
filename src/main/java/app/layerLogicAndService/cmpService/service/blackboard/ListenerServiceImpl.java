@@ -117,8 +117,6 @@ public class ListenerServiceImpl extends Thread implements IListenerService {
         }
 
         Blackboard.URL = "http:/" + sourceIp + ":" + responeDTO.getBlackboard_port();
-        System.out.println(Blackboard.URL);
-        System.out.println(Blackboard.getInstance().getUrl());
 
         // TODO - Für den Logger. Log bitte wenn sich etwas ändert
         //System.out.println(" - " + Blackboard.getInstance().getUrl() + "\n");
@@ -139,6 +137,7 @@ public class ListenerServiceImpl extends Thread implements IListenerService {
         }
     }
 
-
-
+    public boolean isFirstSet() {
+        return isFirstSet;
+    }
 }

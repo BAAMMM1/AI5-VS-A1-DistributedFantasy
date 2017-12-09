@@ -6,5 +6,6 @@ package app.layerLogicAndService.cmpService.service.blackboard;
 public interface IListenerService {
 
     void start();
+    boolean isFirstSet();
 
 }

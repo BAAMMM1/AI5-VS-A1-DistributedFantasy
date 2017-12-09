@@ -50,6 +50,10 @@ public class AppConfigurator {
         System.out.println("starting listener thread");
         this.listener.start();
 
+        while(!this.listener.isFirstSet()){
+
+        }
+
         System.out.println("starting shell");
         this.shell.start();
 
