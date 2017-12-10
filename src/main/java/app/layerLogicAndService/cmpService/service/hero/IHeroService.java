@@ -17,5 +17,6 @@ public interface IHeroService {
     void addAssignmentDeliver(AssignmentDerliver assignmentDerliver);
     void addMessage(Message message);
     List<Message> getMessages();
+    Election election(Election election) throws  UnexpectedResponseCodeException;
 
 }

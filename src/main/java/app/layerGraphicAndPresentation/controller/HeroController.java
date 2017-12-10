@@ -134,8 +134,7 @@ public class HeroController {
         // uri to which one sends election messages to>" RequestBody hier ok?
 
         try{
-
-            // TODO - Serviceaufruf
+            this.heroService.election(request);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         } catch (Exception e){

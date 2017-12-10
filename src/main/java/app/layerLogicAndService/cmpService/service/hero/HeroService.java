@@ -96,4 +96,10 @@ public class HeroService implements IHeroService {
 
         return messages;
     }
+
+
+    @Override
+    public Election election(Election election) throws UnexpectedResponseCodeException {
+        return null;
+    }
 }

@@ -1,5 +1,6 @@
 package app.layerLogicAndService.cmpService.service.heroToHero;
 
+import app.layerLogicAndService.cmpService.entity.hero.Election;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 
 /**
@@ -12,6 +13,7 @@ public interface IHeroToHeroService {
     void sendAssignment(String adventurer,  String message) throws UnexpectedResponseCodeException;
 
     void sendAssignmentDeliver() throws UnexpectedResponseCodeException;
+
 
 
 
