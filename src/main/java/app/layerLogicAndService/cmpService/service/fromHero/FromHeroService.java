@@ -1,4 +1,4 @@
-package app.layerLogicAndService.cmpService.service.hero;
+package app.layerLogicAndService.cmpService.service.fromHero;
 
 
 import app.Application;
@@ -9,18 +9,22 @@ import app.layerLogicAndService.cmpService.entity.hero.*;
 import app.layerLogicAndService.cmpService.entity.taverna.Group;
 import app.layerLogicAndService.cmpService.service.taverna.ITavernaService;
 import app.layerLogicAndService.cmpService.service.taverna.TavernaService;
+import app.layerLogicAndService.cmpService.service.toHero.IToHeroService;
+import app.layerLogicAndService.cmpService.service.toHero.ToHeroService;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.TavernaConsumer;
 
 import java.util.List;
 
 /**
+ * Diese Klasse ist aus der Sicht des Empfängers
  * @author Chris on 03.12.2017
  */
 @org.springframework.stereotype.Service
-public class HeroService implements IHeroService {
+public class FromHeroService implements IFromHeroService {
 
     private ITavernaService tavernaService = new TavernaService();
+
+    private IToHeroService toHeroService =new ToHeroService();
 
     @Override
     public Service getService() {
@@ -99,7 +103,21 @@ public class HeroService implements IHeroService {
 
 
     @Override
-    public Election election(Election election) throws UnexpectedResponseCodeException {
+    public Election addElection(Election election) throws UnexpectedResponseCodeException {
+        // Sicht des Empfänger der Election
+
+        // 1. Um welche Election Stand handelt es sich? election || answer || coordinator
+        if(election.getPayload().equals("election")){
+
+        }
+
+        if(election.getPayload().equals("answer")){
+
+        }
+
+
+
+
         return null;
     }
 }

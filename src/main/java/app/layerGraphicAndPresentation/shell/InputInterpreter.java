@@ -4,10 +4,10 @@ import app.layerGraphicAndPresentation.shell.command.*;
 import app.layerGraphicAndPresentation.shell.exception.*;
 import app.layerLogicAndService.cmpService.service.blackboard.BlackboardServiceImp;
 import app.layerLogicAndService.cmpService.service.blackboard.IBlackboardService;
-import app.layerLogicAndService.cmpService.service.hero.HeroService;
-import app.layerLogicAndService.cmpService.service.hero.IHeroService;
-import app.layerLogicAndService.cmpService.service.heroToHero.HeroToHeroService;
-import app.layerLogicAndService.cmpService.service.heroToHero.IHeroToHeroService;
+import app.layerLogicAndService.cmpService.service.fromHero.FromHeroService;
+import app.layerLogicAndService.cmpService.service.fromHero.IFromHeroService;
+import app.layerLogicAndService.cmpService.service.toHero.ToHeroService;
+import app.layerLogicAndService.cmpService.service.toHero.IToHeroService;
 import app.layerLogicAndService.cmpService.service.quest.IQuestService;
 import app.layerLogicAndService.cmpService.service.quest.QuestServiceImpl;
 import app.layerLogicAndService.cmpService.service.taverna.ITavernaService;
@@ -24,8 +24,8 @@ public class InputInterpreter {
     private IBlackboardService blackboardService;
     private IQuestService questService;
     private ITavernaService tavernaService;
-    private IHeroToHeroService heroToHeroService;
-    private IHeroService heroService;
+    private IToHeroService heroToHeroService;
+    private IFromHeroService heroService;
 
     List<Command> registerCommands;
 
@@ -33,8 +33,8 @@ public class InputInterpreter {
         blackboardService = new BlackboardServiceImp();
         questService = new QuestServiceImpl();
         tavernaService = new TavernaService();
-        this.heroToHeroService = new HeroToHeroService();
-        this.heroService = new HeroService();
+        this.heroToHeroService = new ToHeroService();
+        this.heroService = new FromHeroService();
 
         this.registerCommands = new ArrayList<Command>();
 

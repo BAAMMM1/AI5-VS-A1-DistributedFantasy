@@ -1,4 +1,4 @@
-package app.layerLogicAndService.cmpService.service.heroToHero;
+package app.layerLogicAndService.cmpService.service.toHero;
 
 import app.Application;
 import app.layerLogicAndService.cmpService.entity.blackboard.Blackboard;
@@ -12,16 +12,16 @@ import app.layerLogicAndService.cmpService.entity.taverna.Group;
 import app.layerLogicAndService.cmpService.service.quest.QuestServiceImpl;
 import app.layerLogicAndService.cmpService.service.taverna.ITavernaService;
 import app.layerLogicAndService.cmpService.service.taverna.TavernaService;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.HeroToHeroConsumer;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.ToHeroConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.IHeroToHeroConsumer;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.IToHeroConsumer;
 
 /**
  * @author Chris on 02.12.2017
  */
-public class HeroToHeroService implements IHeroToHeroService {
+public class ToHeroService implements IToHeroService {
 
-    IHeroToHeroConsumer heroToHeroConsumer = new HeroToHeroConsumer();
+    IToHeroConsumer heroToHeroConsumer = new ToHeroConsumer();
 
     ITavernaService tavernaService = new TavernaService();
 
@@ -178,6 +178,11 @@ public class HeroToHeroService implements IHeroToHeroService {
 
         heroToHeroConsumer.sendAssignmentDeliver(Blackboard.getInstance().getUser().getAssignment().getCallback(), assignmentDerliver);
 
+    }
+
+    @Override
+    public void sendElection() {
+        // Sicht des Senders der Election (addElection starten)
     }
 
 

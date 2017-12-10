@@ -9,12 +9,12 @@ import com.google.gson.Gson;
 /**
  * @author Chris on 02.12.2017
  */
-public class HeroToHeroConsumer implements IHeroToHeroConsumer {
+public class ToHeroConsumer implements IToHeroConsumer {
 
     private HttpAccess httpAccess;
     private Gson gson;
 
-    public HeroToHeroConsumer() {
+    public ToHeroConsumer() {
         this.httpAccess = new HttpAccess();
         this.gson = new Gson();
     }

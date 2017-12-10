@@ -1,9 +1,8 @@
 package app.layerGraphicAndPresentation.shell.command;
 
-import app.layerGraphicAndPresentation.shell.InputInterpreter;
 import app.layerGraphicAndPresentation.shell.context.State;
 import app.layerLogicAndService.cmpService.entity.hero.Message;
-import app.layerLogicAndService.cmpService.service.hero.IHeroService;
+import app.layerLogicAndService.cmpService.service.fromHero.IFromHeroService;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 
 import java.io.IOException;
@@ -14,9 +13,9 @@ import java.util.List;
  */
 public class Messages extends Command{
 
-    IHeroService heroService;
+    IFromHeroService heroService;
 
-    public Messages(IHeroService heroService) {
+    public Messages(IFromHeroService heroService) {
         this.heroService = heroService;
     }
 

@@ -1,4 +1,4 @@
-package app.layerLogicAndService.cmpService.service.hero;
+package app.layerLogicAndService.cmpService.service.fromHero;
 
 import app.layerLogicAndService.cmpService.exception.AlreadyInGroupException;
 import app.layerLogicAndService.cmpService.entity.hero.*;
@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * @author Chris on 03.12.2017
  */
-public interface IHeroService {
+public interface IFromHeroService {
 
     Service getService();
     void addHiring(Hiring hiring) throws AlreadyInGroupException, UnexpectedResponseCodeException;
@@ -17,6 +17,6 @@ public interface IHeroService {
     void addAssignmentDeliver(AssignmentDerliver assignmentDerliver);
     void addMessage(Message message);
     List<Message> getMessages();
-    Election election(Election election) throws  UnexpectedResponseCodeException;
+    Election addElection(Election election) throws  UnexpectedResponseCodeException;
 
 }

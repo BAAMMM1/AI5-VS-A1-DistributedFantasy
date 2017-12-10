@@ -6,7 +6,7 @@ import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.Une
 /**
  * @author Chris on 02.12.2017
  */
-public interface IHeroToHeroConsumer {
+public interface IToHeroConsumer {
 
     // For invite heroService to group
     Service getHeroService(String heroServiceUrl) throws UnexpectedResponseCodeException;

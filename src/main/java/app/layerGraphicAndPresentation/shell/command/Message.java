@@ -1,9 +1,8 @@
 package app.layerGraphicAndPresentation.shell.command;
 
-import app.layerGraphicAndPresentation.shell.InputInterpreter;
 import app.layerGraphicAndPresentation.shell.context.State;
 import app.layerGraphicAndPresentation.shell.exception.ParameterIncorrectException;
-import app.layerLogicAndService.cmpService.service.heroToHero.IHeroToHeroService;
+import app.layerLogicAndService.cmpService.service.toHero.IToHeroService;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 
 import java.io.IOException;
@@ -14,9 +13,9 @@ import java.util.List;
  */
 public class Message extends Command{
 
-    IHeroToHeroService heroToHeroService;
+    IToHeroService heroToHeroService;
 
-    public Message(IHeroToHeroService heroToHeroService) {
+    public Message(IToHeroService heroToHeroService) {
         this.heroToHeroService = heroToHeroService;
     }
 

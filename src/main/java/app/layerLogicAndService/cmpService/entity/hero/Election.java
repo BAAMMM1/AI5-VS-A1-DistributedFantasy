@@ -7,7 +7,7 @@ public class Election {
 
     // TODO - add here something
     String algorithm;   // name of the algorithm used
-    String payload;     // he payload for the current state of the algorithm> - election, coordinator
+    String payload;     // he payload for the current state of the algorithm> - addElection, coordinator
     String user;        // uri of the user sending this request
     Assignment job;         // JSON description of the job to do
     String message;     // something you want to tell the other one

@@ -1,12 +1,11 @@
-package app.layerLogicAndService.cmpService.service.heroToHero;
+package app.layerLogicAndService.cmpService.service.toHero;
 
-import app.layerLogicAndService.cmpService.entity.hero.Election;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 
 /**
  * @author Chris on 02.12.2017
  */
-public interface IHeroToHeroService {
+public interface IToHeroService {
 
     String invite(String heroName, int groupId, int taskId, String messageToHero) throws UnexpectedResponseCodeException;
     void sendMessage(String adventurer, String string) throws UnexpectedResponseCodeException;
@@ -14,7 +13,8 @@ public interface IHeroToHeroService {
 
     void sendAssignmentDeliver() throws UnexpectedResponseCodeException;
 
-
+    // Sicht des Senders der Election (addElection starten)
+    void sendElection();
 
 
 

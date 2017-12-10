@@ -1,12 +1,6 @@
 package app.layerGraphicAndPresentation.shell;
 
-import app.layerGraphicAndPresentation.shell.command.*;
 import app.layerGraphicAndPresentation.shell.context.Context;
-import app.layerLogicAndService.cmpService.service.blackboard.IBlackboardService;
-import app.layerLogicAndService.cmpService.service.hero.IHeroService;
-import app.layerLogicAndService.cmpService.service.heroToHero.IHeroToHeroService;
-import app.layerLogicAndService.cmpService.service.quest.IQuestService;
-import app.layerLogicAndService.cmpService.service.taverna.ITavernaService;
 
 import java.util.Scanner;
 

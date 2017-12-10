@@ -1,8 +1,7 @@
 package app.layerGraphicAndPresentation.shell.command;
 
-import app.layerGraphicAndPresentation.shell.InputInterpreter;
 import app.layerGraphicAndPresentation.shell.context.State;
-import app.layerLogicAndService.cmpService.service.heroToHero.IHeroToHeroService;
+import app.layerLogicAndService.cmpService.service.toHero.IToHeroService;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 
 import java.io.IOException;
@@ -12,9 +11,9 @@ import java.io.IOException;
  */
 public class AssignmentDeliver extends Command {
 
-    IHeroToHeroService heroToHeroService;
+    IToHeroService heroToHeroService;
 
-    public AssignmentDeliver(IHeroToHeroService heroToHeroService) {
+    public AssignmentDeliver(IToHeroService heroToHeroService) {
         this.heroToHeroService = heroToHeroService;
     }
 

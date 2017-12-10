@@ -2,7 +2,7 @@ package app.layerGraphicAndPresentation.controller;
 
 import app.configuration.API;
 import app.layerLogicAndService.cmpService.entity.hero.Election;
-import app.layerLogicAndService.cmpService.service.hero.IHeroService;
+import app.layerLogicAndService.cmpService.service.fromHero.IFromHeroService;
 import app.layerLogicAndService.cmpService.exception.AlreadyInGroupException;
 import app.layerLogicAndService.cmpService.exception.ErrorMessage;
 import app.layerLogicAndService.cmpService.entity.hero.*;
@@ -15,7 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * Diese Klasse repräsentiert den heroService Endpoint unseres hero-heroService
+ * Diese Klasse repräsentiert den heroService Endpoint unseres fromHero-heroService
  *
  * @author Chris on 01.12.2017
  */
@@ -25,7 +25,7 @@ public class HeroController {
     Gson gson = new Gson();
 
     @Autowired
-    IHeroService heroService;
+    IFromHeroService heroService;
 
 
     @RequestMapping(
@@ -131,10 +131,10 @@ public class HeroController {
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addElection(@RequestBody Election request){
-        // uri to which one sends election messages to>" RequestBody hier ok?
+        // uri to which one sends addElection messages to>" RequestBody hier ok?
 
         try{
-            this.heroService.election(request);
+            this.heroService.addElection(request);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         } catch (Exception e){
