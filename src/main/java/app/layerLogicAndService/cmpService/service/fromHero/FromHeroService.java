@@ -134,12 +134,16 @@ public class FromHeroService implements IFromHeroService {
     @Override
     public void addElection(Election election) throws UnexpectedResponseCodeException {
         // Sicht des Empfänger der Election
+        System.out.println("attention!: you have got a election");
+        System.out.println("state: " + election.getPayload());
 
         // 1. Um welche Election Stand handelt es sich? election || answer || coordinator
         if(election.getPayload().equals(API.ELECTION_STATE_ELECTION)){
 
+
             // falls eigene ID größer, dann Antoworte mit answer und sende election an höhere Id's
-            if(election.getUser().length() > Blackboard.getInstance().getUser().get_links().getSelf().length()){
+            if( Blackboard.getInstance().getUser().get_links().getSelf().length() > election.getUser().length()){
+                System.out.println("you have a grater Id, your change to win the election");
 
                 Adventurer adventurer = this.tavernaService.getAdventure(election.getUser().replaceAll("/users", ""));
 
@@ -156,7 +160,11 @@ public class FromHeroService implements IFromHeroService {
                                 null,
                                 "You will never be the coordinator!"
                         ));
+
+                this.toHeroService.startElection();
             }
+
+            System.out.println("your Id is smaller, you lose the election");
 
             // falls eigene ID kleiner, nicht mehr an der Wahl beteilen, der Prozess hat die Wahl verloren
             this.waitForCoordinatorMessage();
@@ -164,6 +172,9 @@ public class FromHeroService implements IFromHeroService {
         }
 
         if(election.getPayload().equals(API.ELECTION_STATE_ANSWER)){
+
+            System.out.println("you got a election answer, you lose the election");
+
             /*
             Wenn eine answer-Nachricht kommt, verliert P unbeteiligt sich nicht weiter an der Wahl
             und wartet auf eine coordinator-Nachricht
@@ -180,6 +191,7 @@ public class FromHeroService implements IFromHeroService {
         }
 
         if(election.getPayload().equals(API.ELECTION_STATE_COORDINATOR)){
+            System.out.println("winner of the election: " + election.getUser());
             Blackboard.getInstance().getUser().getCurrentGroup().setCoordinator(election.getUser().replace("/users/", ""));
 
         }
