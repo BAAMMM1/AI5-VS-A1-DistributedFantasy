@@ -20,6 +20,7 @@ public class AssignmentSend extends Command {
     @Override
     State instruction() throws UnexpectedResponseCodeException, IOException, InterruptedException {
 
+        // TODO - Message richtig entgegen nehmen - example(statt helloStranger -> hello Stranger)
         this.heroToHeroService.sendAssignment(this.getParameter().get(0), this.getParameter().get(1));
 
         return null;

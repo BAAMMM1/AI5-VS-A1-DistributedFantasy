@@ -24,7 +24,7 @@ public class InputInterpreter {
     private IBlackboardService blackboardService;
     private IQuestService questService;
     private ITavernaService tavernaService;
-    private IToHeroService heroToHeroService;
+    private IToHeroService toHeroService;
     private IFromHeroService heroService;
 
     List<Command> registerCommands;
@@ -33,7 +33,7 @@ public class InputInterpreter {
         blackboardService = new BlackboardServiceImp();
         questService = new QuestServiceImpl();
         tavernaService = new TavernaService();
-        this.heroToHeroService = new ToHeroService();
+        this.toHeroService = new ToHeroService();
         this.heroService = new FromHeroService();
 
         this.registerCommands = new ArrayList<Command>();
@@ -129,14 +129,15 @@ public class InputInterpreter {
         registerCommands.add(new GroupMembers(tavernaService));
         registerCommands.add(new Adventurers(tavernaService));
         registerCommands.add(new Adventurer(tavernaService));
-        registerCommands.add(new Invite(heroToHeroService));
+        registerCommands.add(new Invite(toHeroService));
         registerCommands.add(new Messages(heroService));
         registerCommands.add(new GroupOwn());
         registerCommands.add(new GroupLeave());
-        registerCommands.add(new Message(heroToHeroService));
+        registerCommands.add(new Message(toHeroService));
         registerCommands.add(new Assignment(questService));
-        registerCommands.add(new AssignmentDeliver(heroToHeroService));
-        registerCommands.add(new AssignmentSend(heroToHeroService));
+        registerCommands.add(new AssignmentDeliver(toHeroService));
+        registerCommands.add(new AssignmentSend(toHeroService));
+        registerCommands.add(new ElectionStart(toHeroService));
 
     }
 
