@@ -12,7 +12,9 @@ import app.layerLogicAndService.cmpService.service.taverna.ITavernaService;
 import app.layerLogicAndService.cmpService.service.taverna.TavernaService;
 import app.layerLogicAndService.cmpService.service.toHero.IToHeroService;
 import app.layerLogicAndService.cmpService.service.toHero.ToHeroService;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.ITavernaConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.IToHeroConsumer;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.TavernaConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.ToHeroConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 
@@ -25,11 +27,15 @@ import java.util.List;
 @org.springframework.stereotype.Service
 public class FromHeroService implements IFromHeroService {
 
+    private static final String GROUP_DENIED = "I am already in a group!";
+
     private ITavernaService tavernaService = new TavernaService();
 
     private IToHeroService toHeroService = new ToHeroService();
 
     private IToHeroConsumer toHeroConsumer = new ToHeroConsumer();
+
+    private ITavernaConsumer tavernaConsumer = new TavernaConsumer();
 
     @Override
     public Service getService() {
@@ -52,8 +58,12 @@ public class FromHeroService implements IFromHeroService {
     @Override
     public void addHiring(Hiring hiring) throws AlreadyInGroupException, UnexpectedResponseCodeException {
 
+        System.out.print("attention!: you got an hiring");
+        System.out.print("message: " + hiring.getMessage());
+
         if(Blackboard.getInstance().getUser().getGroup() != null){
-            throw new AlreadyInGroupException("ehhmm ohh ehmm Nein! oder vlt ehm Nein! Ne doch nicht Nein! Ne Nein!");
+            System.out.println("hiring was declined automatically because you are already in a group");
+            throw new AlreadyInGroupException(GROUP_DENIED);
         }
 
         // TODO - Was ist wenn hiring.getGroup() = http://xxxx:xx/taverna/groups/387 statt /taverna/groups/387
@@ -61,6 +71,7 @@ public class FromHeroService implements IFromHeroService {
         try{
             groupId = Integer.valueOf(hiring.getGroup().replace("/taverna/groups/", ""));
         } catch (Exception e){
+            System.out.println("hiring was declined automatically because the group id is incorrect");
             throw new IllegalArgumentException("group link incorrect");
         }
 
@@ -69,6 +80,7 @@ public class FromHeroService implements IFromHeroService {
 
         // Wenn es sie gibt, beitreten
         // in die Groupe eintretren in der taverna
+        System.out.println("you accepted the hiring automatically");
         this.tavernaService.enterGroup(groupId);
 
         Blackboard.getInstance().getUser().setGroup(hiring.getGroup());
@@ -79,24 +91,33 @@ public class FromHeroService implements IFromHeroService {
     @Override
     public void addAssignment(Assignment assignment) {
 
+        System.out.println("attention!: you have got a assignment");
+        System.out.println("the coordinator selected you to execute an " + assignment.getMethod() + " for task: " + assignment.getTask());
+        System.out.println("messages: " + assignment.getMessage());
+        System.out.println("use the command \"assignment\" to do your job");
+
         Blackboard.getInstance().getUser().setAssignment(assignment);
-        System.out.println("adding assignment");
 
     }
 
     @Override
     public void addAssignmentDeliver(AssignmentDerliver assignmentDerliver) {
 
+        System.out.println("attention!: a fellow has delivered his assignment");
+        System.out.println("messages: " + assignmentDerliver.getMessage());
+
         Blackboard.getInstance().getUser().setAssignmentDerliver(assignmentDerliver);
-        System.out.println("adding assignmentdeliver");
 
     }
 
     @Override
     public void addMessage(Message message) {
 
+        System.out.println("attention!: you have got a messages");
+        System.out.println("type: " + message.getTyp());
+        System.out.println("messages: " + message.getMessage());
+
         Blackboard.getInstance().getUser().addMessage(message);
-        System.out.println("adding message");
 
     }
 
@@ -104,14 +125,14 @@ public class FromHeroService implements IFromHeroService {
     public List<Message> getMessages() {
 
         List<Message> messages = Blackboard.getInstance().getUser().getMessages();
-        Blackboard.getInstance().getUser().removeMessage();
+        //Blackboard.getInstance().getUser().removeMessage();
 
         return messages;
     }
 
 
     @Override
-    public Election addElection(Election election) throws UnexpectedResponseCodeException {
+    public void addElection(Election election) throws UnexpectedResponseCodeException {
         // Sicht des Empfänger der Election
 
         // 1. Um welche Election Stand handelt es sich? election || answer || coordinator
@@ -119,16 +140,21 @@ public class FromHeroService implements IFromHeroService {
 
             // falls eigene ID größer, dann Antoworte mit answer und sende election an höhere Id's
             if(election.getUser().length() > Blackboard.getInstance().getUser().get_links().getSelf().length()){
+
+                Adventurer adventurer = this.tavernaService.getAdventure(election.getUser().replaceAll("/users", ""));
+
+                Service adventurerService = this.toHeroConsumer.getHeroService(adventurer.getUrl());
+
                 toHeroConsumer.sendElection(
 
-                        "TODO-URL",
+                        adventurerService.getElection(),
 
                         new Election(
                                 API.ELECTION_ALGORTIHM,
                                 API.ELECTION_STATE_ANSWER,
                                 Blackboard.getInstance().getUser().get_links().getSelf(),
                                 null,
-                                "message"
+                                "You will never be the coordinator!"
                         ));
             }
 
@@ -149,17 +175,15 @@ public class FromHeroService implements IFromHeroService {
 
              */
 
-            // TODO - waitForCoordinator;
             this.waitForCoordinatorMessage();
 
         }
 
-        if(election.getPayload().equals(API.ELECTIOn_STATE_COORDINATOR)){
-            // TODO - Setze neuen Coordinator
+        if(election.getPayload().equals(API.ELECTION_STATE_COORDINATOR)){
+            Blackboard.getInstance().getUser().getCurrentGroup().setCoordinator(election.getUser().replace("/users/", ""));
 
         }
 
-        return null;
     }
 
     private void waitForCoordinatorMessage(){

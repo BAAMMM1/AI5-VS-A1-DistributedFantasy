@@ -13,12 +13,25 @@ public class Group {
     private int id;
     private List<String> members;
     private String owner;
+    private String  coordinator;
 
     public Group(Link _links, int id, List<String> members, String owner) {
         this._links = _links;
         this.id = id;
         this.members = members;
         this.owner = owner;
+        this.coordinator = owner;
+    }
+
+    public Group() {
+    }
+
+    public String getCoordinator() {
+        return coordinator;
+    }
+
+    public void setCoordinator(String coordinator) {
+        this.coordinator = coordinator;
     }
 
     public Link get_links() {

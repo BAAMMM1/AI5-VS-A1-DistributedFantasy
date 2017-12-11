@@ -17,6 +17,6 @@ public interface IFromHeroService {
     void addAssignmentDeliver(AssignmentDerliver assignmentDerliver);
     void addMessage(Message message);
     List<Message> getMessages();
-    Election addElection(Election election) throws  UnexpectedResponseCodeException;
+    void addElection(Election election) throws  UnexpectedResponseCodeException;
 
 }
