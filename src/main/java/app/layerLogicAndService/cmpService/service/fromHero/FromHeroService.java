@@ -41,7 +41,10 @@ public class FromHeroService implements IFromHeroService {
                 Blackboard.getInstance().getUser().getGroup(),
                 "http://" + Application.IP + ":8080" + API.PATH_HIRINGS,
                 "http://" + Application.IP + ":8080" + API.PATH_ASSIGNMENTS,
-                "http://" + Application.IP + ":8080" + API.PATH_MESSAGES);
+                "http://" + Application.IP + ":8080" + API.PATH_MESSAGES,
+                "http://" + Application.IP + ":8080" + API.PATH_ELECTION,
+                "http://" + Application.IP + ":8080" + API.PATH_MUTEX,
+                "http://" + Application.IP + ":8080" + API.PATH_MUTEXSTATE);
 
         return service;
     }

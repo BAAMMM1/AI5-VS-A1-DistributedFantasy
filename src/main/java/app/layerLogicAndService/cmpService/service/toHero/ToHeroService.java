@@ -6,6 +6,7 @@ import app.layerLogicAndService.cmpService.entity.blackboard.Blackboard;
 import app.layerLogicAndService.cmpService.entity.quest.Task;
 import app.layerLogicAndService.cmpService.entity.quest.questing.Step;
 import app.layerLogicAndService.cmpService.entity.quest.questing.TaskPart;
+import app.layerLogicAndService.cmpService.entity.taverna.Hero;
 import app.layerLogicAndService.cmpService.service.quest.IQuestService;
 import app.layerLogicAndService.cmpService.entity.hero.*;
 import app.layerLogicAndService.cmpService.entity.taverna.Adventurer;
@@ -194,9 +195,12 @@ public class ToHeroService implements IToHeroService {
         for(Adventurer adventurer: groupMembers){
 
             if (adventurer.getUser().length() > Blackboard.getInstance().getUser().get_links().getSelf().length()){
+
+                Service heroService = this.toHeroConsumer.getHeroService(adventurer.getUrl());
+
                 this.toHeroConsumer.sendElection(
 
-                        "TODO - heroURL",
+                        heroService.getElection(),
 
                         new Election(
                                 API.ELECTION_ALGORTIHM,

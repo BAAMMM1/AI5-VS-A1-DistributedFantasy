@@ -11,14 +11,48 @@ public class Service {
     private String hirings;
     private String assignments;
     private String messages;
+    private String election;
+    private String mutex;
+    private String mutexstate;
 
-    public Service(String user, boolean idle, String group, String hirings, String assignments, String messages) {
+    public Service(String user, boolean idle, String group, String hirings, String assignments, String messages, String election, String mutex, String mutexstate) {
         this.user = user;
         this.idle = idle;
         this.group = group;
         this.hirings = hirings;
         this.assignments = assignments;
         this.messages = messages;
+        this.election = election;
+        this.mutex = mutex;
+        this.mutexstate = mutexstate;
+    }
+
+    public Service() {
+
+    }
+
+    public void setElection(String election) {
+        this.election = election;
+    }
+
+    public String getMutex() {
+        return mutex;
+    }
+
+    public void setMutex(String mutex) {
+        this.mutex = mutex;
+    }
+
+    public String getMutexstate() {
+        return mutexstate;
+    }
+
+    public void setMutexstate(String mutexstate) {
+        this.mutexstate = mutexstate;
+    }
+
+    public String getElection() {
+        return election;
     }
 
     public String getUser() {
