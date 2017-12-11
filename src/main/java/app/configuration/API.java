@@ -30,5 +30,10 @@ public class API {
     public static final String PATH_MUTEX = "/mutex";
     public static final String PATH_MUTEXSTATE = "/mutexstate";
 
+    public static final String ELECTION_ALGORTIHM = "bully";
+    public static final String ELECTION_STATE_ELECTION = "election";
+    public static final String ELECTION_STATE_ANSWER = "answer";
+    public static final String ELECTIOn_STATE_COORDINATOR = "coordinator";
+
 
 }

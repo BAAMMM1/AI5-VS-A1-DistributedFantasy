@@ -1,6 +1,7 @@
 package app.layerLogicAndService.cmpService.service.toHero;
 
 import app.Application;
+import app.configuration.API;
 import app.layerLogicAndService.cmpService.entity.blackboard.Blackboard;
 import app.layerLogicAndService.cmpService.entity.quest.Task;
 import app.layerLogicAndService.cmpService.entity.quest.questing.Step;
@@ -16,21 +17,23 @@ import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.ToHeroConsume
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.IToHeroConsumer;
 
+import java.util.List;
+
 /**
  * @author Chris on 02.12.2017
  */
 public class ToHeroService implements IToHeroService {
 
-    IToHeroConsumer heroToHeroConsumer = new ToHeroConsumer();
+    IToHeroConsumer toHeroConsumer = new ToHeroConsumer();
 
     ITavernaService tavernaService = new TavernaService();
 
     IQuestService questService = new QuestServiceImpl();
 
     @Override
-    public String invite(String heroName, int groupId, int taskid, String messageToHero) throws UnexpectedResponseCodeException {
+    public String sendHiringForGroupToHero(String heroName, int groupId, int taskid, String messageToHero) throws UnexpectedResponseCodeException {
 
-        // TODO - Benutzer über invite benachrichten
+        // TODO - Benutzer über sendHiringForGroupToHero benachrichten
 
         Adventurer adventurer = this.tavernaService.getAdventure(heroName);
 
@@ -47,7 +50,7 @@ public class ToHeroService implements IToHeroService {
 
         System.out.println(heroServiceUrl);
 
-        Service heroService = this.heroToHeroConsumer.getHeroService(heroServiceUrl);
+        Service heroService = this.toHeroConsumer.getHeroService(heroServiceUrl);
 
         String heroHiringUrl = heroService.getHirings();
 
@@ -58,7 +61,7 @@ public class ToHeroService implements IToHeroService {
         // TODO - Ist das Hiring hier mit den richtigen Daten befüllt?
         Hiring hiring = new Hiring(group.get_links().getSelf(), task.getName(),  messageToHero);
 
-        return this.heroToHeroConsumer.hiringHero(hiring, heroHiringUrl);
+        return this.toHeroConsumer.sendHiring(hiring, heroHiringUrl);
     }
 
     @Override
@@ -74,7 +77,7 @@ public class ToHeroService implements IToHeroService {
             heroServiceUrl = "http://" + heroServiceUrl;
         }
 
-        Service heroService = this.heroToHeroConsumer.getHeroService(heroServiceUrl);
+        Service heroService = this.toHeroConsumer.getHeroService(heroServiceUrl);
 
         String heroMessageUrl = heroService.getMessages();
 
@@ -87,7 +90,7 @@ public class ToHeroService implements IToHeroService {
         // TODO - User übererfolgreiche zustellung informieren
         Message message = new Message(string, "", "message");
 
-        this.heroToHeroConsumer.sendMessage(message, heroMessageUrl);
+        this.toHeroConsumer.sendMessage(message, heroMessageUrl);
     }
 
     @Override
@@ -111,7 +114,7 @@ public class ToHeroService implements IToHeroService {
             heroServiceUrl = "http://" + heroServiceUrl;
         }
 
-        Service heroService = this.heroToHeroConsumer.getHeroService(heroServiceUrl);
+        Service heroService = this.toHeroConsumer.getHeroService(heroServiceUrl);
 
         String heroAssignmentUrl = heroService.getAssignments();
 
@@ -131,7 +134,7 @@ public class ToHeroService implements IToHeroService {
 
         Blackboard.getInstance().getUser().setSendetAssignment(assignment);
 
-        this.heroToHeroConsumer.sendAssignment(heroAssignmentUrl, assignment);
+        this.toHeroConsumer.sendAssignment(heroAssignmentUrl, assignment);
 
     }
 
@@ -176,13 +179,38 @@ public class ToHeroService implements IToHeroService {
 
         System.out.println(data);
 
-        heroToHeroConsumer.sendAssignmentDeliver(Blackboard.getInstance().getUser().getAssignment().getCallback(), assignmentDerliver);
+        toHeroConsumer.sendAssignmentDeliver(Blackboard.getInstance().getUser().getAssignment().getCallback(), assignmentDerliver);
 
     }
 
+
     @Override
-    public void sendElection() {
-        // Sicht des Senders der Election (addElection starten)
+    public void startElection() throws UnexpectedResponseCodeException {
+        // Hier die election starten
+        // Hole alle GroupMembers, sende status election an alle mit höhere Id
+        // for alle sende status election
+        List<Adventurer> groupMembers = this.tavernaService.getGroupMembers(Blackboard.getInstance().getUser().getCurrentGroup().getId());
+
+        for(Adventurer adventurer: groupMembers){
+
+            if (adventurer.getUser().length() > Blackboard.getInstance().getUser().get_links().getSelf().length()){
+                this.toHeroConsumer.sendElection(
+
+                        "TODO - heroURL",
+
+                        new Election(
+                                API.ELECTION_ALGORTIHM,
+                                API.ELECTION_STATE_ELECTION,
+                                Blackboard.getInstance().getUser().get_links().getSelf(),
+                                null,
+                                "messages"
+                ));
+
+
+            }
+
+        }
+
     }
 
 

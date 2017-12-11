@@ -8,12 +8,14 @@ import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.Une
  */
 public interface IToHeroConsumer {
 
-    // For invite heroService to group
+    // For sendHiringForGroupToHero heroService to group
     Service getHeroService(String heroServiceUrl) throws UnexpectedResponseCodeException;
-    String hiringHero(Hiring hiring, String herHiringUrl) throws UnexpectedResponseCodeException;
+
+    String sendHiring(Hiring hiring, String herHiringUrl) throws UnexpectedResponseCodeException;
     void sendMessage(Message message, String heroMessageUrl) throws UnexpectedResponseCodeException;
     void sendAssignment(String heroAssignmentUrl, Assignment assignment) throws UnexpectedResponseCodeException;
     void sendAssignmentDeliver(String assignmentDeliverUrl, AssignmentDerliver assignmentDeliver) throws UnexpectedResponseCodeException;
+    void sendElection(String electionUrl, Election election) throws UnexpectedResponseCodeException;
 
 
 

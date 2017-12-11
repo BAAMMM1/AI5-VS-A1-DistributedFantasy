@@ -4,6 +4,7 @@ package app.layerLogicAndService.cmpService.service.fromHero;
 import app.Application;
 import app.configuration.API;
 import app.layerLogicAndService.cmpService.entity.blackboard.Blackboard;
+import app.layerLogicAndService.cmpService.entity.taverna.Adventurer;
 import app.layerLogicAndService.cmpService.exception.AlreadyInGroupException;
 import app.layerLogicAndService.cmpService.entity.hero.*;
 import app.layerLogicAndService.cmpService.entity.taverna.Group;
@@ -11,6 +12,8 @@ import app.layerLogicAndService.cmpService.service.taverna.ITavernaService;
 import app.layerLogicAndService.cmpService.service.taverna.TavernaService;
 import app.layerLogicAndService.cmpService.service.toHero.IToHeroService;
 import app.layerLogicAndService.cmpService.service.toHero.ToHeroService;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.IToHeroConsumer;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.ToHeroConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 
 import java.util.List;
@@ -24,7 +27,9 @@ public class FromHeroService implements IFromHeroService {
 
     private ITavernaService tavernaService = new TavernaService();
 
-    private IToHeroService toHeroService =new ToHeroService();
+    private IToHeroService toHeroService = new ToHeroService();
+
+    private IToHeroConsumer toHeroConsumer = new ToHeroConsumer();
 
     @Override
     public Service getService() {
@@ -107,17 +112,55 @@ public class FromHeroService implements IFromHeroService {
         // Sicht des Empfänger der Election
 
         // 1. Um welche Election Stand handelt es sich? election || answer || coordinator
-        if(election.getPayload().equals("election")){
+        if(election.getPayload().equals(API.ELECTION_STATE_ELECTION)){
+
+            // falls eigene ID größer, dann Antoworte mit answer und sende election an höhere Id's
+            if(election.getUser().length() > Blackboard.getInstance().getUser().get_links().getSelf().length()){
+                toHeroConsumer.sendElection(
+
+                        "TODO-URL",
+
+                        new Election(
+                                API.ELECTION_ALGORTIHM,
+                                API.ELECTION_STATE_ANSWER,
+                                Blackboard.getInstance().getUser().get_links().getSelf(),
+                                null,
+                                "message"
+                        ));
+            }
+
+            // falls eigene ID kleiner, nicht mehr an der Wahl beteilen, der Prozess hat die Wahl verloren
+            this.waitForCoordinatorMessage();
 
         }
 
-        if(election.getPayload().equals("answer")){
+        if(election.getPayload().equals(API.ELECTION_STATE_ANSWER)){
+            /*
+            Wenn eine answer-Nachricht kommt, verliert P unbeteiligt sich nicht weiter an der Wahl
+            und wartet auf eine coordinator-Nachricht
+             */
+            /*
+            Falls wir eine(mehrer) election nachricht gesendet haben
+            und hier eine antwort bekommen, ist die election für uns verloren -> als flag hinterlegen
+            flag-answer erhalten true!
+
+             */
+
+            // TODO - waitForCoordinator;
+            this.waitForCoordinatorMessage();
 
         }
 
+        if(election.getPayload().equals(API.ELECTIOn_STATE_COORDINATOR)){
+            // TODO - Setze neuen Coordinator
 
-
+        }
 
         return null;
+    }
+
+    private void waitForCoordinatorMessage(){
+        // TODO - waitForCoordinator;
+
     }
 }

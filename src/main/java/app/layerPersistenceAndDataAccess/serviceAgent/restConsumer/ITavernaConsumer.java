@@ -24,7 +24,7 @@ public interface ITavernaConsumer {
     String enterGroup(int id) throws UnexpectedResponseCodeException;
     List<Adventurer> getGroupMembers(int id) throws UnexpectedResponseCodeException;
 
-    //String invite(String heroname, int groupId) throws UnexpectedResponseCodeException;
+    //String sendHiringForGroupToHero(String heroname, int groupId) throws UnexpectedResponseCodeException;
 
 
 

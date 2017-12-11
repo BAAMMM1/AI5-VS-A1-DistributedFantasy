@@ -20,7 +20,7 @@ public class Invite extends Command {
     @Override
     State instruction() throws UnexpectedResponseCodeException, IOException, InterruptedException {
 
-        String invite = this.heroToHeroService.invite(this.getParameter().get(0),
+        String invite = this.heroToHeroService.sendHiringForGroupToHero(this.getParameter().get(0),
                 Integer.valueOf(this.getParameter().get(1)),
                 Integer.valueOf(this.getParameter().get(2)),
                 this.getParameter().get(3))

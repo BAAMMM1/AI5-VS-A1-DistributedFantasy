@@ -33,7 +33,7 @@ public class ToHeroConsumer implements IToHeroConsumer {
     }
 
     @Override
-    public String hiringHero(Hiring hiring, String herHiringUrl) throws UnexpectedResponseCodeException {
+    public String sendHiring(Hiring hiring, String herHiringUrl) throws UnexpectedResponseCodeException {
 
         HttpResponse response = this.httpAccess.post(herHiringUrl, gson.toJson(hiring));
 
@@ -70,6 +70,17 @@ public class ToHeroConsumer implements IToHeroConsumer {
     public void sendAssignmentDeliver(String assignmentDeliverUrl, AssignmentDerliver assignmentDeliver) throws UnexpectedResponseCodeException {
 
         HttpResponse response = this.httpAccess.post(assignmentDeliverUrl, gson.toJson(assignmentDeliver));
+
+        if (response.getCode() < 200 || response.getCode() >= 300) {
+            throw new UnexpectedResponseCodeException(response);
+        }
+
+    }
+
+    @Override
+    public void sendElection(String electionUrl, Election election) throws UnexpectedResponseCodeException {
+
+        HttpResponse response = this.httpAccess.post(electionUrl, gson.toJson(election));
 
         if (response.getCode() < 200 || response.getCode() >= 300) {
             throw new UnexpectedResponseCodeException(response);
