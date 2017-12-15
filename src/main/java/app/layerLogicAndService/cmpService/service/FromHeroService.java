@@ -170,6 +170,8 @@ public class FromHeroService implements IFromHeroService {
                                 "You will never be the coordinator!"
                         ));
 
+                if(!Blackboard.getInstance().getUser().isElectionWinFlag()){
+
                 Thread t = new Thread(new Runnable() {
 
                     @Override
@@ -178,7 +180,9 @@ public class FromHeroService implements IFromHeroService {
                         IToHeroService toHeroService = new ToHeroService();
 
                         try {
-                            toHeroService.startElection();
+
+                                toHeroService.startElection();
+
                         } catch (UnexpectedResponseCodeException e) {
                             e.printStackTrace();
                         } catch (NotInGroupException e) {
@@ -187,7 +191,9 @@ public class FromHeroService implements IFromHeroService {
 
                     }
                 });
+
                 t.start();
+                }
 
                 //this.toHeroService.startElection();
 
