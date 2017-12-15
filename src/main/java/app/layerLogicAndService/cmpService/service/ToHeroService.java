@@ -22,7 +22,8 @@ import java.util.List;
  */
 public class ToHeroService implements IToHeroService {
 
-    public final static Logger logger = Logger.getLogger(new Object() { }.getClass().getEnclosingClass());
+    public final static Logger logger = Logger.getLogger(new Object() {
+    }.getClass().getEnclosingClass());
 
     IToHeroConsumer toHeroConsumer = new ToHeroConsumer();
 
@@ -189,7 +190,7 @@ public class ToHeroService implements IToHeroService {
 
         logger.info("starting election");
 
-        if(Blackboard.getInstance().getUser().getCurrentGroup() == null){
+        if (Blackboard.getInstance().getUser().getCurrentGroup() == null) {
             logger.info("current user is not in a group");
             throw new NotInGroupException("you must be in a group to start a election");
         }
@@ -206,39 +207,39 @@ public class ToHeroService implements IToHeroService {
 
             if (adventurer.getUser().length() > Blackboard.getInstance().getUser().get_links().getSelf().length()) {
 
-                Service heroService = this.toHeroConsumer.getHeroService(adventurer.getUrl());
+                // Wenn Hero abgestürtz, dann nimm den nächsten hero
+                try {
 
-                logger.info("sending election_state election to: " + heroService.getElection());
+                    Service heroService = this.toHeroConsumer.getHeroService(adventurer.getUrl());
 
-                try{
+                    logger.info("sending election_state election to: " + heroService.getElection());
 
 
-                this.toHeroConsumer.sendElection(
+                    this.toHeroConsumer.sendElection(
 
-                        heroService.getElection(),
+                            heroService.getElection(),
 
-                        new Election(
-                                API.ELECTION_ALGORTIHM,
-                                API.ELECTION_STATE_ELECTION,
-                                Blackboard.getInstance().getUser().get_links().getSelf(),
-                                null,
-                                "message"
-                        ));
+                            new Election(
+                                    API.ELECTION_ALGORTIHM,
+                                    API.ELECTION_STATE_ELECTION,
+                                    Blackboard.getInstance().getUser().get_links().getSelf(),
+                                    null,
+                                    "message"
+                            ));
 
-                } catch(Exception e){
+                } catch (Exception e) {
+                    logger.warn("unavailable:" + adventurer.getUser().toString());
                     continue;
 
                 }
 
-
             }
-
 
 
         }
 
         // TODO - Warte auf timeout zeit
-        try{
+        try {
             Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -260,7 +261,7 @@ public class ToHeroService implements IToHeroService {
             for (Adventurer adventurer : groupMemberList) {
 
                 // falls man selber der nächste ist, dann nicht an sich selber senden
-                if(adventurer.getUser().equals(Blackboard.getInstance().getUser().get_links().getSelf())){
+                if (adventurer.getUser().equals(Blackboard.getInstance().getUser().get_links().getSelf())) {
                     continue;
                 }
 
