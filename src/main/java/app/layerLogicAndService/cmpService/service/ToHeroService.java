@@ -229,7 +229,7 @@ public class ToHeroService implements IToHeroService {
 
         // TODO - Warte auf timeout zeit
         try{
-            Thread.sleep(5000);
+            Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -272,11 +272,13 @@ public class ToHeroService implements IToHeroService {
 
             }
 
+            logger.info("set coodirnator slef");
+
+            Blackboard.getInstance().getUser().getCurrentGroup().setCoordinator(Blackboard.getInstance().getUser().get_links().getSelf());
+
+
         }
 
-        logger.info("set coodinator: self");
-
-        Blackboard.getInstance().getUser().getCurrentGroup().setCoordinator(Blackboard.getInstance().getUser().get_links().getSelf());
 
     }
 
