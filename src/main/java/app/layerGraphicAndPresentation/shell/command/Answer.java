@@ -69,6 +69,6 @@ public class Answer extends Command {
 
     @Override
     String description() {
-        return "  -answer                               answer to the current questing"; // TODO - richtigen Text hier
+        return "  -answer\t\t\t\t\t\t\t\t\t\tanswer to the current questing"; // TODO - richtigen Text hier
     }
 }

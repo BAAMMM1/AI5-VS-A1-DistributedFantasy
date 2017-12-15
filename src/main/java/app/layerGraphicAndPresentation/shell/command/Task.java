@@ -70,6 +70,6 @@ public class Task extends Command {
 
     @Override
     String description() {
-        return "  -task         [task-id]                        displays a task based on a id";
+        return "  -task\t\t\t[task-id]\t\t\t\t\t\tdisplays a task based on a id";
     }
 }

@@ -66,7 +66,7 @@ public class Login extends Command {
 
     @Override
     String description() {
-        return "  -login        [user] [password]                login with user and password";
+        return "  -login\t\t[user] [password]\t\t\t\tlogin with user and password";
     }
 
 

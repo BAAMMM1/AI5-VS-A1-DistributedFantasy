@@ -40,7 +40,7 @@ public class Help extends Command {
 
     @Override
     String description() {
-        return "  -help                                          displays all possible commands";
+        return "  -help\t\t\t\t\t\t\t\t\t\t\tdisplays all possible commands";
     }
 
 

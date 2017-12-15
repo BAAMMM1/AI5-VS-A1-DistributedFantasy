@@ -83,6 +83,6 @@ public class Visit extends Command {
 
     @Override
     String description() {
-        return "  -visit        [location] [task-id]         visit a host based on a ip and port";
+        return "  -visit\t\t[location] [task-id]\t\t\tvisit a host based on a ip and port";
     }
 }

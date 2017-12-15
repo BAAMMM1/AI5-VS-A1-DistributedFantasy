@@ -117,6 +117,7 @@ public class InputInterpreter {
         registerCommands.add(new Answer(questService));
         registerCommands.add(new Deliver(questService));
         registerCommands.add(new Test(blackboardService));
+        registerCommands.add(new Test2(blackboardService));
         registerCommands.add(new Next(questService));
         registerCommands.add(new Step(questService));
         registerCommands.add(new DeliverSteps(questService));

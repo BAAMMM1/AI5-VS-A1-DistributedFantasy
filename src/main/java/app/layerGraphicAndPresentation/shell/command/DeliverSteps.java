@@ -80,6 +80,6 @@ public class DeliverSteps extends Command {
 
     @Override
     String description() {
-        return "  -deliverTask      [quest-id] [task-uri] [token]    deliverTask a token for a quest";
+        return "  -deliverSteps\t\t\t\t\t\t\t\t\tdeliver the steptokens for steps";
     }
 }

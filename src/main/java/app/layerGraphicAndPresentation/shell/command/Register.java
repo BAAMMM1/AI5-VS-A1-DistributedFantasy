@@ -62,7 +62,7 @@ public class Register extends Command {
 
     @Override
     String description() {
-        return "  -register     [user] [password]                registered a new user";
+        return "  -register\t\t[user] [password]\t\t\t\tregistered a new user";
     }
 
 

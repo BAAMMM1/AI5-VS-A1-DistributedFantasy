@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * @author Christian G. on 17.11.2017
  */
-public class Test extends Command {
+public class Test2 extends Command {
 
     private IBlackboardService client;
 
@@ -24,7 +24,7 @@ public class Test extends Command {
     private static final int PARAMETER_SIZE = 0;
 
 
-    public Test(IBlackboardService client) {
+    public Test2(IBlackboardService client) {
         this.client = client;
     }
 
@@ -44,7 +44,7 @@ public class Test extends Command {
 
         // Je nachdem was hier zurück kommt, entweder Ok oder nicht ok, ändere Status
 
-        User user = this.client.login("MeinSuperTestUser", "test1234");
+        User user = this.client.login("Testarossa", "testpw");
 
         // Prompt-Ausgabe
         System.out.println("name: " + user.getName());
@@ -67,7 +67,7 @@ public class Test extends Command {
 
     @Override
     String description() {
-        return "  -test\t\t\t\t\t\t\t\t\t\t\tlogin with MeinSuperTestUser";
+        return "  -test2\t\t\t\t\t\t\t\t\t\tlogin with Testarossa";
     }
 
 

@@ -69,6 +69,6 @@ public class Deliver extends Command {
 
     @Override
     String description() {
-        return "  -deliverTask      [quest-id] [task-uri] [token]    deliverTask a token for a quest";
+        return "  -deliver\t\t\t\t\t\t\t\t\t\tdeliver the task token for the current questing";
     }
 }
