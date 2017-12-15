@@ -291,7 +291,7 @@ public class ToHeroService implements IToHeroService {
             }
 
 
-            logger.info("set coodirnator slef");
+            logger.info("set coodirnator self");
 
             Blackboard.getInstance().getUser().getCurrentGroup().setCoordinator(Blackboard.getInstance().getUser().get_links().getSelf());
             Blackboard.getInstance().getUser().setElectionWinFlag(false);

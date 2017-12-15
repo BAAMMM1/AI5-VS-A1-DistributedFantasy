@@ -156,7 +156,7 @@ public class FromHeroService implements IFromHeroService {
 
                 Service adventurerService = this.toHeroConsumer.getHeroService(adventurer.getUrl());
 
-                logger.info("sending election_state ANSWER to: " + adventurerService.getElection());
+                logger.info("sending election_state ANSWER to: " + adventurer.getUser() + " - " + adventurerService.getElection());
 
                 toHeroConsumer.sendElection(
 

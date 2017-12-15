@@ -105,7 +105,7 @@ public class HttpAccess {
             //System.out.println(responeBody.length);
             //System.out.println(responeLen);
 
-            String Body = new String(responeBody, 0, responeLen);
+            String body = new String(responeBody, 0, responeLen);
 
             /* TODO - Falls eine Anfrage durch ging aber keinen Body enthält
             if(Body.equals("")){
@@ -114,10 +114,11 @@ public class HttpAccess {
             */
 
             logger.info(responeCode + " for: " + request.getUrl());
+            logger.info(body.toString());
             //System.out.println(responeCode);
             //System.out.println(Body.toString());
 
-            HttpResponse response = new HttpResponse(responeCode, Body);
+            HttpResponse response = new HttpResponse(responeCode, body);
 
             connection.disconnect();
 
