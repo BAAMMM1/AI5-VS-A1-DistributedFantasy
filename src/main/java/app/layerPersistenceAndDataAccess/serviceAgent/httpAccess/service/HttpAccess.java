@@ -114,7 +114,7 @@ public class HttpAccess {
             */
 
             logger.info(responeCode + " for: " + request.getUrl());
-            System.out.println(responeCode);
+            //System.out.println(responeCode);
             //System.out.println(Body.toString());
 
             HttpResponse response = new HttpResponse(responeCode, Body);
