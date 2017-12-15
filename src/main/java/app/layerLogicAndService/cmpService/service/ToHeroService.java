@@ -212,7 +212,7 @@ public class ToHeroService implements IToHeroService {
 
                     Service heroService = this.toHeroConsumer.getHeroService(adventurer.getUrl());
 
-                    logger.info("sending election_state ELECTION to: " + heroService.getElection());
+                    logger.info("sending election_state ELECTION to: " + adventurer.getUser() + " - " + heroService.getElection());
 
 
                     this.toHeroConsumer.sendElection(
@@ -268,7 +268,7 @@ public class ToHeroService implements IToHeroService {
 
                     Service heroService = this.toHeroConsumer.getHeroService(adventurer.getUrl());
 
-                    logger.info("sending election_state COORDINATOR to: " + heroService.getElection());
+                    logger.info("sending election_state COORDINATOR to: " + adventurer.getUser() + " - " + heroService.getElection());
 
                     this.toHeroConsumer.sendElection(
 
