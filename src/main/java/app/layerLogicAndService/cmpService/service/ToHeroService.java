@@ -260,28 +260,36 @@ public class ToHeroService implements IToHeroService {
 
             for (Adventurer adventurer : groupMemberList) {
 
-                // falls man selber der nächste ist, dann nicht an sich selber senden
-                if (adventurer.getUser().equals(Blackboard.getInstance().getUser().get_links().getSelf())) {
+                try {
+                    // falls man selber der nächste ist, dann nicht an sich selber senden
+                    if (adventurer.getUser().equals(Blackboard.getInstance().getUser().get_links().getSelf())) {
+                        continue;
+                    }
+
+                    Service heroService = this.toHeroConsumer.getHeroService(adventurer.getUrl());
+
+                    logger.info("sending election_state coordinator to: " + heroService.getElection());
+
+                    this.toHeroConsumer.sendElection(
+
+                            heroService.getElection(),
+
+                            new Election(
+                                    API.ELECTION_ALGORTIHM,
+                                    API.ELECTION_STATE_COORDINATOR,
+                                    Blackboard.getInstance().getUser().get_links().getSelf(),
+                                    null,
+                                    "message"
+                            ));
+
+                } catch (Exception e) {
+                    logger.warn("unavailable:" + adventurer.getUser().toString());
                     continue;
+
                 }
 
-                Service heroService = this.toHeroConsumer.getHeroService(adventurer.getUrl());
-
-                logger.info("sending election_state coordinator to: " + heroService.getElection());
-
-                this.toHeroConsumer.sendElection(
-
-                        heroService.getElection(),
-
-                        new Election(
-                                API.ELECTION_ALGORTIHM,
-                                API.ELECTION_STATE_COORDINATOR,
-                                Blackboard.getInstance().getUser().get_links().getSelf(),
-                                null,
-                                "message"
-                        ));
-
             }
+
 
             logger.info("set coodirnator slef");
 
