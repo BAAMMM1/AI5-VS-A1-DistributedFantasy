@@ -13,6 +13,7 @@ import app.layerLogicAndService.cmpService.exception.NotInGroupException;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.ToHeroConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.IToHeroConsumer;
+import org.apache.log4j.Logger;
 
 import java.util.List;
 
@@ -20,6 +21,8 @@ import java.util.List;
  * @author Chris on 02.12.2017
  */
 public class ToHeroService implements IToHeroService {
+
+    public final static Logger logger = Logger.getLogger(new Object() { }.getClass().getEnclosingClass());
 
     IToHeroConsumer toHeroConsumer = new ToHeroConsumer();
 
@@ -184,7 +187,10 @@ public class ToHeroService implements IToHeroService {
     @Override
     public void startElection() throws UnexpectedResponseCodeException, NotInGroupException {
 
+        logger.info("starting election");
+
         if(Blackboard.getInstance().getUser().getCurrentGroup() == null){
+            logger.info("current user is not in a group");
             throw new NotInGroupException("you must be in a group to start a election");
         }
 
@@ -192,6 +198,7 @@ public class ToHeroService implements IToHeroService {
         // Hole alle GroupMembers, sende status election an alle mit höhere Id
 
         Blackboard.getInstance().getUser().setElectionWinFlag(true);
+        logger.info("set electionWinFlag: " + "true");
 
         List<Adventurer> groupMembers = this.tavernaService.getGroupMembers(Blackboard.getInstance().getUser().getCurrentGroup().getId());
 
@@ -200,6 +207,8 @@ public class ToHeroService implements IToHeroService {
             if (adventurer.getUser().length() > Blackboard.getInstance().getUser().get_links().getSelf().length()) {
 
                 Service heroService = this.toHeroConsumer.getHeroService(adventurer.getUrl());
+
+                logger.info("sending election_state election to: " + heroService.getElection());
 
                 this.toHeroConsumer.sendElection(
 
@@ -227,11 +236,13 @@ public class ToHeroService implements IToHeroService {
 
         // TODO - falls electionWinFlag = false, tue nichts - wir haben ein answer bekommen
         if (!Blackboard.getInstance().getUser().isElectionWinFlag()) {
+            logger.info("user losed the election");
             System.out.print("you lose the election");
         }
 
         // TODO - falls electionWinFlag true, sende hier an alle status coordinator
         if (Blackboard.getInstance().getUser().isElectionWinFlag()) {
+            logger.info("user wins the election");
             System.out.print("you win the election, your are now the new coordinator");
 
             List<Adventurer> groupMemberList = this.tavernaService.getGroupMembers(Blackboard.getInstance().getUser().getCurrentGroup().getId());
@@ -244,6 +255,8 @@ public class ToHeroService implements IToHeroService {
                 }
 
                 Service heroService = this.toHeroConsumer.getHeroService(adventurer.getUrl());
+
+                logger.info("sending election_state coordinator to: " + heroService.getElection());
 
                 this.toHeroConsumer.sendElection(
 
@@ -260,6 +273,8 @@ public class ToHeroService implements IToHeroService {
             }
 
         }
+
+        logger.info("set coodinator: self");
 
         Blackboard.getInstance().getUser().getCurrentGroup().setCoordinator(Blackboard.getInstance().getUser().get_links().getSelf());
 

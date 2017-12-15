@@ -111,7 +111,7 @@ public class HttpAccess {
             */
 
             System.out.println(responeCode);
-            System.out.println(Body.toString());
+            //System.out.println(Body.toString());
 
             HttpResponse response = new HttpResponse(responeCode, Body);
 

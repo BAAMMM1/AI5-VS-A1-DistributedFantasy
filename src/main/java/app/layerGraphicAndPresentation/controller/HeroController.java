@@ -8,6 +8,7 @@ import app.layerLogicAndService.cmpService.exception.AlreadyInGroupException;
 import app.layerLogicAndService.cmpService.entity.hero.*;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 import com.google.gson.Gson;
+import org.apache.log4j.Logger;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,8 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 public class HeroController {
+
+    public final static Logger logger = Logger.getLogger(new Object() { }.getClass().getEnclosingClass());
 
     Gson gson = new Gson();
 
@@ -131,6 +134,8 @@ public class HeroController {
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addElection(@RequestBody Election request){
         // uri to which one sends addElection messages to>" RequestBody hier ok?
+
+        logger.info("incoming election: " + request.toString());
 
         try{
             this.heroService.addElection(request);

@@ -134,10 +134,9 @@ public class FromHeroService implements IFromHeroService {
     @Override
     public void addElection(Election election) throws UnexpectedResponseCodeException, NotInGroupException {
 
-        logger.info("addElection: " + election.toString());
-
         // TODO - Abfangen, wenn man noch nicht in der selen Gruppe ist
         if(Blackboard.getInstance().getUser().getCurrentGroup() == null){
+            logger.warn("current user is not in a group");
             throw new NotInGroupException("I am not in any group");
         }
 
@@ -148,14 +147,16 @@ public class FromHeroService implements IFromHeroService {
         // 1. Um welche Election Stand handelt es sich? election || answer || coordinator
         if(election.getPayload().equals(API.ELECTION_STATE_ELECTION)){
 
-
             // falls eigene ID größer, dann Antoworte mit answer und sende election an höhere Id's
             if( Blackboard.getInstance().getUser().get_links().getSelf().length() > election.getUser().length()){
+                logger.info("own id is grater than the election id");
                 System.out.println("you have a grater Id, your change to win the election");
 
                 Adventurer adventurer = this.tavernaService.getAdventure(election.getUser().replaceAll("/users/", ""));
 
                 Service adventurerService = this.toHeroConsumer.getHeroService(adventurer.getUrl());
+
+                logger.info("sending answer to: " + adventurerService.getElection());
 
                 toHeroConsumer.sendElection(
 
@@ -172,6 +173,7 @@ public class FromHeroService implements IFromHeroService {
                 this.toHeroService.startElection();
 
             } else {
+                logger.info("own id is lower than the election id");
                 System.out.println("your Id is smaller, you lose the election");
                 Blackboard.getInstance().getUser().setElectionWinFlag(false);
 
@@ -184,8 +186,8 @@ public class FromHeroService implements IFromHeroService {
         }
 
         if(election.getPayload().equals(API.ELECTION_STATE_ANSWER)){
-
             System.out.println("you got a election answer, you lose the election");
+            logger.info("set electionWinFlag: false");
             Blackboard.getInstance().getUser().setElectionWinFlag(false);
 
             /*
@@ -203,6 +205,7 @@ public class FromHeroService implements IFromHeroService {
 
         if(election.getPayload().equals(API.ELECTION_STATE_COORDINATOR)){
             System.out.println("winner of the election: " + election.getUser());
+            logger.info("set the winner of the election to: " + election.getUser().replace("/users/", ""));
             Blackboard.getInstance().getUser().getCurrentGroup().setCoordinator(election.getUser().replace("/users/", ""));
 
         }
