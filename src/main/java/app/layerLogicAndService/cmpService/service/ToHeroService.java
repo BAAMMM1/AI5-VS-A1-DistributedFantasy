@@ -210,6 +210,9 @@ public class ToHeroService implements IToHeroService {
 
                 logger.info("sending election_state election to: " + heroService.getElection());
 
+                try{
+
+
                 this.toHeroConsumer.sendElection(
 
                         heroService.getElection(),
@@ -222,8 +225,15 @@ public class ToHeroService implements IToHeroService {
                                 "message"
                         ));
 
+                } catch(Exception e){
+                    continue;
+
+                }
+
 
             }
+
+
 
         }
 
