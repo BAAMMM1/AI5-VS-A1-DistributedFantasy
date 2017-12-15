@@ -14,6 +14,7 @@ import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.IToHeroConsum
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.TavernaConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.ToHeroConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
+import org.apache.log4j.Logger;
 
 import java.util.List;
 
@@ -23,6 +24,8 @@ import java.util.List;
  */
 @org.springframework.stereotype.Service
 public class FromHeroService implements IFromHeroService {
+
+    public final static Logger logger = Logger.getLogger(new Object() { }.getClass().getEnclosingClass());
 
     private static final String GROUP_DENIED = "I am already in a group!";
 
@@ -130,6 +133,8 @@ public class FromHeroService implements IFromHeroService {
 
     @Override
     public void addElection(Election election) throws UnexpectedResponseCodeException, NotInGroupException {
+
+        logger.info("addElection: " + election.toString());
 
         // TODO - Abfangen, wenn man noch nicht in der selen Gruppe ist
         if(Blackboard.getInstance().getUser().getCurrentGroup() == null){
