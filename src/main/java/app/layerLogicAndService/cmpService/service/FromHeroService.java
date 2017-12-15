@@ -170,7 +170,25 @@ public class FromHeroService implements IFromHeroService {
                                 "You will never be the coordinator!"
                         ));
 
-                this.toHeroService.startElection();
+                Thread t = new Thread(new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                        IToHeroService toHeroService = new ToHeroService();
+
+                        try {
+                            toHeroService.startElection();
+                        } catch (UnexpectedResponseCodeException e) {
+                            e.printStackTrace();
+                        } catch (NotInGroupException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
+
+                //this.toHeroService.startElection();
 
             } else {
                 logger.info("own id is lower than the election id");
