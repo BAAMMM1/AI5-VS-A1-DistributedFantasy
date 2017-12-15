@@ -9,6 +9,7 @@ import app.layerLogicAndService.cmpService.entity.quest.questing.TaskPart;
 import app.layerLogicAndService.cmpService.entity.hero.*;
 import app.layerLogicAndService.cmpService.entity.taverna.Adventurer;
 import app.layerLogicAndService.cmpService.entity.taverna.Group;
+import app.layerLogicAndService.cmpService.exception.NotInGroupException;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.ToHeroConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.IToHeroConsumer;
@@ -181,7 +182,12 @@ public class ToHeroService implements IToHeroService {
 
 
     @Override
-    public void startElection() throws UnexpectedResponseCodeException {
+    public void startElection() throws UnexpectedResponseCodeException, NotInGroupException {
+
+        if(Blackboard.getInstance().getUser().getCurrentGroup() == null){
+            throw new NotInGroupException("you must be in a group to start a election");
+        }
+
         // Hier die election starten
         // Hole alle GroupMembers, sende status election an alle mit höhere Id
 

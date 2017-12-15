@@ -37,7 +37,7 @@ public class InputHandler {
             command.execute(param);
 
         } catch (CommandNotExistsException | UnAcceptedStateException | ParameterIncorrectException | IllegalArgumentException e) {
-            System.out.println(Context.getInstance().getPromptState() + e.getMessage());
+            System.out.println(e.getClass().getSimpleName() + ": " + e.getMessage());
 
         } catch (UnexpectedResponseCodeException e) {
             System.out.println(e.getClass().getSimpleName() + ": code: " + e.getCode() + " message: " + e.getMessage());

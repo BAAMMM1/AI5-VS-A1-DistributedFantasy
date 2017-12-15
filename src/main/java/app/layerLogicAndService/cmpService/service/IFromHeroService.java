@@ -2,6 +2,7 @@ package app.layerLogicAndService.cmpService.service;
 
 import app.layerLogicAndService.cmpService.exception.AlreadyInGroupException;
 import app.layerLogicAndService.cmpService.entity.hero.*;
+import app.layerLogicAndService.cmpService.exception.NotInGroupException;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 
 import java.util.List;
@@ -17,6 +18,6 @@ public interface IFromHeroService {
     void addAssignmentDeliver(AssignmentDerliver assignmentDerliver);
     void addMessage(Message message);
     List<Message> getMessages();
-    void addElection(Election election) throws  UnexpectedResponseCodeException;
+    void addElection(Election election) throws UnexpectedResponseCodeException, NotInGroupException;
 
 }

@@ -6,6 +6,6 @@ package app.layerGraphicAndPresentation.shell.exception;
 public class CommandNotExistsException extends Throwable {
 
     public CommandNotExistsException(String command) {
-        super("command not exists: " + command);
+        super(command + " not exists");
     }
 }

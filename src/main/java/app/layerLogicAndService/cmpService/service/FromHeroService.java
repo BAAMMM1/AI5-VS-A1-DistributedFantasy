@@ -8,6 +8,7 @@ import app.layerLogicAndService.cmpService.entity.taverna.Adventurer;
 import app.layerLogicAndService.cmpService.exception.AlreadyInGroupException;
 import app.layerLogicAndService.cmpService.entity.hero.*;
 import app.layerLogicAndService.cmpService.entity.taverna.Group;
+import app.layerLogicAndService.cmpService.exception.NotInGroupException;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.ITavernaConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.IToHeroConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.TavernaConsumer;
@@ -128,7 +129,13 @@ public class FromHeroService implements IFromHeroService {
 
 
     @Override
-    public void addElection(Election election) throws UnexpectedResponseCodeException {
+    public void addElection(Election election) throws UnexpectedResponseCodeException, NotInGroupException {
+
+        // TODO - Abfangen, wenn man noch nicht in der selen Gruppe ist
+        if(Blackboard.getInstance().getUser().getCurrentGroup() == null){
+            throw new NotInGroupException("I am not in any group");
+        }
+
         // Sicht des Empfänger der Election
         System.out.println("attention!: you have got a election");
         System.out.println("state: " + election.getPayload());
