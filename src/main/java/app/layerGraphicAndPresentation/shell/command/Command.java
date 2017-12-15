@@ -6,6 +6,7 @@ import app.layerGraphicAndPresentation.shell.exception.ParameterIncorrectExcepti
 import app.layerGraphicAndPresentation.shell.exception.UnAcceptedStateException;
 import app.layerGraphicAndPresentation.shell.context.Context;
 import app.layerGraphicAndPresentation.shell.context.State;
+import app.layerLogicAndService.cmpService.exception.NotInGroupException;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 
 import java.io.IOException;
@@ -60,7 +61,7 @@ public abstract class Command {
      *
      * @throws UnAcceptedStateException
      */
-    public void execute(List<String> param) throws UnAcceptedStateException, ParameterIncorrectException, UnexpectedResponseCodeException, IOException, InterruptedException, NumberFormatException  {
+    public void execute(List<String> param) throws UnAcceptedStateException, ParameterIncorrectException, UnexpectedResponseCodeException, IOException, InterruptedException, NumberFormatException, NotInGroupException {
 
         // TODO - doppel checkParam
         this.checkParam(param);
@@ -91,7 +92,7 @@ public abstract class Command {
      *
      * @return aktuellen State der Application
      */
-    abstract State instruction() throws UnexpectedResponseCodeException, IOException, InterruptedException;
+    abstract State instruction() throws UnexpectedResponseCodeException, IOException, InterruptedException, NotInGroupException;
 
 
     /**

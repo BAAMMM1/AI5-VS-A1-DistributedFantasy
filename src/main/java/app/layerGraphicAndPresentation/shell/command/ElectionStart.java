@@ -1,6 +1,7 @@
 package app.layerGraphicAndPresentation.shell.command;
 
 import app.layerGraphicAndPresentation.shell.context.State;
+import app.layerLogicAndService.cmpService.exception.NotInGroupException;
 import app.layerLogicAndService.cmpService.service.IToHeroService;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 
@@ -18,7 +19,7 @@ public class ElectionStart extends Command {
     }
 
     @Override
-        State instruction() throws UnexpectedResponseCodeException, IOException, InterruptedException {
+        State instruction() throws UnexpectedResponseCodeException, IOException, InterruptedException, NotInGroupException {
 
         this.toHeroService.startElection();
 
