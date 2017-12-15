@@ -212,7 +212,7 @@ public class ToHeroService implements IToHeroService {
 
                     Service heroService = this.toHeroConsumer.getHeroService(adventurer.getUrl());
 
-                    logger.info("sending election_state election to: " + heroService.getElection());
+                    logger.info("sending election_state ELECTION to: " + heroService.getElection());
 
 
                     this.toHeroConsumer.sendElection(
@@ -228,7 +228,7 @@ public class ToHeroService implements IToHeroService {
                             ));
 
                 } catch (Exception e) {
-                    logger.warn("unavailable:" + adventurer.getUser().toString());
+                    logger.warn("unavailable: cant sending election_state ELECTION to" + adventurer.getUser().toString());
                     continue;
 
                 }
@@ -268,7 +268,7 @@ public class ToHeroService implements IToHeroService {
 
                     Service heroService = this.toHeroConsumer.getHeroService(adventurer.getUrl());
 
-                    logger.info("sending election_state coordinator to: " + heroService.getElection());
+                    logger.info("sending election_state COORDINATOR to: " + heroService.getElection());
 
                     this.toHeroConsumer.sendElection(
 
@@ -283,7 +283,7 @@ public class ToHeroService implements IToHeroService {
                             ));
 
                 } catch (Exception e) {
-                    logger.warn("unavailable:" + adventurer.getUser().toString());
+                    logger.warn("unavailable: cant sendeing election_state COORDINATOR to " + adventurer.getUser().toString());
                     continue;
 
                 }

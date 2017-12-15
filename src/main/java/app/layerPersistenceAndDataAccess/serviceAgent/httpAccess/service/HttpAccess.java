@@ -5,6 +5,7 @@ import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.entity.HttpRequ
 import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.entity.HttpResponse;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 import com.google.gson.Gson;
+import org.apache.log4j.Logger;
 
 import javax.el.MethodNotFoundException;
 import java.io.IOException;
@@ -18,6 +19,8 @@ import java.util.Base64;
  * @author Christian G. on 02.11.2017
  */
 public class HttpAccess {
+
+    public final static Logger logger = Logger.getLogger(new Object() { }.getClass().getEnclosingClass());
 
     private static final int BUFFER_LENGHT = 819200;
     private static final String MEDIA_TYPE_APPLICATION_JSON = "application/json";
@@ -110,6 +113,7 @@ public class HttpAccess {
             }
             */
 
+            logger.info(responeCode + " for: " + request.getUrl());
             System.out.println(responeCode);
             //System.out.println(Body.toString());
 
