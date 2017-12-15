@@ -239,7 +239,7 @@ public class ToHeroService implements IToHeroService {
             for (Adventurer adventurer : groupMemberList) {
 
                 // falls man selber der nächste ist, dann nicht an sich selber senden
-                if(adventurer.getUser().equals(Blackboard.getInstance().getUser().getName())){
+                if(adventurer.getUser().equals(Blackboard.getInstance().getUser().get_links().getSelf())){
                     continue;
                 }
 
