@@ -153,7 +153,7 @@ public class FromHeroService implements IFromHeroService {
             if( Blackboard.getInstance().getUser().get_links().getSelf().length() > election.getUser().length()){
                 System.out.println("you have a grater Id, your change to win the election");
 
-                Adventurer adventurer = this.tavernaService.getAdventure(election.getUser().replaceAll("/users", ""));
+                Adventurer adventurer = this.tavernaService.getAdventure(election.getUser().replaceAll("/users/", ""));
 
                 Service adventurerService = this.toHeroConsumer.getHeroService(adventurer.getUrl());
 
