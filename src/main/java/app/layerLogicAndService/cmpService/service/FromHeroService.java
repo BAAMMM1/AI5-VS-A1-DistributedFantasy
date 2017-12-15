@@ -170,12 +170,16 @@ public class FromHeroService implements IFromHeroService {
                         ));
 
                 this.toHeroService.startElection();
+
+            } else {
+                System.out.println("your Id is smaller, you lose the election");
+                Blackboard.getInstance().getUser().setElectionWinFlag(false);
+
+                // falls eigene ID kleiner, nicht mehr an der Wahl beteilen, der Prozess hat die Wahl verloren
+
+
             }
 
-            System.out.println("your Id is smaller, you lose the election");
-            Blackboard.getInstance().getUser().setElectionWinFlag(false);
-
-            // falls eigene ID kleiner, nicht mehr an der Wahl beteilen, der Prozess hat die Wahl verloren
 
         }
 

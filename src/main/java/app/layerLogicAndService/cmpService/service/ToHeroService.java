@@ -232,10 +232,16 @@ public class ToHeroService implements IToHeroService {
 
         // TODO - falls electionWinFlag true, sende hier an alle status coordinator
         if (Blackboard.getInstance().getUser().isElectionWinFlag()) {
+            System.out.print("you win the election, your are now the new coordinator");
 
             List<Adventurer> groupMemberList = this.tavernaService.getGroupMembers(Blackboard.getInstance().getUser().getCurrentGroup().getId());
 
             for (Adventurer adventurer : groupMemberList) {
+
+                // falls man selber der nächste ist, dann nicht an sich selber senden
+                if(adventurer.getUser().equals(Blackboard.getInstance().getUser().getName())){
+                    continue;
+                }
 
                 Service heroService = this.toHeroConsumer.getHeroService(adventurer.getUrl());
 
@@ -254,6 +260,8 @@ public class ToHeroService implements IToHeroService {
             }
 
         }
+
+        Blackboard.getInstance().getUser().getCurrentGroup().setCoordinator(Blackboard.getInstance().getUser().get_links().getSelf());
 
     }
 
