@@ -187,6 +187,7 @@ public class FromHeroService implements IFromHeroService {
 
                     }
                 });
+                t.start();
 
                 //this.toHeroService.startElection();
 
