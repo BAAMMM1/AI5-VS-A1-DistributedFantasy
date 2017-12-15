@@ -1,4 +1,4 @@
-package app.layerLogicAndService.cmpService.service.toHero;
+package app.layerLogicAndService.cmpService.service;
 
 import app.Application;
 import app.configuration.API;
@@ -6,14 +6,9 @@ import app.layerLogicAndService.cmpService.entity.blackboard.Blackboard;
 import app.layerLogicAndService.cmpService.entity.quest.Task;
 import app.layerLogicAndService.cmpService.entity.quest.questing.Step;
 import app.layerLogicAndService.cmpService.entity.quest.questing.TaskPart;
-import app.layerLogicAndService.cmpService.entity.taverna.Hero;
-import app.layerLogicAndService.cmpService.service.quest.IQuestService;
 import app.layerLogicAndService.cmpService.entity.hero.*;
 import app.layerLogicAndService.cmpService.entity.taverna.Adventurer;
 import app.layerLogicAndService.cmpService.entity.taverna.Group;
-import app.layerLogicAndService.cmpService.service.quest.QuestServiceImpl;
-import app.layerLogicAndService.cmpService.service.taverna.ITavernaService;
-import app.layerLogicAndService.cmpService.service.taverna.TavernaService;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.ToHeroConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.IToHeroConsumer;
@@ -29,7 +24,7 @@ public class ToHeroService implements IToHeroService {
 
     ITavernaService tavernaService = new TavernaService();
 
-    IQuestService questService = new QuestServiceImpl();
+    IQuestService questService = new QuestService();
 
     @Override
     public String sendHiringForGroupToHero(String heroName, int groupId, int taskid, String messageToHero) throws UnexpectedResponseCodeException {
@@ -45,7 +40,7 @@ public class ToHeroService implements IToHeroService {
 
         String heroServiceUrl = adventurer.getUrl();
 
-        if(!heroServiceUrl.substring(0,7).equals("http://")){
+        if (!heroServiceUrl.substring(0, 7).equals("http://")) {
             heroServiceUrl = "http://" + heroServiceUrl;
         }
 
@@ -55,12 +50,12 @@ public class ToHeroService implements IToHeroService {
 
         String heroHiringUrl = heroService.getHirings();
 
-        if(!heroHiringUrl.substring(0,7).equals("http://")){
+        if (!heroHiringUrl.substring(0, 7).equals("http://")) {
             heroHiringUrl = "http://" + heroHiringUrl;
         }
 
         // TODO - Ist das Hiring hier mit den richtigen Daten befüllt?
-        Hiring hiring = new Hiring(group.get_links().getSelf(), task.getName(),  messageToHero);
+        Hiring hiring = new Hiring(group.get_links().getSelf(), task.getName(), messageToHero);
 
         return this.toHeroConsumer.sendHiring(hiring, heroHiringUrl);
     }
@@ -74,7 +69,7 @@ public class ToHeroService implements IToHeroService {
 
         String heroServiceUrl = adven.getUrl();
 
-        if(!heroServiceUrl.substring(0,7).equals("http://")){
+        if (!heroServiceUrl.substring(0, 7).equals("http://")) {
             heroServiceUrl = "http://" + heroServiceUrl;
         }
 
@@ -82,7 +77,7 @@ public class ToHeroService implements IToHeroService {
 
         String heroMessageUrl = heroService.getMessages();
 
-        if(!heroMessageUrl.substring(0,7).equals("http://")){
+        if (!heroMessageUrl.substring(0, 7).equals("http://")) {
             heroMessageUrl = "http://" + heroMessageUrl;
         }
 
@@ -111,7 +106,7 @@ public class ToHeroService implements IToHeroService {
 
         String heroServiceUrl = adven.getUrl();
 
-        if(!heroServiceUrl.substring(0,7).equals("http://")){
+        if (!heroServiceUrl.substring(0, 7).equals("http://")) {
             heroServiceUrl = "http://" + heroServiceUrl;
         }
 
@@ -119,7 +114,7 @@ public class ToHeroService implements IToHeroService {
 
         String heroAssignmentUrl = heroService.getAssignments();
 
-        if(!heroAssignmentUrl.substring(0,7).equals("http://")){
+        if (!heroAssignmentUrl.substring(0, 7).equals("http://")) {
             heroAssignmentUrl = "http://" + heroAssignmentUrl;
         }
 
@@ -131,7 +126,7 @@ public class ToHeroService implements IToHeroService {
                 "data",
                 "http://" + Application.IP + ":8080/assignments/deliveries",
                 message
-                );
+        );
 
         Blackboard.getInstance().getUser().setSendetAssignment(assignment);
 
@@ -151,9 +146,9 @@ public class ToHeroService implements IToHeroService {
         }
 
 
-        for (int i = 0; i < Blackboard.getInstance().getUser().getCurrentQuesting().getPart().getStepList().size(); i++){
+        for (int i = 0; i < Blackboard.getInstance().getUser().getCurrentQuesting().getPart().getStepList().size(); i++) {
 
-            if(Blackboard.getInstance().getUser().getCurrentQuesting().getPart().getStepList().get(i).getToken().getToken() == null){
+            if (Blackboard.getInstance().getUser().getCurrentQuesting().getPart().getStepList().get(i).getToken().getToken() == null) {
 
                 throw new IllegalArgumentException("a steptoken is missing");
             }
@@ -163,11 +158,11 @@ public class ToHeroService implements IToHeroService {
 
         String data = "";
         for (Step step : part.getStepList()) {
-            String token = "\""+ step.getToken().getToken() +"\", ";
+            String token = "\"" + step.getToken().getToken() + "\", ";
             data = data + token;
         }
 
-        data = data.substring(0, data.length()-2);
+        data = data.substring(0, data.length() - 2);
 
         AssignmentDerliver assignmentDerliver = new AssignmentDerliver(
                 Blackboard.getInstance().getUser().getAssignment().getId(),
@@ -189,12 +184,14 @@ public class ToHeroService implements IToHeroService {
     public void startElection() throws UnexpectedResponseCodeException {
         // Hier die election starten
         // Hole alle GroupMembers, sende status election an alle mit höhere Id
-        // for alle sende status election
+
+        Blackboard.getInstance().getUser().setElectionWinFlag(true);
+
         List<Adventurer> groupMembers = this.tavernaService.getGroupMembers(Blackboard.getInstance().getUser().getCurrentGroup().getId());
 
-        for(Adventurer adventurer: groupMembers){
+        for (Adventurer adventurer : groupMembers) {
 
-            if (adventurer.getUser().length() > Blackboard.getInstance().getUser().get_links().getSelf().length()){
+            if (adventurer.getUser().length() > Blackboard.getInstance().getUser().get_links().getSelf().length()) {
 
                 Service heroService = this.toHeroConsumer.getHeroService(adventurer.getUrl());
 
@@ -207,9 +204,46 @@ public class ToHeroService implements IToHeroService {
                                 API.ELECTION_STATE_ELECTION,
                                 Blackboard.getInstance().getUser().get_links().getSelf(),
                                 null,
-                                "messages"
-                ));
+                                "message"
+                        ));
 
+
+            }
+
+        }
+
+        // TODO - Warte auf timeout zeit
+        try{
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // TODO - falls electionWinFlag = false, tue nichts - wir haben ein answer bekommen
+        if (!Blackboard.getInstance().getUser().isElectionWinFlag()) {
+            System.out.print("you lose the election");
+        }
+
+        // TODO - falls electionWinFlag true, sende hier an alle status coordinator
+        if (Blackboard.getInstance().getUser().isElectionWinFlag()) {
+
+            List<Adventurer> groupMemberList = this.tavernaService.getGroupMembers(Blackboard.getInstance().getUser().getCurrentGroup().getId());
+
+            for (Adventurer adventurer : groupMemberList) {
+
+                Service heroService = this.toHeroConsumer.getHeroService(adventurer.getUrl());
+
+                this.toHeroConsumer.sendElection(
+
+                        heroService.getElection(),
+
+                        new Election(
+                                API.ELECTION_ALGORTIHM,
+                                API.ELECTION_STATE_COORDINATOR,
+                                Blackboard.getInstance().getUser().get_links().getSelf(),
+                                null,
+                                "message"
+                        ));
 
             }
 

@@ -1,10 +1,9 @@
 package app.layerGraphicAndPresentation.shell.command;
 
-import app.layerGraphicAndPresentation.shell.InputInterpreter;
 import app.layerGraphicAndPresentation.shell.exception.UnAcceptedStateException;
 import app.layerGraphicAndPresentation.shell.context.Context;
 import app.layerGraphicAndPresentation.shell.context.State;
-import app.layerLogicAndService.cmpService.service.blackboard.IBlackboardService;
+import app.layerLogicAndService.cmpService.service.IBlackboardService;
 import app.layerLogicAndService.cmpService.entity.blackboard.User;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 

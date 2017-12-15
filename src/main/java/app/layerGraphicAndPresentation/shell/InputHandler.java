@@ -1,9 +1,11 @@
 package app.layerGraphicAndPresentation.shell;
 
+import app.Application;
 import app.layerGraphicAndPresentation.shell.command.Command;
 import app.layerGraphicAndPresentation.shell.exception.*;
 import app.layerGraphicAndPresentation.shell.context.Context;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
+import org.apache.log4j.Logger;
 
 import java.util.List;
 
@@ -11,6 +13,8 @@ import java.util.List;
  * @author Christian G. on 17.11.2017
  */
 public class InputHandler {
+
+    public final static Logger log = Logger.getLogger(new Object() { }.getClass().getEnclosingClass());
 
     InputInterpreter inputInterpreter;
 
@@ -29,6 +33,7 @@ public class InputHandler {
             Command command = inputInterpreter.interpret(in);
             List<String> param = inputInterpreter.interpretParam(in);
 
+            log.info("execute command: " + command.getCommandName());
             command.execute(param);
 
         } catch (CommandNotExistsException | UnAcceptedStateException | ParameterIncorrectException | IllegalArgumentException e) {

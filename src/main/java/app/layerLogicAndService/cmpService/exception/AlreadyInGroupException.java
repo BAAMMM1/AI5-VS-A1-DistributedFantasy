@@ -5,15 +5,9 @@ package app.layerLogicAndService.cmpService.exception;
  */
 public class AlreadyInGroupException extends Throwable {
 
-    ErrorMessage error;
 
     public AlreadyInGroupException(String s) {
         super(s);
-        error = new ErrorMessage(s);
-    }
-
-    public ErrorMessage getError() {
-        return error;
     }
 
 

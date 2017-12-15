@@ -1,4 +1,4 @@
-package app.layerLogicAndService.cmpService.service.blackboard;
+package app.layerLogicAndService.cmpService.service;
 
 /**
  * @author Chris on 21.11.2017

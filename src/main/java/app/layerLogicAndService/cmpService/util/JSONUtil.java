@@ -14,14 +14,16 @@ public class JSONUtil {
 
     private static Gson gson = new Gson();
 
-    public static <T>T getObject(String body, String field, Class<T> tClass){
+
+    public static <T>T getObject(String jsonString, String field, Class<T> tClass){
 
         if(tClass == String.class){
-            return (T)new JSONObject(body).get(field).toString();
+            return (T)new JSONObject(jsonString).get(field).toString();
         }
 
-        return gson.fromJson(new JSONObject(body).get(field).toString(), tClass);
+        return gson.fromJson(new JSONObject(jsonString).get(field).toString(), tClass);
     }
+
 
     public static <T>List<T> getObjectList(String body, String field, Class<T> tClass){
 

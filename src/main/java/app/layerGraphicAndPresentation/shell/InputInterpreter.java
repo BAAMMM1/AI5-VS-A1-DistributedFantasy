@@ -2,16 +2,16 @@ package app.layerGraphicAndPresentation.shell;
 
 import app.layerGraphicAndPresentation.shell.command.*;
 import app.layerGraphicAndPresentation.shell.exception.*;
-import app.layerLogicAndService.cmpService.service.blackboard.BlackboardServiceImp;
-import app.layerLogicAndService.cmpService.service.blackboard.IBlackboardService;
-import app.layerLogicAndService.cmpService.service.fromHero.FromHeroService;
-import app.layerLogicAndService.cmpService.service.fromHero.IFromHeroService;
-import app.layerLogicAndService.cmpService.service.toHero.ToHeroService;
-import app.layerLogicAndService.cmpService.service.toHero.IToHeroService;
-import app.layerLogicAndService.cmpService.service.quest.IQuestService;
-import app.layerLogicAndService.cmpService.service.quest.QuestServiceImpl;
-import app.layerLogicAndService.cmpService.service.taverna.ITavernaService;
-import app.layerLogicAndService.cmpService.service.taverna.TavernaService;
+import app.layerLogicAndService.cmpService.service.BlackboardService;
+import app.layerLogicAndService.cmpService.service.IBlackboardService;
+import app.layerLogicAndService.cmpService.service.FromHeroService;
+import app.layerLogicAndService.cmpService.service.IFromHeroService;
+import app.layerLogicAndService.cmpService.service.ToHeroService;
+import app.layerLogicAndService.cmpService.service.IToHeroService;
+import app.layerLogicAndService.cmpService.service.IQuestService;
+import app.layerLogicAndService.cmpService.service.QuestService;
+import app.layerLogicAndService.cmpService.service.ITavernaService;
+import app.layerLogicAndService.cmpService.service.TavernaService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +30,8 @@ public class InputInterpreter {
     List<Command> registerCommands;
 
     public InputInterpreter() {
-        blackboardService = new BlackboardServiceImp();
-        questService = new QuestServiceImpl();
+        blackboardService = new BlackboardService();
+        questService = new QuestService();
         tavernaService = new TavernaService();
         this.toHeroService = new ToHeroService();
         this.heroService = new FromHeroService();
@@ -120,7 +120,6 @@ public class InputInterpreter {
         registerCommands.add(new Next(questService));
         registerCommands.add(new Step(questService));
         registerCommands.add(new DeliverSteps(questService));
-        registerCommands.add(new Entertaverna(tavernaService));
         registerCommands.add(new GroupCreate(tavernaService));
         registerCommands.add(new GroupDelete(tavernaService));
         registerCommands.add(new Groups(tavernaService));

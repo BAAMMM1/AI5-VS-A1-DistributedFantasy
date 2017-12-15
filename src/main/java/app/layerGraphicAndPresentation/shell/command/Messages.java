@@ -2,7 +2,7 @@ package app.layerGraphicAndPresentation.shell.command;
 
 import app.layerGraphicAndPresentation.shell.context.State;
 import app.layerLogicAndService.cmpService.entity.hero.Message;
-import app.layerLogicAndService.cmpService.service.fromHero.IFromHeroService;
+import app.layerLogicAndService.cmpService.service.IFromHeroService;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 
 import java.io.IOException;

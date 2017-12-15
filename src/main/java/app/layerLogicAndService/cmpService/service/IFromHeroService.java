@@ -1,4 +1,4 @@
-package app.layerLogicAndService.cmpService.service.fromHero;
+package app.layerLogicAndService.cmpService.service;
 
 import app.layerLogicAndService.cmpService.exception.AlreadyInGroupException;
 import app.layerLogicAndService.cmpService.entity.hero.*;

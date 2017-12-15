@@ -35,6 +35,9 @@ public class API {
     public static final String ELECTION_STATE_ANSWER = "answer";
     public static final String ELECTION_STATE_COORDINATOR = "coordinator";
 
+    public static final String MESSAGE = "message";
+    public static final String ERROR = "error";
+
     //public static final String
 
 

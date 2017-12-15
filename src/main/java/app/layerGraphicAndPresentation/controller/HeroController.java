@@ -1,13 +1,14 @@
 package app.layerGraphicAndPresentation.controller;
 
 import app.configuration.API;
+import app.layerLogicAndService.cmpService.entity.blackboard.Blackboard;
 import app.layerLogicAndService.cmpService.entity.hero.Election;
-import app.layerLogicAndService.cmpService.service.fromHero.IFromHeroService;
+import app.layerLogicAndService.cmpService.service.IFromHeroService;
 import app.layerLogicAndService.cmpService.exception.AlreadyInGroupException;
-import app.layerLogicAndService.cmpService.exception.ErrorMessage;
 import app.layerLogicAndService.cmpService.entity.hero.*;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 import com.google.gson.Gson;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -36,10 +37,10 @@ public class HeroController {
 
         try{
             Service service = this.heroService.getService();
-            return new ResponseEntity<Service>(service, HttpStatus.OK);
+            return new ResponseEntity<>(this.gson.toJson(service), HttpStatus.OK);
 
         } catch (Exception e){
-            return new ResponseEntity<String>("error", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new JSONObject().put(API.MESSAGE, API.ERROR), HttpStatus.BAD_REQUEST);
 
         }
 
@@ -61,13 +62,11 @@ public class HeroController {
             return new ResponseEntity<>(HttpStatus.OK);
 
         } catch (AlreadyInGroupException e) {
-            return new ResponseEntity<>(this.gson.toJson(e.getError()), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(this.gson.toJson(e.getMessage()), HttpStatus.BAD_REQUEST);
 
-        } catch (UnexpectedResponseCodeException e) {
-            return new ResponseEntity<>(this.gson.toJson(new ErrorMessage(e.getMessage())), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new JSONObject().put(API.MESSAGE, e.getMessage()), HttpStatus.BAD_REQUEST);
 
-        } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(this.gson.toJson(new ErrorMessage(e.getMessage())), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -85,7 +84,7 @@ public class HeroController {
             return new ResponseEntity<>(HttpStatus.CREATED);
 
         } catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new JSONObject().put(API.MESSAGE, API.ERROR), HttpStatus.BAD_REQUEST);
 
         }
 
@@ -103,7 +102,7 @@ public class HeroController {
             return new ResponseEntity<>(HttpStatus.CREATED);
 
         } catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new JSONObject().put(API.MESSAGE, API.ERROR), HttpStatus.BAD_REQUEST);
 
         }
 
@@ -121,7 +120,7 @@ public class HeroController {
             return new ResponseEntity<>(HttpStatus.CREATED);
 
         } catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new JSONObject().put(API.MESSAGE, API.ERROR), HttpStatus.BAD_REQUEST);
 
         }
     }
@@ -135,10 +134,10 @@ public class HeroController {
 
         try{
             this.heroService.addElection(request);
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.OK);
 
         } catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new JSONObject().put(API.MESSAGE, API.ERROR), HttpStatus.BAD_REQUEST);
 
         }
     }
@@ -156,7 +155,7 @@ public class HeroController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         } catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new JSONObject().put(API.MESSAGE, API.ERROR), HttpStatus.BAD_REQUEST);
 
         }
     }
@@ -174,7 +173,7 @@ public class HeroController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         } catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new JSONObject().put(API.MESSAGE, API.ERROR), HttpStatus.BAD_REQUEST);
 
         }
     }

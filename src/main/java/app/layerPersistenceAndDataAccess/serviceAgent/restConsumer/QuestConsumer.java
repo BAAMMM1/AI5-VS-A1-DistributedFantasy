@@ -18,12 +18,12 @@ import java.util.List;
 /**
  * @author Chris on 19.11.2017
  */
-public class QuestConsumerImpl implements IQuestConsumer {
+public class QuestConsumer implements IQuestConsumer {
 
     private HttpAccess httpAccess;
     private Gson gson;
 
-    public QuestConsumerImpl() {
+    public QuestConsumer() {
         this.httpAccess = new HttpAccess();
         this.gson = new Gson();
     }

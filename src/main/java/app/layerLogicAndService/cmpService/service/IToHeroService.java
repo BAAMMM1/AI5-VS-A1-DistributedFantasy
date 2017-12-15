@@ -1,4 +1,4 @@
-package app.layerLogicAndService.cmpService.service.toHero;
+package app.layerLogicAndService.cmpService.service;
 
 import app.layerLogicAndService.cmpService.entity.hero.Election;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;

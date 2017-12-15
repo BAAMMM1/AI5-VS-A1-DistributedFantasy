@@ -61,11 +61,21 @@ public class User {
 
     private Assignment sendetAssignment;
 
+    private boolean electionWinFlag = false;
+
     public User(String name, String userToken, String userTokenValidTime) {
         this.name = name;
         this.userToken = userToken;
         this.userTokenValidTime = userTokenValidTime;
         this.messages = new ArrayList<>();
+    }
+
+    public boolean isElectionWinFlag() {
+        return electionWinFlag;
+    }
+
+    public void setElectionWinFlag(boolean electionWinFlag) {
+        this.electionWinFlag = electionWinFlag;
     }
 
     public String getName() {

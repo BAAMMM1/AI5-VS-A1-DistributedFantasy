@@ -1,4 +1,4 @@
-package app.layerLogicAndService.cmpService.service.fromHero;
+package app.layerLogicAndService.cmpService.service;
 
 
 import app.Application;
@@ -8,10 +8,6 @@ import app.layerLogicAndService.cmpService.entity.taverna.Adventurer;
 import app.layerLogicAndService.cmpService.exception.AlreadyInGroupException;
 import app.layerLogicAndService.cmpService.entity.hero.*;
 import app.layerLogicAndService.cmpService.entity.taverna.Group;
-import app.layerLogicAndService.cmpService.service.taverna.ITavernaService;
-import app.layerLogicAndService.cmpService.service.taverna.TavernaService;
-import app.layerLogicAndService.cmpService.service.toHero.IToHeroService;
-import app.layerLogicAndService.cmpService.service.toHero.ToHeroService;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.ITavernaConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.IToHeroConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.TavernaConsumer;
@@ -165,15 +161,16 @@ public class FromHeroService implements IFromHeroService {
             }
 
             System.out.println("your Id is smaller, you lose the election");
+            Blackboard.getInstance().getUser().setElectionWinFlag(false);
 
             // falls eigene ID kleiner, nicht mehr an der Wahl beteilen, der Prozess hat die Wahl verloren
-            this.waitForCoordinatorMessage();
 
         }
 
         if(election.getPayload().equals(API.ELECTION_STATE_ANSWER)){
 
             System.out.println("you got a election answer, you lose the election");
+            Blackboard.getInstance().getUser().setElectionWinFlag(false);
 
             /*
             Wenn eine answer-Nachricht kommt, verliert P unbeteiligt sich nicht weiter an der Wahl
@@ -186,8 +183,6 @@ public class FromHeroService implements IFromHeroService {
 
              */
 
-            this.waitForCoordinatorMessage();
-
         }
 
         if(election.getPayload().equals(API.ELECTION_STATE_COORDINATOR)){
@@ -198,8 +193,4 @@ public class FromHeroService implements IFromHeroService {
 
     }
 
-    private void waitForCoordinatorMessage(){
-        // TODO - waitForCoordinator;
-
-    }
 }

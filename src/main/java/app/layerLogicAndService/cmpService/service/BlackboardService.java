@@ -1,22 +1,18 @@
-package app.layerLogicAndService.cmpService.service.blackboard;
+package app.layerLogicAndService.cmpService.service;
 
-import app.Application;
 import app.layerLogicAndService.cmpService.entity.blackboard.Blackboard;
 import app.layerLogicAndService.cmpService.entity.blackboard.User;
 import app.layerLogicAndService.cmpService.entity.blackboard.Login;
-import app.layerLogicAndService.cmpService.service.taverna.ITavernaService;
-import app.layerLogicAndService.cmpService.service.taverna.TavernaService;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.BlackboardConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.IBlackboardConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
-import org.springframework.boot.SpringApplication;
 
 import java.net.UnknownHostException;
 
 /**
  * @author Christian G. on 02.11.2017
  */
-public class BlackboardServiceImp implements IBlackboardService {
+public class BlackboardService implements IBlackboardService {
 
     private IBlackboardConsumer registerConsumer = new BlackboardConsumer();
 

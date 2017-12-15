@@ -1,4 +1,4 @@
-package app.layerLogicAndService.cmpService.service.quest;
+package app.layerLogicAndService.cmpService.service;
 
 import app.layerLogicAndService.cmpService.entity.quest.*;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;

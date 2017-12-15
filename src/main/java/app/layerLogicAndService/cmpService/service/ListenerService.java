@@ -1,7 +1,8 @@
-package app.layerLogicAndService.cmpService.service.blackboard;
+package app.layerLogicAndService.cmpService.service;
 
 import app.layerLogicAndService.cmpService.entity.blackboard.Blackboard;
 import com.google.gson.Gson;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -9,7 +10,9 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 
-public class ListenerServiceImpl extends Thread implements IListenerService {
+public class ListenerService extends Thread implements IListenerService {
+
+    public final static Logger log = Logger.getLogger(new Object() { }.getClass().getEnclosingClass());
 
     private int udpPort;
     private static final int BUFFER_LENGHT = 1024;
@@ -20,7 +23,7 @@ public class ListenerServiceImpl extends Thread implements IListenerService {
 
     private Gson gson;
 
-    public ListenerServiceImpl(int port) {
+    public ListenerService(int port) {
         this.udpPort = port;
         this.gson = new Gson();
     }
@@ -40,7 +43,7 @@ public class ListenerServiceImpl extends Thread implements IListenerService {
      */
     @Override
     public void run() {
-        System.out.println("listen to udp_port: " + this.udpPort);
+        log.info("listen to udp_port: " + this.udpPort);
 
         try {
 
@@ -54,7 +57,7 @@ public class ListenerServiceImpl extends Thread implements IListenerService {
 
                     // Behandlung der Fehler, die beim Empfangen entstehen
                 } catch (Exception e) {
-                    // TODO - Logger log fehler
+                    // TODO - Logger logger fehler
                     //System.out.println("listen failed: " + e.getMessage());
 
                 }

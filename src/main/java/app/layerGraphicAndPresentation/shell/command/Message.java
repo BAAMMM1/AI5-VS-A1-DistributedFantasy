@@ -2,7 +2,7 @@ package app.layerGraphicAndPresentation.shell.command;
 
 import app.layerGraphicAndPresentation.shell.context.State;
 import app.layerGraphicAndPresentation.shell.exception.ParameterIncorrectException;
-import app.layerLogicAndService.cmpService.service.toHero.IToHeroService;
+import app.layerLogicAndService.cmpService.service.IToHeroService;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 
 import java.io.IOException;

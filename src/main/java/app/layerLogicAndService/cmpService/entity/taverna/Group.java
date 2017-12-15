@@ -13,7 +13,7 @@ public class Group {
     private int id;
     private List<String> members;
     private String owner;
-    private String  coordinator;
+    private String coordinator;
 
     public Group(Link _links, int id, List<String> members, String owner) {
         this._links = _links;

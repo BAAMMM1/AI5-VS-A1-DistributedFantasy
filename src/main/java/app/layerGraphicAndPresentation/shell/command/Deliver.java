@@ -1,12 +1,11 @@
 package app.layerGraphicAndPresentation.shell.command;
 
-import app.layerGraphicAndPresentation.shell.InputInterpreter;
 import app.layerGraphicAndPresentation.shell.exception.ParameterIncorrectException;
 import app.layerGraphicAndPresentation.shell.exception.UnAcceptedStateException;
 import app.layerGraphicAndPresentation.shell.context.Context;
 import app.layerGraphicAndPresentation.shell.context.State;
 import app.layerLogicAndService.cmpService.entity.quest.Delivery;
-import app.layerLogicAndService.cmpService.service.quest.IQuestService;
+import app.layerLogicAndService.cmpService.service.IQuestService;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 
 import java.io.IOException;

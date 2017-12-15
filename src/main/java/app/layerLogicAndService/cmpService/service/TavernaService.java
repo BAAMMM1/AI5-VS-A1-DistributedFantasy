@@ -1,4 +1,4 @@
-package app.layerLogicAndService.cmpService.service.taverna;
+package app.layerLogicAndService.cmpService.service;
 
 import app.layerLogicAndService.cmpService.entity.blackboard.Blackboard;
 import app.layerLogicAndService.cmpService.entity.taverna.Adventurer;

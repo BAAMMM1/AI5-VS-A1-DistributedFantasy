@@ -1,4 +1,4 @@
-package app.layerLogicAndService.cmpService.service.blackboard;
+package app.layerLogicAndService.cmpService.service;
 
 import app.layerLogicAndService.cmpService.entity.blackboard.User;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
