@@ -2,6 +2,11 @@ package app.layerGraphicAndPresentation.shell;
 
 import app.layerGraphicAndPresentation.shell.context.Context;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Scanner;
 
 /**
@@ -20,23 +25,40 @@ public class Shell {
     public Shell() {
         this.scanner = new Scanner(System.in);
         inputInterpreter = new InputInterpreter();
-        handler = new InputHandler(inputInterpreter);
+        handler = new InputHandler(inputInterpreter);;
 
     }
 
 
     public void start(){
 
+
+
         while (true) {
+
+            String in = null;
+
+            BufferedReader buffer=new BufferedReader(new InputStreamReader(System.in));
+
+            try {
+                in=buffer.readLine();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+
+            }
 
             System.out.print(Context.getInstance().getPromptState());
 
-            String in = scanner.nextLine();
+            //String in = scanner.nextLine();
 
             handler.handleCommand(in);
 
         }
 
     }
+
+
+
 
 }
