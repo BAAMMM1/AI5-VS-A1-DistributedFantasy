@@ -31,11 +31,7 @@ public class FromHeroService implements IFromHeroService {
 
     private ITavernaService tavernaService = new TavernaService();
 
-    private IToHeroService toHeroService = new ToHeroService();
-
     private IToHeroConsumer toHeroConsumer = new ToHeroConsumer();
-
-    private ITavernaConsumer tavernaConsumer = new TavernaConsumer();
 
     @Override
     public Service getService() {
