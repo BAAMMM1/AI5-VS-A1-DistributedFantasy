@@ -31,6 +31,8 @@ public class ToHeroService implements IToHeroService {
 
     IQuestService questService = new QuestService();
 
+    IFromHeroService fromHeroService = new FromHeroService();
+
     @Override
     public String sendHiringForGroupToHero(String heroName, int groupId, int taskid, String messageToHero) throws UnexpectedResponseCodeException {
 
@@ -190,11 +192,12 @@ public class ToHeroService implements IToHeroService {
             throw new IllegalArgumentException("you are dead!, you cant start a election");
         }
 
+        Assignment assignment;
         String data = null;
 
         if (Blackboard.getInstance().getUser().getCurrentQuesting() == null) {
 
-            data = "null";
+            assignment = null;
 
         } else {
 
@@ -204,10 +207,20 @@ public class ToHeroService implements IToHeroService {
                 data = "{\"group\":\"/taverna/groups/857\",\"token\":\"" + Blackboard.getInstance().getUser().getCurrentQuesting().getRingToken() + "\"}";
             }
 
+            assignment = new Assignment(
+                    Assignment.counter,
+                    Blackboard.getInstance().getUser().getCurrentQuesting().getTask().get_links().getSelf(),
+                    Blackboard.getInstance().getUser().getCurrentQuesting().getCurrentUri(),
+                    "POST", // TODO - method muss vom command mit übergeben werden,per user eingabe
+                    data,
+                    "http://" + Application.IP + ":8080/assignments/deliveries",
+                    "message"
+            );
+
         }
 
 
-        Assignment assignment = new Assignment(
+        assignment = new Assignment(
                 Assignment.counter,
                 Blackboard.getInstance().getUser().getCurrentQuesting().getTask().get_links().getSelf(),
                 Blackboard.getInstance().getUser().getCurrentQuesting().getCurrentUri(),
@@ -332,6 +345,7 @@ public class ToHeroService implements IToHeroService {
             logger.info("current user wins the election");
             logger.info("set coodirnator: " + Blackboard.getInstance().getUser().getName());
             logger.info("election job: " + assignment.toString());
+            this.fromHeroService.addAssignment(assignment);
 
             Blackboard.getInstance().getUser().getCurrentGroup().setCoordinator(Blackboard.getInstance().getUser().get_links().getSelf());
             Blackboard.getInstance().getUser().setElectionWinFlag(false);
