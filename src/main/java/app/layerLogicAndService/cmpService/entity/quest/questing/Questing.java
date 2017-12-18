@@ -16,10 +16,20 @@ public class Questing {
     // Falls quest mehrer TaskPart besitzen, hier eine Liste draus machen
     private TaskPart part;
 
+    private String ringToken;
+
     public Questing(Task task, Map map, String currentUri) {
         this.task = task;
         this.map = map;
         this.currentUri = currentUri;
+    }
+
+    public String getRingToken() {
+        return ringToken;
+    }
+
+    public void setRingToken(String ringToken) {
+        this.ringToken = ringToken;
     }
 
     public Task getTask() {

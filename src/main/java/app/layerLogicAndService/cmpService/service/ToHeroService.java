@@ -184,9 +184,33 @@ public class ToHeroService implements IToHeroService {
 
     }
 
+    public void doElection() throws NotInGroupException, UnexpectedResponseCodeException {
+
+        String data = null;
+
+        if (Blackboard.getInstance().getUser().getCurrentQuesting().getRingToken() == null) {
+            data = "{\"group\":\"" + Blackboard.getInstance().getUser().getCurrentGroup().get_links().getSelf() + "\"}";
+        } else {
+            data = "{\"group\":\"/taverna/groups/857\",\"token\":\"" + Blackboard.getInstance().getUser().getCurrentQuesting().getRingToken() + "\"}";
+        }
+
+        Assignment assignment = new Assignment(
+                Assignment.counter,
+                Blackboard.getInstance().getUser().getCurrentQuesting().getTask().get_links().getSelf(),
+                Blackboard.getInstance().getUser().getCurrentQuesting().getCurrentUri(),
+                "POST", // TODO - method muss vom command mit übergeben werden,per user eingabe
+                data,
+                "http://" + Application.IP + ":8080/assignments/deliveries",
+                "message"
+        );
+
+        this.startElection(assignment);
+
+    }
+
 
     @Override
-    public void startElection() throws UnexpectedResponseCodeException, NotInGroupException {
+    public void startElection(Assignment assignment) throws UnexpectedResponseCodeException, NotInGroupException {
 
         logger.info("starting election");
 
@@ -194,6 +218,8 @@ public class ToHeroService implements IToHeroService {
             logger.info("current user is not in a group");
             throw new NotInGroupException("you must be in a group to start a election");
         }
+
+
 
         // Hier die election starten
         // Hole alle GroupMembers, sende status election an alle mit höhere Id
@@ -223,7 +249,7 @@ public class ToHeroService implements IToHeroService {
                                     API.ELECTION_ALGORTIHM,
                                     API.ELECTION_STATE_ELECTION,
                                     Blackboard.getInstance().getUser().get_links().getSelf(),
-                                    null,
+                                    assignment,
                                     "message"
                             ));
 
@@ -291,7 +317,9 @@ public class ToHeroService implements IToHeroService {
             }
 
 
-            logger.info("set coodirnator self");
+            logger.info("current user wins the election");
+            logger.info("set coodirnator: " + Blackboard.getInstance().getUser().getName());
+            logger.info("election job: " + assignment.toString());
 
             Blackboard.getInstance().getUser().getCurrentGroup().setCoordinator(Blackboard.getInstance().getUser().get_links().getSelf());
             Blackboard.getInstance().getUser().setElectionWinFlag(false);

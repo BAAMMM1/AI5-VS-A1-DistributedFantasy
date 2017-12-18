@@ -18,7 +18,7 @@ public class GroupOwn extends Command {
     @Override
     State instruction() throws UnexpectedResponseCodeException, IOException, InterruptedException {
 
-        System.out.println(Blackboard.getInstance().getUser().getGroup());
+        System.out.println(Blackboard.getInstance().getUser().getCurrentGroup());
 
         return null;
     }

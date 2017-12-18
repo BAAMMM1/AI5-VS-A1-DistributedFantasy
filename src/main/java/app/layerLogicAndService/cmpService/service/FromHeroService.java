@@ -181,7 +181,7 @@ public class FromHeroService implements IFromHeroService {
 
                         try {
 
-                                toHeroService.startElection();
+                                toHeroService.startElection(election.getJob());
 
                         } catch (UnexpectedResponseCodeException e) {
                             e.printStackTrace();
