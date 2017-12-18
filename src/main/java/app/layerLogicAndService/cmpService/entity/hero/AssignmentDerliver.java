@@ -5,7 +5,7 @@ package app.layerLogicAndService.cmpService.entity.hero;
  */
 public class AssignmentDerliver {
 
-    private int id;
+    private String id;
     private String task;
     private String resource;
     private String method;
@@ -13,7 +13,7 @@ public class AssignmentDerliver {
     private String user;
     private String message;
 
-    public AssignmentDerliver(int id, String task, String resource, String method, String data, String user, String message) {
+    public AssignmentDerliver(String id, String task, String resource, String method, String data, String user, String message) {
         this.id = id;
         this.task = task;
         this.resource = resource;
@@ -28,11 +28,11 @@ public class AssignmentDerliver {
     public AssignmentDerliver() {
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

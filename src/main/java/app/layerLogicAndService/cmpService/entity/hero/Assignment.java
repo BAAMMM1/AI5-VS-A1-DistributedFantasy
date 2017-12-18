@@ -7,7 +7,7 @@ public class Assignment {
 
     public static int counter = 0;
 
-    private int id;
+    private String id;
     private String task;
     private String resource;
     private String method;
@@ -15,7 +15,7 @@ public class Assignment {
     private String callback;
     private String message;
 
-    public Assignment(int id, String task, String resource, String method, String data, String callback, String message) {
+    public Assignment(String id, String task, String resource, String method, String data, String callback, String message) {
         this.id = id;
         this.task = task;
         this.resource = resource;
@@ -30,11 +30,11 @@ public class Assignment {
     public Assignment() {
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

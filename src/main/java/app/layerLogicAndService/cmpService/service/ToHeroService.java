@@ -126,7 +126,7 @@ public class ToHeroService implements IToHeroService {
         }
 
         Assignment assignment = new Assignment(
-                Assignment.counter,
+                String.valueOf(Assignment.counter),
                 Blackboard.getInstance().getUser().getCurrentQuesting().getTask().get_links().getSelf(),
                 Blackboard.getInstance().getUser().getCurrentQuesting().getCurrentUri(),
                 "POST", // TODO - method muss vom command mit übergeben werden,per user eingabe
@@ -207,21 +207,11 @@ public class ToHeroService implements IToHeroService {
                 data = "{\"group\":\"/taverna/groups/857\",\"token\":\"" + Blackboard.getInstance().getUser().getCurrentQuesting().getRingToken() + "\"}";
             }
 
-            assignment = new Assignment(
-                    Assignment.counter,
-                    Blackboard.getInstance().getUser().getCurrentQuesting().getTask().get_links().getSelf(),
-                    Blackboard.getInstance().getUser().getCurrentQuesting().getCurrentUri(),
-                    "POST", // TODO - method muss vom command mit übergeben werden,per user eingabe
-                    data,
-                    "http://" + Application.IP + ":8080/assignments/deliveries",
-                    "message"
-            );
-
         }
 
 
         assignment = new Assignment(
-                Assignment.counter,
+                String.valueOf(Assignment.counter) + "ELECTION",
                 Blackboard.getInstance().getUser().getCurrentQuesting().getTask().get_links().getSelf(),
                 Blackboard.getInstance().getUser().getCurrentQuesting().getCurrentUri(),
                 "POST", // TODO - method muss vom command mit übergeben werden,per user eingabe

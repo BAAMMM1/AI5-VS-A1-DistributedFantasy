@@ -30,6 +30,7 @@ public class FromHeroService implements IFromHeroService {
     }.getClass().getEnclosingClass());
 
     private static final String GROUP_DENIED = "I am already in a group!";
+    public static final String ELECTION_IDENTIFIER = "ELECTION";
 
     private ITavernaService tavernaService = new TavernaService();
 
@@ -111,7 +112,7 @@ public class FromHeroService implements IFromHeroService {
             Blackboard.getInstance().getUser().getCurrentQuesting().getTask().setToken(assignmentDerliver.getData());
 
             // TODO - assignment ID für assignment job von einer election
-            if(assignmentDerliver.getData().contains("group")) {
+            if(assignmentDerliver.getData().contains(ELECTION_IDENTIFIER)) {
                 // TODO - schön machen
                 List<Adventurer> groupMemberList = this.tavernaService.getGroupMembers(Blackboard.getInstance().getUser().getCurrentGroup().getId());
 
