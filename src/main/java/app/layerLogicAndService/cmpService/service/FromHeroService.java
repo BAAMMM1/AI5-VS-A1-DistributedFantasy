@@ -20,12 +20,14 @@ import java.util.List;
 
 /**
  * Diese Klasse ist aus der Sicht des Empfängers
+ *
  * @author Chris on 03.12.2017
  */
 @org.springframework.stereotype.Service
 public class FromHeroService implements IFromHeroService {
 
-    public final static Logger logger = Logger.getLogger(new Object() { }.getClass().getEnclosingClass());
+    public final static Logger logger = Logger.getLogger(new Object() {
+    }.getClass().getEnclosingClass());
 
     private static final String GROUP_DENIED = "I am already in a group!";
 
@@ -57,16 +59,16 @@ public class FromHeroService implements IFromHeroService {
         System.out.print("attention!: you got an hiring");
         System.out.print("message: " + hiring.getMessage());
 
-        if(Blackboard.getInstance().getUser().getGroup() != null){
+        if (Blackboard.getInstance().getUser().getGroup() != null) {
             System.out.println("hiring was declined automatically because you are already in a group");
             throw new AlreadyInGroupException(GROUP_DENIED);
         }
 
         // TODO - Was ist wenn hiring.getGroup() = http://xxxx:xx/taverna/groups/387 statt /taverna/groups/387
         int groupId;
-        try{
+        try {
             groupId = Integer.valueOf(hiring.getGroup().replace("/taverna/groups/", ""));
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println("hiring was declined automatically because the group id is incorrect");
             throw new IllegalArgumentException("group link incorrect");
         }
@@ -97,16 +99,52 @@ public class FromHeroService implements IFromHeroService {
     }
 
     @Override
-    public void addAssignmentDeliver(AssignmentDerliver assignmentDerliver) {
+    public void addAssignmentDeliver(AssignmentDerliver assignmentDerliver) throws UnexpectedResponseCodeException {
 
         System.out.println("attention!: a fellow has delivered his assignment");
         System.out.println("messages: " + assignmentDerliver.getMessage());
 
         Blackboard.getInstance().getUser().setAssignmentDerliver(assignmentDerliver);
 
-        if(assignmentDerliver.getData() != null){
+        if (assignmentDerliver.getData() != null) {
             Blackboard.getInstance().getUser().getCurrentQuesting().setRingToken(assignmentDerliver.getData());
             Blackboard.getInstance().getUser().getCurrentQuesting().getTask().setToken(assignmentDerliver.getData());
+
+            // TODO - schön machen
+            List<Adventurer> groupMemberList = this.tavernaService.getGroupMembers(Blackboard.getInstance().getUser().getCurrentGroup().getId());
+
+            for (Adventurer adventurer : groupMemberList) {
+
+                try {
+                    // falls man selber der nächste ist, dann nicht an sich selber senden
+                    if (adventurer.getUser().equals(Blackboard.getInstance().getUser().get_links().getSelf())) {
+                        continue;
+                    }
+
+                    Service heroService = this.toHeroConsumer.getHeroService(adventurer.getUrl());
+
+                    logger.info("sending election_state COORDINATOR to: " + adventurer.getUser() + " - " + heroService.getElection());
+
+                    this.toHeroConsumer.sendElection(
+
+                            heroService.getElection(),
+
+                            new Election(
+                                    API.ELECTION_ALGORTIHM,
+                                    API.ELECTION_STATE_COORDINATOR,
+                                    Blackboard.getInstance().getUser().get_links().getSelf(),
+                                    null,
+                                    "message"
+                            ));
+
+                } catch (Exception e) {
+                    logger.warn("unavailable: cant sendeing election_state COORDINATOR to " + adventurer.getUser().toString());
+                    continue;
+
+                }
+
+            }
+
         }
 
     }
@@ -136,7 +174,7 @@ public class FromHeroService implements IFromHeroService {
     public void addElection(Election election) throws UnexpectedResponseCodeException, NotInGroupException {
 
         // TODO - Abfangen, wenn man noch nicht in der selen Gruppe ist
-        if(Blackboard.getInstance().getUser().getCurrentGroup() == null){
+        if (Blackboard.getInstance().getUser().getCurrentGroup() == null) {
             logger.warn("current user is not in a group");
             throw new NotInGroupException("I am not in any group");
         }
@@ -146,10 +184,10 @@ public class FromHeroService implements IFromHeroService {
         System.out.println("state: " + election.getPayload());
 
         // 1. Um welche Election Stand handelt es sich? election || answer || coordinator
-        if(election.getPayload().equals(API.ELECTION_STATE_ELECTION)){
+        if (election.getPayload().equals(API.ELECTION_STATE_ELECTION)) {
 
             // falls eigene ID größer, dann Antoworte mit answer und sende election an höhere Id's
-            if( Blackboard.getInstance().getUser().get_links().getSelf().length() > election.getUser().length()){
+            if (Blackboard.getInstance().getUser().get_links().getSelf().length() > election.getUser().length()) {
                 logger.info("own id is grater than the election id");
                 System.out.println("you have a grater Id, your change to win the election");
 
@@ -171,29 +209,29 @@ public class FromHeroService implements IFromHeroService {
                                 "You will never be the coordinator!"
                         ));
 
-                if(!Blackboard.getInstance().getUser().isElectionWinFlag()){
+                if (!Blackboard.getInstance().getUser().isElectionWinFlag()) {
 
-                Thread t = new Thread(new Runnable() {
+                    Thread t = new Thread(new Runnable() {
 
-                    @Override
-                    public void run() {
+                        @Override
+                        public void run() {
 
-                        IToHeroService toHeroService = new ToHeroService();
+                            IToHeroService toHeroService = new ToHeroService();
 
-                        try {
+                            try {
 
                                 toHeroService.startElection(election.getJob());
 
-                        } catch (UnexpectedResponseCodeException e) {
-                            e.printStackTrace();
-                        } catch (NotInGroupException e) {
-                            e.printStackTrace();
+                            } catch (UnexpectedResponseCodeException e) {
+                                e.printStackTrace();
+                            } catch (NotInGroupException e) {
+                                e.printStackTrace();
+                            }
+
                         }
+                    });
 
-                    }
-                });
-
-                t.start();
+                    t.start();
                 }
 
                 //this.toHeroService.startElection();
@@ -211,7 +249,7 @@ public class FromHeroService implements IFromHeroService {
 
         }
 
-        if(election.getPayload().equals(API.ELECTION_STATE_ANSWER)){
+        if (election.getPayload().equals(API.ELECTION_STATE_ANSWER)) {
             System.out.println("you got a election answer, you lose the election");
             logger.info("set electionWinFlag: false");
             Blackboard.getInstance().getUser().setElectionWinFlag(false);
@@ -229,7 +267,7 @@ public class FromHeroService implements IFromHeroService {
 
         }
 
-        if(election.getPayload().equals(API.ELECTION_STATE_COORDINATOR)){
+        if (election.getPayload().equals(API.ELECTION_STATE_COORDINATOR)) {
             System.out.println("winner of the election: " + election.getUser());
             logger.info("set the winner of the election to: " + election.getUser().replace("/users/", ""));
             Blackboard.getInstance().getUser().getCurrentGroup().setCoordinator(election.getUser().replace("/users/", ""));

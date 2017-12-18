@@ -144,7 +144,6 @@ public class ToHeroService implements IToHeroService {
     @Override
     public void sendAssignmentDeliver() throws UnexpectedResponseCodeException {
 
-        /*
         if (Blackboard.getInstance().getUser().getCurrentQuesting().getPart() == null) {
             throw new IllegalArgumentException("no part to deliverTask");
         }
@@ -152,7 +151,6 @@ public class ToHeroService implements IToHeroService {
         if (Blackboard.getInstance().getUser().getCurrentQuesting().getPart().getStepList() == null) {
             throw new IllegalArgumentException("no steps to deliverTask");
         }
-        */
 
 
         for (int i = 0; i < Blackboard.getInstance().getUser().getCurrentQuesting().getPart().getStepList().size(); i++) {
@@ -356,6 +354,7 @@ public class ToHeroService implements IToHeroService {
 
 
     }
+
 
 
 }
