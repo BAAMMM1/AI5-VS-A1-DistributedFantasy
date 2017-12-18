@@ -1,5 +1,6 @@
 package app.layerLogicAndService.cmpService.service;
 
+import app.layerLogicAndService.cmpService.entity.hero.Assignment;
 import app.layerLogicAndService.cmpService.entity.hero.Election;
 import app.layerLogicAndService.cmpService.exception.NotInGroupException;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
@@ -15,7 +16,7 @@ public interface IToHeroService {
     void sendAssignmentDeliver() throws UnexpectedResponseCodeException;
 
     // Sicht des Senders der Election (addElection starten)
-    void startElection() throws UnexpectedResponseCodeException, NotInGroupException;
+    void startElection(Assignment assignment) throws UnexpectedResponseCodeException, NotInGroupException;
 
 
 
