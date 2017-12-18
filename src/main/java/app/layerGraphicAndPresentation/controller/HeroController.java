@@ -6,7 +6,6 @@ import app.layerLogicAndService.cmpService.entity.hero.Election;
 import app.layerLogicAndService.cmpService.service.IFromHeroService;
 import app.layerLogicAndService.cmpService.exception.AlreadyInGroupException;
 import app.layerLogicAndService.cmpService.entity.hero.*;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 import com.google.gson.Gson;
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
@@ -17,7 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * Diese Klasse repräsentiert den heroService Endpoint unseres fromHero-heroService
+ * Diese Klasse repräsentiert den fromHeroService Endpoint unseres fromHero-fromHeroService
  *
  * @author Chris on 01.12.2017
  */
@@ -29,7 +28,7 @@ public class HeroController {
     Gson gson = new Gson();
 
     @Autowired
-    IFromHeroService heroService;
+    IFromHeroService fromHeroService;
 
 
     @RequestMapping(
@@ -39,7 +38,7 @@ public class HeroController {
     public ResponseEntity<?> getServices() {
 
         try{
-            Service service = this.heroService.getService();
+            Service service = this.fromHeroService.getService();
             return new ResponseEntity<>(this.gson.toJson(service), HttpStatus.OK);
 
         } catch (Exception e){
@@ -61,7 +60,7 @@ public class HeroController {
 
         try {
             System.out.println(request.toString());
-            this.heroService.addHiring(request);
+            this.fromHeroService.addHiring(request);
             return new ResponseEntity<>(HttpStatus.OK);
 
         } catch (AlreadyInGroupException e) {
@@ -83,7 +82,7 @@ public class HeroController {
     public ResponseEntity<?> addAssignment(@RequestBody Assignment request){
 
         try{
-            this.heroService.addAssignment(request);
+            this.fromHeroService.addAssignment(request);
             return new ResponseEntity<>(HttpStatus.CREATED);
 
         } catch (Exception e){
@@ -101,7 +100,7 @@ public class HeroController {
 
         try{
 
-            this.heroService.addAssignmentDeliver(request);
+            this.fromHeroService.addAssignmentDeliver(request);
             return new ResponseEntity<>(HttpStatus.CREATED);
 
         } catch (Exception e){
@@ -119,7 +118,7 @@ public class HeroController {
     public ResponseEntity<?> addMessage(@RequestBody Message request){
 
         try{
-            this.heroService.addMessage(request);
+            this.fromHeroService.addMessage(request);
             return new ResponseEntity<>(HttpStatus.CREATED);
 
         } catch (Exception e){
@@ -142,7 +141,7 @@ public class HeroController {
         }
 
         try{
-            this.heroService.addElection(request);
+            this.fromHeroService.addElection(request);
             return new ResponseEntity<>(HttpStatus.OK);
 
         } catch (Exception e){

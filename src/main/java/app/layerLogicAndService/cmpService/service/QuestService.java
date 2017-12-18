@@ -2,12 +2,15 @@ package app.layerLogicAndService.cmpService.service;
 
 import app.layerLogicAndService.cmpService.entity.blackboard.Blackboard;
 import app.layerLogicAndService.cmpService.entity.hero.Assignment;
+import app.layerLogicAndService.cmpService.entity.hero.AssignmentDerliver;
 import app.layerLogicAndService.cmpService.entity.quest.*;
 import app.layerLogicAndService.cmpService.entity.quest.questing.Questing;
 import app.layerLogicAndService.cmpService.entity.quest.questing.Step;
 import app.layerLogicAndService.cmpService.entity.quest.questing.TaskPart;
 import app.layerLogicAndService.cmpService.entity.quest.questing.Token;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.IToHeroConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.QuestConsumer;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.ToHeroConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.IQuestConsumer;
 
@@ -20,6 +23,8 @@ import java.util.List;
 public class QuestService implements IQuestService {
 
     private IQuestConsumer questConsumer = new QuestConsumer();
+
+    private IToHeroConsumer toHeroConsumer = new ToHeroConsumer();
 
     @Override
     public List<Quest> getQuests() throws UnexpectedResponseCodeException {
@@ -222,7 +227,17 @@ public class QuestService implements IQuestService {
 
         if(assignment.getData() != null){
             if (assignment.getMethod().equals("POST")){
-                this.answerToCurrentUri(assignment.getData());
+                String token = this.questConsumer.postData(Blackboard.getInstance().getUser().getCurrentQuesting().getMap().getHost(), Blackboard.getInstance().getUser().getCurrentQuesting().getCurrentUri(), assignment.getData());
+
+                AssignmentDerliver deliver = new AssignmentDerliver(assignment.getId(),
+                        assignment.getTask(),
+                        assignment.getResource(),
+                        assignment.getMethod(),
+                        token,
+                        Blackboard.getInstance().getUser().get_links().getSelf(),
+                        "message");
+
+                this.toHeroConsumer.sendAssignmentDeliver(assignment.getCallback(), deliver);
             }
         }
 
@@ -237,7 +252,7 @@ public class QuestService implements IQuestService {
             throw new IllegalArgumentException("no to answer task");
         }
 
-        Answer answer = this.questConsumer.post(Blackboard.getInstance().getUser().getCurrentQuesting().getMap().getHost(), Blackboard.getInstance().getUser().getCurrentQuesting().getCurrentUri(), body);
+        Answer answer = this.questConsumer.answer(Blackboard.getInstance().getUser().getCurrentQuesting().getMap().getHost(), Blackboard.getInstance().getUser().getCurrentQuesting().getCurrentUri(), body);
 
 
         if (answer.getToken() != null) {

@@ -104,6 +104,11 @@ public class FromHeroService implements IFromHeroService {
 
         Blackboard.getInstance().getUser().setAssignmentDerliver(assignmentDerliver);
 
+        if(assignmentDerliver.getData() != null){
+            Blackboard.getInstance().getUser().getCurrentQuesting().setRingToken(assignmentDerliver.getData());
+            Blackboard.getInstance().getUser().getCurrentQuesting().getTask().setToken(assignmentDerliver.getData());
+        }
+
     }
 
     @Override

@@ -94,7 +94,7 @@ public class QuestConsumer implements IQuestConsumer {
     }
 
     @Override
-    public Answer post(String ipPort, String ressource, String body) throws UnexpectedResponseCodeException {
+    public Answer answer(String ipPort, String ressource, String body) throws UnexpectedResponseCodeException {
 
         HttpResponse response = this.httpAccess.post("http://" + ipPort + ressource, Blackboard.getInstance().getUser().getUserToken(), body);
 
@@ -105,6 +105,19 @@ public class QuestConsumer implements IQuestConsumer {
         return gson.fromJson(response.getBody(), Answer.class);
 
     }
+
+    @Override
+    public String postData(String ipPort, String ressource, String body) throws UnexpectedResponseCodeException {
+
+        HttpResponse response = this.httpAccess.post("http://" + ipPort + ressource, Blackboard.getInstance().getUser().getUserToken(), body);
+
+        if (response.getCode() != 200) {
+            throw new UnexpectedResponseCodeException(response);
+        }
+
+        return JSONUtil.getObject(body, "token", String.class);
+    }
+
 
     @Override
     public List<Delivery> deliverTask(Task task) throws UnexpectedResponseCodeException {
@@ -151,6 +164,7 @@ public class QuestConsumer implements IQuestConsumer {
         return gson.fromJson(response.getBody(), Visit.class);
 
     }
+
 
 
 }

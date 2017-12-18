@@ -17,11 +17,13 @@ public interface IQuestConsumer {
     Task getTask(int index) throws UnexpectedResponseCodeException;
     Map lookAtTheMap(String location) throws UnexpectedResponseCodeException;
     Visit visitHost(String ipPort, String ressource) throws UnexpectedResponseCodeException;
-    Answer post(String ipPort, String ressource, String body) throws UnexpectedResponseCodeException;
+    Answer answer(String ipPort, String ressource, String body) throws UnexpectedResponseCodeException;
 
     // TODO - Nicht task-uri sinder taskId
     List<Delivery> deliverTask(Task task) throws UnexpectedResponseCodeException;
 
     Visit deliverTaskPart(TaskPart taskpart) throws UnexpectedResponseCodeException;
+
+    String postData(String ipPort, String ressource, String body) throws UnexpectedResponseCodeException;
 
 }
