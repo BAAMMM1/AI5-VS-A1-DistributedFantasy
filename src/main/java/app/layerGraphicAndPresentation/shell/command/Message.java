@@ -19,6 +19,7 @@ public class Message extends Command{
         this.heroToHeroService = heroToHeroService;
     }
 
+    @Override
     public void checkParam(List<String> param) throws ParameterIncorrectException {
 
         if (param.size() < this.getNumberOfParameter()) {

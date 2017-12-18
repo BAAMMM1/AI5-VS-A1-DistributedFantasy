@@ -129,8 +129,8 @@ public class ToHeroService implements IToHeroService {
                 Assignment.counter,
                 Blackboard.getInstance().getUser().getCurrentQuesting().getTask().get_links().getSelf(),
                 Blackboard.getInstance().getUser().getCurrentQuesting().getCurrentUri(),
-                "answer", // TODO - method muss vom command mit übergeben werden,per user eingabe
-                "data",
+                "POST", // TODO - method muss vom command mit übergeben werden,per user eingabe
+                null,
                 "http://" + Application.IP + ":8080/assignments/deliveries",
                 message
         );
