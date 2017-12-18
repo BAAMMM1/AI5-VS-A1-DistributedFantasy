@@ -18,6 +18,8 @@ public interface IToHeroService {
     // Sicht des Senders der Election (addElection starten)
     void startElection(Assignment assignment) throws UnexpectedResponseCodeException, NotInGroupException;
 
+    void doElection() throws UnexpectedResponseCodeException, NotInGroupException;
+
 
 
 

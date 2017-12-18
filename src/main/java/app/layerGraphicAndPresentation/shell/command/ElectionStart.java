@@ -21,7 +21,7 @@ public class ElectionStart extends Command {
     @Override
         State instruction() throws UnexpectedResponseCodeException, IOException, InterruptedException, NotInGroupException {
 
-        this.toHeroService.startElection();
+        this.toHeroService.doElection();
 
         return null;
     }
