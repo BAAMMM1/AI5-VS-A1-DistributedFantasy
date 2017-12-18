@@ -50,6 +50,6 @@ public class Assignment extends Command {
 
     @Override
     String description() {
-        return null;
+        return "  -assignement\t\t\t\t\t\t\tshows assignement of a adventurerer";
     }
 }

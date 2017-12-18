@@ -41,6 +41,6 @@ public class Adventurers extends Command{
 
     @Override
     String description() {
-        return null;
+        return "  -adventurers\t\t\t\t\t\t\tshows all adventurerer registered in taverna";
     }
 }
