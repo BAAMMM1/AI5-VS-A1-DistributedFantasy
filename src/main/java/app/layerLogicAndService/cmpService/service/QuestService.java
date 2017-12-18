@@ -220,6 +220,12 @@ public class QuestService implements IQuestService {
 
         System.out.println(Blackboard.getInstance().getUser().getCurrentQuesting().toString());
 
+        if(assignment.getData() != null){
+            if (assignment.getMethod().equals("POST")){
+                this.answerToCurrentUri(assignment.getData());
+            }
+        }
+
         return dto;
     }
 
