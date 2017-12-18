@@ -110,39 +110,41 @@ public class FromHeroService implements IFromHeroService {
             Blackboard.getInstance().getUser().getCurrentQuesting().setRingToken(assignmentDerliver.getData());
             Blackboard.getInstance().getUser().getCurrentQuesting().getTask().setToken(assignmentDerliver.getData());
 
-            // TODO - schön machen
-            List<Adventurer> groupMemberList = this.tavernaService.getGroupMembers(Blackboard.getInstance().getUser().getCurrentGroup().getId());
+            if(assignmentDerliver.getData().contains("group")) {
+                // TODO - schön machen
+                List<Adventurer> groupMemberList = this.tavernaService.getGroupMembers(Blackboard.getInstance().getUser().getCurrentGroup().getId());
 
-            for (Adventurer adventurer : groupMemberList) {
+                for (Adventurer adventurer : groupMemberList) {
 
-                try {
-                    // falls man selber der nächste ist, dann nicht an sich selber senden
-                    if (adventurer.getUser().equals(Blackboard.getInstance().getUser().get_links().getSelf())) {
+                    try {
+                        // falls man selber der nächste ist, dann nicht an sich selber senden
+                        if (adventurer.getUser().equals(Blackboard.getInstance().getUser().get_links().getSelf())) {
+                            continue;
+                        }
+
+                        Service heroService = this.toHeroConsumer.getHeroService(adventurer.getUrl());
+
+                        logger.info("sending election_state COORDINATOR to: " + adventurer.getUser() + " - " + heroService.getElection());
+
+                        this.toHeroConsumer.sendElection(
+
+                                heroService.getElection(),
+
+                                new Election(
+                                        API.ELECTION_ALGORTIHM,
+                                        API.ELECTION_STATE_COORDINATOR,
+                                        Blackboard.getInstance().getUser().get_links().getSelf(),
+                                        null,
+                                        "message"
+                                ));
+
+                    } catch (Exception e) {
+                        logger.warn("unavailable: cant sendeing election_state COORDINATOR to " + adventurer.getUser().toString());
                         continue;
+
                     }
 
-                    Service heroService = this.toHeroConsumer.getHeroService(adventurer.getUrl());
-
-                    logger.info("sending election_state COORDINATOR to: " + adventurer.getUser() + " - " + heroService.getElection());
-
-                    this.toHeroConsumer.sendElection(
-
-                            heroService.getElection(),
-
-                            new Election(
-                                    API.ELECTION_ALGORTIHM,
-                                    API.ELECTION_STATE_COORDINATOR,
-                                    Blackboard.getInstance().getUser().get_links().getSelf(),
-                                    null,
-                                    "message"
-                            ));
-
-                } catch (Exception e) {
-                    logger.warn("unavailable: cant sendeing election_state COORDINATOR to " + adventurer.getUser().toString());
-                    continue;
-
                 }
-
             }
 
         }
