@@ -56,8 +56,8 @@ public class FromHeroService implements IFromHeroService {
     @Override
     public void addHiring(Hiring hiring) throws AlreadyInGroupException, UnexpectedResponseCodeException {
 
-        System.out.print("attention!: you got an hiring");
-        System.out.print("message: " + hiring.getMessage());
+        System.out.println("attention!: you got an hiring");
+        System.out.println("message: " + hiring.getMessage());
 
         if (Blackboard.getInstance().getUser().getGroup() != null) {
             System.out.println("hiring was declined automatically because you are already in a group");

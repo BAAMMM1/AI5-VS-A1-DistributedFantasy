@@ -40,7 +40,7 @@ public class AssignmentSend extends Command {
         message.substring(0, message.length()-1);
 
         // TODO - Message richtig entgegen nehmen - example(statt helloStranger -> hello Stranger)
-        this.heroToHeroService.sendAssignment(this.getParameter().get(0), this.getParameter().get(1));
+        this.heroToHeroService.sendAssignment(this.getParameter().get(0), message);
 
         return null;
     }
