@@ -63,11 +63,21 @@ public class User {
 
     private boolean electionWinFlag = false;
 
+    private boolean isDead = false;
+
     public User(String name, String userToken, String userTokenValidTime) {
         this.name = name;
         this.userToken = userToken;
         this.userTokenValidTime = userTokenValidTime;
         this.messages = new ArrayList<>();
+    }
+
+    public boolean isDead() {
+        return isDead;
+    }
+
+    public void setDead(boolean dead) {
+        isDead = dead;
     }
 
     public boolean isElectionWinFlag() {

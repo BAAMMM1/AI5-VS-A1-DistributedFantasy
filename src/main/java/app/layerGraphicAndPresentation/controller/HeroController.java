@@ -137,6 +137,10 @@ public class HeroController {
 
         logger.info("incoming election: " + request.toString());
 
+        if(Blackboard.getInstance().getUser().isDead()){
+            return new ResponseEntity<>(HttpStatus.SERVICE_UNAVAILABLE);
+        }
+
         try{
             this.heroService.addElection(request);
             return new ResponseEntity<>(HttpStatus.OK);
