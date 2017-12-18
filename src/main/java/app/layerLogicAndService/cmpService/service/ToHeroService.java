@@ -186,6 +186,10 @@ public class ToHeroService implements IToHeroService {
 
     public void doElection() throws NotInGroupException, UnexpectedResponseCodeException {
 
+        if(Blackboard.getInstance().getUser().isDead()){
+            throw new IllegalArgumentException("you are dead!, you cant start a election");
+        }
+
         String data = null;
 
         if (Blackboard.getInstance().getUser().getCurrentQuesting() == null) {
