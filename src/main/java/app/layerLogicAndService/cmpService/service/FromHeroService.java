@@ -112,7 +112,7 @@ public class FromHeroService implements IFromHeroService {
             Blackboard.getInstance().getUser().getCurrentQuesting().getTask().setToken(assignmentDerliver.getData());
 
             // TODO - assignment ID für assignment job von einer election
-            if(assignmentDerliver.getData().contains(ELECTION_IDENTIFIER)) {
+            if(assignmentDerliver.getId().contains(ELECTION_IDENTIFIER)) {
                 // TODO - schön machen
                 List<Adventurer> groupMemberList = this.tavernaService.getGroupMembers(Blackboard.getInstance().getUser().getCurrentGroup().getId());
 
