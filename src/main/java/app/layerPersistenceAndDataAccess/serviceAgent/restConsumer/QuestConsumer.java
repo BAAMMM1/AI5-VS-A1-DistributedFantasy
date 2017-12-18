@@ -115,7 +115,7 @@ public class QuestConsumer implements IQuestConsumer {
             throw new UnexpectedResponseCodeException(response);
         }
 
-        return JSONUtil.getObject(body, "token", String.class);
+        return JSONUtil.getObject(response.getBody(), "token", String.class);
     }
 
 
