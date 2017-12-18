@@ -31,6 +31,8 @@ public class FromHeroService implements IFromHeroService {
 
     private static final String GROUP_DENIED = "I am already in a group!";
     public static final String ELECTION_IDENTIFIER = "ELECTION";
+    public static final String PORT = ":8080";
+    public static final String HTTP = "http://";
 
     private ITavernaService tavernaService = new TavernaService();
 
@@ -44,12 +46,12 @@ public class FromHeroService implements IFromHeroService {
                 Blackboard.getInstance().getUser().get_links().getSelf(),
                 false,
                 Blackboard.getInstance().getUser().getGroup(),
-                "http://" + Application.IP + ":8080" + API.PATH_HIRINGS,
-                "http://" + Application.IP + ":8080" + API.PATH_ASSIGNMENTS,
-                "http://" + Application.IP + ":8080" + API.PATH_MESSAGES,
-                "http://" + Application.IP + ":8080" + API.PATH_ELECTION,
-                "http://" + Application.IP + ":8080" + API.PATH_MUTEX,
-                "http://" + Application.IP + ":8080" + API.PATH_MUTEXSTATE);
+                HTTP + Application.IP + PORT + API.PATH_HIRINGS,
+                HTTP + Application.IP + PORT + API.PATH_ASSIGNMENTS,
+                HTTP + Application.IP + PORT + API.PATH_MESSAGES,
+                HTTP + Application.IP + PORT + API.PATH_ELECTION,
+                HTTP + Application.IP + PORT + API.PATH_MUTEX,
+                HTTP + Application.IP + PORT + API.PATH_MUTEXSTATE);
 
         return service;
     }
