@@ -141,6 +141,7 @@ public class QuestService implements IQuestService {
     @Override
     public Visit deliverTaskPart() throws UnexpectedResponseCodeException {
 
+        /*
         if (Blackboard.getInstance().getUser().getCurrentQuesting().getPart() == null) {
             throw new IllegalArgumentException("no part to deliverTask");
         }
@@ -148,6 +149,7 @@ public class QuestService implements IQuestService {
         if (Blackboard.getInstance().getUser().getCurrentQuesting().getPart().getStepList() == null) {
             throw new IllegalArgumentException("no steps to deliverTask");
         }
+        */
 
 
         // Prüfen ob alle Assignments abgeliefert
