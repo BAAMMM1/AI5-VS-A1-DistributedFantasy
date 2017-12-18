@@ -188,11 +188,20 @@ public class ToHeroService implements IToHeroService {
 
         String data = null;
 
-        if (Blackboard.getInstance().getUser().getCurrentQuesting().getRingToken() == null) {
-            data = "{\"group\":\"" + Blackboard.getInstance().getUser().getCurrentGroup().get_links().getSelf() + "\"}";
+        if (Blackboard.getInstance().getUser().getCurrentQuesting() == null) {
+
+            data = "null";
+
         } else {
-            data = "{\"group\":\"/taverna/groups/857\",\"token\":\"" + Blackboard.getInstance().getUser().getCurrentQuesting().getRingToken() + "\"}";
+
+            if (Blackboard.getInstance().getUser().getCurrentQuesting().getRingToken() == null) {
+                data = "{\"group\":\"" + Blackboard.getInstance().getUser().getCurrentGroup().get_links().getSelf() + "\"}";
+            } else {
+                data = "{\"group\":\"/taverna/groups/857\",\"token\":\"" + Blackboard.getInstance().getUser().getCurrentQuesting().getRingToken() + "\"}";
+            }
+
         }
+
 
         Assignment assignment = new Assignment(
                 Assignment.counter,
@@ -218,7 +227,6 @@ public class ToHeroService implements IToHeroService {
             logger.info("current user is not in a group");
             throw new NotInGroupException("you must be in a group to start a election");
         }
-
 
 
         // Hier die election starten
