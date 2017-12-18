@@ -155,6 +155,18 @@ public class QuestConsumer implements IQuestConsumer {
 
         String tokens = new JSONObject().put("tokens", tokenList).toString();
 
+
+        if(Blackboard.getInstance().getUser().getAssignmentDerliver() != null) {
+
+            tokens = tokens.substring(0, tokens.length()-2);
+            tokens = tokens + ", " +Blackboard.getInstance().getUser().getAssignmentDerliver().getData();
+            tokens = tokens + "]}";
+        }
+
+        System.out.println(tokens);
+
+
+
         HttpResponse response = this.httpAccess.post("http://" + taskpart.getDeliverUri(), Blackboard.getInstance().getUser().getUserToken(), tokens);
 
         if (response.getCode() != 200) {
