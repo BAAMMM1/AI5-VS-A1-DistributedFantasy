@@ -80,6 +80,6 @@ public class DeliverSteps extends Command {
 
     @Override
     String description() {
-        return "  -deliverSteps\t\t\t\t\t\t\t\t\tdeliver the steptokens for steps";
+        return "  -deliverSteps\t\t\t\t\t\tdeliver the steptokens for steps";
     }
 }

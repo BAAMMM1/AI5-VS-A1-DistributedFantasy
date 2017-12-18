@@ -28,6 +28,6 @@ public class Exit extends Command {
 
     @Override
     String description() {
-        return "  -exit\t\t\t\t\t\t\t\t\t\t\tterminates the application";
+        return "  -exit\t\t\t\t\t\t\tterminates the application";
     }
 }

@@ -42,7 +42,7 @@ public class Clear extends Command {
 
     @Override
     String description() {
-        return "  -clear\t\t\t\t\t\t\t\t\t\tclear the console";
+        return "  -clear\t\t\t\t\t\tclear the console";
     }
 
 }

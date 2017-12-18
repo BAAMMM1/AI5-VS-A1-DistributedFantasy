@@ -47,6 +47,6 @@ public class GroupDelete extends Command {
 
     @Override
     String description() {
-        return "  -groupdelete\t[groupID]\t\t\t\t\t\t\t\tdelete a group dependent on his id and ownership";
+        return "  -groupdelete\t\t[groupID]\t\t\tdelete a group dependent on his id and ownership";
     }
 }

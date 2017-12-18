@@ -33,6 +33,6 @@ public class ElectionStart extends Command {
 
     @Override
     String description() {
-        return "  -electionstart\t\t\t\t\t\t\t\tstarts an election for new coordinator in a group";
+        return "  -electionstart\t\t\t\t\tstarts an election for new coordinator in a group";
     }
 }

@@ -33,6 +33,6 @@ public class AssignmentSend extends Command {
 
     @Override
     String description() {
-        return "  -assignementsend\t\t\t\t\t\t\tsend a assignement to someone";
+        return "  -assignementsend\t\tsend a assignement to someone";
     }
 }

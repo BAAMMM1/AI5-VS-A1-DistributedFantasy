@@ -50,6 +50,6 @@ public class Message extends Command{
 
     @Override
     String description() {
-        return "  -message\t[adventurer][message]\t\t\t\t\t\tsend a message to a adventurere";
+        return "  -message\t\t[adventurer][message]\t\tsend a message to a adventurere";
     }
 }

@@ -52,6 +52,6 @@ public class Next extends Command{
 
     @Override
     String description() {
-        return "  -next\t\t\t\t\t\t\t\t\t\tgo to next quest location";
+        return "  -next\t\t\t\t\t\t\tgo to next quest location";
     }
 }

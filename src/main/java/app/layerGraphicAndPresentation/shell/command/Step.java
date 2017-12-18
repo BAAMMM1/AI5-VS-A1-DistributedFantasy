@@ -53,6 +53,6 @@ public class Step extends Command{
 
     @Override
     String description() {
-        return "  -step\t\t\t\t\t\t\t\t\t\tdo next queststep";
+        return "  -step\t\t\t\t\t\t\tdo next queststep";
     }
 }

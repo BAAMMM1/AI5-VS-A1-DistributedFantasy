@@ -69,6 +69,6 @@ public class Quest extends Command {
 
     @Override
     String description() {
-        return "  -quest\t\t[quest-id]\t\t\t\t\t\tdisplays a quest based on a id";
+        return "  -quest\t\t[quest-id]\t\t\tdisplays a quest based on a id";
     }
 }

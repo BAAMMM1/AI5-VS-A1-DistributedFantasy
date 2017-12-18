@@ -67,7 +67,7 @@ public class Test2 extends Command {
 
     @Override
     String description() {
-        return "  -test2\t\t\t\t\t\t\t\t\t\tlogin with Testarossa";
+        return "  -test2\t\t\t\t\t\tlogin with Testarossa";
     }
 
 

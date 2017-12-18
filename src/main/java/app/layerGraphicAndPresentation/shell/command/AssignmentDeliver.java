@@ -32,6 +32,6 @@ public class AssignmentDeliver extends Command {
 
     @Override
     String description() {
-        return "  -assignementdeliver\t\t\t\t\t\t\tsend token received of assignement back to sender";
+        return "  -assignementdeliver\t\t\t\t\tsend token received of assignement back to sender";
     }
 }

@@ -63,6 +63,6 @@ public class Map extends Command {
 
     @Override
     String description() {
-        return "  -map\t\t\t[location]\t\t\t\t\t\tvisit the map based on a location";
+        return "  -map\t\t\t[location]\t\t\tvisit the map based on a location";
     }
 }
