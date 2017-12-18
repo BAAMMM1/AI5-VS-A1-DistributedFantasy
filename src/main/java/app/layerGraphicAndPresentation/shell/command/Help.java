@@ -22,7 +22,7 @@ public class Help extends Command {
     State instruction() {
 
         System.out.println("");
-        System.out.println("# command ----------- # parameter -------------------- # description --------------------------------------");
+        System.out.println("# command ----------- # parameter ------------------- # description --------------------------------------");
 
         for (Command command : this.inputInterpreter.getRegisterCommands()) {
             System.out.println(command.description());
