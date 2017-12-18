@@ -30,6 +30,6 @@ public class GroupLeave extends Command {
 
     @Override
     String description() {
-        return null;
+        return "  -groupleave\t[groupID]\t\t\t\t\t\t\t\tleaves a group";
     }
 }

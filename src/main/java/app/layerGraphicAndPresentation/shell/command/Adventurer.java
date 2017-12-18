@@ -37,6 +37,6 @@ public class Adventurer extends Command {
 
     @Override
     String description() {
-        return null;
+        return "  -adventurer\t[name]\t\t\t\t\t\tshows the Information of the Adventurerer";
     }
 }

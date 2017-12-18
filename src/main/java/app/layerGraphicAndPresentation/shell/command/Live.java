@@ -28,7 +28,7 @@ public class Live extends Command{
 
     @Override
     String description() {
-        return null;
+        return "  -live\t\t\t\t\t\t\t\t\t\treturns the current user alive";
     }
 
 }

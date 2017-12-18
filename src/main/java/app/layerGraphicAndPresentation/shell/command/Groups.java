@@ -41,6 +41,6 @@ public class Groups extends Command{
 
     @Override
     String description() {
-        return null;
+        return "  -groups\t\t\t\t\t\t\t\t\t\tshows all groups registered in taverna";
     }
 }

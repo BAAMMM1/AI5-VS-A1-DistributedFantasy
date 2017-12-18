@@ -19,6 +19,8 @@ public class Application {
     public static String IP;
 
     public static void main(String[] args) throws UnknownHostException {
+        String string = new String();
+        string = "5";
 
         logger.info("starting application");
 

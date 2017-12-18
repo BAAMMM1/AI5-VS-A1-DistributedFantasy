@@ -58,6 +58,6 @@ public class GroupEnter extends Command{
 
     @Override
     String description() {
-        return null;
+        return "  -groupenter\t[groupID]\t\t\t\t\t\t\t\tenters a specific group";
     }
 }

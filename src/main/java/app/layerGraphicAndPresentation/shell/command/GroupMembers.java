@@ -55,6 +55,6 @@ public class GroupMembers extends Command {
 
     @Override
     String description() {
-        return null;
+        return "  -groupmembers\t\t\t\t\t\t\t\t\t\tshows all members of a group";
     }
 }

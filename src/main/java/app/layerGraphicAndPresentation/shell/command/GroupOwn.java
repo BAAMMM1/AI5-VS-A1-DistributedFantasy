@@ -30,6 +30,6 @@ public class GroupOwn extends Command {
 
     @Override
     String description() {
-        return null;
+        return "  -groupown\t\t\t\t\t\t\t\t\tshows entered group and delivers groupID";
     }
 }

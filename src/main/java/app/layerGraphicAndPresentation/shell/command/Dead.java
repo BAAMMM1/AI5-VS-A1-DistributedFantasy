@@ -28,7 +28,7 @@ public class Dead extends Command{
 
     @Override
     String description() {
-        return null;
+        return "  -dead\t\t\t\t\t\t\t\t\t\tset the current user to dead";
     }
 
 }

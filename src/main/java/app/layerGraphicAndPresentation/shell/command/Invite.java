@@ -37,6 +37,6 @@ public class Invite extends Command {
 
     @Override
     String description() {
-        return null;
+        return "  -invite\t[adventurer][groupid][taskid][message]\tinvites a adventurere to a group for a specific task with a individual message";
     }
 }

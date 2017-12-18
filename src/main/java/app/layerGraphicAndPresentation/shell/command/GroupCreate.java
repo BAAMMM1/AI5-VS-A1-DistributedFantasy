@@ -38,6 +38,6 @@ public class GroupCreate extends Command {
 
     @Override
     String description() {
-        return null;
+        return "  -groupcreate\t\t\t\t\t\t\tcreates a new group and deliver a groupID";
     }
 }

@@ -53,6 +53,6 @@ public class Group extends Command{
 
     @Override
     String description() {
-        return null;
+        return "  -group\t\t[groupID]\t\t\t\t\t\t\tshows information about a group";
     }
 }

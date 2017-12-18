@@ -38,6 +38,6 @@ public class Messages extends Command{
 
     @Override
     String description() {
-        return null;
+        return "  -messages\t\t\t\t\t\t\t\t\t\treturns all messages of others received";
     }
 }
