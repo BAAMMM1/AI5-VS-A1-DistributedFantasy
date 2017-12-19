@@ -52,12 +52,18 @@ public class Visit extends Command {
     @Override
     State instruction() throws UnexpectedResponseCodeException, IOException, InterruptedException {
 
-        System.out.println(Context.getInstance().getState());
-
         app.layerLogicAndService.cmpService.entity.quest.Visit visit = this.questService.visitLocationForTask(this.getParameter().get(0), Integer.valueOf(this.getParameter().get(1)));
 
-        System.out.println("message:" + visit.getMessage());
-
+        System.out.print("\n");
+        System.out.println("######################################################################################");
+        System.out.println("yor are visit the " + this.getParameter().get(0) + " for task: " + Integer.valueOf(this.getParameter().get(1)));
+        System.out.println("######################################################################################");
+        System.out.print("\n");
+        System.out.println(visit.getMessage());
+        System.out.print("\n");
+        System.out.println("required players: " + visit.getRequired_players());
+        System.out.println("required tokens: " + visit.getRequired_tokens());
+        System.out.print("\n");
         if (visit.getNext() != null) {
             System.out.println("next: " + visit.getNext());
         }
@@ -66,8 +72,7 @@ public class Visit extends Command {
             System.out.println("steps_todo: " + visit.getSteps_todo());
         }
 
-        System.out.println("required_players: " + visit.getRequired_players());
-        System.out.println("required_tokens: " + visit.getRequired_tokens());
+
 
         if (visit.getToken_name() != null) {
             System.out.println("token_name: " + visit.getToken_name());
