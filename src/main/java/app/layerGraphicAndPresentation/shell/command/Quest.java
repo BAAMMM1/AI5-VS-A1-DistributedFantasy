@@ -51,9 +51,10 @@ public class Quest extends Command {
 
         app.layerLogicAndService.cmpService.entity.quest.Quest quest = this.client.getQuest(Integer.valueOf(this.getParameter().get(0)));
 
-        System.out.println("\n######################################################################\n");
+        System.out.print("\n");
+        System.out.println("####################################################################################");
         System.out.println("\t\t\t\t" + quest.getName().toString());
-        System.out.println("\n######################################################################\n");
+        System.out.println("####################################################################################");
         System.out.println(quest.getDescription().toString());
         System.out.print("\n");
         System.out.print("task to do: [");
@@ -61,7 +62,7 @@ public class Quest extends Command {
         for(String string: quest.getTasks()){
             taskIds = taskIds + string.substring(string.length()-1) + ", ";
         }
-        taskIds = taskIds.substring(0, taskIds.length()-1);
+        taskIds = taskIds.substring(0, taskIds.length()-2);
         taskIds = taskIds + "]";
         System.out.print(taskIds);
         System.out.print("\n");
@@ -69,7 +70,7 @@ public class Quest extends Command {
         System.out.println("prerequisites: " + quest.getPrerequisites().toString());
         System.out.println("followups: " + quest.getFollowups());
 
-        System.out.println("\n");
+        System.out.print("\n");
         System.out.println("reward: " + quest.getReward());
 
         return null;
