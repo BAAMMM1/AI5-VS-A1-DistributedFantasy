@@ -233,17 +233,20 @@ public class QuestService implements IQuestService {
 
         if(assignment.getData() != null){
             if (assignment.getMethod().equals("POST")){
-                String token = this.questConsumer.postData(Blackboard.getInstance().getUser().getCurrentQuesting().getMap().getHost(), Blackboard.getInstance().getUser().getCurrentQuesting().getCurrentUri(), assignment.getData());
+
+                List<String> strings = this.questConsumer.postData(Blackboard.getInstance().getUser().getCurrentQuesting().getMap().getHost(), Blackboard.getInstance().getUser().getCurrentQuesting().getCurrentUri(), assignment.getData());
 
                 AssignmentDerliver deliver = new AssignmentDerliver(assignment.getId(),
                         assignment.getTask(),
                         assignment.getResource(),
                         assignment.getMethod(),
-                        token,
+                        strings.get(0),
                         Blackboard.getInstance().getUser().get_links().getSelf(),
-                        "message");
+                        strings.get(1));
 
                 this.toHeroConsumer.sendAssignmentDeliver(assignment.getCallback(), deliver);
+
+                System.out.print(strings.get(1));
             }
         }
 

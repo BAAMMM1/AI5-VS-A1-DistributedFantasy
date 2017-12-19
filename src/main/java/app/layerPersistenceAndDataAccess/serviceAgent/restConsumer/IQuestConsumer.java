@@ -24,6 +24,6 @@ public interface IQuestConsumer {
 
     Visit deliverTaskPart(TaskPart taskpart) throws UnexpectedResponseCodeException;
 
-    String postData(String ipPort, String ressource, String body) throws UnexpectedResponseCodeException;
+    List<String> postData(String ipPort, String ressource, String body) throws UnexpectedResponseCodeException;
 
 }
