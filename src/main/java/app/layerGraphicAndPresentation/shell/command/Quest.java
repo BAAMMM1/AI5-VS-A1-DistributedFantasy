@@ -52,9 +52,9 @@ public class Quest extends Command {
         app.layerLogicAndService.cmpService.entity.quest.Quest quest = this.client.getQuest(Integer.valueOf(this.getParameter().get(0)));
 
         System.out.print("\n");
-        System.out.println("####################################################################################");
-        System.out.println("\t\t\t\t" + quest.getName().toString());
-        System.out.println("####################################################################################");
+        System.out.println("######################################################################################\n");
+        System.out.println("\t\t\t\t   " + quest.getName().toString() + "\n");
+        System.out.println("######################################################################################");
         System.out.println(quest.getDescription().toString());
         System.out.print("\n");
         System.out.print("task to do: [");
