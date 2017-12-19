@@ -215,7 +215,7 @@ public class FromHeroService implements IFromHeroService {
             // falls eigene ID größer, dann Antoworte mit answer und sende election an höhere Id's
             if (Blackboard.getInstance().getUser().get_links().getSelf().length() > election.getUser().length()) {
                 logger.info("own id is grater than the election id");
-                System.out.println("you have a greater Id, your change to win the election");
+                System.out.println("you have a greater Id, your chance to win the election");
 
                 Adventurer adventurer = this.tavernaService.getAdventure(election.getUser().replaceAll("/users/", ""));
 
