@@ -58,7 +58,7 @@ public class Task extends Command {
         System.out.println("######################################################################################");
         System.out.println(task.getDescription().toString());
         System.out.print("\n");
-        System.out.println("location: " + task.getLocation().toString());
+        System.out.println("location: " + task.getLocation().toString().replace("/map/", ""));
         System.out.print("\n");
         System.out.println("required_players: " + task.getRequired_players());
         System.out.println("requirements: " + task.getRequirements());

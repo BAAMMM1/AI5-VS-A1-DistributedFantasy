@@ -49,7 +49,11 @@ public class Map extends Command {
 
         app.layerLogicAndService.cmpService.entity.quest.Map map = this.client.getMap(this.getParameter().get(0));
 
-        System.out.println("map: " + map.getName());
+        System.out.print("\n");
+        System.out.println("######################################################################################\n");
+        System.out.println("\t\t\t\t   " + map.getName().toString() + "\n");
+        System.out.println("######################################################################################");
+        System.out.print("\n");
         System.out.println("tasks: " + map.getTasks());
         System.out.println("visitors: " + map.getVisitors());
 
