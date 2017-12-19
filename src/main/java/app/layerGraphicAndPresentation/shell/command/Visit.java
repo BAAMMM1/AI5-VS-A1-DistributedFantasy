@@ -17,14 +17,14 @@ import java.util.List;
  */
 public class Visit extends Command {
 
-    private IQuestService client;
+    private IQuestService questService;
 
     private static final int PARAMETER_SIZE = 2;
 
     private List<State> acceptedStates = new ArrayList<State>(Arrays.asList(State.LOGIN));
 
-    public Visit(IQuestService client) {
-        this.client = client;
+    public Visit(IQuestService questService) {
+        this.questService = questService;
     }
 
     public void checkParam(List<String> param) throws ParameterIncorrectException, NumberFormatException  {
@@ -54,7 +54,7 @@ public class Visit extends Command {
 
         System.out.println(Context.getInstance().getState());
 
-        app.layerLogicAndService.cmpService.entity.quest.Visit visit = this.client.visitLocationForTask(this.getParameter().get(0), Integer.valueOf(this.getParameter().get(1)));
+        app.layerLogicAndService.cmpService.entity.quest.Visit visit = this.questService.visitLocationForTask(this.getParameter().get(0), Integer.valueOf(this.getParameter().get(1)));
 
         System.out.println("message:" + visit.getMessage());
 

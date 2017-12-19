@@ -13,6 +13,7 @@ import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.QuestConsumer
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.ToHeroConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.IQuestConsumer;
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,9 @@ import java.util.List;
  * @author Chris on 19.11.2017
  */
 public class QuestService implements IQuestService {
+
+    public final static Logger logger = Logger.getLogger(new Object() {
+    }.getClass().getEnclosingClass());
 
     private IQuestConsumer questConsumer = new QuestConsumer();
 
@@ -79,7 +83,7 @@ public class QuestService implements IQuestService {
 
         }
 
-        System.out.println(Blackboard.getInstance().getUser().getCurrentQuesting().toString());
+        logger.info(Blackboard.getInstance().getUser().getCurrentQuesting().toString());
 
         return dto;
     }
