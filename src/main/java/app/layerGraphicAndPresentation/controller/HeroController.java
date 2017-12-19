@@ -65,10 +65,10 @@ public class HeroController {
             return new ResponseEntity<>("i accepted your hiring!", HttpStatus.OK);
 
         } catch (AlreadyInGroupException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new JSONObject().put("message", e.getMessage()).toString(), HttpStatus.BAD_REQUEST);
 
         } catch (Exception e) {
-            return new ResponseEntity<>(API.MESSAGE, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new JSONObject().put("message", API.MESSAGE).toString(), HttpStatus.BAD_REQUEST);
 
         }
     }
