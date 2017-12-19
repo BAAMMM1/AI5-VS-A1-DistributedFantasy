@@ -265,10 +265,12 @@ public class QuestService implements IQuestService {
                         Blackboard.getInstance().getUser().get_links().getSelf(),
                         strings.get(1));
 
+                System.out.print(strings.get(1));
+
                 this.toHeroConsumer.sendAssignmentDeliver(assignment.getCallback(), deliver);
 
                 // TODO - raus ziehen
-                System.out.print(strings.get(1));
+
             }
         }
 
