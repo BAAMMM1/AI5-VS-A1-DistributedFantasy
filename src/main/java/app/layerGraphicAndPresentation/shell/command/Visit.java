@@ -57,8 +57,9 @@ public class Visit extends Command {
         System.out.print("\n");
         System.out.println("######################################################################################");
         System.out.println("yor are visit the " + this.getParameter().get(0) + " for task: " + Integer.valueOf(this.getParameter().get(1)));
-        System.out.println("######################################################################################");
+        System.out.println("######################################################################################\n");
         System.out.println(visit.getMessage());
+        System.out.print("\n");
         System.out.println("required players: " + visit.getRequired_players());
         System.out.println("required tokens: " + visit.getRequired_tokens());
         System.out.print("\n");

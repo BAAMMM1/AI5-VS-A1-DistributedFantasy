@@ -113,7 +113,7 @@ public class QuestService implements IQuestService {
             Blackboard.getInstance().getUser().getCurrentQuesting().setPart(new TaskPart(Blackboard.getInstance().getUser().getCurrentQuesting().getMap().getHost() + Blackboard.getInstance().getUser().getCurrentQuesting().getCurrentUri(), steps));
         }
 
-        System.out.println(Blackboard.getInstance().getUser().getCurrentQuesting().toString());
+        logger.info(Blackboard.getInstance().getUser().getCurrentQuesting().toString());
         return dto;
     }
 
@@ -138,7 +138,7 @@ public class QuestService implements IQuestService {
         Blackboard.getInstance().getUser().getCurrentQuesting().setCurrentUri(Blackboard.getInstance().getUser().getCurrentQuesting().getPart().getStepList().get(step - 1).getUri());
 
 
-        System.out.println(Blackboard.getInstance().getUser().getCurrentQuesting().toString());
+        logger.info(Blackboard.getInstance().getUser().getCurrentQuesting().toString());
         return dto;
     }
 
@@ -229,7 +229,7 @@ public class QuestService implements IQuestService {
 
         }
 
-        System.out.println(Blackboard.getInstance().getUser().getCurrentQuesting().toString());
+        logger.info(Blackboard.getInstance().getUser().getCurrentQuesting().toString());
 
         if(assignment.getData() != null){
             if (assignment.getMethod().equals("POST")){
@@ -281,7 +281,7 @@ public class QuestService implements IQuestService {
 
         }
 
-        System.out.println(Blackboard.getInstance().getUser().getCurrentQuesting().toString());
+        logger.info(Blackboard.getInstance().getUser().getCurrentQuesting().toString());
 
         return answer;
     }
