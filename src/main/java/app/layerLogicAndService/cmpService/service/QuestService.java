@@ -155,7 +155,13 @@ public class QuestService implements IQuestService {
         }
         */
 
+        if(Blackboard.getInstance().getUser().getSendetAssignmentList().size() != Blackboard.getInstance().getUser().getAssignmentDerliverList().size()){
+            throw new IllegalArgumentException("not all sendet assignments delivered at this time");
+        }
+        // TODO - Auf korrekte ids prüfen
 
+
+        /*
         // Prüfen ob alle Assignments abgeliefert
         if(Blackboard.getInstance().getUser().getSendetAssignment() != null){
 
@@ -169,6 +175,7 @@ public class QuestService implements IQuestService {
 
 
         }
+        */
 
 
 
@@ -193,12 +200,19 @@ public class QuestService implements IQuestService {
     @Override
     public Visit doAssignment() throws UnexpectedResponseCodeException {
 
+        if(Blackboard.getInstance().getUser().getAssignmentList().size() == 0){
+            throw new IllegalArgumentException("no assignment at the moment");
+        }
 
+        /*
         if(Blackboard.getInstance().getUser().getAssignment() == null){
             throw new IllegalArgumentException("no assignment at the moment");
         }
 
         Assignment assignment = Blackboard.getInstance().getUser().getAssignment();
+        */
+
+        Assignment assignment = Blackboard.getInstance().getUser().getAssignmentList().get(0);
 
         int taskid = Integer.valueOf(assignment.getTask().replace("/blackboard/tasks/", ""));
 
@@ -274,6 +288,8 @@ public class QuestService implements IQuestService {
 
             }
         }
+
+        Blackboard.getInstance().getUser().getAssignmentList().remove(0);
 
         return dto;
     }

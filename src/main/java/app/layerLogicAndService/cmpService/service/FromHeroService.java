@@ -105,6 +105,8 @@ public class FromHeroService implements IFromHeroService {
 
         Blackboard.getInstance().getUser().setAssignment(assignment);
 
+        Blackboard.getInstance().getUser().getAssignmentList().add(assignment);
+
         System.out.print(Context.getInstance().getPromptState());
 
     }

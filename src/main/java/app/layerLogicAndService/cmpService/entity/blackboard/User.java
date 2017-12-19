@@ -61,7 +61,11 @@ public class User {
 
     private Assignment assignment;
 
+    private List<Assignment> assignmentList;
+
     private Assignment sendetAssignment;
+
+    private List<Assignment> sendetAssignmentList;
 
     private boolean electionWinFlag = false;
 
@@ -73,6 +77,20 @@ public class User {
         this.userTokenValidTime = userTokenValidTime;
         this.messages = new ArrayList<>();
         this.assignmentDerliverList = new ArrayList<AssignmentDerliver>();
+        this.assignmentList = new ArrayList<Assignment>();
+        this.sendetAssignmentList = new ArrayList<Assignment>();
+    }
+
+    public void removeAllSendetAssignments(){
+        this.sendetAssignmentList = new ArrayList<Assignment>();
+    }
+
+    public List<Assignment> getSendetAssignmentList() {
+        return sendetAssignmentList;
+    }
+
+    public List<Assignment> getAssignmentList() {
+        return assignmentList;
     }
 
     public List<AssignmentDerliver> getAssignmentDerliverList() {

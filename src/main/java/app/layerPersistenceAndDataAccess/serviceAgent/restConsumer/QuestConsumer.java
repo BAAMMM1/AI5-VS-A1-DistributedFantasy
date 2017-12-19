@@ -169,6 +169,9 @@ public class QuestConsumer implements IQuestConsumer {
 
         String tokens = new JSONObject().put("tokens", tokenList).toString();
 
+        Blackboard.getInstance().getUser().removeAllAssignmentDerliver();
+        Blackboard.getInstance().getUser().removeAllSendetAssignments();
+
         /*
         if(Blackboard.getInstance().getUser().getAssignmentDerliver() != null) {
 
@@ -180,7 +183,7 @@ public class QuestConsumer implements IQuestConsumer {
 
 
 
-        System.out.println(tokens);
+        //System.out.println(tokens);
 
 
 
