@@ -23,10 +23,13 @@ public class GroupCreate extends Command {
 
         Group group = this.tavernaService.createGroup();
 
-        System.out.println(group.getId());
-        System.out.println(group.getOwner());
-        System.out.println(group.getMembers());
-        System.out.println(group.get_links().toString());
+        System.out.print("\n");
+        System.out.println("######################################################################################");
+        System.out.println("you are created the group: " + group.getId());
+        System.out.println("######################################################################################\n");
+        System.out.print("\n");
+        System.out.println("groupowner: " + group.getOwner());
+        System.out.println("groupmembers: " + group.getMembers());
 
         return null;
     }

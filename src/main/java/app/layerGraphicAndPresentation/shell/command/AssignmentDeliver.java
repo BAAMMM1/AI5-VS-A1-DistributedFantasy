@@ -22,6 +22,8 @@ public class AssignmentDeliver extends Command {
 
         this.heroToHeroService.sendAssignmentDeliver();
 
+        System.out.println("you have submitted the assignmentdeliver successfully");
+
         return null;
     }
 

@@ -3,6 +3,7 @@ package app.layerLogicAndService.cmpService.service;
 
 import app.Application;
 import app.configuration.API;
+import app.layerGraphicAndPresentation.shell.context.Context;
 import app.layerLogicAndService.cmpService.entity.blackboard.Blackboard;
 import app.layerLogicAndService.cmpService.entity.taverna.Adventurer;
 import app.layerLogicAndService.cmpService.exception.AlreadyInGroupException;
@@ -59,6 +60,7 @@ public class FromHeroService implements IFromHeroService {
     @Override
     public void addHiring(Hiring hiring) throws AlreadyInGroupException, UnexpectedResponseCodeException {
 
+        System.out.print("\n");
         System.out.println("attention!: you got an hiring");
         System.out.println("message: " + hiring.getMessage());
 
@@ -86,12 +88,15 @@ public class FromHeroService implements IFromHeroService {
 
         Blackboard.getInstance().getUser().setGroup(hiring.getGroup());
 
+        System.out.println(Context.getInstance().getPromptState());
+
 
     }
 
     @Override
     public void addAssignment(Assignment assignment) {
 
+        System.out.print("\n");
         System.out.println("attention!: you have got a assignment");
         System.out.println("the coordinator selected you to execute an " + assignment.getMethod() + " for task: " + assignment.getTask() + " to the ressource: " + assignment.getResource());
         System.out.println("messages: " + assignment.getMessage());
@@ -99,11 +104,14 @@ public class FromHeroService implements IFromHeroService {
 
         Blackboard.getInstance().getUser().setAssignment(assignment);
 
+        System.out.println(Context.getInstance().getPromptState());
+
     }
 
     @Override
     public void addAssignmentDeliver(AssignmentDerliver assignmentDerliver) throws UnexpectedResponseCodeException {
 
+        System.out.print("\n");
         System.out.println("attention!: a fellow has delivered his assignment");
         System.out.println("messages: " + assignmentDerliver.getMessage());
 
@@ -153,16 +161,21 @@ public class FromHeroService implements IFromHeroService {
 
         }
 
+        System.out.println(Context.getInstance().getPromptState());
+
     }
 
     @Override
     public void addMessage(Message message) {
 
+        System.out.print("\n");
         System.out.println("attention!: you have got a messages");
         System.out.println("type: " + message.getTyp());
         System.out.println("messages: " + message.getMessage());
 
         Blackboard.getInstance().getUser().addMessage(message);
+
+        System.out.println(Context.getInstance().getPromptState());
 
     }
 
@@ -179,6 +192,7 @@ public class FromHeroService implements IFromHeroService {
     @Override
     public void addElection(Election election) throws UnexpectedResponseCodeException, NotInGroupException {
 
+        System.out.print("\n");
         // TODO - Abfangen, wenn man noch nicht in der selen Gruppe ist
         if (Blackboard.getInstance().getUser().getCurrentGroup() == null) {
             logger.warn("current user is not in a group");
@@ -279,6 +293,8 @@ public class FromHeroService implements IFromHeroService {
             Blackboard.getInstance().getUser().getCurrentGroup().setCoordinator(election.getUser().replace("/users/", ""));
 
         }
+
+        System.out.println(Context.getInstance().getPromptState());
 
     }
 

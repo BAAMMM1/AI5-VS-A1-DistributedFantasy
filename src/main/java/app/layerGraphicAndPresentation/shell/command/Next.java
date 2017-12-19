@@ -25,6 +25,7 @@ public class Next extends Command{
 
         Visit visit = this.client.next();
 
+        System.out.print("\n");
         System.out.println(visit.getMessage());
         System.out.print("\n");
         System.out.println("required_players: " + visit.getRequired_players());

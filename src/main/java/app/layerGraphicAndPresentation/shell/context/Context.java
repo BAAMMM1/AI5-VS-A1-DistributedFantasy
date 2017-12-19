@@ -40,7 +40,7 @@ public class Context {
 
         if(state.equals(State.LOGIN)){
 
-            return "\n>> Distributed Fantasy@" + Blackboard.getInstance().getUser().getName() +" # ";
+            return "\n>> Distributed Fantasy @ " + Blackboard.getInstance().getUser().getName() +" # ";
 
         } else {
             return "\n>> Distributed Fantasy # ";

@@ -51,7 +51,7 @@ public class ToHeroService implements IToHeroService {
             heroServiceUrl = "http://" + heroServiceUrl;
         }
 
-        System.out.println(heroServiceUrl);
+        //System.out.println(heroServiceUrl);
 
         Service heroService = this.toHeroConsumer.getHeroService(heroServiceUrl);
 

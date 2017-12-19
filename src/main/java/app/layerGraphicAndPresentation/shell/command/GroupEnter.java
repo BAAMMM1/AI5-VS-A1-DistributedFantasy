@@ -36,16 +36,7 @@ public class GroupEnter extends Command{
 
         String response = this.tavernaService.enterGroup(Integer.parseInt(this.getParameter().get(0)));
 
-        /*
-        for(Adventurer adventurer: adventurerList){
-            System.out.println(adventurer.getUser());
-            System.out.println(adventurer.getHeroclass());
-            System.out.println(adventurer.getCapabilities());
-            System.out.println(adventurer.getUrl());
-        }
-        */
-
-        System.out.println(response);
+        System.out.println("joining the group was successful: " + response);
 
 
         return null;

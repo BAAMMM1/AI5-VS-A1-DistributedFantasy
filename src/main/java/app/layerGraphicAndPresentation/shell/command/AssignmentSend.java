@@ -42,6 +42,8 @@ public class AssignmentSend extends Command {
         // TODO - Message richtig entgegen nehmen - example(statt helloStranger -> hello Stranger)
         this.heroToHeroService.sendAssignment(this.getParameter().get(0), message);
 
+        System.out.println("you have submitted the assignment successfully");
+
         return null;
     }
 

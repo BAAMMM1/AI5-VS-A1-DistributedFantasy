@@ -52,7 +52,9 @@ public class DeliverSteps extends Command {
 
         Visit visit = this.client.deliverTaskPart();
 
-        System.out.println("message:" + visit.getMessage());
+        System.out.print("\n");
+        System.out.println(visit.getMessage());
+        System.out.print("\n");
 
         if (visit.getNext() != null) {
             System.out.println("next: " + visit.getNext());

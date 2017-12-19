@@ -41,7 +41,7 @@ public class Answer {
 
     @Override
     public String toString() {
-        return "Answer{" +
+        return "Post{" +
                 "\nmessage='" + message + '\'' +
                 ", \ntoken='" + token + '\'' +
                 ", \ntoken_name='" + token_name + '\'' +

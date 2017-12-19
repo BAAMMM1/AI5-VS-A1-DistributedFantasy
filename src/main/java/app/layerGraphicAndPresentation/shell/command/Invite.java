@@ -13,10 +13,10 @@ import java.util.List;
  */
 public class Invite extends Command {
 
-    IToHeroService heroToHeroService;
+    IToHeroService toHeroService;
 
-    public Invite(IToHeroService heroToHeroService) {
-        this.heroToHeroService = heroToHeroService;
+    public Invite(IToHeroService toHeroService) {
+        this.toHeroService = toHeroService;
     }
 
     @Override
@@ -40,12 +40,14 @@ public class Invite extends Command {
         message.substring(0, message.length()-1);
 
 
-        String invite = this.heroToHeroService.sendHiringForGroupToHero(this.getParameter().get(0),
+        String invite = this.toHeroService.sendHiringForGroupToHero(this.getParameter().get(0),
                 Integer.valueOf(this.getParameter().get(1)),
                 Integer.valueOf(this.getParameter().get(2)),
                 message)
                 ;
-        System.out.print(invite);
+
+        System.out.println("your hiring was successful!");
+        System.out.print("message: " + invite);
 
         return null;
     }

@@ -23,6 +23,8 @@ public class ElectionStart extends Command {
 
         this.toHeroService.doElection();
 
+        System.out.println("you jave started a election successfully");
+
         return null;
     }
 

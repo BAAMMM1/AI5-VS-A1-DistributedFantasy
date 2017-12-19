@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * @author Chris on 20.11.2017
  */
-public class Answer extends Command {
+public class Post extends Command {
 
     private IQuestService client;
 
@@ -23,7 +23,7 @@ public class Answer extends Command {
 
     private List<State> acceptedStates = new ArrayList<State>(Arrays.asList(State.LOGIN));
 
-    public Answer(IQuestService client) {
+    public Post(IQuestService client) {
         this.client = client;
     }
 
@@ -52,7 +52,9 @@ public class Answer extends Command {
                 this.getParameter().get(0)
         );
 
-        System.out.println("message: " + answer.getMessage());
+        System.out.print("\n");
+        System.out.println(answer.getMessage());
+        System.out.print("\n");
 
         if(answer.getToken_name() != null){
             System.out.println("token_name: " + answer.getToken_name());

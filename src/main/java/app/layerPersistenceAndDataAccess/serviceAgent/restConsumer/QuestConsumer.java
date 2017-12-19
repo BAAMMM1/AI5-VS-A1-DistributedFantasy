@@ -163,7 +163,7 @@ public class QuestConsumer implements IQuestConsumer {
             tokens = tokens + "]}";
         }
 
-        System.out.println(tokens);
+        //System.out.println(tokens);
 
 
 

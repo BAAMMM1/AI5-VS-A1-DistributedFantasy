@@ -54,9 +54,10 @@ public class Deliver extends Command {
         List<Delivery> list = this.client.deliverTask();
 
         for(Delivery delivery: list){
-            System.out.println("id: " + delivery.getId());
-            System.out.println("quest-id: " + delivery.getQuest());
-            System.out.println("user: " + delivery.getUser());
+            System.out.print("\n");
+            System.out.println("######################################################################################");
+            System.out.println("you have fulfilled the quest: " + delivery.getQuest());
+            System.out.println("######################################################################################\n");
         }
 
         return null;
