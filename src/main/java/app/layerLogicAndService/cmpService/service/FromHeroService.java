@@ -116,7 +116,10 @@ public class FromHeroService implements IFromHeroService {
         System.out.println("attention!: a fellow has delivered his assignment");
         System.out.println("message: " + assignmentDerliver.getMessage());
 
+        // TODO - AssignmentDerliver
         Blackboard.getInstance().getUser().setAssignmentDerliver(assignmentDerliver);
+
+        Blackboard.getInstance().getUser().addAssignmentDerliver(assignmentDerliver);
 
         if (assignmentDerliver.getData() != null) {
             Blackboard.getInstance().getUser().getCurrentQuesting().setRingToken(assignmentDerliver.getData());
@@ -148,7 +151,7 @@ public class FromHeroService implements IFromHeroService {
                                         API.ELECTION_STATE_COORDINATOR,
                                         Blackboard.getInstance().getUser().get_links().getSelf(),
                                         null,
-                                        "message"
+                                        "good job!"
                                 ));
 
                     } catch (Exception e) {

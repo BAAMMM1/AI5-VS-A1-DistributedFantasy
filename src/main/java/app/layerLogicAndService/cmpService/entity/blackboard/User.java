@@ -57,6 +57,8 @@ public class User {
 
     private AssignmentDerliver assignmentDerliver;
 
+    private List<AssignmentDerliver> assignmentDerliverList;
+
     private Assignment assignment;
 
     private Assignment sendetAssignment;
@@ -70,6 +72,19 @@ public class User {
         this.userToken = userToken;
         this.userTokenValidTime = userTokenValidTime;
         this.messages = new ArrayList<>();
+        this.assignmentDerliverList = new ArrayList<AssignmentDerliver>();
+    }
+
+    public List<AssignmentDerliver> getAssignmentDerliverList() {
+        return assignmentDerliverList;
+    }
+
+    public void addAssignmentDerliver(AssignmentDerliver assignmentDerliver){
+        this.assignmentDerliverList.add(assignmentDerliver);
+    }
+
+    public void removeAllAssignmentDerliver(){
+        this.assignmentDerliverList = new ArrayList<AssignmentDerliver>();
     }
 
     public boolean isDead() {

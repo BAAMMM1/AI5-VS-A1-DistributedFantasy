@@ -42,12 +42,10 @@ public class Register extends Command {
 
         User user = this.client.registerUser(this.getParameter().get(0), this.getParameter().get(1));
 
-        System.out.println("name: " + user.getName());
-        System.out.println("location: " + user.getLocation());
-        System.out.println("ip: " + user.getIp());
-        System.out.println("deliverables_done: " + user.getDeliverables_done());
+        System.out.println("register successful");
+        System.out.println("login successful: " + user.getName());
+        System.out.println("deliverables done: " + user.getDeliverables_done());
         System.out.println("delivered: " + user.getDelivered());
-        System.out.println("_links: " + user.get_links().toString());
 
 
         return State.LOGIN;
