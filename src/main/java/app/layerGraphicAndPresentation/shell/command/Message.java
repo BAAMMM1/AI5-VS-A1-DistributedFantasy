@@ -41,7 +41,7 @@ public class Message extends Command{
 
         this.heroToHeroService.sendMessage(this.getParameter().get(0), message);
 
-        System.out.println("your message was send successful !");
+        System.out.println("your message was send successful!");
 
         return null;
     }

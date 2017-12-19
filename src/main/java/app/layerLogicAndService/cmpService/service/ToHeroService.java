@@ -178,9 +178,9 @@ public class ToHeroService implements IToHeroService {
                 Blackboard.getInstance().getUser().getAssignment().getMethod(),
                 data,
                 Blackboard.getInstance().getUser().get_links().getSelf(),
-                "message");
+                "i done the job!");
 
-        System.out.println(data);
+        //System.out.println(data);
 
         toHeroConsumer.sendAssignmentDeliver(Blackboard.getInstance().getUser().getAssignment().getCallback(), assignmentDerliver);
 
@@ -217,7 +217,7 @@ public class ToHeroService implements IToHeroService {
                 "POST", // TODO - method muss vom command mit übergeben werden,per user eingabe
                 data,
                 "http://" + Application.IP + ":8080/assignments/deliveries",
-                "message"
+                "do the job!"
         );
 
         this.startElection(assignment);
@@ -265,7 +265,7 @@ public class ToHeroService implements IToHeroService {
                                     API.ELECTION_STATE_ELECTION,
                                     Blackboard.getInstance().getUser().get_links().getSelf(),
                                     assignment,
-                                    "message"
+                                    "we have to elect a new coordinator"
                             ));
 
                 } catch (Exception e) {
@@ -289,13 +289,13 @@ public class ToHeroService implements IToHeroService {
         // TODO - falls electionWinFlag = false, tue nichts - wir haben ein answer bekommen
         if (!Blackboard.getInstance().getUser().isElectionWinFlag()) {
             logger.info("user losed the election");
-            System.out.print("you lose the election");
+            System.out.print("\nyou lose the election");
         }
 
         // TODO - falls electionWinFlag true, sende hier an alle status coordinator
         if (Blackboard.getInstance().getUser().isElectionWinFlag()) {
             logger.info("user wins the election");
-            System.out.print("you win the election, your are now the new coordinator");
+            System.out.print("\nyou win the election, your are now the new coordinator\n");
 
             List<Adventurer> groupMemberList = this.tavernaService.getGroupMembers(Blackboard.getInstance().getUser().getCurrentGroup().getId());
 
@@ -320,7 +320,7 @@ public class ToHeroService implements IToHeroService {
                                     API.ELECTION_STATE_COORDINATOR,
                                     Blackboard.getInstance().getUser().get_links().getSelf(),
                                     null,
-                                    "message"
+                                    "no its my time!"
                             ));
 
                 } catch (Exception e) {

@@ -172,7 +172,7 @@ public class FromHeroService implements IFromHeroService {
         System.out.print("\n");
         System.out.println("attention!: you have got a messages");
         System.out.println("type: " + message.getTyp());
-        System.out.println("messages: " + message.getMessage());
+        System.out.println("message: " + message.getMessage());
 
         Blackboard.getInstance().getUser().addMessage(message);
 
@@ -203,6 +203,8 @@ public class FromHeroService implements IFromHeroService {
         // Sicht des Empfänger der Election
         System.out.println("attention!: you have got a election");
         System.out.println("state: " + election.getPayload());
+        System.out.println("from: " + election.getUser());
+        System.out.println("message: " + election.getMessage());
 
         // 1. Um welche Election Stand handelt es sich? election || answer || coordinator
         if (election.getPayload().equals(API.ELECTION_STATE_ELECTION)) {

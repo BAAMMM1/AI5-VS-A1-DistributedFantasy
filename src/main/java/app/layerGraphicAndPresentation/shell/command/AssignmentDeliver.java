@@ -11,16 +11,16 @@ import java.io.IOException;
  */
 public class AssignmentDeliver extends Command {
 
-    IToHeroService heroToHeroService;
+    IToHeroService toHeroService;
 
-    public AssignmentDeliver(IToHeroService heroToHeroService) {
-        this.heroToHeroService = heroToHeroService;
+    public AssignmentDeliver(IToHeroService toHeroService) {
+        this.toHeroService = toHeroService;
     }
 
     @Override
     State instruction() throws UnexpectedResponseCodeException, IOException, InterruptedException {
 
-        this.heroToHeroService.sendAssignmentDeliver();
+        this.toHeroService.sendAssignmentDeliver();
 
         System.out.println("you have submitted the assignmentdeliver successfully");
 
