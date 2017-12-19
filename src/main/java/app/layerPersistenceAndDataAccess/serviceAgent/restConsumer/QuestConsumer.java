@@ -121,6 +121,7 @@ public class QuestConsumer implements IQuestConsumer {
 
         strings.add(JSONUtil.getObject(response.getBody(), "token", String.class));
         strings.add(JSONUtil.getObject(response.getBody(), "message", String.class));
+        strings.add(JSONUtil.getObject(response.getBody(), "token_name", String.class));
 
         return strings;
     }

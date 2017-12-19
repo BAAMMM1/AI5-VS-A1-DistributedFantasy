@@ -263,9 +263,10 @@ public class QuestService implements IQuestService {
                         assignment.getMethod(),
                         strings.get(0),
                         Blackboard.getInstance().getUser().get_links().getSelf(),
-                        strings.get(1));
+                        strings.get(1) + "\n" + strings.get(2));
 
                 System.out.print(strings.get(1)+"\n");
+                System.out.print(strings.get(2)+"\n");
 
                 this.toHeroConsumer.sendAssignmentDeliver(assignment.getCallback(), deliver);
 
