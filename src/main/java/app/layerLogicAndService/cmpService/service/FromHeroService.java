@@ -99,7 +99,7 @@ public class FromHeroService implements IFromHeroService {
 
         System.out.print("\n");
         System.out.println("attention!: you have got a assignment");
-        System.out.println("the coordinator selected you to execute an " + assignment.getMethod() + " for task: " + assignment.getTask() + " to the ressource: " + assignment.getResource());
+        System.out.println("execute an " + assignment.getMethod() + " for task: " + assignment.getTask() + " to the ressource: " + assignment.getResource());
         System.out.println("messages: " + assignment.getMessage());
         System.out.println("use the command \"assignment\" to do your job");
 

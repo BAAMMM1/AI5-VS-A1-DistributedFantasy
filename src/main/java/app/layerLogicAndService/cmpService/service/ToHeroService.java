@@ -320,7 +320,7 @@ public class ToHeroService implements IToHeroService {
                                     API.ELECTION_STATE_COORDINATOR,
                                     Blackboard.getInstance().getUser().get_links().getSelf(),
                                     null,
-                                    "no its my time!"
+                                    "now its my time!"
                             ));
 
                 } catch (Exception e) {
