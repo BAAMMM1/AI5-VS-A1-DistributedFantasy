@@ -205,7 +205,7 @@ public class ToHeroService implements IToHeroService {
             if (Blackboard.getInstance().getUser().getCurrentQuesting().getRingToken() == null) {
                 data = "{\"group\":\"" + Blackboard.getInstance().getUser().getCurrentGroup().get_links().getSelf() + "\"}";
             } else {
-                data = "{\"group\":\"/taverna/groups/857\",\"token\":\"" + Blackboard.getInstance().getUser().getCurrentQuesting().getRingToken() + "\"}";
+                data = "{\"group\":\"" + Blackboard.getInstance().getUser().getCurrentGroup().get_links().getSelf() + "\",\"token\":\"" + Blackboard.getInstance().getUser().getCurrentQuesting().getRingToken() + "\"}";
             }
 
         }
