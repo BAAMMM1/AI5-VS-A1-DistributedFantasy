@@ -26,7 +26,11 @@ public class Step extends Command{
 
         Visit visit = this.client.step(Integer.valueOf(this.getParameter().get(0)));
 
-        System.out.println("message:" + visit.getMessage());
+        System.out.println(visit.getMessage());
+        System.out.print("\n");
+        System.out.println("required_players: " + visit.getRequired_players());
+        System.out.println("required_tokens: " + visit.getRequired_tokens());
+        System.out.print("\n");
 
         if (visit.getNext() != null) {
             System.out.println("next: " + visit.getNext());
@@ -36,8 +40,7 @@ public class Step extends Command{
             System.out.println("steps_todo: " + visit.getSteps_todo());
         }
 
-        System.out.println("required_players: " + visit.getRequired_players());
-        System.out.println("required_tokens: " + visit.getRequired_tokens());
+
 
         if (visit.getToken_name() != null) {
             System.out.println("token_name: " + visit.getToken_name());
