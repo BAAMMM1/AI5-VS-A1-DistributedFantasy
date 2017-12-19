@@ -14,6 +14,7 @@ import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.ToHeroConsume
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.IToHeroConsumer;
 import org.apache.log4j.Logger;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -131,6 +132,53 @@ public class ToHeroService implements IToHeroService {
                 Blackboard.getInstance().getUser().getCurrentQuesting().getCurrentUri(),
                 "POST", // TODO - method muss vom command mit übergeben werden,per user eingabe
                 " ",
+                "http://" + Application.IP + ":8080/assignments/deliveries",
+                message
+        );
+
+        //Blackboard.getInstance().getUser().setSendetAssignment(assignment);
+        Blackboard.getInstance().getUser().getSendetAssignmentList().add(assignment);
+
+        this.toHeroConsumer.sendAssignment(heroAssignmentUrl, assignment);
+
+    }
+
+    @Override
+    public void sendEndAssignment(String adventurer, String message) throws UnexpectedResponseCodeException {
+
+        if(Blackboard.getInstance().getUser().getCurrentQuesting().getTask().getToken() == null){
+            throw new IllegalArgumentException("cant send end token, because empty");
+        }
+
+        Adventurer adven = this.tavernaService.getAdventure(adventurer);
+
+        String heroServiceUrl = adven.getUrl();
+
+        if (!heroServiceUrl.substring(0, 7).equals("http://")) {
+            heroServiceUrl = "http://" + heroServiceUrl;
+        }
+
+        Service heroService = this.toHeroConsumer.getHeroService(heroServiceUrl);
+
+        String heroAssignmentUrl = heroService.getAssignments();
+
+        if (!heroAssignmentUrl.substring(0, 7).equals("http://")) {
+            heroAssignmentUrl = "http://" + heroAssignmentUrl;
+        }
+
+        // creating the body with the task token
+        JSONObject jsonToken = new JSONObject();
+        jsonToken.put(Blackboard.getInstance().getUrl() + Blackboard.getInstance().getUser().getCurrentQuesting().getTask().get_links().getSelf(), Blackboard.getInstance().getUser().getCurrentQuesting().getTask().getToken());
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("tokens", jsonToken);
+
+        Assignment assignment = new Assignment(
+                String.valueOf(Assignment.counter),
+                Blackboard.getInstance().getUser().getCurrentQuesting().getTask().get_links().getSelf(),
+                API.BLACKBOARD_QUESTS +"/" + Blackboard.getInstance().getUser().getCurrentQuesting().getTask().getQuest() + "/deliveries",
+                "POST", // TODO - method muss vom command mit übergeben werden,per user eingabe
+                jsonToken.toString(),
                 "http://" + Application.IP + ":8080/assignments/deliveries",
                 message
         );

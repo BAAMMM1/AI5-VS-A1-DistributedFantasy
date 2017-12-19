@@ -140,6 +140,7 @@ public class InputInterpreter {
         registerCommands.add(new ElectionStart(toHeroService));
         registerCommands.add(new Dead());
         registerCommands.add(new Live());
+        registerCommands.add(new AssignmentSendEnd(toHeroService));
 
     }
 

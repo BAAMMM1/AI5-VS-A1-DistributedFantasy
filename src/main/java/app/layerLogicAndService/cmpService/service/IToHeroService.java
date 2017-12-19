@@ -14,6 +14,7 @@ public interface IToHeroService {
     void sendMessage(String adventurer, String string) throws UnexpectedResponseCodeException;
     void sendAssignment(String adventurer,  String message) throws UnexpectedResponseCodeException;
     void sendAssignmentDeliver() throws UnexpectedResponseCodeException;
+    void sendEndAssignment(String adventurer, String message) throws UnexpectedResponseCodeException;
 
     // Sicht des Senders der Election (addElection starten)
     void startElection(Assignment assignment) throws UnexpectedResponseCodeException, NotInGroupException;
