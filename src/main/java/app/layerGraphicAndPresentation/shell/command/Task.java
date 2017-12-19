@@ -52,11 +52,14 @@ public class Task extends Command {
 
         app.layerLogicAndService.cmpService.entity.quest.Task task = this.client.getTask(Integer.valueOf(this.getParameter().get(0)));
 
-        System.out.println("task-id: " + task.getId());
-        System.out.println("quest-id: " + task.getQuest());
-        System.out.println("name: " + task.getName().toString());
-        System.out.println("name: " + task.getDescription().toString());
+        System.out.print("\n");
+        System.out.println("######################################################################################\n");
+        System.out.println("\t\t\t\t   " + task.getName().toString() + "\n");
+        System.out.println("######################################################################################");
+        System.out.println(task.getDescription().toString());
+        System.out.print("\n");
         System.out.println("location: " + task.getLocation().toString());
+        System.out.print("\n");
         System.out.println("required_players: " + task.getRequired_players());
         System.out.println("requirements: " + task.getRequirements());
 
