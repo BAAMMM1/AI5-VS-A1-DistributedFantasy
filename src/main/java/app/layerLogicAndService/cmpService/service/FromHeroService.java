@@ -10,9 +10,7 @@ import app.layerLogicAndService.cmpService.exception.AlreadyInGroupException;
 import app.layerLogicAndService.cmpService.entity.hero.*;
 import app.layerLogicAndService.cmpService.entity.taverna.Group;
 import app.layerLogicAndService.cmpService.exception.NotInGroupException;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.ITavernaConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.IToHeroConsumer;
-import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.TavernaConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.ToHeroConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 import org.apache.log4j.Logger;
@@ -103,7 +101,7 @@ public class FromHeroService implements IFromHeroService {
         System.out.println("message: \n" + assignment.getMessage());
         System.out.println("use the command \"assignment\" to do your job");
 
-        Blackboard.getInstance().getUser().setAssignment(assignment);
+        //Blackboard.getInstance().getUser().setAssignment(assignment);
 
         Blackboard.getInstance().getUser().getAssignmentList().add(assignment);
 
@@ -112,23 +110,23 @@ public class FromHeroService implements IFromHeroService {
     }
 
     @Override
-    public void addAssignmentDeliver(AssignmentDerliver assignmentDerliver) throws UnexpectedResponseCodeException {
+    public void addAssignmentDeliver(AssignmentDeliver assignmentDeliver) throws UnexpectedResponseCodeException {
 
         System.out.print("\n");
         System.out.println("attention!: a fellow has delivered his assignment");
-        System.out.println("message: " + assignmentDerliver.getMessage());
+        System.out.println("message: " + assignmentDeliver.getMessage());
 
-        // TODO - AssignmentDerliver
-        Blackboard.getInstance().getUser().setAssignmentDerliver(assignmentDerliver);
+        // TODO - AssignmentDeliver
+        //Blackboard.getInstance().getUser().setAssignmentDeliver(assignmentDeliver);
 
-        Blackboard.getInstance().getUser().addAssignmentDerliver(assignmentDerliver);
+        Blackboard.getInstance().getUser().addAssignmentDerliver(assignmentDeliver);
 
-        if (assignmentDerliver.getData() != null) {
-            Blackboard.getInstance().getUser().getCurrentQuesting().setRingToken(assignmentDerliver.getData());
-            Blackboard.getInstance().getUser().getCurrentQuesting().getTask().setToken(assignmentDerliver.getData());
+        if (assignmentDeliver.getData() != null) {
+            Blackboard.getInstance().getUser().getCurrentQuesting().setRingToken(assignmentDeliver.getData());
+            Blackboard.getInstance().getUser().getCurrentQuesting().getTask().setToken(assignmentDeliver.getData());
 
             // TODO - assignment ID für assignment job von einer election
-            if(assignmentDerliver.getId().contains(ELECTION_IDENTIFIER)) {
+            if(assignmentDeliver.getId().contains(ELECTION_IDENTIFIER)) {
                 // TODO - schön machen
                 List<Adventurer> groupMemberList = this.tavernaService.getGroupMembers(Blackboard.getInstance().getUser().getCurrentGroup().getId());
 

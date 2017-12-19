@@ -1,7 +1,7 @@
 package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer;
 
 import app.layerLogicAndService.cmpService.entity.blackboard.Blackboard;
-import app.layerLogicAndService.cmpService.entity.hero.AssignmentDerliver;
+import app.layerLogicAndService.cmpService.entity.hero.AssignmentDeliver;
 import app.layerLogicAndService.cmpService.entity.quest.*;
 import app.layerLogicAndService.cmpService.util.JSONUtil;
 import app.layerLogicAndService.cmpService.entity.quest.questing.Step;
@@ -10,7 +10,6 @@ import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.service.HttpAcc
 import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.entity.HttpResponse;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 import app.configuration.API;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.google.gson.Gson;
 import org.json.JSONObject;
 
@@ -160,9 +159,9 @@ public class QuestConsumer implements IQuestConsumer {
         for (Step step : taskpart.getStepList()) {
             tokenList.add(step.getToken().getToken());
         }
-        List<AssignmentDerliver> assignmentDerliverList = Blackboard.getInstance().getUser().getAssignmentDerliverList();
-        if(!assignmentDerliverList.isEmpty()){
-            for (AssignmentDerliver derliver: assignmentDerliverList){
+        List<AssignmentDeliver> assignmentDeliverList = Blackboard.getInstance().getUser().getAssignmentDeliverList();
+        if(!assignmentDeliverList.isEmpty()){
+            for (AssignmentDeliver derliver: assignmentDeliverList){
                 tokenList.add(derliver.getData());
             }
         }
@@ -173,10 +172,10 @@ public class QuestConsumer implements IQuestConsumer {
         Blackboard.getInstance().getUser().removeAllSendetAssignments();
 
         /*
-        if(Blackboard.getInstance().getUser().getAssignmentDerliver() != null) {
+        if(Blackboard.getInstance().getUser().getAssignmentDeliver() != null) {
 
             tokens = tokens.substring(0, tokens.length()-2);
-            tokens = tokens + ", " +Blackboard.getInstance().getUser().getAssignmentDerliver().getData();
+            tokens = tokens + ", " +Blackboard.getInstance().getUser().getAssignmentDeliver().getData();
             tokens = tokens + "]}";
         }
        */

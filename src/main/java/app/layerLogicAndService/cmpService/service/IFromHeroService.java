@@ -15,7 +15,7 @@ public interface IFromHeroService {
     Service getService();
     void addHiring(Hiring hiring) throws AlreadyInGroupException, UnexpectedResponseCodeException;
     void addAssignment(Assignment assignment);
-    void addAssignmentDeliver(AssignmentDerliver assignmentDerliver) throws UnexpectedResponseCodeException;
+    void addAssignmentDeliver(AssignmentDeliver assignmentDeliver) throws UnexpectedResponseCodeException;
     void addMessage(Message message);
     List<Message> getMessages();
     void addElection(Election election) throws UnexpectedResponseCodeException, NotInGroupException;

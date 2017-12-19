@@ -135,7 +135,7 @@ public class ToHeroService implements IToHeroService {
                 message
         );
 
-        Blackboard.getInstance().getUser().setSendetAssignment(assignment);
+        //Blackboard.getInstance().getUser().setSendetAssignment(assignment);
         Blackboard.getInstance().getUser().getSendetAssignmentList().add(assignment);
 
         this.toHeroConsumer.sendAssignment(heroAssignmentUrl, assignment);
@@ -172,18 +172,18 @@ public class ToHeroService implements IToHeroService {
 
         data = data.substring(0, data.length() - 2);
 
-        AssignmentDerliver assignmentDerliver = new AssignmentDerliver(
-                Blackboard.getInstance().getUser().getAssignment().getId(),
-                Blackboard.getInstance().getUser().getAssignment().getTask(),
-                Blackboard.getInstance().getUser().getAssignment().getResource(),
-                Blackboard.getInstance().getUser().getAssignment().getMethod(),
+        AssignmentDeliver assignmentDeliver = new AssignmentDeliver(
+                Blackboard.getInstance().getUser().getAssignmentList().get(0).getId(),
+                Blackboard.getInstance().getUser().getAssignmentList().get(0).getTask(),
+                Blackboard.getInstance().getUser().getAssignmentList().get(0).getResource(),
+                Blackboard.getInstance().getUser().getAssignmentList().get(0).getMethod(),
                 data,
                 Blackboard.getInstance().getUser().get_links().getSelf(),
                 "i done the job!");
 
         //System.out.println(data);
 
-        toHeroConsumer.sendAssignmentDeliver(Blackboard.getInstance().getUser().getAssignment().getCallback(), assignmentDerliver);
+        toHeroConsumer.sendAssignmentDeliver(Blackboard.getInstance().getUser().getAssignmentList().get(0).getCallback(), assignmentDeliver);
 
     }
 

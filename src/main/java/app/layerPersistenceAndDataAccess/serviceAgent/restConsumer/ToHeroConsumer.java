@@ -67,7 +67,7 @@ public class ToHeroConsumer implements IToHeroConsumer {
     }
 
     @Override
-    public void sendAssignmentDeliver(String assignmentDeliverUrl, AssignmentDerliver assignmentDeliver) throws UnexpectedResponseCodeException {
+    public void sendAssignmentDeliver(String assignmentDeliverUrl, AssignmentDeliver assignmentDeliver) throws UnexpectedResponseCodeException {
 
         HttpResponse response = this.httpAccess.post(assignmentDeliverUrl, gson.toJson(assignmentDeliver));
 

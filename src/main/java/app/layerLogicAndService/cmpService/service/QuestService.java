@@ -2,7 +2,7 @@ package app.layerLogicAndService.cmpService.service;
 
 import app.layerLogicAndService.cmpService.entity.blackboard.Blackboard;
 import app.layerLogicAndService.cmpService.entity.hero.Assignment;
-import app.layerLogicAndService.cmpService.entity.hero.AssignmentDerliver;
+import app.layerLogicAndService.cmpService.entity.hero.AssignmentDeliver;
 import app.layerLogicAndService.cmpService.entity.quest.*;
 import app.layerLogicAndService.cmpService.entity.quest.questing.Questing;
 import app.layerLogicAndService.cmpService.entity.quest.questing.Step;
@@ -155,7 +155,7 @@ public class QuestService implements IQuestService {
         }
         */
 
-        if(Blackboard.getInstance().getUser().getSendetAssignmentList().size() != Blackboard.getInstance().getUser().getAssignmentDerliverList().size()){
+        if(Blackboard.getInstance().getUser().getSendetAssignmentList().size() != Blackboard.getInstance().getUser().getAssignmentDeliverList().size()){
             throw new IllegalArgumentException("not all sendet assignments delivered at this time");
         }
         // TODO - Auf korrekte ids prüfen
@@ -165,10 +165,10 @@ public class QuestService implements IQuestService {
         // Prüfen ob alle Assignments abgeliefert
         if(Blackboard.getInstance().getUser().getSendetAssignment() != null){
 
-            if(Blackboard.getInstance().getUser().getAssignmentDerliver() == null){
+            if(Blackboard.getInstance().getUser().getAssignmentDeliver() == null){
                 throw new IllegalArgumentException("assignment not delivered");
             } else {
-                if(Blackboard.getInstance().getUser().getAssignmentDerliver().getId() != Blackboard.getInstance().getUser().getAssignmentDerliver().getId()){
+                if(Blackboard.getInstance().getUser().getAssignmentDeliver().getId() != Blackboard.getInstance().getUser().getAssignmentDeliver().getId()){
                     throw new IllegalArgumentException("assignment id != assignmentdeliver id");
                 }
             }
@@ -271,7 +271,7 @@ public class QuestService implements IQuestService {
 
                 List<String> strings = this.questConsumer.postData(Blackboard.getInstance().getUser().getCurrentQuesting().getMap().getHost(), Blackboard.getInstance().getUser().getCurrentQuesting().getCurrentUri(), assignment.getData());
 
-                AssignmentDerliver deliver = new AssignmentDerliver(assignment.getId(),
+                AssignmentDeliver deliver = new AssignmentDeliver(assignment.getId(),
                         assignment.getTask(),
                         assignment.getResource(),
                         assignment.getMethod(),

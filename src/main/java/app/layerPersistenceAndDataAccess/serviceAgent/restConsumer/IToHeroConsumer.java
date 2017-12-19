@@ -14,7 +14,7 @@ public interface IToHeroConsumer {
     String sendHiring(Hiring hiring, String herHiringUrl) throws UnexpectedResponseCodeException;
     void sendMessage(Message message, String heroMessageUrl) throws UnexpectedResponseCodeException;
     void sendAssignment(String heroAssignmentUrl, Assignment assignment) throws UnexpectedResponseCodeException;
-    void sendAssignmentDeliver(String assignmentDeliverUrl, AssignmentDerliver assignmentDeliver) throws UnexpectedResponseCodeException;
+    void sendAssignmentDeliver(String assignmentDeliverUrl, AssignmentDeliver assignmentDeliver) throws UnexpectedResponseCodeException;
     void sendElection(String electionUrl, Election election) throws UnexpectedResponseCodeException;
 
 

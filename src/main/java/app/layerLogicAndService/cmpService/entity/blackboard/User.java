@@ -1,7 +1,7 @@
 package app.layerLogicAndService.cmpService.entity.blackboard;
 
 import app.layerLogicAndService.cmpService.entity.hero.Assignment;
-import app.layerLogicAndService.cmpService.entity.hero.AssignmentDerliver;
+import app.layerLogicAndService.cmpService.entity.hero.AssignmentDeliver;
 import app.layerLogicAndService.cmpService.entity.hero.Message;
 import app.layerLogicAndService.cmpService.entity.quest.Link;
 import app.layerLogicAndService.cmpService.entity.quest.questing.Questing;
@@ -55,15 +55,9 @@ public class User {
 
     private Questing currentQuesting;
 
-    private AssignmentDerliver assignmentDerliver;
-
-    private List<AssignmentDerliver> assignmentDerliverList;
-
-    private Assignment assignment;
-
     private List<Assignment> assignmentList;
 
-    private Assignment sendetAssignment;
+    private List<AssignmentDeliver> assignmentDeliverList;
 
     private List<Assignment> sendetAssignmentList;
 
@@ -76,7 +70,7 @@ public class User {
         this.userToken = userToken;
         this.userTokenValidTime = userTokenValidTime;
         this.messages = new ArrayList<>();
-        this.assignmentDerliverList = new ArrayList<AssignmentDerliver>();
+        this.assignmentDeliverList = new ArrayList<AssignmentDeliver>();
         this.assignmentList = new ArrayList<Assignment>();
         this.sendetAssignmentList = new ArrayList<Assignment>();
     }
@@ -93,16 +87,16 @@ public class User {
         return assignmentList;
     }
 
-    public List<AssignmentDerliver> getAssignmentDerliverList() {
-        return assignmentDerliverList;
+    public List<AssignmentDeliver> getAssignmentDeliverList() {
+        return assignmentDeliverList;
     }
 
-    public void addAssignmentDerliver(AssignmentDerliver assignmentDerliver){
-        this.assignmentDerliverList.add(assignmentDerliver);
+    public void addAssignmentDerliver(AssignmentDeliver assignmentDeliver){
+        this.assignmentDeliverList.add(assignmentDeliver);
     }
 
     public void removeAllAssignmentDerliver(){
-        this.assignmentDerliverList = new ArrayList<AssignmentDerliver>();
+        this.assignmentDeliverList = new ArrayList<AssignmentDeliver>();
     }
 
     public boolean isDead() {
@@ -229,22 +223,6 @@ public class User {
         this.currentQuesting = currentQuesting;
     }
 
-    public AssignmentDerliver getAssignmentDerliver() {
-        return assignmentDerliver;
-    }
-
-    public void setAssignmentDerliver(AssignmentDerliver assignmentDerliver) {
-        this.assignmentDerliver = assignmentDerliver;
-    }
-
-    public Assignment getAssignment() {
-        return assignment;
-    }
-
-    public void setAssignment(Assignment assignment) {
-        this.assignment = assignment;
-    }
-
     public Group getCurrentGroup() {
         return currentGroup;
     }
@@ -253,13 +231,6 @@ public class User {
         this.currentGroup = currentGroup;
     }
 
-    public Assignment getSendetAssignment() {
-        return sendetAssignment;
-    }
-
-    public void setSendetAssignment(Assignment sendetAssignment) {
-        this.sendetAssignment = sendetAssignment;
-    }
 
     @Override
     public String toString() {

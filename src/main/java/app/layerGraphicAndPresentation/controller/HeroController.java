@@ -97,7 +97,7 @@ public class HeroController {
             value = API.PATH_ASSIGNMENTS + "/deliveries",
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> addAssignmentDeliver(@RequestBody AssignmentDerliver request){
+    public ResponseEntity<?> addAssignmentDeliver(@RequestBody AssignmentDeliver request){
 
         try{
 
