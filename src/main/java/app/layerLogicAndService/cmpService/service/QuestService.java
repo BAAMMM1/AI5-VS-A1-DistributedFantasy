@@ -193,6 +193,7 @@ public class QuestService implements IQuestService {
     @Override
     public Visit doAssignment() throws UnexpectedResponseCodeException {
 
+
         if(Blackboard.getInstance().getUser().getAssignment() == null){
             throw new IllegalArgumentException("no assignment at the moment");
         }
@@ -209,6 +210,26 @@ public class QuestService implements IQuestService {
         Visit dto = this.questConsumer.visitHost(map.getHost(), assignment.getResource());
 
         Blackboard.getInstance().getUser().setCurrentQuesting(new Questing(task, map, assignment.getResource()));
+
+        // TODO - raus ziehen
+        System.out.print("\n");
+        System.out.println(dto.getMessage());
+        System.out.print("\n");
+        System.out.println("required_players: " + dto.getRequired_players());
+        System.out.println("required_tokens: " + dto.getRequired_tokens());
+        System.out.print("\n");
+
+        if (dto.getNext() != null) {
+            System.out.println("next: " + dto.getNext());
+        }
+
+        if (dto.getSteps_todo() != null) {
+            System.out.println("steps_todo: " + dto.getSteps_todo());
+        }
+
+        if (dto.getToken_name() != null) {
+            System.out.println("token_name: " + dto.getToken_name());
+        }
 
 
 
@@ -246,6 +267,7 @@ public class QuestService implements IQuestService {
 
                 this.toHeroConsumer.sendAssignmentDeliver(assignment.getCallback(), deliver);
 
+                // TODO - raus ziehen
                 System.out.print(strings.get(1));
             }
         }
