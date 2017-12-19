@@ -60,15 +60,15 @@ public class HeroController {
 
         try {
             logger.info(request.toString());
-            
+
             this.fromHeroService.addHiring(request);
             return new ResponseEntity<>("i accepted your hiring!", HttpStatus.OK);
 
         } catch (AlreadyInGroupException e) {
-            return new ResponseEntity<>(this.gson.toJson(e.getMessage()), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 
         } catch (Exception e) {
-            return new ResponseEntity<>(new JSONObject().put(API.MESSAGE, e.getMessage()).toString(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(API.MESSAGE, HttpStatus.BAD_REQUEST);
 
         }
     }

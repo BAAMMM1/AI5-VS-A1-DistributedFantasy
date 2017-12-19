@@ -46,7 +46,7 @@ public class Invite extends Command {
                 message)
                 ;
 
-        System.out.println("your hiring was successful!");
+        System.out.println("your hiring was send successful!");
         System.out.print("message: " + invite);
 
         return null;

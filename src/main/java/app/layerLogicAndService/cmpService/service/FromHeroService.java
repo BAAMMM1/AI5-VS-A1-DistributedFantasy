@@ -66,6 +66,7 @@ public class FromHeroService implements IFromHeroService {
 
         if (Blackboard.getInstance().getUser().getGroup() != null) {
             System.out.println("hiring was declined automatically because you are already in a group");
+            System.out.print(Context.getInstance().getPromptState());
             throw new AlreadyInGroupException(GROUP_DENIED);
         }
 
