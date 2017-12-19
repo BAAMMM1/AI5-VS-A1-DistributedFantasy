@@ -88,7 +88,7 @@ public class FromHeroService implements IFromHeroService {
 
         Blackboard.getInstance().getUser().setGroup(hiring.getGroup());
 
-        System.out.println(Context.getInstance().getPromptState());
+        System.out.print(Context.getInstance().getPromptState());
 
 
     }
@@ -104,7 +104,7 @@ public class FromHeroService implements IFromHeroService {
 
         Blackboard.getInstance().getUser().setAssignment(assignment);
 
-        System.out.println(Context.getInstance().getPromptState());
+        System.out.print(Context.getInstance().getPromptState());
 
     }
 
@@ -161,7 +161,7 @@ public class FromHeroService implements IFromHeroService {
 
         }
 
-        System.out.println(Context.getInstance().getPromptState());
+        System.out.print(Context.getInstance().getPromptState());
 
     }
 
@@ -175,7 +175,7 @@ public class FromHeroService implements IFromHeroService {
 
         Blackboard.getInstance().getUser().addMessage(message);
 
-        System.out.println(Context.getInstance().getPromptState());
+        System.out.print(Context.getInstance().getPromptState());
 
     }
 
@@ -294,7 +294,7 @@ public class FromHeroService implements IFromHeroService {
 
         }
 
-        System.out.println(Context.getInstance().getPromptState());
+        System.out.print(Context.getInstance().getPromptState());
 
     }
 

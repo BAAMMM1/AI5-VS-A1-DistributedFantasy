@@ -56,6 +56,7 @@ public class Task extends Command {
         System.out.println("######################################################################################\n");
         System.out.println("\t\t\t\t   " + task.getName().toString() + "\n");
         System.out.println("######################################################################################");
+        System.out.print("\n");
         System.out.println(task.getDescription().toString());
         System.out.print("\n");
         System.out.println("location: " + task.getLocation().toString().replace("/map/", ""));

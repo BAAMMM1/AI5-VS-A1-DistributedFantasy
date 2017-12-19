@@ -26,7 +26,7 @@ public class GroupCreate extends Command {
         System.out.print("\n");
         System.out.println("######################################################################################");
         System.out.println("you are created the group: " + group.getId());
-        System.out.println("######################################################################################\n");
+        System.out.println("######################################################################################");
         System.out.print("\n");
         System.out.println("groupowner: " + group.getOwner());
         System.out.println("groupmembers: " + group.getMembers());

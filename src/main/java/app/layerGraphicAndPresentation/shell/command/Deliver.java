@@ -57,7 +57,7 @@ public class Deliver extends Command {
             System.out.print("\n");
             System.out.println("######################################################################################");
             System.out.println("you have fulfilled the quest: " + delivery.getQuest());
-            System.out.println("######################################################################################\n");
+            System.out.println("######################################################################################");
         }
 
         return null;

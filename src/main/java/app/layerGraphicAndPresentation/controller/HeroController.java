@@ -59,7 +59,8 @@ public class HeroController {
     public ResponseEntity<?> addhiring(@RequestBody Hiring request) {
 
         try {
-            System.out.println(request.toString());
+            logger.info(request.toString());
+            
             this.fromHeroService.addHiring(request);
             return new ResponseEntity<>("i accepted your hiring!", HttpStatus.OK);
 

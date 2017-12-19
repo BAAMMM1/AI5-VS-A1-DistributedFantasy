@@ -52,9 +52,7 @@ public class Post extends Command {
                 this.getParameter().get(0)
         );
 
-        System.out.print("\n");
         System.out.println(answer.getMessage());
-        System.out.print("\n");
 
         if(answer.getToken_name() != null){
             System.out.println("token_name: " + answer.getToken_name());

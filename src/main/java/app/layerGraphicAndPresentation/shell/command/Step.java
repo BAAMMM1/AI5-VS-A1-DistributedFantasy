@@ -26,9 +26,7 @@ public class Step extends Command{
 
         Visit visit = this.client.step(Integer.valueOf(this.getParameter().get(0)));
 
-        System.out.print("\n");
         System.out.println(visit.getMessage());
-        System.out.print("\n");
         System.out.println("required_players: " + visit.getRequired_players());
         System.out.println("required_tokens: " + visit.getRequired_tokens());
         System.out.print("\n");
