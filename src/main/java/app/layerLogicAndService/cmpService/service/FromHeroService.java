@@ -100,7 +100,7 @@ public class FromHeroService implements IFromHeroService {
         System.out.print("\n");
         System.out.println("attention!: you have got a assignment");
         System.out.println("execute an " + assignment.getMethod() + " for task: " + assignment.getTask() + " to the ressource: " + assignment.getResource());
-        System.out.println("messages: " + assignment.getMessage());
+        System.out.println("message: \n" + assignment.getMessage());
         System.out.println("use the command \"assignment\" to do your job");
 
         Blackboard.getInstance().getUser().setAssignment(assignment);
@@ -114,7 +114,7 @@ public class FromHeroService implements IFromHeroService {
 
         System.out.print("\n");
         System.out.println("attention!: a fellow has delivered his assignment");
-        System.out.println("messages: " + assignmentDerliver.getMessage());
+        System.out.println("message: " + assignmentDerliver.getMessage());
 
         Blackboard.getInstance().getUser().setAssignmentDerliver(assignmentDerliver);
 
@@ -170,7 +170,7 @@ public class FromHeroService implements IFromHeroService {
     public void addMessage(Message message) {
 
         System.out.print("\n");
-        System.out.println("attention!: you have got a messages");
+        System.out.println("attention!: you have got a message");
         System.out.println("type: " + message.getTyp());
         System.out.println("message: " + message.getMessage());
 
