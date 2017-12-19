@@ -204,6 +204,7 @@ public class QuestService implements IQuestService {
             throw new IllegalArgumentException("no assignment at the moment");
         }
 
+
         /*
         if(Blackboard.getInstance().getUser().getAssignment() == null){
             throw new IllegalArgumentException("no assignment at the moment");
@@ -284,14 +285,14 @@ public class QuestService implements IQuestService {
 
                 this.toHeroConsumer.sendAssignmentDeliver(assignment.getCallback(), deliver);
 
-                // TODO - raus ziehen
-
             }
         }
 
         Blackboard.getInstance().getUser().getAssignmentList().remove(0);
 
         return dto;
+
+
     }
 
 

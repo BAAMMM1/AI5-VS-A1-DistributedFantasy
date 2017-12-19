@@ -26,4 +26,6 @@ public interface IQuestConsumer {
 
     List<String> postData(String ipPort, String ressource, String body) throws UnexpectedResponseCodeException;
 
+    Answer postToURL(String url, String body) throws UnexpectedResponseCodeException;
+
 }
