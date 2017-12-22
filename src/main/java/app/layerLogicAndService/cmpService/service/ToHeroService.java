@@ -3,6 +3,7 @@ package app.layerLogicAndService.cmpService.service;
 import app.Application;
 import app.configuration.API;
 import app.layerLogicAndService.cmpService.entity.blackboard.Blackboard;
+import app.layerLogicAndService.cmpService.entity.hero.mutex.MutexMessage;
 import app.layerLogicAndService.cmpService.entity.quest.Task;
 import app.layerLogicAndService.cmpService.entity.quest.questing.Step;
 import app.layerLogicAndService.cmpService.entity.quest.questing.TaskPart;
@@ -97,6 +98,53 @@ public class ToHeroService implements IToHeroService {
 
     @Override
     public void wantMutex() throws UnexpectedResponseCodeException {
+
+        // TODO - adding logger to method
+
+        if(true){
+            throw new IllegalArgumentException("function not implemented yet");
+
+        }
+
+        // 1. hole alle heros, die die capability mutex besitzen
+        List<Adventurer> adventurerListWithMutex = this.tavernaService.getAdventurersWithCapabilityMutex();
+
+        for(Adventurer adventurer: adventurerListWithMutex){
+
+            try{
+
+                String heroServiceUrl = adventurer.getUrl();
+
+                if (!heroServiceUrl.substring(0, 7).equals("http://")) {
+                    heroServiceUrl = "http://" + heroServiceUrl;
+                }
+
+                Service heroService = this.toHeroConsumer.getHeroService(heroServiceUrl);
+
+                String heroMutexUrl = heroService.getMutex();
+
+                if (!heroMutexUrl.substring(0, 7).equals("http://")) {
+                    heroMutexUrl = "http://" + heroMutexUrl;
+                }
+
+
+                // TODO - Was soll hier übermittelt werden?
+                MutexMessage message = new MutexMessage(
+                        null,
+                        Blackboard.getInstance().getUser().getMutex().getTime(),
+                        null,
+                        null);
+
+                this.toHeroConsumer.sendMutexMessage(heroMutexUrl, message);
+
+
+            } catch (Exception e){
+                logger.warn(e.getMessage());
+            }
+
+
+        }
+
 
     }
 
