@@ -25,6 +25,8 @@ public interface ITavernaService {
     String enterGroup(int id) throws UnexpectedResponseCodeException;
     List<Adventurer> getGroupMembers(int id) throws UnexpectedResponseCodeException;
 
+    List<Adventurer> getAdventurersWithCapabilityMutex() throws UnexpectedResponseCodeException;
+
 
 
 }

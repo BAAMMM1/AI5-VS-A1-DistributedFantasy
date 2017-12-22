@@ -23,6 +23,9 @@ public interface IToHeroService {
 
     void getHerosServices() throws UnexpectedResponseCodeException;
 
+    void wantMutex() throws UnexpectedResponseCodeException;
+
+
 
 
 

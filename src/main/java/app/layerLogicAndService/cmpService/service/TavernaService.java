@@ -9,6 +9,7 @@ import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.Une
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.ITavernaConsumer;
 
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -80,6 +81,25 @@ public class TavernaService implements ITavernaService {
     @Override
     public List<Adventurer> getGroupMembers(int id) throws UnexpectedResponseCodeException {
         return this.tavernaConsumer.getGroupMembers(id);
+    }
+
+    @Override
+    public List<Adventurer> getAdventurersWithCapabilityMutex() throws UnexpectedResponseCodeException {
+
+        List<Adventurer> adventurerList = this.getAdventurers();
+
+        List<Adventurer> adventurerListWithCapabilityMutex = new ArrayList<Adventurer>();
+
+        for(Adventurer adventurer: adventurerList){
+
+            if(adventurer.getCapabilities().contains("mutex")){
+                adventurerListWithCapabilityMutex.add(adventurer);
+            }
+
+        }
+
+
+        return adventurerListWithCapabilityMutex;
     }
 
 }

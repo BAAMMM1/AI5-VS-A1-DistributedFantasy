@@ -1,6 +1,7 @@
 package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer;
 
 import app.layerLogicAndService.cmpService.entity.hero.*;
+import app.layerLogicAndService.cmpService.entity.hero.mutex.MutexMessage;
 import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.service.HttpAccess;
 import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.entity.HttpResponse;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
@@ -81,6 +82,17 @@ public class ToHeroConsumer implements IToHeroConsumer {
     public void sendElection(String electionUrl, Election election) throws UnexpectedResponseCodeException {
 
         HttpResponse response = this.httpAccess.post(electionUrl, gson.toJson(election));
+
+        if (response.getCode() < 200 || response.getCode() >= 300) {
+            throw new UnexpectedResponseCodeException(response);
+        }
+
+    }
+
+    @Override
+    public void sendMutexMessage(String mutexUrl, MutexMessage mutexMessage) throws UnexpectedResponseCodeException {
+
+        HttpResponse response = this.httpAccess.post(mutexUrl, gson.toJson(mutexMessage));
 
         if (response.getCode() < 200 || response.getCode() >= 300) {
             throw new UnexpectedResponseCodeException(response);

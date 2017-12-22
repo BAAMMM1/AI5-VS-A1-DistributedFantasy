@@ -1,4 +1,4 @@
-package app.layerLogicAndService.cmpService.entity.hero;
+package app.layerLogicAndService.cmpService.entity.hero.mutex;
 
 /**
  * @author Chris on 09.12.2017

@@ -3,6 +3,8 @@ package app.layerGraphicAndPresentation.controller;
 import app.configuration.API;
 import app.layerLogicAndService.cmpService.entity.blackboard.Blackboard;
 import app.layerLogicAndService.cmpService.entity.hero.Election;
+import app.layerLogicAndService.cmpService.entity.hero.mutex.Mutex;
+import app.layerLogicAndService.cmpService.entity.hero.mutex.MutexMessage;
 import app.layerLogicAndService.cmpService.service.IFromHeroService;
 import app.layerLogicAndService.cmpService.exception.AlreadyInGroupException;
 import app.layerLogicAndService.cmpService.entity.hero.*;
@@ -154,8 +156,9 @@ public class HeroController {
     @RequestMapping(
             value = API.PATH_MUTEX,
             method = RequestMethod.POST,
-            consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> addMutex(@RequestBody Mutex request){
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> addMutex(@RequestBody MutexMessage request){
         // uri to endpoint where one posts mutex algorithm messages>" - RequestBody hier ok?
 
         try{

@@ -96,6 +96,11 @@ public class ToHeroService implements IToHeroService {
     }
 
     @Override
+    public void wantMutex() throws UnexpectedResponseCodeException {
+
+    }
+
+    @Override
     public void sendMessage(String adventurer, String string) throws UnexpectedResponseCodeException {
 
         // TODO - Benutzer über Message income benachrichtigen

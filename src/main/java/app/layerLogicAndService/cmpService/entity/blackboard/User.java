@@ -3,7 +3,7 @@ package app.layerLogicAndService.cmpService.entity.blackboard;
 import app.layerLogicAndService.cmpService.entity.hero.Assignment;
 import app.layerLogicAndService.cmpService.entity.hero.AssignmentDeliver;
 import app.layerLogicAndService.cmpService.entity.hero.Message;
-import app.layerLogicAndService.cmpService.entity.hero.Mutex;
+import app.layerLogicAndService.cmpService.entity.hero.mutex.Mutex;
 import app.layerLogicAndService.cmpService.entity.quest.Link;
 import app.layerLogicAndService.cmpService.entity.quest.questing.Questing;
 import app.layerLogicAndService.cmpService.entity.taverna.Group;
