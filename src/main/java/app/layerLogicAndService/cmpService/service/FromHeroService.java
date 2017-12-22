@@ -56,6 +56,11 @@ public class FromHeroService implements IFromHeroService {
     }
 
     @Override
+    public Mutex getMutex(){
+        return Blackboard.getInstance().getUser().getMutex();
+    }
+
+    @Override
     public void addHiring(Hiring hiring) throws AlreadyInGroupException, UnexpectedResponseCodeException {
 
         System.out.print("\n");

@@ -20,4 +20,6 @@ public interface IFromHeroService {
     List<Message> getMessages();
     void addElection(Election election) throws UnexpectedResponseCodeException, NotInGroupException;
 
+    Mutex getMutex();
+
 }

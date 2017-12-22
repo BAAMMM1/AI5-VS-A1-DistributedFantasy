@@ -172,14 +172,13 @@ public class HeroController {
     @RequestMapping(
             value = API.PATH_MUTEXSTATE,
             method = RequestMethod.GET,
-            consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getMutexstate(@RequestBody Mutex request){
-        // uri to endpoint telling the mutex state> ist hier get ok?
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getMutexstate(){
 
         try{
 
-            // TODO - Serviceaufruf
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            Mutex currentMutex = this.fromHeroService.getMutex();
+            return new ResponseEntity<>(gson.toJson(currentMutex), HttpStatus.OK);
 
         } catch (Exception e){
             return new ResponseEntity<>(new JSONObject().put(API.MESSAGE, e.getMessage()).toString(), HttpStatus.BAD_REQUEST);

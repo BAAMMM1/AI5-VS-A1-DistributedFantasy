@@ -3,6 +3,7 @@ package app.layerLogicAndService.cmpService.entity.blackboard;
 import app.layerLogicAndService.cmpService.entity.hero.Assignment;
 import app.layerLogicAndService.cmpService.entity.hero.AssignmentDeliver;
 import app.layerLogicAndService.cmpService.entity.hero.Message;
+import app.layerLogicAndService.cmpService.entity.hero.Mutex;
 import app.layerLogicAndService.cmpService.entity.quest.Link;
 import app.layerLogicAndService.cmpService.entity.quest.questing.Questing;
 import app.layerLogicAndService.cmpService.entity.taverna.Group;
@@ -65,6 +66,8 @@ public class User {
 
     private boolean isDead = false;
 
+    private Mutex mutex;
+
     public User(String name, String userToken, String userTokenValidTime) {
         this.name = name;
         this.userToken = userToken;
@@ -73,6 +76,11 @@ public class User {
         this.assignmentDeliverList = new ArrayList<AssignmentDeliver>();
         this.assignmentList = new ArrayList<Assignment>();
         this.sendetAssignmentList = new ArrayList<Assignment>();
+        this.mutex = new Mutex();
+    }
+
+    public Mutex getMutex() {
+        return mutex;
     }
 
     public void removeAllSendetAssignments(){
