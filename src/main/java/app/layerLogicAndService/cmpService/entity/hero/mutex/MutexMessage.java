@@ -51,4 +51,14 @@ public class MutexMessage {
     public void setUser(String user) {
         this.user = user;
     }
+
+    @Override
+    public String toString() {
+        return "\nMutexMessage{" +
+                "msg='" + msg + '\'' +
+                ", time=" + time +
+                ", reply='" + reply + '\'' +
+                ", user='" + user + '\'' +
+                '}';
+    }
 }
