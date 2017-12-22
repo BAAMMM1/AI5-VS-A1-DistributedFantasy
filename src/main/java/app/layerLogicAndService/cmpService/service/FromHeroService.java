@@ -7,6 +7,8 @@ import app.layerGraphicAndPresentation.shell.context.Context;
 import app.layerLogicAndService.cmpService.entity.blackboard.Blackboard;
 import app.layerLogicAndService.cmpService.entity.hero.mutex.Mutex;
 import app.layerLogicAndService.cmpService.entity.hero.mutex.MutexMessage;
+import app.layerLogicAndService.cmpService.entity.hero.mutex.MutexMsg;
+import app.layerLogicAndService.cmpService.entity.hero.mutex.MutexState;
 import app.layerLogicAndService.cmpService.entity.taverna.Adventurer;
 import app.layerLogicAndService.cmpService.exception.AlreadyInGroupException;
 import app.layerLogicAndService.cmpService.entity.hero.*;
@@ -312,10 +314,54 @@ public class FromHeroService implements IFromHeroService {
     }
 
     @Override
-    public void addMutexMessage(MutexMessage mutexMessage) throws UnexpectedResponseCodeException {
-        throw new IllegalArgumentException("not implemented yet");
+    public void addMutexMessage(MutexMessage request) throws UnexpectedResponseCodeException {
+
+        if(true){
+            throw new IllegalArgumentException("not implemented yet");
+        }
 
         // TODO - Mutex hinterlegen wenn ...
+
+        Mutex currentMutex = Blackboard.getInstance().getUser().getMutex();
+
+        currentMutex.incrementTime();
+
+        String mutexState = currentMutex.getState();
+        int time = currentMutex.getTime();
+
+        MutexMessage response = null;
+
+        if(mutexState.equals(MutexState.RELEASED.toString())){
+            response = new MutexMessage(
+                    MutexMsg.REPLYOK.toString(),
+                    time,
+                    HTTP + Application.IP + PORT + API.PATH_MUTEX_REPLY,
+                    HTTP + Application.IP + PORT + API.PATH_SERVICES
+            );
+
+        } else if(mutexState.equals(MutexState.WANTING.toString())){
+
+            if(request.getTime() < time){
+                response = new MutexMessage(
+                        MutexMsg.REPLYOK.toString(),
+                        time,
+                        HTTP + Application.IP + PORT + API.PATH_MUTEX_REPLY,
+                        HTTP + Application.IP + PORT + API.PATH_SERVICES
+                );
+
+            } else if (request.getTime() == time){
+
+                //if()
+
+
+
+            }
+
+        } else {
+
+        }
+
+        this.toHeroConsumer.sendMutexMessage(request.getReply(), response);
 
     }
 

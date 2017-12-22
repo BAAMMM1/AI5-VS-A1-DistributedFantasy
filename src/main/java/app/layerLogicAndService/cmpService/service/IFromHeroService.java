@@ -22,7 +22,7 @@ public interface IFromHeroService {
     List<Message> getMessages();
     void addElection(Election election) throws UnexpectedResponseCodeException, NotInGroupException;
 
-    void addMutexMessage(MutexMessage mutexMessage) throws UnexpectedResponseCodeException;
+    void addMutexMessage(MutexMessage request) throws UnexpectedResponseCodeException;
     Mutex getMutexState();
 
 }

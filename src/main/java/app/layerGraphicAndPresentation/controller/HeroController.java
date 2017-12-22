@@ -25,7 +25,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class HeroController {
 
-    public final static Logger logger = Logger.getLogger(new Object() { }.getClass().getEnclosingClass());
+    public final static Logger logger = Logger.getLogger(new Object() {
+    }.getClass().getEnclosingClass());
 
     Gson gson = new Gson();
 
@@ -39,19 +40,17 @@ public class HeroController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getServices() {
 
-        try{
+        try {
             Service service = this.fromHeroService.getService();
             return new ResponseEntity<>(this.gson.toJson(service), HttpStatus.OK);
 
-        } catch (Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(new JSONObject().put(API.MESSAGE, e.getMessage()).toString(), HttpStatus.BAD_REQUEST);
 
         }
 
 
-
     }
-
 
 
     @RequestMapping(
@@ -76,19 +75,17 @@ public class HeroController {
     }
 
 
-
-
     @RequestMapping(
             value = API.PATH_ASSIGNMENTS,
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> addAssignment(@RequestBody Assignment request){
+    public ResponseEntity<?> addAssignment(@RequestBody Assignment request) {
 
-        try{
+        try {
             this.fromHeroService.addAssignment(request);
             return new ResponseEntity<>(HttpStatus.CREATED);
 
-        } catch (Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(new JSONObject().put(API.MESSAGE, e.getMessage()).toString(), HttpStatus.BAD_REQUEST);
 
         }
@@ -99,14 +96,14 @@ public class HeroController {
             value = API.PATH_ASSIGNMENTS + "/deliveries",
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> addAssignmentDeliver(@RequestBody AssignmentDeliver request){
+    public ResponseEntity<?> addAssignmentDeliver(@RequestBody AssignmentDeliver request) {
 
-        try{
+        try {
 
             this.fromHeroService.addAssignmentDeliver(request);
             return new ResponseEntity<>(HttpStatus.CREATED);
 
-        } catch (Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(new JSONObject().put(API.MESSAGE, e.getMessage()).toString(), HttpStatus.BAD_REQUEST);
 
         }
@@ -118,13 +115,13 @@ public class HeroController {
             value = API.PATH_MESSAGES,
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> addMessage(@RequestBody Message request){
+    public ResponseEntity<?> addMessage(@RequestBody Message request) {
 
-        try{
+        try {
             this.fromHeroService.addMessage(request);
             return new ResponseEntity<>(HttpStatus.CREATED);
 
-        } catch (Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(new JSONObject().put(API.MESSAGE, e.getMessage()).toString(), HttpStatus.BAD_REQUEST);
 
         }
@@ -134,20 +131,20 @@ public class HeroController {
             value = API.PATH_ELECTION,
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> addElection(@RequestBody Election request){
+    public ResponseEntity<?> addElection(@RequestBody Election request) {
         // uri to which one sends addElection messages to>" RequestBody hier ok?
 
         logger.info("incoming election: " + request.toString());
 
-        if(Blackboard.getInstance().getUser().isDead()){
+        if (Blackboard.getInstance().getUser().isDead()) {
             return new ResponseEntity<>(HttpStatus.SERVICE_UNAVAILABLE);
         }
 
-        try{
+        try {
             this.fromHeroService.addElection(request);
             return new ResponseEntity<>(HttpStatus.OK);
 
-        } catch (Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(new JSONObject().put(API.MESSAGE, e.getMessage()).toString(), HttpStatus.BAD_REQUEST);
 
         }
@@ -157,38 +154,58 @@ public class HeroController {
             value = API.PATH_MUTEX,
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> addMutex(@RequestBody MutexMessage request){
+    public ResponseEntity<?> addMutex(@RequestBody MutexMessage request) {
         // uri to endpoint where one posts mutex algorithm messages>" - RequestBody hier ok?
 
         logger.info("income mutexmessage: " + request.toString());
 
-        try{
+        try {
             this.fromHeroService.addMutexMessage(request);
             return new ResponseEntity<>(HttpStatus.OK);
 
-        } catch (Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(new JSONObject().put(API.MESSAGE, e.getMessage()).toString(), HttpStatus.BAD_REQUEST);
 
         }
+
+    }
+
+    @RequestMapping(
+            value = API.PATH_MUTEX_REPLY,
+            method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> addMutexReply(@RequestBody MutexMessage request) {
+        // uri to endpoint where one posts mutex algorithm messages>" - RequestBody hier ok?
+
+        logger.info("income mutexreply: " + request.toString());
+
+        try {
+            return new ResponseEntity<>(new JSONObject().put(API.MESSAGE, API.ERROR).toString(), HttpStatus.BAD_REQUEST);
+
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(new JSONObject().put(API.MESSAGE, e.getMessage()).toString(), HttpStatus.BAD_REQUEST);
+
+        }
+
     }
 
     @RequestMapping(
             value = API.PATH_MUTEXSTATE,
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getMutexstate(){
+    public ResponseEntity<?> getMutexstate() {
 
-        try{
+        try {
 
             Mutex currentMutex = this.fromHeroService.getMutexState();
             return new ResponseEntity<>(gson.toJson(currentMutex), HttpStatus.OK);
 
-        } catch (Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(new JSONObject().put(API.MESSAGE, e.getMessage()).toString(), HttpStatus.BAD_REQUEST);
 
         }
     }
-
 
 
 }
