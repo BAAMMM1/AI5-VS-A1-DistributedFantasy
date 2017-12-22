@@ -48,7 +48,7 @@ public class User{
 
     // TODO - Hard bis wir wissen wo es herkommt
     private String heroclass = "WiZzArD";
-    private String capabilities ="group, election, bully";
+    private String capabilities ="group, election, bully, mutex";
     private String group = null;
 
     private Group currentGroup;

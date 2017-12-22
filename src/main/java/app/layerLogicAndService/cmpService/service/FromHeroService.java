@@ -336,7 +336,7 @@ public class FromHeroService implements IFromHeroService {
                     MutexMsg.REPLYOK.toString(),
                     time,
                     HTTP + Application.IP + PORT + API.PATH_MUTEX_REPLY,
-                    HTTP + Application.IP + PORT + API.PATH_SERVICES
+                    API.USERS + "/" + Blackboard.getInstance().getUser().getName()
             );
 
         } else if(mutexState.equals(MutexState.WANTING.toString())){
@@ -346,22 +346,45 @@ public class FromHeroService implements IFromHeroService {
                         MutexMsg.REPLYOK.toString(),
                         time,
                         HTTP + Application.IP + PORT + API.PATH_MUTEX_REPLY,
-                        HTTP + Application.IP + PORT + API.PATH_SERVICES
+                        API.USERS + "/" + Blackboard.getInstance().getUser().getName()
                 );
 
             } else if (request.getTime() == time){
 
-                //if()
+                String userID = request.getUser();
+                if(userID.contains(API.USERS + "/")){
+                    userID.replace(API.USERS + "/", "");
+                }
+
+                if(userID.length() < Blackboard.getInstance().getUser().getName().length()){
+                    response = new MutexMessage(
+                            MutexMsg.REPLYOK.toString(),
+                            time,
+                            HTTP + Application.IP + PORT + API.PATH_MUTEX_REPLY,
+                            API.USERS + "/" + Blackboard.getInstance().getUser().getName()
+                    );
+                } else {
+                    //eigene id ist kleiner als income ID
+                    Blackboard.getInstance().getUser().getMutexMessageList().add(request);
+
+                }
 
 
 
+            } else {
+                // eigene Zeit ist kleiner als income Zeit
+                Blackboard.getInstance().getUser().getMutexMessageList().add(request);
             }
 
-        } else {
+        } else if(mutexState.equals(MutexState.HOLD.toString())){
+            Blackboard.getInstance().getUser().getMutexMessageList().add(request);
+
 
         }
 
         this.toHeroConsumer.sendMutexMessage(request.getReply(), response);
+
+        currentMutex.incrementTime();
 
     }
 
