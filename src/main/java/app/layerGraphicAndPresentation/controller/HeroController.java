@@ -17,6 +17,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * Diese Klasse repräsentiert den fromHeroService Endpoint unseres fromHero-fromHeroService
  *
@@ -115,7 +117,9 @@ public class HeroController {
             value = API.PATH_MESSAGES,
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> addMessage(@RequestBody Message request) {
+    public ResponseEntity<?> addMessage(@RequestBody Message request, HttpServletRequest req) {
+
+        logger.info(req.getRemoteAddr());
 
         try {
             this.fromHeroService.addMessage(request);

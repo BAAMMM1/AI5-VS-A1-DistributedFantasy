@@ -4,6 +4,7 @@ import app.Application;
 import app.configuration.API;
 import app.layerLogicAndService.cmpService.entity.blackboard.Blackboard;
 import app.layerLogicAndService.cmpService.entity.hero.mutex.MutexMessage;
+import app.layerLogicAndService.cmpService.entity.hero.mutex.MutexMsg;
 import app.layerLogicAndService.cmpService.entity.quest.Task;
 import app.layerLogicAndService.cmpService.entity.quest.questing.Step;
 import app.layerLogicAndService.cmpService.entity.quest.questing.TaskPart;
@@ -26,6 +27,9 @@ public class ToHeroService implements IToHeroService {
 
     public final static Logger logger = Logger.getLogger(new Object() {
     }.getClass().getEnclosingClass());
+
+    public static final String PORT = ":8080";
+    public static final String HTTP = "http://";
 
     IToHeroConsumer toHeroConsumer = new ToHeroConsumer();
 
@@ -74,9 +78,9 @@ public class ToHeroService implements IToHeroService {
 
         List<Adventurer> adventurerList = this.tavernaService.getAdventurers();
 
-        for(Adventurer adventurer: adventurerList){
+        for (Adventurer adventurer : adventurerList) {
 
-            try{
+            try {
 
                 String heroServiceUrl = adventurer.getUrl();
 
@@ -88,7 +92,7 @@ public class ToHeroService implements IToHeroService {
 
                 System.out.println(heroService.toString() + "\n");
 
-            } catch (Exception e){
+            } catch (Exception e) {
 
             }
 
@@ -101,7 +105,7 @@ public class ToHeroService implements IToHeroService {
 
         // TODO - adding logger to method
 
-        if(true){
+        if (true) {
             throw new IllegalArgumentException("function not implemented yet");
 
         }
@@ -109,9 +113,9 @@ public class ToHeroService implements IToHeroService {
         // 1. hole alle heros, die die capability mutex besitzen
         List<Adventurer> adventurerListWithMutex = this.tavernaService.getAdventurersWithCapabilityMutex();
 
-        for(Adventurer adventurer: adventurerListWithMutex){
+        for (Adventurer adventurer : adventurerListWithMutex) {
 
-            try{
+            try {
 
                 String heroServiceUrl = adventurer.getUrl();
 
@@ -127,20 +131,34 @@ public class ToHeroService implements IToHeroService {
                     heroMutexUrl = "http://" + heroMutexUrl;
                 }
 
-
-                // TODO - Was soll hier übermittelt werden?
-                MutexMessage message = new MutexMessage(
-                        null,
+                MutexMessage request = new MutexMessage(
+                        MutexMsg.REQUEST.toString(),
                         Blackboard.getInstance().getUser().getMutex().getTime(),
-                        null,
-                        null);
+                        HTTP + Application.IP + PORT + API.PATH_MUTEX_REPLY,
+                        API.USERS + "/" + Blackboard.getInstance().getUser().getName()
+                );
 
-                this.toHeroConsumer.sendMutexMessage(heroMutexUrl, message);
+                this.toHeroConsumer.sendMutexMessage(heroMutexUrl, request);
+                Blackboard.getInstance().getUser().getMutex().incrementTime();
+                Blackboard.getInstance().getUser().getMutexSendingMessageList().add(request);
+
+                // TODO - Waiting Threadstarten
+                // Wenn antwort, dann lösche aus getMutexSendingMessageList
+                // Wenn nicht in einer angemessenen Zeit geantowrtet, dann prüfen von /mutexState
+                // Bei wanting oder holt noch etwas warten, bei release oder gar keine Antwort, aus der Liste löschen
 
 
-            } catch (Exception e){
+            } catch (Exception e) {
                 logger.warn(e.getMessage());
             }
+
+            // TODO - Warten bis Liste leer
+            // TODO - Wenn Liste leer, dann alle geantwortet, dann kritisch Bereich betreten
+
+            // TODO - Wenn kritich Bereich betreten
+
+
+            // TODO - Wenn kritischer Bereich verlassen, dann mutexMessageList, abarbeiten und allen ok senden.
 
 
         }
@@ -226,7 +244,7 @@ public class ToHeroService implements IToHeroService {
     @Override
     public void sendEndAssignment(String adventurer, String message) throws UnexpectedResponseCodeException {
 
-        if(Blackboard.getInstance().getUser().getCurrentQuesting().getTask().getToken() == null){
+        if (Blackboard.getInstance().getUser().getCurrentQuesting().getTask().getToken() == null) {
             throw new IllegalArgumentException("cant send end token, because empty");
         }
 
@@ -256,7 +274,7 @@ public class ToHeroService implements IToHeroService {
         Assignment assignment = new Assignment(
                 String.valueOf(Assignment.counter),
                 Blackboard.getInstance().getUser().getCurrentQuesting().getTask().get_links().getSelf(),
-                API.BLACKBOARD_QUESTS +"/" + Blackboard.getInstance().getUser().getCurrentQuesting().getTask().getQuest() + "/deliveries",
+                API.BLACKBOARD_QUESTS + "/" + Blackboard.getInstance().getUser().getCurrentQuesting().getTask().getQuest() + "/deliveries",
                 "POST", // TODO - method muss vom command mit übergeben werden,per user eingabe
                 jsonToken.toString(),
                 "http://" + Application.IP + ":8080/assignments/deliveries",
@@ -317,7 +335,7 @@ public class ToHeroService implements IToHeroService {
 
     public void doElection() throws NotInGroupException, UnexpectedResponseCodeException {
 
-        if(Blackboard.getInstance().getUser().isDead()){
+        if (Blackboard.getInstance().getUser().isDead()) {
             throw new IllegalArgumentException("you are dead!, you cant start a election");
         }
 
@@ -473,7 +491,6 @@ public class ToHeroService implements IToHeroService {
 
 
     }
-
 
 
 }

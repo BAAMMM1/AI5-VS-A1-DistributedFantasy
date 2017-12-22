@@ -71,6 +71,8 @@ public class User{
 
     private List<MutexMessage> mutexMessageList;
 
+    private List<MutexMessage> mutexSendingMessageList;
+
     public User(String name, String userToken, String userTokenValidTime) {
         this.name = name;
         this.userToken = userToken;
@@ -81,6 +83,11 @@ public class User{
         this.sendetAssignmentList = new ArrayList<Assignment>();
         this.mutex = new Mutex();
         this.mutexMessageList = new ArrayList<MutexMessage>();
+        this.mutexSendingMessageList = new ArrayList<MutexMessage>();
+    }
+
+    public List<MutexMessage> getMutexSendingMessageList() {
+        return mutexSendingMessageList;
     }
 
     public List<MutexMessage> getMutexMessageList() {
