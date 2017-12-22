@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * @author Chris on 24.11.2017
  */
-public class User {
+public class User{
 
     /*
     "user": {
