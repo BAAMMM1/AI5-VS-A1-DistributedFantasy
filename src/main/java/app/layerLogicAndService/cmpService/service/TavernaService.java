@@ -94,8 +94,6 @@ public class TavernaService implements ITavernaService {
 
             if (adventurer.getCapabilities() != null) {
 
-                System.out.println(adventurer.getCapabilities());
-
                 if (adventurer.getCapabilities().contains("mutex") && !adventurer.getCapabilities().contains("mutextest")) {
                     adventurerListWithCapabilityMutex.add(adventurer);
                 }

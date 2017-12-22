@@ -25,6 +25,7 @@ public class AdventurersMutex extends Command{
         List<Adventurer>  adventurers = this.tavernaService.getAdventurersWithCapabilityMutex();
 
         for(Adventurer adventurer: adventurers){
+            System.out.println("\n###############################################");
             System.out.println(adventurer.getUser());
             System.out.println(adventurer.getHeroclass());
             System.out.println(adventurer.getCapabilities());
