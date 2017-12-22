@@ -5,20 +5,20 @@ package app.layerLogicAndService.cmpService.entity.hero;
  */
 public class Mutex {
 
-    MutexState state;
-    int time;
+    private String state;
+    private int time;
 
     public Mutex() {
-        this.state = MutexState.RELEASED;
+        this.setState(MutexState.RELEASED);
         this.time = 0;
     }
 
-    public MutexState getState() {
+    public String getState() {
         return state;
     }
 
     public void setState(MutexState state) {
-        this.state = state;
+        this.state = state.toString();
     }
 
     public int getTime() {
