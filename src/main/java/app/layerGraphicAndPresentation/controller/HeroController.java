@@ -156,15 +156,15 @@ public class HeroController {
     @RequestMapping(
             value = API.PATH_MUTEX,
             method = RequestMethod.POST,
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+            consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addMutex(@RequestBody MutexMessage request){
         // uri to endpoint where one posts mutex algorithm messages>" - RequestBody hier ok?
 
-        try{
+        logger.info("income mutexmessage: " + request.toString());
 
-            // TODO - Serviceaufruf
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        try{
+            this.fromHeroService.addMutexMessage(request);
+            return new ResponseEntity<>(HttpStatus.OK);
 
         } catch (Exception e){
             return new ResponseEntity<>(new JSONObject().put(API.MESSAGE, e.getMessage()).toString(), HttpStatus.BAD_REQUEST);
@@ -180,7 +180,7 @@ public class HeroController {
 
         try{
 
-            Mutex currentMutex = this.fromHeroService.getMutex();
+            Mutex currentMutex = this.fromHeroService.getMutexState();
             return new ResponseEntity<>(gson.toJson(currentMutex), HttpStatus.OK);
 
         } catch (Exception e){

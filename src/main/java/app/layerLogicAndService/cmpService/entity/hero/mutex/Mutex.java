@@ -29,6 +29,10 @@ public class Mutex {
         this.time = time;
     }
 
+    public void incrementTime(){
+        this.time++;
+    }
+
     @Override
     public String toString() {
         return "Mutex{" +

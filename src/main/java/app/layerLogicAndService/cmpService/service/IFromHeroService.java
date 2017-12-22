@@ -1,6 +1,7 @@
 package app.layerLogicAndService.cmpService.service;
 
 import app.layerLogicAndService.cmpService.entity.hero.mutex.Mutex;
+import app.layerLogicAndService.cmpService.entity.hero.mutex.MutexMessage;
 import app.layerLogicAndService.cmpService.exception.AlreadyInGroupException;
 import app.layerLogicAndService.cmpService.entity.hero.*;
 import app.layerLogicAndService.cmpService.exception.NotInGroupException;
@@ -21,6 +22,7 @@ public interface IFromHeroService {
     List<Message> getMessages();
     void addElection(Election election) throws UnexpectedResponseCodeException, NotInGroupException;
 
-    Mutex getMutex();
+    void addMutexMessage(MutexMessage mutexMessage) throws UnexpectedResponseCodeException;
+    Mutex getMutexState();
 
 }

@@ -6,6 +6,7 @@ import app.configuration.API;
 import app.layerGraphicAndPresentation.shell.context.Context;
 import app.layerLogicAndService.cmpService.entity.blackboard.Blackboard;
 import app.layerLogicAndService.cmpService.entity.hero.mutex.Mutex;
+import app.layerLogicAndService.cmpService.entity.hero.mutex.MutexMessage;
 import app.layerLogicAndService.cmpService.entity.taverna.Adventurer;
 import app.layerLogicAndService.cmpService.exception.AlreadyInGroupException;
 import app.layerLogicAndService.cmpService.entity.hero.*;
@@ -57,7 +58,7 @@ public class FromHeroService implements IFromHeroService {
     }
 
     @Override
-    public Mutex getMutex(){
+    public Mutex getMutexState(){
         return Blackboard.getInstance().getUser().getMutex();
     }
 
@@ -308,6 +309,11 @@ public class FromHeroService implements IFromHeroService {
 
         System.out.print(Context.getInstance().getPromptState());
 
+    }
+
+    @Override
+    public void addMutexMessage(MutexMessage mutexMessage) throws UnexpectedResponseCodeException {
+        throw new IllegalArgumentException("not implemented yet");
     }
 
 }
