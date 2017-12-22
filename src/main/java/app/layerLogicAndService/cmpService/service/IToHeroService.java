@@ -21,6 +21,8 @@ public interface IToHeroService {
 
     void doElection() throws UnexpectedResponseCodeException, NotInGroupException;
 
+    void getHerosServices() throws UnexpectedResponseCodeException;
+
 
 
 

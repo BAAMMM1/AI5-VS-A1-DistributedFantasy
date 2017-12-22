@@ -68,6 +68,32 @@ public class ToHeroService implements IToHeroService {
         return this.toHeroConsumer.sendHiring(hiring, heroHiringUrl);
     }
 
+    private void getHerosServices() throws UnexpectedResponseCodeException {
+
+        List<Adventurer> adventurerList = this.tavernaService.getAdventurers();
+
+        for(Adventurer adventurer: adventurerList){
+
+            try{
+
+                String heroServiceUrl = adventurer.getUrl();
+
+                if (!heroServiceUrl.substring(0, 7).equals("http://")) {
+                    heroServiceUrl = "http://" + heroServiceUrl;
+                }
+
+                Service heroService = this.toHeroConsumer.getHeroService(heroServiceUrl);
+
+                System.out.println(heroService.toString() + "\n");
+
+            } catch (Exception e){
+
+            }
+
+        }
+
+    }
+
     @Override
     public void sendMessage(String adventurer, String string) throws UnexpectedResponseCodeException {
 

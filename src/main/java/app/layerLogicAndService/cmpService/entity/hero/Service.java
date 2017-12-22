@@ -105,13 +105,16 @@ public class Service {
 
     @Override
     public String toString() {
-        return "service{" +
-                "user='" + user + '\'' +
-                ", idle=" + idle +
-                ", group='" + group + '\'' +
-                ", hirings='" + hirings + '\'' +
-                ", assignments='" + assignments + '\'' +
-                ", messages='" + messages + '\'' +
+        return "Service{" +
+                "\nuser='" + user + '\'' +
+                "\n, idle=" + idle +
+                "\n, group='" + group + '\'' +
+                "\n, hirings='" + hirings + '\'' +
+                "\n, assignments='" + assignments + '\'' +
+                "\n, messages='" + messages + '\'' +
+                "\n, election='" + election + '\'' +
+                "\n, mutex='" + mutex + '\'' +
+                "\n, mutexstate='" + mutexstate + '\'' +
                 '}';
     }
 }
