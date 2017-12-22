@@ -38,6 +38,8 @@ public class API {
     public static final String MESSAGE = "message";
     public static final String ERROR = "error";
 
+    public static final String CAPABILITY_MUTEX = "mutex";
+
     //public static final String
 
 

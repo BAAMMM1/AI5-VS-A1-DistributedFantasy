@@ -1,5 +1,6 @@
 package app.layerLogicAndService.cmpService.service;
 
+import app.configuration.API;
 import app.layerLogicAndService.cmpService.entity.blackboard.Blackboard;
 import app.layerLogicAndService.cmpService.entity.taverna.Adventurer;
 import app.layerLogicAndService.cmpService.entity.taverna.Group;
@@ -94,7 +95,7 @@ public class TavernaService implements ITavernaService {
 
             if (adventurer.getCapabilities() != null) {
 
-                if (adventurer.getCapabilities().contains("mutex") && !adventurer.getCapabilities().contains("mutextest")) {
+                if (adventurer.getCapabilities().contains(API.CAPABILITY_MUTEX) && !adventurer.getCapabilities().contains("mutextest")) {
                     adventurerListWithCapabilityMutex.add(adventurer);
                 }
 
