@@ -119,7 +119,8 @@ public class HeroController {
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addMessage(@RequestBody Message request, HttpServletRequest req) {
 
-        logger.info(req.getRemoteAddr());
+        logger.info("form ip: " + req.getRemoteAddr());
+        logger.info("form port: " + req.getRemotePort());
 
         try {
             this.fromHeroService.addMessage(request);
