@@ -142,6 +142,7 @@ public class InputInterpreter {
         registerCommands.add(new Live());
         registerCommands.add(new AssignmentSendEnd(toHeroService));
         registerCommands.add(new Services(toHeroService));
+        registerCommands.add(new AdventurersMutex(tavernaService));
 
     }
 
