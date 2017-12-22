@@ -90,12 +90,16 @@ public class TavernaService implements ITavernaService {
 
         List<Adventurer> adventurerListWithCapabilityMutex = new ArrayList<Adventurer>();
 
-        for(Adventurer adventurer: adventurerList){
+        for (Adventurer adventurer : adventurerList) {
 
-            System.out.println(adventurer.getCapabilities());
+            if (adventurer.getCapabilities() != null) {
 
-            if(adventurer.getCapabilities().contains("mutex")){
-                adventurerListWithCapabilityMutex.add(adventurer);
+                System.out.println(adventurer.getCapabilities());
+
+                if (adventurer.getCapabilities().contains("mutex")) {
+                    adventurerListWithCapabilityMutex.add(adventurer);
+                }
+
             }
 
         }
