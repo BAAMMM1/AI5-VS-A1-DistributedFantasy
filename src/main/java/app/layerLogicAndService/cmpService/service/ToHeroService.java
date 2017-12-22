@@ -68,7 +68,8 @@ public class ToHeroService implements IToHeroService {
         return this.toHeroConsumer.sendHiring(hiring, heroHiringUrl);
     }
 
-    private void getHerosServices() throws UnexpectedResponseCodeException {
+    @Override
+    public void getHerosServices() throws UnexpectedResponseCodeException {
 
         List<Adventurer> adventurerList = this.tavernaService.getAdventurers();
 
