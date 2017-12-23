@@ -145,29 +145,35 @@ public class HttpAccess {
         }
 
         try {
+            System.out.println("1");
             URL url = new URL(request.getUrl());
             HttpURLConnection connection = null;
 
+            System.out.println("2");
             connection = (HttpURLConnection) url.openConnection();
             connection.setConnectTimeout(CONNECT_TIMEOUT);
 
 
+            System.out.println("3");
             connection.setRequestMethod(request.getMethod().toString());
-            connection.setRequestProperty("Accept", MEDIA_TYPE_APPLICATION_JSON);
+            connection.setRequestProperty("Accept", "text/text");
             connection.setDoOutput(true);
 
+            System.out.println("4");
             // basicAuth?
             if (request.isBasicAuth()) {
                 String encoded = Base64.getEncoder().encodeToString((request.getBasicAuthUser() + ":" + request.getBasicAuthPw()).getBytes(StandardCharsets.UTF_8));
                 connection.setRequestProperty("Authorization", "Basic " + encoded);
             }
 
+            System.out.println("5");
             // Authorization Token?
             if (request.isAuthorization()) {
                 connection.setRequestProperty("Authorization", "Token "
                         + request.getAuthorizationToken());
             }
 
+            System.out.println("6");
             // Body?
             if (request.getBody() != null) {
                 connection.setRequestProperty("Content-Type", MEDIA_TYPE_APPLICATION_JSON);
@@ -175,8 +181,6 @@ public class HttpAccess {
                 connection.getOutputStream().write(request.getBody().getBytes());
 
             }
-
-            connection.setRequestProperty("Accept", "text/text");
 
             System.out.println("connect");
             try {
