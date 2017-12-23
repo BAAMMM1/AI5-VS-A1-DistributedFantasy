@@ -23,7 +23,7 @@ public class Mutexwant extends Command{
     @Override
     State instruction() throws UnexpectedResponseCodeException, IOException, InterruptedException {
 
-        this.tooHeroService.wantMutex("","","");
+        this.tooHeroService.wantMutex("","");
 
         System.out.println("your mutex want was send successful!");
 
