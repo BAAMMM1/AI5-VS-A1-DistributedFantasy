@@ -105,6 +105,8 @@ public class ToHeroService implements IToHeroService {
     public void wantMutex() throws UnexpectedResponseCodeException {
 
         logger.info("wanting mutex");
+        logger.info("set mutex-state to: " + MutexState.WANTING.toString());
+        Blackboard.getInstance().getUser().getMutex().setState(MutexState.WANTING);
 
         /*
         if (true) {
@@ -265,9 +267,13 @@ public class ToHeroService implements IToHeroService {
 
             // TODO - kritich Bereich
             logger.info("entering critcal section");
+            logger.info("set mutex-state to: " + MutexState.HOLD.toString());
+            Blackboard.getInstance().getUser().getMutex().setState(MutexState.HOLD);
 
         }
         logger.info("leaving critcal section");
+        logger.info("set mutex-state to: " + MutexState.RELEASED.toString());
+        Blackboard.getInstance().getUser().getMutex().setState(MutexState.RELEASED);
 
 
         logger.info("start to answer storaged mutexmessage-requests");
