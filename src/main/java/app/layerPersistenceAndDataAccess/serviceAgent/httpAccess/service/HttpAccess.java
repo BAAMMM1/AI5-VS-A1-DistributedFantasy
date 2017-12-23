@@ -138,6 +138,7 @@ public class HttpAccess {
 
 
     public HttpResponse call2(HttpRequest request) {
+        System.out.println("call2");
 
         if (request.getUrl().contains("null")) {
             throw new IllegalArgumentException("error: no host or port");
@@ -175,8 +176,9 @@ public class HttpAccess {
 
             }
 
-            connection.setRequestProperty("\"Accept", "text/text");
+            connection.setRequestProperty("Accept", "text/text");
 
+            System.out.println("connect");
             try {
                 connection.connect();
 
@@ -185,6 +187,7 @@ public class HttpAccess {
 
             }
 
+            System.out.println("read");
             BufferedReader in = new BufferedReader(new InputStreamReader(
                     connection.getInputStream()));
 
