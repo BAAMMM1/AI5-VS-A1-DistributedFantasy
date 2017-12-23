@@ -284,7 +284,9 @@ public class ToHeroService implements IToHeroService {
 
         logger.info("start to answer storaged mutexmessage-requests");
         // 5. Wenn kritischer Bereich verlassen, dann mutexMessageStorageList, abarbeiten und allen ok senden.
-        List<MutexMessage> mutexMessageStorageList = Blackboard.getInstance().getUser().getMutexMessageStoreageList();
+        List<MutexMessage> mutexMessageStorageList = new ArrayList<MutexMessage>();
+        mutexMessageStorageList.addAll(Blackboard.getInstance().getUser().getMutexMessageStoreageList());
+
         logger.info("mutexMessageStorageList: " + mutexMessageStorageList.toString());
 
         for (MutexMessage request : mutexMessageStorageList) {
