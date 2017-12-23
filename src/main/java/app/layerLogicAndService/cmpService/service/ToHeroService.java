@@ -105,10 +105,12 @@ public class ToHeroService implements IToHeroService {
 
         logger.info("wanting mutex");
 
+        /*
         if (true) {
             throw new IllegalArgumentException("function not implemented yet");
 
         }
+        */
 
         // 1. hole alle heros, die die capability mutex besitzen
         List<Adventurer> adventurerListWithMutex = this.tavernaService.getAdventurersWithCapabilityMutex();

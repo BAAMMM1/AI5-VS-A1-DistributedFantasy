@@ -329,9 +329,11 @@ public class FromHeroService implements IFromHeroService {
     @Override
     public void addMutexMessage(MutexMessage request) throws UnexpectedResponseCodeException {
 
+        /*
         if(true){
             throw new IllegalArgumentException("not implemented yet");
         }
+        */
 
         // TODO - Mutex hinterlegen wenn ...
 
