@@ -52,9 +52,10 @@ public class HttpAccess {
             connection.setRequestMethod(request.getMethod().toString());
 
             if(request.isAcceptText()){
-                connection.setRequestProperty("Accept", MEDIA_TYPE_APPLICATION_JSON);
-            } else {
                 connection.setRequestProperty("Accept", "text/text");
+            } else {
+                connection.setRequestProperty("Accept", MEDIA_TYPE_APPLICATION_JSON);
+
             }
 
             connection.setDoOutput(true);
