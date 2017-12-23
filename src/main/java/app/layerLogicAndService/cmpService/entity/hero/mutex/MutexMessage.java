@@ -54,7 +54,7 @@ public class MutexMessage {
 
     @Override
     public String toString() {
-        return "\nMutexMessage{" +
+        return "MutexMessage{" +
                 "msg='" + msg + '\'' +
                 ", time=" + time +
                 ", reply='" + reply + '\'' +

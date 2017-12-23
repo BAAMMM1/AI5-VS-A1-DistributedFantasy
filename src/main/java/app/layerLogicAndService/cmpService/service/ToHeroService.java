@@ -119,6 +119,7 @@ public class ToHeroService implements IToHeroService {
         logger.info("starting sending mutex request for adventurers");
 
         for (Adventurer adventurer : adventurerListWithMutex) {
+            logger.info("try to sending to: " + adventurer.toString());
 
 
             try {
@@ -152,17 +153,19 @@ public class ToHeroService implements IToHeroService {
                         API.USERS + "/" + Blackboard.getInstance().getUser().getName()
                 );
 
-                logger.info("sending request for: " + adventurer.getUser() + " to: " + heroMutexUrl);
-                this.toHeroConsumer.sendMutexMessage(heroMutexUrl, request);
-                logger.info("reply-address: " + HTTP + Application.IP + PORT + API.PATH_MUTEX_REPLY + "/" + uuid);
+                logger.info("sending request for: " + adventurer.getUser() + " to: " + heroMutexUrl + " reply-address: " + HTTP + Application.IP + PORT + API.PATH_MUTEX_REPLY + "/" + uuid);
+
 
                 Blackboard.getInstance().getUser().getMutex().incrementTime();
                 logger.info("time now at: " + Blackboard.getInstance().getUser().getMutex().getTime());
 
                 MutexMessageWrapper wrapper = new MutexMessageWrapper(uuid, request, heroMutexStateUrl);
+                logger.info("adding wrapper to sending list: " + wrapper.toString());
                 Blackboard.getInstance().getUser().getMutexSendingMessageList().add(wrapper);
 
-                logger.info("adding wrapper to sending list: " + wrapper.toString());
+
+
+                this.toHeroConsumer.sendMutexMessage(heroMutexUrl, request);
 
 
             } catch (Exception e) {
@@ -200,6 +203,9 @@ public class ToHeroService implements IToHeroService {
 
                 logger.info("check mutexstate for: " + wrapper.toString());
                 // mutextState abfragen für den jeweiligen wrapper
+                if(wrapper.getPathMutexState() != null){
+
+
                 Mutex hisCurrentMutexState = this.toHeroConsumer.getMutexState(wrapper.getPathMutexState());
 
                 String mutexState = hisCurrentMutexState.getState();
@@ -224,6 +230,12 @@ public class ToHeroService implements IToHeroService {
                     // löschen
                     Blackboard.getInstance().getUser().getMutexSendingMessageList().remove(wrapper);
                     logger.info("delete wrapper from sending list");
+                }
+
+                } else {
+                    // Falls der Service keine mutexState addresse hat, wird er aus der LIste gelöscht
+                    Blackboard.getInstance().getUser().getMutexSendingMessageList().remove(wrapper);
+                    logger.info("delete wrapper from sending list because there is no mutexstate address");
                 }
 
 

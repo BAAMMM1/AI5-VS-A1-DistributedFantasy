@@ -65,6 +65,7 @@ public class FromHeroService implements IFromHeroService {
     public void addMutexReplyMessage(String uuid, MutexMessage request) {
 
         // Wenn antwort, dann lösche aus getMutexSendingMessageList
+        logger.info("try to find request in sending List: " + request.toString());
 
         List<MutexMessageWrapper> wrapperList = Blackboard.getInstance().getUser().getMutexSendingMessageList();
 
@@ -73,6 +74,9 @@ public class FromHeroService implements IFromHeroService {
         if(wrapper != null){
             logger.info("remove from mutexMessageSendingList: " + wrapper.toString());
             Blackboard.getInstance().getUser().getMutexSendingMessageList().remove(wrapper);
+        } else {
+            logger.info("reply not found in sending list: " + request.toString());
+            logger.info("with uuid: " + uuid);
         }
 
     }

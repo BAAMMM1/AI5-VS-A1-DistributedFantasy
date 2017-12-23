@@ -188,6 +188,7 @@ public class HeroController {
 
         try {
             this.fromHeroService.addMutexReplyMessage(uuid, request);
+
             return new ResponseEntity<>(HttpStatus.OK);
 
 
