@@ -17,6 +17,7 @@ import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.IToHeroConsum
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -196,7 +197,9 @@ public class ToHeroService implements IToHeroService {
             boolean waitagain = false;
             logger.info("wrapper sending list is after waiting not empty");
 
-            List<MutexMessageWrapper> list = Blackboard.getInstance().getUser().getMutexSendingMessageList();
+            List<MutexMessageWrapper> list = new ArrayList<MutexMessageWrapper>();
+            list.addAll(Blackboard.getInstance().getUser().getMutexSendingMessageList());
+
             logger.info("wrapper sending list: " + list.toString());
 
             // für jeden der noch in der Liste ist, Frage den mutexState ab
