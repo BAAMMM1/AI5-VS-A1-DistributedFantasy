@@ -228,7 +228,7 @@ public class ToHeroService implements IToHeroService {
                         waitagain = true;
                         logger.info("waitagain = true");
 
-                    } else if (mutexState.equals(MutexState.RELEASED)) {
+                    } else if (mutexState.equals(MutexState.RELEASED.toString())) {
                         Blackboard.getInstance().getUser().getMutexSendingMessageList().remove(wrapper);
                         logger.info("delete wrapper from sending list");
                     }
