@@ -173,11 +173,13 @@ public class ToHeroService implements IToHeroService {
             }
         }
 
+        logger.info("end sending request");
         logger.info("wrapper sending list: " + Blackboard.getInstance().getUser().getMutexSendingMessageList().toString());
 
 
         // Wait bis Liste leer
         // 1. angemessene Zeit warten
+        // TODO - nur schlafen, falls sie noch nicht leer
         try {
             logger.info("sleep");
             Thread.sleep(5000);
@@ -203,7 +205,7 @@ public class ToHeroService implements IToHeroService {
 
                 logger.info("check mutexstate for: " + wrapper.toString());
                 // mutextState abfragen für den jeweiligen wrapper
-                if(wrapper.getPathMutexState() != null){
+                if(wrapper.getPathMutexState().isEmpty()){
 
 
                 Mutex hisCurrentMutexState = this.toHeroConsumer.getMutexState(wrapper.getPathMutexState());
