@@ -42,6 +42,18 @@ public class Visit {
     private List<String> steps_todo;
     private String token;
     private String token_name;
+    private String critical_section;
+
+    public Visit(String message, String next, int required_players, List<String> required_tokens, List<String> steps_todo, String token, String token_name, String critical_section) {
+        this.message = message;
+        this.next = next;
+        this.required_players = required_players;
+        this.required_tokens = required_tokens;
+        this.steps_todo = steps_todo;
+        this.token = token;
+        this.token_name = token_name;
+        this.critical_section = critical_section;
+    }
 
     public Visit(String message, String next, int required_players, List<String> required_tokens, List<String> steps_todo, String token, String token_name) {
         this.message = message;
@@ -51,6 +63,17 @@ public class Visit {
         this.steps_todo = steps_todo;
         this.token = token;
         this.token_name = token_name;
+    }
+
+    public Visit() {
+    }
+
+    public String getCritical_section() {
+        return critical_section;
+    }
+
+    public void setCritical_section(String critical_section) {
+        this.critical_section = critical_section;
     }
 
     public String getMessage() {

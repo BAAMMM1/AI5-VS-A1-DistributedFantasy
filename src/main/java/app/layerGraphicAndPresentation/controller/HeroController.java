@@ -210,7 +210,7 @@ public class HeroController {
         try {
 
             Mutex currentMutex = this.fromHeroService.getMutexState();
-            logger.info("respose to: " + req.getRemoteAddr() + " currentMutexState: " + currentMutex.toString());
+            logger.info("response to: " + req.getRemoteAddr() + " currentMutexState: " + currentMutex.toString());
             return new ResponseEntity<>(gson.toJson(currentMutex), HttpStatus.OK);
 
         } catch (Exception e) {

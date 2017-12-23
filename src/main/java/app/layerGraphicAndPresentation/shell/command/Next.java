@@ -40,10 +40,12 @@ public class Next extends Command{
             System.out.println("steps_todo: " + visit.getSteps_todo());
         }
 
-
-
         if (visit.getToken_name() != null) {
             System.out.println("token_name: " + visit.getToken_name());
+        }
+
+        if(visit.getCritical_section() != null) {
+            System.out.println("critical_section: " + visit.getCritical_section());
         }
 
         return null;
