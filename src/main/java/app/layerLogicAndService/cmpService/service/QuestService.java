@@ -144,9 +144,11 @@ public class QuestService implements IQuestService {
         }
 
         String bodyWithToken = this.toHeroService.wantMutex(Blackboard.getInstance().getUser().getCurrentQuesting().getMap().getHost(), Blackboard.getInstance().getUser().getCurrentQuesting().getNext());
-        // TODO - token parsen
 
-        System.out.println(bodyWithToken);
+        String token = bodyWithToken.substring(bodyWithToken.indexOf("=========================token----------------------")+52, bodyWithToken.indexOf("====================================================token_name----------------------Token:Destroy the Ring========================="));
+
+        Blackboard.getInstance().getUser().getCurrentQuesting().getTask().setToken(token);
+
     }
 
     @Override
