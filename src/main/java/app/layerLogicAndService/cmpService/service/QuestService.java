@@ -135,6 +135,10 @@ public class QuestService implements IQuestService {
 
     public void goCrit() throws UnexpectedResponseCodeException {
 
+        if(Blackboard.getInstance().getUser().getCurrentQuesting() == null){
+            throw new IllegalArgumentException("no questing");
+        }
+
         if(!Blackboard.getInstance().getUser().getCurrentQuesting().isNextCritical()){
             throw new IllegalArgumentException("no crit");
         }
