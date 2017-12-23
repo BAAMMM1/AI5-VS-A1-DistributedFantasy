@@ -204,7 +204,11 @@ public class HttpAccess {
 
     public HttpResponse postBuffered(String url, String token, String body) throws UnexpectedResponseCodeException {
 
-        return this.docall(this.buildRequest(url, EnumHTTPMethod.POST, token, body, null, null), true);
+        HttpRequest request = new HttpRequest(url, EnumHTTPMethod.POST, body);
+        request.setAuthorizationToken(token);
+        request.setAcceptText(true);
+
+        return this.docall(request, true);
 
     }
 
