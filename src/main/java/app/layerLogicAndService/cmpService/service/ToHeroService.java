@@ -195,7 +195,10 @@ public class ToHeroService implements IToHeroService {
         // So lange die Liste der gesendeten noch nicht leer ist
         // 2. Wenn nicht in einer angemessenen Zeit geantowrtet, dann prüfen von /mutexState
         // if wanting oder holt noch etwas warten, else bei release oder gar keine Antwort, aus der Liste löschen
-        while (!Blackboard.getInstance().getUser().getMutexSendingMessageList().isEmpty()) {
+        List<MutexMessageWrapper> sendingList = new ArrayList<MutexMessageWrapper>();
+        sendingList.addAll(Blackboard.getInstance().getUser().getMutexSendingMessageList());
+
+        while (!sendingList.isEmpty()) {
             boolean waitagain = false;
             logger.info("wrapper sending list is after waiting not empty");
 
@@ -257,6 +260,9 @@ public class ToHeroService implements IToHeroService {
                     e.printStackTrace();
                 }
             }
+
+            sendingList = new ArrayList<MutexMessageWrapper>();
+            sendingList.addAll(Blackboard.getInstance().getUser().getMutexSendingMessageList());
 
         }
 
