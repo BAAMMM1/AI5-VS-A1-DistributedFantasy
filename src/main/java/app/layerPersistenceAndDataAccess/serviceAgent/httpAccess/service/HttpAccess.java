@@ -92,7 +92,7 @@ public class HttpAccess {
             HttpResponse response = null;
 
             if(buffered){
-                System.out.println("read");
+
                 BufferedReader in = new BufferedReader(new InputStreamReader(
                         connection.getInputStream()));
 

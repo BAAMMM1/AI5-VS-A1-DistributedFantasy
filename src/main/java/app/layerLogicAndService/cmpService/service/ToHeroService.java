@@ -277,19 +277,13 @@ public class ToHeroService implements IToHeroService {
 
         if (Blackboard.getInstance().getUser().getMutexSendingMessageList().isEmpty()) {
             logger.info("wrapper sending list is empty");
-            // TODO - Liste leer, alle haben geantwortet, dann kritisch Bereich betreten
-
-
-            body = this.questConsumer.postBuffered(ipPort, ressource, "");
-
-
-
-
+            // Liste leer, alle haben geantwortet, dann kritisch Bereich betreten
 
             // TODO - kritich Bereich
             logger.info("entering critcal section");
             logger.info("set mutex-state to: " + MutexState.HOLD.toString());
             Blackboard.getInstance().getUser().getMutex().setState(MutexState.HOLD);
+            body = this.questConsumer.postBuffered(ipPort, ressource, "");
 
         }
         logger.info("leaving critcal section");
