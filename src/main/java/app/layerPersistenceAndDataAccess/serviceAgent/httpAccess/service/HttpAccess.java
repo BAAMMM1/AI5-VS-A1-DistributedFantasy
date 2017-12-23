@@ -8,7 +8,10 @@ import com.google.gson.Gson;
 import org.apache.log4j.Logger;
 
 import javax.el.MethodNotFoundException;
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -75,7 +78,6 @@ public class HttpAccess {
 
             }
 
-
             // Get the response
             int responeCode = connection.getResponseCode();
             int responeLen;
@@ -134,6 +136,83 @@ public class HttpAccess {
         }
     }
 
+
+    public HttpResponse call2(HttpRequest request) {
+
+        if (request.getUrl().contains("null")) {
+            throw new IllegalArgumentException("error: no host or port");
+        }
+
+        try {
+            URL url = new URL(request.getUrl());
+            HttpURLConnection connection = null;
+
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setConnectTimeout(CONNECT_TIMEOUT);
+
+
+            connection.setRequestMethod(request.getMethod().toString());
+            connection.setRequestProperty("Accept", MEDIA_TYPE_APPLICATION_JSON);
+            connection.setDoOutput(true);
+
+            // basicAuth?
+            if (request.isBasicAuth()) {
+                String encoded = Base64.getEncoder().encodeToString((request.getBasicAuthUser() + ":" + request.getBasicAuthPw()).getBytes(StandardCharsets.UTF_8));
+                connection.setRequestProperty("Authorization", "Basic " + encoded);
+            }
+
+            // Authorization Token?
+            if (request.isAuthorization()) {
+                connection.setRequestProperty("Authorization", "Token "
+                        + request.getAuthorizationToken());
+            }
+
+            // Body?
+            if (request.getBody() != null) {
+                connection.setRequestProperty("Content-Type", MEDIA_TYPE_APPLICATION_JSON);
+                //connection.setRequestProperty("Content-Length", "" + request.getBody().getBytes().length);
+                connection.getOutputStream().write(request.getBody().getBytes());
+
+            }
+
+            connection.setRequestProperty("\"Accept", "text/text");
+
+            try {
+                connection.connect();
+
+            } catch (Exception e) {
+                throw new IllegalArgumentException(e.getMessage());
+
+            }
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(
+                    connection.getInputStream()));
+
+            String responeBody = "";
+            String inputLine;
+            while ((inputLine = in.readLine()) != null)
+                responeBody = responeBody + inputLine;
+                System.out.println(inputLine);
+            in.close();
+
+
+
+            //System.out.println(responeBody.length);
+            //System.out.println(responeLen);
+
+            String body = responeBody;
+
+            HttpResponse response = new HttpResponse(200, body);
+
+            connection.disconnect();
+
+            return response;
+
+        } catch (IOException e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
+    }
+
     public HttpResponse get(String url) {
 
         return this.call(this.buildRequest(url, EnumHTTPMethod.GET, null, null, null, null));
@@ -159,6 +238,12 @@ public class HttpAccess {
     public HttpResponse post(String url, String token, String body) throws UnexpectedResponseCodeException {
 
         return this.call(this.buildRequest(url, EnumHTTPMethod.POST, token, body, null, null));
+
+    }
+
+    public HttpResponse post2(String url, String token, String body) throws UnexpectedResponseCodeException {
+
+        return this.call2(this.buildRequest(url, EnumHTTPMethod.POST, token, body, null, null));
 
     }
 

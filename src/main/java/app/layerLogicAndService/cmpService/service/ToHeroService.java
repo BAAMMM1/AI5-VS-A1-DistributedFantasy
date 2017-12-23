@@ -4,13 +4,17 @@ import app.Application;
 import app.configuration.API;
 import app.layerLogicAndService.cmpService.entity.blackboard.Blackboard;
 import app.layerLogicAndService.cmpService.entity.hero.mutex.*;
+import app.layerLogicAndService.cmpService.entity.quest.Answer;
 import app.layerLogicAndService.cmpService.entity.quest.Task;
+import app.layerLogicAndService.cmpService.entity.quest.Visit;
 import app.layerLogicAndService.cmpService.entity.quest.questing.Step;
 import app.layerLogicAndService.cmpService.entity.quest.questing.TaskPart;
 import app.layerLogicAndService.cmpService.entity.hero.*;
 import app.layerLogicAndService.cmpService.entity.taverna.Adventurer;
 import app.layerLogicAndService.cmpService.entity.taverna.Group;
 import app.layerLogicAndService.cmpService.exception.NotInGroupException;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.IQuestConsumer;
+import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.QuestConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.ToHeroConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.IToHeroConsumer;
@@ -39,6 +43,8 @@ public class ToHeroService implements IToHeroService {
     IQuestService questService = new QuestService();
 
     IFromHeroService fromHeroService = new FromHeroService();
+
+    IQuestConsumer questConsumer = new QuestConsumer();
 
     @Override
     public String sendHiringForGroupToHero(String heroName, int groupId, int taskid, String messageToHero) throws UnexpectedResponseCodeException {
@@ -102,7 +108,7 @@ public class ToHeroService implements IToHeroService {
     }
 
     @Override
-    public void wantMutex() throws UnexpectedResponseCodeException {
+    public void wantMutex(String ipPort, String ressource, String method) throws UnexpectedResponseCodeException {
 
         logger.info("wanting mutex");
         logger.info("set mutex-state to: " + MutexState.WANTING.toString());
@@ -273,6 +279,18 @@ public class ToHeroService implements IToHeroService {
         if (Blackboard.getInstance().getUser().getMutexSendingMessageList().isEmpty()) {
             logger.info("wrapper sending list is empty");
             // TODO - Liste leer, alle haben geantwortet, dann kritisch Bereich betreten
+
+
+            if(method.equals("get")){
+                Visit visit = this.questConsumer.visitHost(ipPort, ressource);
+
+            } else if(method.equals("post")){
+                Answer answer = this.questConsumer.answer(ipPort, ressource, "");
+            }
+
+
+
+
 
             // TODO - kritich Bereich
             logger.info("entering critcal section");

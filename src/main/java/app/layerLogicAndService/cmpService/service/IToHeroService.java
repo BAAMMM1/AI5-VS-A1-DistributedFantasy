@@ -23,7 +23,7 @@ public interface IToHeroService {
 
     void getHerosServices() throws UnexpectedResponseCodeException;
 
-    void wantMutex() throws UnexpectedResponseCodeException;
+    void wantMutex(String ipPort, String ressource, String method) throws UnexpectedResponseCodeException;
 
 
 
