@@ -205,7 +205,7 @@ public class ToHeroService implements IToHeroService {
 
                 logger.info("check mutexstate for: " + wrapper.toString());
                 // mutextState abfragen für den jeweiligen wrapper
-                if(wrapper.getPathMutexState().isEmpty()){
+                if(!wrapper.getPathMutexState().isEmpty()){
 
 
                 Mutex hisCurrentMutexState = this.toHeroConsumer.getMutexState(wrapper.getPathMutexState());
