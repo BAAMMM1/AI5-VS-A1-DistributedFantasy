@@ -66,6 +66,17 @@ public class FromHeroService implements IFromHeroService {
 
         logger.info("adding mutex reply message");
 
+        if(request.getTime() > Blackboard.getInstance().getUser().getMutex().getTime()){
+            logger.info("incoming time is higher");
+            Blackboard.getInstance().getUser().getMutex().setTime(request.getTime());
+            Blackboard.getInstance().getUser().getMutex().incrementTime();
+            logger.info("time ist now at: " + Blackboard.getInstance().getUser().getMutex().getTime());
+        } else {
+            logger.info("incoming time is lower");
+            Blackboard.getInstance().getUser().getMutex().incrementTime();
+            logger.info("time ist now at: " + Blackboard.getInstance().getUser().getMutex().getTime());
+        }
+
         // Wenn antwort, dann lösche aus getMutexSendingMessageList
         logger.info("try to find request in sending List: " + request.toString());
 
@@ -80,6 +91,9 @@ public class FromHeroService implements IFromHeroService {
             logger.info("reply not found in sending list: " + request.toString());
             logger.info("with uuid: " + uuid);
         }
+
+
+
 
     }
 
@@ -353,10 +367,21 @@ public class FromHeroService implements IFromHeroService {
         int time = currentMutex.getTime();
         logger.info("state at: " + mutexState);
         logger.info("time now at: " + time);
+        int requestedTim = Blackboard.getInstance().getUser().getTimeFromRequest();
 
         MutexMessage response = null;
 
-        if(mutexState.equals(MutexState.RELEASED.toString())){
+        if(request.getUser().equals(API.USERS + "/" + Blackboard.getInstance().getUser().getName())){
+            logger.info("request comes from self");
+
+            response = new MutexMessage(
+                    MutexMsg.REPLYOK.toString(),
+                    time,
+                    HTTP + Application.IP + PORT + API.PATH_MUTEX_REPLY,
+                    API.USERS + "/" + Blackboard.getInstance().getUser().getName()
+            );
+
+        } else if(mutexState.equals(MutexState.RELEASED.toString())){
             logger.info("current state equals: " + MutexState.RELEASED.toString());
 
             response = new MutexMessage(
@@ -369,8 +394,8 @@ public class FromHeroService implements IFromHeroService {
         } else if(mutexState.equals(MutexState.WANTING.toString())){
             logger.info("current state equals: " + MutexState.WANTING.toString());
 
-            if(request.getTime() < time){
-                logger.info("request time is lower than own time");
+            if(request.getTime() < requestedTim){
+                logger.info("request time is lower than own requested time");
                 response = new MutexMessage(
                         MutexMsg.REPLYOK.toString(),
                         time,
@@ -378,8 +403,8 @@ public class FromHeroService implements IFromHeroService {
                         API.USERS + "/" + Blackboard.getInstance().getUser().getName()
                 );
 
-            } else if (request.getTime() == time){
-                logger.info("request time equals own time");
+            } else if (request.getTime() == requestedTim){
+                logger.info("request time equals own requested time");
 
                 String userId = request.getUser();
                 if(userId.contains(API.USERS + "/")){
@@ -425,6 +450,20 @@ public class FromHeroService implements IFromHeroService {
         logger.info("time now at: " + currentMutex.getTime());
         this.toHeroConsumer.sendMutexMessage(request.getReply(), response);
 
+
+        // TODO - muss das hier auch geschehen?
+        /*
+        if(request.getTime() > Blackboard.getInstance().getUser().getMutex().getTime()){
+            logger.info("incoming time is higher");
+            Blackboard.getInstance().getUser().getMutex().setTime(request.getTime());
+            Blackboard.getInstance().getUser().getMutex().incrementTime();
+            logger.info("time ist now at: " + Blackboard.getInstance().getUser().getMutex().getTime());
+        } else {
+            logger.info("incoming time is lower");
+            Blackboard.getInstance().getUser().getMutex().incrementTime();
+            logger.info("time ist now at: " + Blackboard.getInstance().getUser().getMutex().getTime());
+        }
+        */
 
 
     }

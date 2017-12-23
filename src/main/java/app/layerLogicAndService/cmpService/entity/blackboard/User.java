@@ -74,6 +74,8 @@ public class User{
 
     private List<MutexMessageWrapper> mutexSendingMessageList;
 
+    private int timeFromRequest = 0;
+
     public User(String name, String userToken, String userTokenValidTime) {
         this.name = name;
         this.userToken = userToken;
@@ -85,6 +87,14 @@ public class User{
         this.mutex = new Mutex();
         this.mutexMessageStoreageList = new ArrayList<MutexMessage>();
         this.mutexSendingMessageList = new ArrayList<MutexMessageWrapper>();
+    }
+
+    public int getTimeFromRequest() {
+        return timeFromRequest;
+    }
+
+    public void setTimeFromRequest(int timeFromRequest) {
+        this.timeFromRequest = timeFromRequest;
     }
 
     public List<MutexMessageWrapper> getMutexSendingMessageList() {

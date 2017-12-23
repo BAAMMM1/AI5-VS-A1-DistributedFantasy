@@ -121,6 +121,9 @@ public class ToHeroService implements IToHeroService {
         logger.info("adventurers with capabilitiy mutex: " + adventurerListWithMutex.toString());
         logger.info("starting sending mutex request for adventurers");
 
+        int requestTime = Blackboard.getInstance().getUser().getMutex().getTime();
+        Blackboard.getInstance().getUser().setTimeFromRequest(requestTime);
+
         for (Adventurer adventurer : adventurerListWithMutex) {
             logger.info("try to sending to: " + adventurer.toString());
 
@@ -151,7 +154,7 @@ public class ToHeroService implements IToHeroService {
 
                 MutexMessage request = new MutexMessage(
                         MutexMsg.REQUEST.toString(),
-                        Blackboard.getInstance().getUser().getMutex().getTime(),
+                        requestTime,
                         HTTP + Application.IP + PORT + API.PATH_MUTEX_REPLY + "/" + uuid, // TODO - Id hierein
                         API.USERS + "/" + Blackboard.getInstance().getUser().getName()
                 );

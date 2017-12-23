@@ -95,6 +95,8 @@ public class QuestService implements IQuestService {
             throw new IllegalArgumentException("no next");
         }
 
+        // TODO - if critical flag im questen gesetzt dann muss die Aufgabe an wantMutex übergeben werden
+
         Visit dto = this.questConsumer.visitHost(Blackboard.getInstance().getUser().getCurrentQuesting().getMap().getHost(), Blackboard.getInstance().getUser().getCurrentQuesting().getNext());
         Blackboard.getInstance().getUser().getCurrentQuesting().setCurrentUri(Blackboard.getInstance().getUser().getCurrentQuesting().getNext());
 
@@ -114,6 +116,19 @@ public class QuestService implements IQuestService {
         }
 
         logger.info(Blackboard.getInstance().getUser().getCurrentQuesting().toString());
+
+        // TODO - prüfen ob eine critical_section true ist
+        // Wenn critical section true, dann ist der nächste next aufruf crital -> flag im questing setzen
+        if(dto.getCritical_section() != null){
+
+            if(dto.getCritical_section().equals("true")){
+
+                // TODO - Dann setze Flag so dass der nächste next Aufruf wantMutex ausführt
+            }
+
+        }
+
+
         return dto;
     }
 
