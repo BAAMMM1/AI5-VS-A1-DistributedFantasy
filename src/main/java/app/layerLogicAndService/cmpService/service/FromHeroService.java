@@ -64,6 +64,8 @@ public class FromHeroService implements IFromHeroService {
     @Override
     public void addMutexReplyMessage(String uuid, MutexMessage request) {
 
+        logger.info("adding mutex reply message");
+
         // Wenn antwort, dann lösche aus getMutexSendingMessageList
         logger.info("try to find request in sending List: " + request.toString());
 
@@ -333,24 +335,30 @@ public class FromHeroService implements IFromHeroService {
     @Override
     public void addMutexMessage(MutexMessage request) throws UnexpectedResponseCodeException {
 
+        logger.info("adding mutex message: " + request);
+
         /*
         if(true){
             throw new IllegalArgumentException("not implemented yet");
         }
         */
 
-        // TODO - Mutex hinterlegen wenn ...
-
         Mutex currentMutex = Blackboard.getInstance().getUser().getMutex();
+        logger.info("current mutex: " + currentMutex);
 
         currentMutex.incrementTime();
 
+
         String mutexState = currentMutex.getState();
         int time = currentMutex.getTime();
+        logger.info("state at: " + mutexState);
+        logger.info("time now at: " + time);
 
         MutexMessage response = null;
 
         if(mutexState.equals(MutexState.RELEASED.toString())){
+            logger.info("current state equals: " + MutexState.RELEASED.toString());
+
             response = new MutexMessage(
                     MutexMsg.REPLYOK.toString(),
                     time,
@@ -359,8 +367,10 @@ public class FromHeroService implements IFromHeroService {
             );
 
         } else if(mutexState.equals(MutexState.WANTING.toString())){
+            logger.info("current state equals: " + MutexState.WANTING.toString());
 
             if(request.getTime() < time){
+                logger.info("request time is lower than own time");
                 response = new MutexMessage(
                         MutexMsg.REPLYOK.toString(),
                         time,
@@ -369,13 +379,16 @@ public class FromHeroService implements IFromHeroService {
                 );
 
             } else if (request.getTime() == time){
+                logger.info("request time equals own time");
 
-                String userID = request.getUser();
-                if(userID.contains(API.USERS + "/")){
-                    userID.replace(API.USERS + "/", "");
+                String userId = request.getUser();
+                if(userId.contains(API.USERS + "/")){
+                    userId.replace(API.USERS + "/", "");
                 }
+                logger.info("user-id: " + userId);
 
-                if(userID.length() < Blackboard.getInstance().getUser().getName().length()){
+                if(userId.length() < Blackboard.getInstance().getUser().getName().length()){
+                    logger.info("userId is lower than own id");
                     response = new MutexMessage(
                             MutexMsg.REPLYOK.toString(),
                             time,
@@ -384,6 +397,8 @@ public class FromHeroService implements IFromHeroService {
                     );
                 } else {
                     //eigene id ist kleiner als income ID
+                    logger.info("own id is lower than userId");
+                    logger.info("saving request");
                     Blackboard.getInstance().getUser().getMutexMessageStoreageList().add(request);
 
                 }
@@ -392,18 +407,25 @@ public class FromHeroService implements IFromHeroService {
 
             } else {
                 // eigene Zeit ist kleiner als income Zeit
+                logger.info("own time is lower");
+                logger.info("saving request");
                 Blackboard.getInstance().getUser().getMutexMessageStoreageList().add(request);
             }
 
         } else if(mutexState.equals(MutexState.HOLD.toString())){
+            logger.info("current state equals: " + MutexState.HOLD.toString());
+            logger.info("saving request");
             Blackboard.getInstance().getUser().getMutexMessageStoreageList().add(request);
 
 
         }
 
+        logger.info("answer with: " + response.toString());
+        currentMutex.incrementTime();
+        logger.info("time now at: " + currentMutex.getTime());
         this.toHeroConsumer.sendMutexMessage(request.getReply(), response);
 
-        currentMutex.incrementTime();
+
 
     }
 

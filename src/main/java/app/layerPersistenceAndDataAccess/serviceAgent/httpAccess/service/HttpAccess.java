@@ -24,7 +24,7 @@ public class HttpAccess {
 
     private static final int BUFFER_LENGHT = 819200;
     private static final String MEDIA_TYPE_APPLICATION_JSON = "application/json";
-    public static final int CONNECT_TIMEOUT = 2000; // before 10000
+    public static final int CONNECT_TIMEOUT = 1000; // before 10000
 
     private Gson gson = new Gson();
 
