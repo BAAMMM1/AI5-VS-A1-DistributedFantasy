@@ -1,7 +1,6 @@
 package app.layerLogicAndService.cmpService.service;
 
 import app.layerLogicAndService.cmpService.entity.hero.Assignment;
-import app.layerLogicAndService.cmpService.entity.hero.Election;
 import app.layerLogicAndService.cmpService.exception.NotInGroupException;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 
@@ -23,7 +22,7 @@ public interface IToHeroService {
 
     void getHerosServices() throws UnexpectedResponseCodeException;
 
-    void wantMutex(String ipPort, String ressource, String method) throws UnexpectedResponseCodeException;
+    String wantMutex(String ipPort, String ressource) throws UnexpectedResponseCodeException;
 
 
 

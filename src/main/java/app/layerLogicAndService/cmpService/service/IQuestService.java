@@ -27,4 +27,6 @@ public interface IQuestService {
 
     Visit doAssignment() throws UnexpectedResponseCodeException;
 
+    void goCrit() throws UnexpectedResponseCodeException;
+
 }

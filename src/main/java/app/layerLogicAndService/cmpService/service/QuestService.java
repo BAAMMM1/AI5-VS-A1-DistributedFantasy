@@ -30,6 +30,8 @@ public class QuestService implements IQuestService {
 
     private IToHeroConsumer toHeroConsumer = new ToHeroConsumer();
 
+    private IToHeroService toHeroService = new ToHeroService();
+
     @Override
     public List<Quest> getQuests() throws UnexpectedResponseCodeException {
 
@@ -95,8 +97,6 @@ public class QuestService implements IQuestService {
             throw new IllegalArgumentException("no next");
         }
 
-        // TODO - if critical flag im questen gesetzt dann muss die Aufgabe an wantMutex übergeben werden
-
         Visit dto = this.questConsumer.visitHost(Blackboard.getInstance().getUser().getCurrentQuesting().getMap().getHost(), Blackboard.getInstance().getUser().getCurrentQuesting().getNext());
         Blackboard.getInstance().getUser().getCurrentQuesting().setCurrentUri(Blackboard.getInstance().getUser().getCurrentQuesting().getNext());
 
@@ -123,13 +123,26 @@ public class QuestService implements IQuestService {
 
             if(dto.getCritical_section().equals("true")){
 
-                // TODO - Dann setze Flag so dass der nächste next Aufruf wantMutex ausführt
+                Blackboard.getInstance().getUser().getCurrentQuesting().setNextCritical(true);
+
             }
 
         }
 
 
         return dto;
+    }
+
+    public void goCrit() throws UnexpectedResponseCodeException {
+
+        if(!Blackboard.getInstance().getUser().getCurrentQuesting().isNextCritical()){
+            throw new IllegalArgumentException("no crit");
+        }
+
+        String bodyWithToken = this.toHeroService.wantMutex(Blackboard.getInstance().getUser().getCurrentQuesting().getMap().getHost(), Blackboard.getInstance().getUser().getCurrentQuesting().getNext());
+        // TODO - token parsen
+
+        System.out.println(bodyWithToken);
     }
 
     @Override

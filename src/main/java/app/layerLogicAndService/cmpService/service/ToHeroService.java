@@ -4,9 +4,7 @@ import app.Application;
 import app.configuration.API;
 import app.layerLogicAndService.cmpService.entity.blackboard.Blackboard;
 import app.layerLogicAndService.cmpService.entity.hero.mutex.*;
-import app.layerLogicAndService.cmpService.entity.quest.Answer;
 import app.layerLogicAndService.cmpService.entity.quest.Task;
-import app.layerLogicAndService.cmpService.entity.quest.Visit;
 import app.layerLogicAndService.cmpService.entity.quest.questing.Step;
 import app.layerLogicAndService.cmpService.entity.quest.questing.TaskPart;
 import app.layerLogicAndService.cmpService.entity.hero.*;
@@ -40,8 +38,6 @@ public class ToHeroService implements IToHeroService {
 
     ITavernaService tavernaService = new TavernaService();
 
-    IQuestService questService = new QuestService();
-
     IFromHeroService fromHeroService = new FromHeroService();
 
     IQuestConsumer questConsumer = new QuestConsumer();
@@ -56,7 +52,7 @@ public class ToHeroService implements IToHeroService {
         // TODO - Wenn Grouß nicht da, dann besser response als 404 - Not Found
         Group group = this.tavernaService.getGroup(groupId);
 
-        Task task = this.questService.getTask(taskid);
+        Task task = this.questConsumer.getTask(taskid);
 
         String heroServiceUrl = adventurer.getUrl();
 
@@ -108,9 +104,12 @@ public class ToHeroService implements IToHeroService {
     }
 
     @Override
-    public void wantMutex(String ipPort, String ressource, String method) throws UnexpectedResponseCodeException {
+    public String wantMutex(String ipPort, String ressource) throws UnexpectedResponseCodeException {
 
         logger.info("wanting mutex");
+
+        String body = null;
+
         logger.info("set mutex-state to: " + MutexState.WANTING.toString());
         Blackboard.getInstance().getUser().getMutex().setState(MutexState.WANTING);
 
@@ -281,12 +280,7 @@ public class ToHeroService implements IToHeroService {
             // TODO - Liste leer, alle haben geantwortet, dann kritisch Bereich betreten
 
 
-            if(method.equals("get")){
-                Visit visit = this.questConsumer.visitHost(ipPort, ressource);
-
-            } else if(method.equals("post")){
-                Answer answer = this.questConsumer.answer(ipPort, ressource, "");
-            }
+            body = this.questConsumer.postBuffered(ipPort, ressource, "");
 
 
 
@@ -327,6 +321,8 @@ public class ToHeroService implements IToHeroService {
 
         }
 
+
+        return body;
 
     }
 

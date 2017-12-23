@@ -145,7 +145,7 @@ public class InputInterpreter {
         registerCommands.add(new AdventurersMutex(tavernaService));
         registerCommands.add(new Mutexwant(toHeroService));
         registerCommands.add(new Wanting());
-        registerCommands.add(new Crit());
+        registerCommands.add(new Crit(questService));
 
     }
 

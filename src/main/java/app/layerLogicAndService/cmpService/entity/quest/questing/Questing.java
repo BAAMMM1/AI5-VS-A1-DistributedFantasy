@@ -12,6 +12,7 @@ public class Questing {
     private Map map;
     private String next;
     private String currentUri;
+    private boolean nextCritical = false;
 
     // Falls quest mehrer TaskPart besitzen, hier eine Liste draus machen
     private TaskPart part;
@@ -22,6 +23,14 @@ public class Questing {
         this.task = task;
         this.map = map;
         this.currentUri = currentUri;
+    }
+
+    public boolean isNextCritical() {
+        return nextCritical;
+    }
+
+    public void setNextCritical(boolean nextCritical) {
+        this.nextCritical = nextCritical;
     }
 
     public String getRingToken() {

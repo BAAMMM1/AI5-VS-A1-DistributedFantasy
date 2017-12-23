@@ -28,4 +28,6 @@ public interface IQuestConsumer {
 
     Answer postToURL(String url, String body) throws UnexpectedResponseCodeException;
 
+    String postBuffered(String ipPort, String ressource, String body) throws UnexpectedResponseCodeException;
+
 }
