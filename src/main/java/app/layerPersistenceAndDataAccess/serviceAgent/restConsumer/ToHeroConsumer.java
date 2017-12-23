@@ -1,6 +1,7 @@
 package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer;
 
 import app.layerLogicAndService.cmpService.entity.hero.*;
+import app.layerLogicAndService.cmpService.entity.hero.mutex.Mutex;
 import app.layerLogicAndService.cmpService.entity.hero.mutex.MutexMessage;
 import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.service.HttpAccess;
 import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.entity.HttpResponse;
@@ -97,6 +98,19 @@ public class ToHeroConsumer implements IToHeroConsumer {
         if (response.getCode() < 200 || response.getCode() >= 300) {
             throw new UnexpectedResponseCodeException(response);
         }
+
+    }
+
+    @Override
+    public Mutex getMutexState(String heroMutexStateUrl) throws UnexpectedResponseCodeException {
+
+        HttpResponse response = this.httpAccess.get(heroMutexStateUrl);
+
+        if (response.getCode() != 200) {
+            throw new UnexpectedResponseCodeException(response);
+        }
+
+        return gson.fromJson(response.getBody(), Mutex.class);
 
     }
 

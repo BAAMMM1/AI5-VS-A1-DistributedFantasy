@@ -120,7 +120,6 @@ public class HeroController {
     public ResponseEntity<?> addMessage(@RequestBody Message request, HttpServletRequest req) {
 
         logger.info("form ip: " + req.getRemoteAddr());
-        logger.info("form port: " + req.getRemotePort());
 
         try {
             this.fromHeroService.addMessage(request);
@@ -176,16 +175,20 @@ public class HeroController {
     }
 
     @RequestMapping(
-            value = API.PATH_MUTEX_REPLY,
+            value = API.PATH_MUTEX_REPLY + "/" + "{" + API.MUTEX_MESSAGE_ID + "}",
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> addMutexReply(@RequestBody MutexMessage request) {
+    public ResponseEntity<?> addMutexReply(@PathVariable(API.MUTEX_MESSAGE_ID) String uuid, @RequestBody MutexMessage request) {
         // uri to endpoint where one posts mutex algorithm messages>" - RequestBody hier ok?
 
-        logger.info("income mutexreply: " + request.toString());
+        logger.info("income mutexreply");
+        logger.info("uuid: " + uuid);
+        logger.info("reply: " + request.toString());
+
 
         try {
-            return new ResponseEntity<>(new JSONObject().put(API.MESSAGE, API.ERROR).toString(), HttpStatus.BAD_REQUEST);
+            this.fromHeroService.addMutexReplyMessage(uuid, request);
+            return new ResponseEntity<>(HttpStatus.OK);
 
 
         } catch (Exception e) {
@@ -199,11 +202,14 @@ public class HeroController {
             value = API.PATH_MUTEXSTATE,
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getMutexstate() {
+    public ResponseEntity<?> getMutexstate(HttpServletRequest req) {
+
+        logger.info("ask for mutexState: " + req.getRemoteAddr());
 
         try {
 
             Mutex currentMutex = this.fromHeroService.getMutexState();
+            logger.info("respose to: " + req.getRemoteAddr() + " currentMutexState: " + currentMutex.toString());
             return new ResponseEntity<>(gson.toJson(currentMutex), HttpStatus.OK);
 
         } catch (Exception e) {

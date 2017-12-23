@@ -1,6 +1,7 @@
 package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer;
 
 import app.layerLogicAndService.cmpService.entity.hero.*;
+import app.layerLogicAndService.cmpService.entity.hero.mutex.Mutex;
 import app.layerLogicAndService.cmpService.entity.hero.mutex.MutexMessage;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
 
@@ -19,7 +20,6 @@ public interface IToHeroConsumer {
     void sendElection(String electionUrl, Election election) throws UnexpectedResponseCodeException;
 
     void sendMutexMessage(String mutexUrl, MutexMessage mutexMessage) throws UnexpectedResponseCodeException;
-
-
+    Mutex getMutexState(String heroMutexStateUrl) throws UnexpectedResponseCodeException;
 
 }

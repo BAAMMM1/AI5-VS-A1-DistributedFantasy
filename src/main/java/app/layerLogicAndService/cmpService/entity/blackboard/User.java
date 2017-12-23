@@ -5,6 +5,7 @@ import app.layerLogicAndService.cmpService.entity.hero.AssignmentDeliver;
 import app.layerLogicAndService.cmpService.entity.hero.Message;
 import app.layerLogicAndService.cmpService.entity.hero.mutex.Mutex;
 import app.layerLogicAndService.cmpService.entity.hero.mutex.MutexMessage;
+import app.layerLogicAndService.cmpService.entity.hero.mutex.MutexMessageWrapper;
 import app.layerLogicAndService.cmpService.entity.quest.Link;
 import app.layerLogicAndService.cmpService.entity.quest.questing.Questing;
 import app.layerLogicAndService.cmpService.entity.taverna.Group;
@@ -69,9 +70,9 @@ public class User{
 
     private Mutex mutex;
 
-    private List<MutexMessage> mutexMessageList;
+    private List<MutexMessage> mutexMessageStoreageList;
 
-    private List<MutexMessage> mutexSendingMessageList;
+    private List<MutexMessageWrapper> mutexSendingMessageList;
 
     public User(String name, String userToken, String userTokenValidTime) {
         this.name = name;
@@ -82,16 +83,16 @@ public class User{
         this.assignmentList = new ArrayList<Assignment>();
         this.sendetAssignmentList = new ArrayList<Assignment>();
         this.mutex = new Mutex();
-        this.mutexMessageList = new ArrayList<MutexMessage>();
-        this.mutexSendingMessageList = new ArrayList<MutexMessage>();
+        this.mutexMessageStoreageList = new ArrayList<MutexMessage>();
+        this.mutexSendingMessageList = new ArrayList<MutexMessageWrapper>();
     }
 
-    public List<MutexMessage> getMutexSendingMessageList() {
+    public List<MutexMessageWrapper> getMutexSendingMessageList() {
         return mutexSendingMessageList;
     }
 
-    public List<MutexMessage> getMutexMessageList() {
-        return mutexMessageList;
+    public List<MutexMessage> getMutexMessageStoreageList() {
+        return mutexMessageStoreageList;
     }
 
     public Mutex getMutex() {

@@ -3,8 +3,7 @@ package app.layerLogicAndService.cmpService.service;
 import app.Application;
 import app.configuration.API;
 import app.layerLogicAndService.cmpService.entity.blackboard.Blackboard;
-import app.layerLogicAndService.cmpService.entity.hero.mutex.MutexMessage;
-import app.layerLogicAndService.cmpService.entity.hero.mutex.MutexMsg;
+import app.layerLogicAndService.cmpService.entity.hero.mutex.*;
 import app.layerLogicAndService.cmpService.entity.quest.Task;
 import app.layerLogicAndService.cmpService.entity.quest.questing.Step;
 import app.layerLogicAndService.cmpService.entity.quest.questing.TaskPart;
@@ -19,6 +18,7 @@ import org.apache.log4j.Logger;
 import org.json.JSONObject;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author Chris on 02.12.2017
@@ -103,7 +103,7 @@ public class ToHeroService implements IToHeroService {
     @Override
     public void wantMutex() throws UnexpectedResponseCodeException {
 
-        // TODO - adding logger to method
+        logger.info("wanting mutex");
 
         if (true) {
             throw new IllegalArgumentException("function not implemented yet");
@@ -113,7 +113,11 @@ public class ToHeroService implements IToHeroService {
         // 1. hole alle heros, die die capability mutex besitzen
         List<Adventurer> adventurerListWithMutex = this.tavernaService.getAdventurersWithCapabilityMutex();
 
+        logger.info("adventurers with capabilitiy mutex: " + adventurerListWithMutex.toString());
+        logger.info("starting sending mutex request for adventurers");
+
         for (Adventurer adventurer : adventurerListWithMutex) {
+
 
             try {
 
@@ -131,35 +135,141 @@ public class ToHeroService implements IToHeroService {
                     heroMutexUrl = "http://" + heroMutexUrl;
                 }
 
+                String heroMutexStateUrl = heroService.getMutexstate();
+
+                if (!heroMutexUrl.substring(0, 7).equals("http://")) {
+                    heroMutexUrl = "http://" + heroMutexStateUrl;
+                }
+
+                String uuid = UUID.randomUUID().toString();
+
                 MutexMessage request = new MutexMessage(
                         MutexMsg.REQUEST.toString(),
                         Blackboard.getInstance().getUser().getMutex().getTime(),
-                        HTTP + Application.IP + PORT + API.PATH_MUTEX_REPLY,
+                        HTTP + Application.IP + PORT + API.PATH_MUTEX_REPLY + "/" + uuid, // TODO - Id hierein
                         API.USERS + "/" + Blackboard.getInstance().getUser().getName()
                 );
 
+                logger.info("sending request for: " + adventurer.getUser() + " to: " + heroMutexUrl);
                 this.toHeroConsumer.sendMutexMessage(heroMutexUrl, request);
-                Blackboard.getInstance().getUser().getMutex().incrementTime();
-                Blackboard.getInstance().getUser().getMutexSendingMessageList().add(request);
+                logger.info("reply-address: " + HTTP + Application.IP + PORT + API.PATH_MUTEX_REPLY + "/" + uuid);
 
-                // TODO - Waiting Threadstarten
-                // Wenn antwort, dann lösche aus getMutexSendingMessageList
-                // Wenn nicht in einer angemessenen Zeit geantowrtet, dann prüfen von /mutexState
-                // Bei wanting oder holt noch etwas warten, bei release oder gar keine Antwort, aus der Liste löschen
+                Blackboard.getInstance().getUser().getMutex().incrementTime();
+                logger.info("time now at: " + Blackboard.getInstance().getUser().getMutex().getTime());
+
+                MutexMessageWrapper wrapper = new MutexMessageWrapper(uuid, request, heroMutexStateUrl);
+                Blackboard.getInstance().getUser().getMutexSendingMessageList().add(wrapper);
+
+                logger.info("adding wrapper to sending list: " + wrapper.toString());
 
 
             } catch (Exception e) {
                 logger.warn(e.getMessage());
             }
+        }
 
-            // TODO - Warten bis Liste leer
-            // TODO - Wenn Liste leer, dann alle geantwortet, dann kritisch Bereich betreten
-
-            // TODO - Wenn kritich Bereich betreten
+        logger.info("wrapper sending list: " + Blackboard.getInstance().getUser().getMutexSendingMessageList().toString());
 
 
-            // TODO - Wenn kritischer Bereich verlassen, dann mutexMessageList, abarbeiten und allen ok senden.
+        // Wait bis Liste leer
+        // 1. angemessene Zeit warten
+        try {
+            logger.info("sleep");
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
+        // Wenn antwort, dann lösche aus getMutexSendingMessageList -> FromHeroService -> addMutexReplyMessage
+
+        // So lange die Liste der gesendeten noch nicht leer ist
+        // 2. Wenn nicht in einer angemessenen Zeit geantowrtet, dann prüfen von /mutexState
+        // if wanting oder holt noch etwas warten, else bei release oder gar keine Antwort, aus der Liste löschen
+        while (!Blackboard.getInstance().getUser().getMutexSendingMessageList().isEmpty()) {
+            boolean waitagain = false;
+            logger.info("wrapper sending list is after waiting not empty");
+
+            List<MutexMessageWrapper> list = Blackboard.getInstance().getUser().getMutexSendingMessageList();
+            logger.info("wrapper sending list: " + list.toString());
+
+            // für jeden der noch in der Liste ist, Frage den mutexState ab
+            logger.info("starting check mutexstate");
+            for (MutexMessageWrapper wrapper : list) {
+
+                logger.info("check mutexstate for: " + wrapper.toString());
+                // mutextState abfragen für den jeweiligen wrapper
+                Mutex hisCurrentMutexState = this.toHeroConsumer.getMutexState(wrapper.getPathMutexState());
+
+                String mutexState = hisCurrentMutexState.getState();
+                logger.info("mutexstate is: " + mutexState);
+
+                if (mutexState != null) {
+
+                    if (mutexState.equals(MutexState.WANTING.toString())) {
+                        waitagain = true;
+                        logger.info("waitagain = true");
+
+                    } else if (mutexState.equals(MutexState.HOLD.toString())) {
+                        waitagain = true;
+                        logger.info("waitagain = true");
+
+                    } else if (mutexState.equals(MutexState.RELEASED)) {
+                        Blackboard.getInstance().getUser().getMutexSendingMessageList().remove(wrapper);
+                        logger.info("delete wrapper from sending list");
+                    }
+
+                } else {
+                    // löschen
+                    Blackboard.getInstance().getUser().getMutexSendingMessageList().remove(wrapper);
+                    logger.info("delete wrapper from sending list");
+                }
+
+
+            }
+
+            if (waitagain) {
+
+                try {
+                    logger.info("sleep");
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+
+
+        if (Blackboard.getInstance().getUser().getMutexSendingMessageList().isEmpty()) {
+            logger.info("wrapper sending list is empty");
+            // TODO - Liste leer, alle haben geantwortet, dann kritisch Bereich betreten
+
+            // TODO - kritich Bereich
+            logger.info("entering critcal section");
+
+        }
+        logger.info("leaving critcal section");
+
+
+        logger.info("start to answer storaged mutexmessage-requests");
+        // 5. Wenn kritischer Bereich verlassen, dann mutexMessageStorageList, abarbeiten und allen ok senden.
+        List<MutexMessage> mutexMessageStorageList = Blackboard.getInstance().getUser().getMutexMessageStoreageList();
+        logger.info("mutexMessageStorageList: " + mutexMessageStorageList.toString());
+
+        for (MutexMessage request : mutexMessageStorageList) {
+
+            MutexMessage response = new MutexMessage(
+                    MutexMsg.REPLYOK.toString(),
+                    Blackboard.getInstance().getUser().getMutex().getTime(),
+                    HTTP + Application.IP + PORT + API.PATH_MUTEX_REPLY,
+                    API.USERS + "/" + Blackboard.getInstance().getUser().getName()
+            );
+
+            logger.info("senden reply-ok to: " + request.getReply());
+            this.toHeroConsumer.sendMutexMessage(request.getReply(), response);
+            Blackboard.getInstance().getUser().getMutex().incrementTime();
+            logger.info("time now at: " + Blackboard.getInstance().getUser().getMutex().getTime());
+            Blackboard.getInstance().getUser().getMutexMessageStoreageList().remove(request);
 
         }
 
@@ -169,7 +279,6 @@ public class ToHeroService implements IToHeroService {
     @Override
     public void sendMessage(String adventurer, String string) throws UnexpectedResponseCodeException {
 
-        // TODO - Benutzer über Message income benachrichtigen
 
         Adventurer adven = this.tavernaService.getAdventure(adventurer);
 

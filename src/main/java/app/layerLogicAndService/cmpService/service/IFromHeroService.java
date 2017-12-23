@@ -25,4 +25,6 @@ public interface IFromHeroService {
     void addMutexMessage(MutexMessage request) throws UnexpectedResponseCodeException;
     Mutex getMutexState();
 
+    void addMutexReplyMessage(String uuid, MutexMessage request);
+
 }

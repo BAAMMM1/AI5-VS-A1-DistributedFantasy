@@ -36,6 +36,8 @@ public class API {
     public static final String ELECTION_STATE_ANSWER = "answer";
     public static final String ELECTION_STATE_COORDINATOR = "coordinator";
 
+    public static final String MUTEX_MESSAGE_ID = "mutex-message-id";
+
     public static final String MESSAGE = "message";
     public static final String ERROR = "error";
 

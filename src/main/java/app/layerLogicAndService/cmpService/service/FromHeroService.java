@@ -5,10 +5,7 @@ import app.Application;
 import app.configuration.API;
 import app.layerGraphicAndPresentation.shell.context.Context;
 import app.layerLogicAndService.cmpService.entity.blackboard.Blackboard;
-import app.layerLogicAndService.cmpService.entity.hero.mutex.Mutex;
-import app.layerLogicAndService.cmpService.entity.hero.mutex.MutexMessage;
-import app.layerLogicAndService.cmpService.entity.hero.mutex.MutexMsg;
-import app.layerLogicAndService.cmpService.entity.hero.mutex.MutexState;
+import app.layerLogicAndService.cmpService.entity.hero.mutex.*;
 import app.layerLogicAndService.cmpService.entity.taverna.Adventurer;
 import app.layerLogicAndService.cmpService.exception.AlreadyInGroupException;
 import app.layerLogicAndService.cmpService.entity.hero.*;
@@ -62,6 +59,22 @@ public class FromHeroService implements IFromHeroService {
     @Override
     public Mutex getMutexState(){
         return Blackboard.getInstance().getUser().getMutex();
+    }
+
+    @Override
+    public void addMutexReplyMessage(String uuid, MutexMessage request) {
+
+        // Wenn antwort, dann lösche aus getMutexSendingMessageList
+
+        List<MutexMessageWrapper> wrapperList = Blackboard.getInstance().getUser().getMutexSendingMessageList();
+
+        MutexMessageWrapper wrapper = wrapperList.stream().filter(w -> w.getUuid().equals(uuid)).findFirst().orElse(null);
+
+        if(wrapper != null){
+            logger.info("remove from mutexMessageSendingList: " + wrapper.toString());
+            Blackboard.getInstance().getUser().getMutexSendingMessageList().remove(wrapper);
+        }
+
     }
 
     @Override
@@ -365,7 +378,7 @@ public class FromHeroService implements IFromHeroService {
                     );
                 } else {
                     //eigene id ist kleiner als income ID
-                    Blackboard.getInstance().getUser().getMutexMessageList().add(request);
+                    Blackboard.getInstance().getUser().getMutexMessageStoreageList().add(request);
 
                 }
 
@@ -373,11 +386,11 @@ public class FromHeroService implements IFromHeroService {
 
             } else {
                 // eigene Zeit ist kleiner als income Zeit
-                Blackboard.getInstance().getUser().getMutexMessageList().add(request);
+                Blackboard.getInstance().getUser().getMutexMessageStoreageList().add(request);
             }
 
         } else if(mutexState.equals(MutexState.HOLD.toString())){
-            Blackboard.getInstance().getUser().getMutexMessageList().add(request);
+            Blackboard.getInstance().getUser().getMutexMessageStoreageList().add(request);
 
 
         }
