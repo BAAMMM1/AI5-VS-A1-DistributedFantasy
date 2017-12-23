@@ -160,7 +160,7 @@ public class ToHeroService implements IToHeroService {
                 Blackboard.getInstance().getUser().getMutex().incrementTime();
                 logger.info("time now at: " + Blackboard.getInstance().getUser().getMutex().getTime());
 
-                MutexMessageWrapper wrapper = new MutexMessageWrapper(uuid, request, heroMutexStateUrl);
+                MutexMessageWrapper wrapper = new MutexMessageWrapper(adventurer.getUser(), uuid, request, heroMutexStateUrl);
                 logger.info("adding wrapper to sending list: " + wrapper.toString());
                 Blackboard.getInstance().getUser().getMutexSendingMessageList().add(wrapper);
 
