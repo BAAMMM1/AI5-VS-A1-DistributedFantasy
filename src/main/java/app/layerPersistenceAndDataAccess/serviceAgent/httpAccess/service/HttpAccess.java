@@ -197,11 +197,10 @@ public class HttpAccess {
 
             String responeBody = "";
             String inputLine;
-            while ((inputLine = in.readLine()) != null)
-                System.out.println("not null");
-                System.out.println("inputLine: " + inputLine);
+            while ((inputLine = in.readLine()) != null){
                 responeBody = responeBody + inputLine;
                 System.out.println(inputLine);
+            }
             in.close();
             System.out.println("close");
 
@@ -210,6 +209,7 @@ public class HttpAccess {
             //System.out.println(responeLen);
 
             String body = responeBody;
+            System.out.println(responeBody);
 
             HttpResponse response = new HttpResponse(200, body);
 
