@@ -103,10 +103,8 @@ public class HttpAccess {
                     System.out.println(inputLine);
                 }
                 in.close();
-                System.out.println("close");
 
                 body = responeBody;
-                System.out.println(responeBody);
 
                 response = new HttpResponse(200, body);
 

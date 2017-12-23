@@ -147,7 +147,7 @@ public class QuestService implements IQuestService {
 
         String token = bodyWithToken.substring(bodyWithToken.indexOf("=========================token----------------------")+52, bodyWithToken.indexOf("==================================================token_name----------------------Token:Destroy the Ring========================="));
 
-        System.out.println(token);
+        logger.info("token: " + token);
 
         Blackboard.getInstance().getUser().getCurrentQuesting().getTask().setToken(token);
 
