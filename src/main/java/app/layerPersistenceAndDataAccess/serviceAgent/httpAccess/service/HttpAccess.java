@@ -31,8 +31,11 @@ public class HttpAccess {
 
     private Gson gson = new Gson();
 
-
     public HttpResponse call(HttpRequest request) {
+        return this.docall(request, false);
+    }
+
+    public HttpResponse docall(HttpRequest request, boolean buffered) {
 
         if (request.getUrl().contains("null")) {
             throw new IllegalArgumentException("error: no host or port");
@@ -47,7 +50,13 @@ public class HttpAccess {
 
 
             connection.setRequestMethod(request.getMethod().toString());
-            connection.setRequestProperty("Accept", MEDIA_TYPE_APPLICATION_JSON);
+
+            if(request.isAcceptText()){
+                connection.setRequestProperty("Accept", MEDIA_TYPE_APPLICATION_JSON);
+            } else {
+                connection.setRequestProperty("Accept", "text/text");
+            }
+
             connection.setDoOutput(true);
 
             // basicAuth?
@@ -78,37 +87,74 @@ public class HttpAccess {
 
             }
 
-            // Get the response
-            int responeCode = connection.getResponseCode();
-            int responeLen;
+            String body = "";
+            HttpResponse response = null;
 
-            byte[] responeBody = new byte[BUFFER_LENGHT];
+            if(buffered){
+                System.out.println("read");
+                BufferedReader in = new BufferedReader(new InputStreamReader(
+                        connection.getInputStream()));
 
+                String responeBody = "";
+                String inputLine;
+                while ((inputLine = in.readLine()) != null){
+                    responeBody = responeBody + inputLine;
+                    System.out.println(inputLine);
+                }
+                in.close();
+                System.out.println("close");
 
-            if (responeCode >= 500) {
-                throw new ServerException("code: " + responeCode);
-            }
+                body = responeBody;
+                System.out.println(responeBody);
 
-            if (responeCode == 404) {
-                throw new MethodNotFoundException("method " + request.getMethod() + " could not be found for " + request.getUrl());
-            }
-
-
-            // Which stream is available depends on the return code...
-            if (responeCode < 400) {
-                responeLen = connection.getInputStream().available();
-                connection.getInputStream().read(responeBody);
+                response = new HttpResponse(200, body);
 
             } else {
-                responeLen = connection.getErrorStream().available();
-                connection.getErrorStream().read(responeBody);
+
+                // Get the response
+                int responeCode = connection.getResponseCode();
+                int responeLen;
+
+                byte[] responeBody = new byte[BUFFER_LENGHT];
+
+
+                if (responeCode >= 500) {
+                    throw new ServerException("code: " + responeCode);
+                }
+
+                if (responeCode == 404) {
+                    throw new MethodNotFoundException("method " + request.getMethod() + " could not be found for " + request.getUrl());
+                }
+
+
+                // Which stream is available depends on the return code...
+                if (responeCode < 400) {
+                    responeLen = connection.getInputStream().available();
+                    connection.getInputStream().read(responeBody);
+
+                } else {
+                    responeLen = connection.getErrorStream().available();
+                    connection.getErrorStream().read(responeBody);
+
+                }
+
+                //System.out.println(responeBody.length);
+                //System.out.println(responeLen);
+
+                body = new String(responeBody, 0, responeLen);
+
+                logger.info(responeCode + " for: " + request.getUrl());
+                if(body != null) {
+                    if(!body.isEmpty()){
+                        logger.info(body.toString());
+                    }
+                }
+                //System.out.println(responeCode);
+                //System.out.println(Body.toString());
+
+                response = new HttpResponse(responeCode, body);
 
             }
-
-            //System.out.println(responeBody.length);
-            //System.out.println(responeLen);
-
-            String body = new String(responeBody, 0, responeLen);
 
             /* TODO - Falls eine Anfrage durch ging aber keinen Body enthält
             if(Body.equals("")){
@@ -116,102 +162,7 @@ public class HttpAccess {
             }
             */
 
-            logger.info(responeCode + " for: " + request.getUrl());
-            if(body != null) {
-                if(!body.isEmpty()){
-                    logger.info(body.toString());
-                }
-            }
-            //System.out.println(responeCode);
-            //System.out.println(Body.toString());
 
-            HttpResponse response = new HttpResponse(responeCode, body);
-
-            connection.disconnect();
-
-            return response;
-
-        } catch (IOException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        }
-    }
-
-
-    public HttpResponse call2(HttpRequest request) {
-        System.out.println("call2");
-
-        if (request.getUrl().contains("null")) {
-            throw new IllegalArgumentException("error: no host or port");
-        }
-
-        try {
-            System.out.println("1");
-            URL url = new URL(request.getUrl());
-            HttpURLConnection connection = null;
-
-            System.out.println("2");
-            connection = (HttpURLConnection) url.openConnection();
-            connection.setConnectTimeout(CONNECT_TIMEOUT);
-
-
-            System.out.println("3");
-            connection.setRequestMethod(request.getMethod().toString());
-            connection.setRequestProperty("Accept", "text/text");
-            connection.setDoOutput(true);
-
-            System.out.println("4");
-            // basicAuth?
-            if (request.isBasicAuth()) {
-                String encoded = Base64.getEncoder().encodeToString((request.getBasicAuthUser() + ":" + request.getBasicAuthPw()).getBytes(StandardCharsets.UTF_8));
-                connection.setRequestProperty("Authorization", "Basic " + encoded);
-            }
-
-            System.out.println("5");
-            // Authorization Token?
-            if (request.isAuthorization()) {
-                connection.setRequestProperty("Authorization", "Token "
-                        + request.getAuthorizationToken());
-            }
-
-            System.out.println("6");
-            // Body?
-            if (request.getBody() != null) {
-                connection.setRequestProperty("Content-Type", MEDIA_TYPE_APPLICATION_JSON);
-                //connection.setRequestProperty("Content-Length", "" + request.getBody().getBytes().length);
-                connection.getOutputStream().write(request.getBody().getBytes());
-
-            }
-
-            System.out.println("connect");
-            try {
-                connection.connect();
-
-            } catch (Exception e) {
-                throw new IllegalArgumentException(e.getMessage());
-
-            }
-
-            System.out.println("read");
-            BufferedReader in = new BufferedReader(new InputStreamReader(
-                    connection.getInputStream()));
-
-            String responeBody = "";
-            String inputLine;
-            while ((inputLine = in.readLine()) != null){
-                responeBody = responeBody + inputLine;
-                System.out.println(inputLine);
-            }
-            in.close();
-            System.out.println("close");
-
-
-            //System.out.println(responeBody.length);
-            //System.out.println(responeLen);
-
-            String body = responeBody;
-            System.out.println(responeBody);
-
-            HttpResponse response = new HttpResponse(200, body);
 
             connection.disconnect();
 
@@ -250,9 +201,9 @@ public class HttpAccess {
 
     }
 
-    public HttpResponse post2(String url, String token, String body) throws UnexpectedResponseCodeException {
+    public HttpResponse postBuffered(String url, String token, String body) throws UnexpectedResponseCodeException {
 
-        return this.call2(this.buildRequest(url, EnumHTTPMethod.POST, token, body, null, null));
+        return this.docall(this.buildRequest(url, EnumHTTPMethod.POST, token, body, null, null), true);
 
     }
 

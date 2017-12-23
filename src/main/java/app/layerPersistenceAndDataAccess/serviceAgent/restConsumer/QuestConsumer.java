@@ -212,7 +212,7 @@ public class QuestConsumer implements IQuestConsumer {
 
     public void postToCritial() throws UnexpectedResponseCodeException {
 
-        HttpResponse response = this.httpAccess.post2("http://172.19.0.8:5000/magicaltower/wand", Blackboard.getInstance().getUser().getUserToken(), " ");
+        HttpResponse response = this.httpAccess.postBuffered("http://172.19.0.8:5000/magicaltower/wand", Blackboard.getInstance().getUser().getUserToken(), " ");
 
         if (response.getCode() != 200) {
             throw new UnexpectedResponseCodeException(response);

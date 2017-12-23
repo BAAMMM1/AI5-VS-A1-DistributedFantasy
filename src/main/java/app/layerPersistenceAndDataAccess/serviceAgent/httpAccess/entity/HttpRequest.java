@@ -15,6 +15,7 @@ public class HttpRequest {
     private String basicAuthPw;
     private boolean authorization = false;
     private String authorizationToken;
+    private boolean acceptText = false;
 
     public HttpRequest(String url, EnumHTTPMethod method, String body) {
         this.url = url;
@@ -70,5 +71,13 @@ public class HttpRequest {
 
     public String getAuthorizationToken() {
         return authorizationToken;
+    }
+
+    public boolean isAcceptText() {
+        return acceptText;
+    }
+
+    public void setAcceptText(boolean acceptText) {
+        this.acceptText = acceptText;
     }
 }
