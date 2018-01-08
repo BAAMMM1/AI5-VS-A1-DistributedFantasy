@@ -169,7 +169,6 @@ public class ToHeroService implements IToHeroService {
                 Blackboard.getInstance().getUser().getMutexSendingMessageList().add(wrapper);
 
 
-
                 this.toHeroConsumer.sendMutexMessage(heroMutexUrl, request);
 
 
@@ -215,34 +214,43 @@ public class ToHeroService implements IToHeroService {
 
                 logger.info("check mutexstate for: " + wrapper.toString());
                 // mutextState abfragen für den jeweiligen wrapper
-                if(!wrapper.getPathMutexState().isEmpty()){
+                if (!wrapper.getPathMutexState().isEmpty()) {
 
+                    Mutex hisCurrentMutexState = null;
+                    try {
+                        hisCurrentMutexState = this.toHeroConsumer.getMutexState(wrapper.getPathMutexState());
+                    } catch (Exception e) {
+                        logger.warn(e.getClass().getSimpleName());
 
-                Mutex hisCurrentMutexState = this.toHeroConsumer.getMutexState(wrapper.getPathMutexState());
+                        // fassl connection reuse löschen
+                        Blackboard.getInstance().getUser().getMutexSendingMessageList().remove(wrapper);
+                        logger.info("delete wrapper from sending list");
 
-                String mutexState = hisCurrentMutexState.getState();
-                logger.info("mutexstate is: " + mutexState);
+                    }
 
-                if (mutexState != null) {
+                    String mutexState = hisCurrentMutexState.getState();
+                    logger.info("mutexstate is: " + mutexState);
 
-                    if (mutexState.equals(MutexState.WANTING.toString())) {
-                        waitagain = true;
-                        logger.info("waitagain = true");
+                    if (mutexState != null) {
 
-                    } else if (mutexState.equals(MutexState.HOLD.toString())) {
-                        waitagain = true;
-                        logger.info("waitagain = true");
+                        if (mutexState.equals(MutexState.WANTING.toString())) {
+                            waitagain = true;
+                            logger.info("waitagain = true");
 
-                    } else if (mutexState.equals(MutexState.RELEASED.toString())) {
+                        } else if (mutexState.equals(MutexState.HOLD.toString())) {
+                            waitagain = true;
+                            logger.info("waitagain = true");
+
+                        } else if (mutexState.equals(MutexState.RELEASED.toString())) {
+                            Blackboard.getInstance().getUser().getMutexSendingMessageList().remove(wrapper);
+                            logger.info("delete wrapper from sending list");
+                        }
+
+                    } else {
+                        // löschen
                         Blackboard.getInstance().getUser().getMutexSendingMessageList().remove(wrapper);
                         logger.info("delete wrapper from sending list");
                     }
-
-                } else {
-                    // löschen
-                    Blackboard.getInstance().getUser().getMutexSendingMessageList().remove(wrapper);
-                    logger.info("delete wrapper from sending list");
-                }
 
                 } else {
                     // Falls der Service keine mutexState addresse hat, wird er aus der LIste gelöscht
