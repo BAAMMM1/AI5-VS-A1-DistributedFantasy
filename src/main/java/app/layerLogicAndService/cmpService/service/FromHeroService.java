@@ -351,11 +351,6 @@ public class FromHeroService implements IFromHeroService {
 
         logger.info("adding mutex message: " + request);
 
-        /*
-        if(true){
-            throw new IllegalArgumentException("not implemented yet");
-        }
-        */
 
         Mutex currentMutex = Blackboard.getInstance().getUser().getMutex();
         logger.info("current mutex: " + currentMutex);
@@ -371,6 +366,7 @@ public class FromHeroService implements IFromHeroService {
 
         MutexMessage response = null;
 
+        // Falls das request von sich selber kommt, antworte mit reply_ok
         if(request.getUser().equals(API.USERS + "/" + Blackboard.getInstance().getUser().getName())){
             logger.info("request comes from self");
 
@@ -407,9 +403,14 @@ public class FromHeroService implements IFromHeroService {
                 logger.info("request time equals own requested time");
 
                 String userId = request.getUser();
+
+
                 if(userId.contains(API.USERS + "/")){
                     userId.replace(API.USERS + "/", "");
                 }
+
+
+                logger.info(API.USERS + "/");
                 logger.info("user-id: " + userId);
 
                 if(userId.length() < Blackboard.getInstance().getUser().getName().length()){
@@ -423,7 +424,7 @@ public class FromHeroService implements IFromHeroService {
                 } else {
                     //eigene id ist kleiner als income ID
                     logger.info("own id is lower than userId");
-                    logger.info("saving request");
+                    logger.info("saving request to answer later");
                     Blackboard.getInstance().getUser().getMutexMessageStoreageList().add(request);
 
                 }
@@ -433,7 +434,7 @@ public class FromHeroService implements IFromHeroService {
             } else {
                 // eigene Zeit ist kleiner als income Zeit
                 logger.info("own time is lower");
-                logger.info("saving request");
+                logger.info("saving request to answer later");
                 Blackboard.getInstance().getUser().getMutexMessageStoreageList().add(request);
             }
 

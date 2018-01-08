@@ -113,12 +113,6 @@ public class ToHeroService implements IToHeroService {
         logger.info("set mutex-state to: " + MutexState.WANTING.toString());
         Blackboard.getInstance().getUser().getMutex().setState(MutexState.WANTING);
 
-        /*
-        if (true) {
-            throw new IllegalArgumentException("function not implemented yet");
-
-        }
-        */
 
         // 1. hole alle heros, die die capability mutex besitzen
         List<Adventurer> adventurerListWithMutex = this.tavernaService.getAdventurersWithCapabilityMutex();
@@ -190,7 +184,6 @@ public class ToHeroService implements IToHeroService {
 
         // Wait bis Liste leer
         // 1. angemessene Zeit warten
-        // TODO - nur schlafen, falls sie noch nicht leer
         try {
             logger.info("sleep");
             Thread.sleep(5000);
@@ -203,6 +196,7 @@ public class ToHeroService implements IToHeroService {
         // So lange die Liste der gesendeten noch nicht leer ist
         // 2. Wenn nicht in einer angemessenen Zeit geantowrtet, dann prüfen von /mutexState
         // if wanting oder holt noch etwas warten, else bei release oder gar keine Antwort, aus der Liste löschen
+        // die Liste aller gesendeten muss leer sein, damit von jedem eine Antwort rein gekommen ist
         List<MutexMessageWrapper> sendingList = new ArrayList<MutexMessageWrapper>();
         sendingList.addAll(Blackboard.getInstance().getUser().getMutexSendingMessageList());
 
