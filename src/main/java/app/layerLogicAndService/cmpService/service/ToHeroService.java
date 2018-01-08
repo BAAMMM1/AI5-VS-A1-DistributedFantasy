@@ -107,6 +107,8 @@ public class ToHeroService implements IToHeroService {
     @Override
     public String wantMutex(String ipPort, String ressource) throws UnexpectedResponseCodeException {
 
+        // Phase 1 - Alle mit Capability mutex identifizieren und request schicken
+
         logger.info("wanting mutex");
 
         String body = null;
@@ -162,15 +164,14 @@ public class ToHeroService implements IToHeroService {
                 logger.info("sending request for: " + adventurer.getUser() + " to: " + heroMutexUrl + " reply-address: " + HTTP + Application.IP + PORT + API.PATH_MUTEX_REPLY + "/" + uuid);
 
 
-                Blackboard.getInstance().getUser().getMutex().incrementSendTime();
-                logger.info("time now at: " + Blackboard.getInstance().getUser().getMutex().getTime());
-
                 MutexMessageWrapper wrapper = new MutexMessageWrapper(adventurer.getUser(), uuid, request, heroMutexStateUrl);
                 logger.info("adding wrapper to sending list: " + wrapper.toString());
                 Blackboard.getInstance().getUser().getMutexSendingMessageList().add(wrapper);
 
-
+                Blackboard.getInstance().getUser().getMutex().incrementSendTime();
                 this.toHeroConsumer.sendMutexMessage(heroMutexUrl, request);
+
+                logger.info("time now at: " + Blackboard.getInstance().getUser().getMutex().getTime());
 
 
             } catch (Exception e) {
@@ -181,6 +182,11 @@ public class ToHeroService implements IToHeroService {
 
         logger.info("end sending request");
         logger.info("wrapper sending list: " + Blackboard.getInstance().getUser().getMutexSendingMessageList().toString());
+
+
+        // Phase 2, Prüfen ob von allen ein ein reply_ok zurpckgekommen ist.
+        // Wenn nicht warte noch (z.b. ein anderer Prozess ist im kritischen Bereichen)
+        // Und prüfe den mutex state
 
 
         // Wait bis Liste leer
@@ -279,6 +285,7 @@ public class ToHeroService implements IToHeroService {
 
         }
 
+        // Phase 3 - Betrete den kritischen Abschnitt/Bereich
 
         if (Blackboard.getInstance().getUser().getMutexSendingMessageList().isEmpty()) {
             logger.info("wrapper sending list is empty");
@@ -295,6 +302,8 @@ public class ToHeroService implements IToHeroService {
         logger.info("set mutex-state to: " + MutexState.RELEASED.toString());
         Blackboard.getInstance().getUser().getMutex().setState(MutexState.RELEASED);
 
+        // Phase 4 - Nach dem der kritische Bereich verlassen wurde, sende an die gespeicherten request
+        // Anfragen ein reply_ok
 
         logger.info("start to answer storaged mutexmessage-requests");
         // 5. Wenn kritischer Bereich verlassen, dann mutexMessageStorageList, abarbeiten und allen ok senden.
@@ -313,8 +322,10 @@ public class ToHeroService implements IToHeroService {
             );
 
             logger.info("senden reply-ok to: " + request.getReply());
+
             Blackboard.getInstance().getUser().getMutex().incrementSendTime();
             this.toHeroConsumer.sendMutexMessage(request.getReply(), response);
+
             logger.info("time now at: " + Blackboard.getInstance().getUser().getMutex().getTime());
             Blackboard.getInstance().getUser().getMutexMessageStoreageList().remove(request);
 

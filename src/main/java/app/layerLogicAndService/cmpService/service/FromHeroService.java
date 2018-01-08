@@ -57,7 +57,7 @@ public class FromHeroService implements IFromHeroService {
     }
 
     @Override
-    public Mutex getMutexState(){
+    public Mutex getMutexState() {
         return Blackboard.getInstance().getUser().getMutex();
     }
 
@@ -75,15 +75,13 @@ public class FromHeroService implements IFromHeroService {
 
         MutexMessageWrapper wrapper = wrapperList.stream().filter(w -> w.getUuid().equals(uuid)).findFirst().orElse(null);
 
-        if(wrapper != null){
+        if (wrapper != null) {
             logger.info("remove from mutexMessageSendingList: " + wrapper.toString());
             Blackboard.getInstance().getUser().getMutexSendingMessageList().remove(wrapper);
         } else {
             logger.info("reply not found in sending list: " + request.toString());
             logger.info("with uuid: " + uuid);
         }
-
-
 
 
     }
@@ -159,7 +157,7 @@ public class FromHeroService implements IFromHeroService {
             Blackboard.getInstance().getUser().getCurrentQuesting().getTask().setToken(assignmentDeliver.getData());
 
             // TODO - assignment ID für assignment job von einer election
-            if(assignmentDeliver.getId().contains(ELECTION_IDENTIFIER)) {
+            if (assignmentDeliver.getId().contains(ELECTION_IDENTIFIER)) {
                 // TODO - schön machen
                 List<Adventurer> groupMemberList = this.tavernaService.getGroupMembers(Blackboard.getInstance().getUser().getCurrentGroup().getId());
 
@@ -341,110 +339,83 @@ public class FromHeroService implements IFromHeroService {
     public void addMutexMessage(MutexMessage request) throws UnexpectedResponseCodeException {
 
         logger.info("adding mutex message: " + request);
-
         Blackboard.getInstance().getUser().getMutex().incrementRequestTime(request.getTime());
-
 
         Mutex currentMutex = Blackboard.getInstance().getUser().getMutex();
         logger.info("current mutex: " + currentMutex);
-
-
-
-
         String mutexState = currentMutex.getState();
-        int time = currentMutex.getTime();
-        logger.info("state at: " + mutexState);
-        logger.info("time now at: " + time);
+
+        logger.info("current state at: " + mutexState);
+        logger.info("time now at: " + currentMutex.getTime());
+
         int requestedTim = Blackboard.getInstance().getUser().getTimeFromRequest();
 
-        MutexMessage response = null;
-
         // Falls das request von sich selber kommt, antworte mit reply_ok
-        if(request.getUser().equals(API.USERS + "/" + Blackboard.getInstance().getUser().getName())){
+        if (request.getUser().equals(API.USERS + "/" + Blackboard.getInstance().getUser().getName())) {
             logger.info("request comes from self");
+            this.sendReplyOK(request);
 
-            response = new MutexMessage(
-                    MutexMsg.REPLYOK.toString(),
-                    time,
-                    HTTP + Application.IP + PORT + API.PATH_MUTEX_REPLY,
-                    API.USERS + "/" + Blackboard.getInstance().getUser().getName()
-            );
+        } else if (mutexState.equals(MutexState.RELEASED.toString())) {
+            this.sendReplyOK(request);
 
-        } else if(mutexState.equals(MutexState.RELEASED.toString())){
-            logger.info("current state equals: " + MutexState.RELEASED.toString());
+        } else if (mutexState.equals(MutexState.WANTING.toString())) {
 
-            response = new MutexMessage(
-                    MutexMsg.REPLYOK.toString(),
-                    time,
-                    HTTP + Application.IP + PORT + API.PATH_MUTEX_REPLY,
-                    API.USERS + "/" + Blackboard.getInstance().getUser().getName()
-            );
-
-        } else if(mutexState.equals(MutexState.WANTING.toString())){
-            logger.info("current state equals: " + MutexState.WANTING.toString());
-
-            if(request.getTime() < requestedTim){
+            if (request.getTime() < requestedTim) {
                 logger.info("request time is lower than own requested time");
-                response = new MutexMessage(
-                        MutexMsg.REPLYOK.toString(),
-                        time,
-                        HTTP + Application.IP + PORT + API.PATH_MUTEX_REPLY,
-                        API.USERS + "/" + Blackboard.getInstance().getUser().getName()
-                );
+                this.sendReplyOK(request);
 
-            } else if (request.getTime() == requestedTim){
+            } else if (request.getTime() == requestedTim) {
                 logger.info("request time equals own requested time");
 
-                String userId = request.getUser();
-
-
-                if(userId.contains(API.USERS + "/")){
-                    userId.replace(API.USERS + "/", "");
-                }
-
-
-                logger.info("user-id: " + userId);
+                logger.info("user-id: " + request.getUser());
                 logger.info("own-id: " + API.USERS + "/" + Blackboard.getInstance().getUser().getName());
 
-                if(userId.length() < (API.USERS + "/" + Blackboard.getInstance().getUser().getName()).length()){
+                if (request.getUser().length() < (API.USERS + "/" + Blackboard.getInstance().getUser().getName()).length()) {
+
                     logger.info("userId is lower than own id");
-                    response = new MutexMessage(
-                            MutexMsg.REPLYOK.toString(),
-                            time,
-                            HTTP + Application.IP + PORT + API.PATH_MUTEX_REPLY,
-                            API.USERS + "/" + Blackboard.getInstance().getUser().getName()
-                    );
+                    this.sendReplyOK(request);
+
                 } else {
                     //eigene id ist kleiner als income ID
                     logger.info("own id is lower than userId");
-                    logger.info("saving request to answer later");
-                    Blackboard.getInstance().getUser().getMutexMessageStoreageList().add(request);
+                    this.saveRequest(request);
 
                 }
-
-
 
             } else {
                 // eigene Zeit ist kleiner als income Zeit
                 logger.info("own time is lower");
-                logger.info("saving request to answer later");
-                Blackboard.getInstance().getUser().getMutexMessageStoreageList().add(request);
+                this.saveRequest(request);
             }
 
-        } else if(mutexState.equals(MutexState.HOLD.toString())){
-            logger.info("current state equals: " + MutexState.HOLD.toString());
-            logger.info("saving request");
-            Blackboard.getInstance().getUser().getMutexMessageStoreageList().add(request);
-
-
+        } else if (mutexState.equals(MutexState.HOLD.toString())) {
+            this.saveRequest(request);
         }
 
+    }
+
+    public void saveRequest(MutexMessage request) {
+        logger.info("saving request to answer later");
+        Blackboard.getInstance().getUser().getMutexMessageStoreageList().add(request);
+
+
+    }
+
+    public void sendReplyOK(MutexMessage request) throws UnexpectedResponseCodeException {
+
+        MutexMessage response = new MutexMessage(
+                MutexMsg.REPLYOK.toString(),
+                Blackboard.getInstance().getUser().getMutex().getTime(),
+                HTTP + Application.IP + PORT + API.PATH_MUTEX_REPLY,
+                API.USERS + "/" + Blackboard.getInstance().getUser().getName()
+        );
+
         logger.info("answer with: " + response.toString());
-        currentMutex.incrementSendTime();
-        logger.info("time now at: " + currentMutex.getTime());
+
+        Blackboard.getInstance().getUser().getMutex().incrementSendTime();
+        logger.info("time now at: " + Blackboard.getInstance().getUser().getMutex().getTime());
+
         this.toHeroConsumer.sendMutexMessage(request.getReply(), response);
-
-
 
     }
 
