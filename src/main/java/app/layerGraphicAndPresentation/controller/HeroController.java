@@ -205,7 +205,7 @@ public class HeroController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getMutexstate(HttpServletRequest req) {
 
-        logger.info("ask for mutexState: " + req.getRemoteAddr());
+        logger.info("request for mutexState from: " + req.getRemoteAddr());
 
         try {
 

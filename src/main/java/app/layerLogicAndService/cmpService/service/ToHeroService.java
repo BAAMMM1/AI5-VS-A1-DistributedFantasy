@@ -33,6 +33,7 @@ public class ToHeroService implements IToHeroService {
 
     public static final String PORT = ":8080";
     public static final String HTTP = "http://";
+    public static final int SLEEP_TIME = 5000;
 
     IToHeroConsumer toHeroConsumer = new ToHeroConsumer();
 
@@ -161,7 +162,7 @@ public class ToHeroService implements IToHeroService {
                 logger.info("sending request for: " + adventurer.getUser() + " to: " + heroMutexUrl + " reply-address: " + HTTP + Application.IP + PORT + API.PATH_MUTEX_REPLY + "/" + uuid);
 
 
-                Blackboard.getInstance().getUser().getMutex().incrementTime();
+                Blackboard.getInstance().getUser().getMutex().incrementSendTime();
                 logger.info("time now at: " + Blackboard.getInstance().getUser().getMutex().getTime());
 
                 MutexMessageWrapper wrapper = new MutexMessageWrapper(adventurer.getUser(), uuid, request, heroMutexStateUrl);
@@ -185,7 +186,7 @@ public class ToHeroService implements IToHeroService {
         // 1. angemessene Zeit warten
         try {
             logger.info("sleep");
-            Thread.sleep(5000);
+            Thread.sleep(SLEEP_TIME);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -311,8 +312,8 @@ public class ToHeroService implements IToHeroService {
             );
 
             logger.info("senden reply-ok to: " + request.getReply());
+            Blackboard.getInstance().getUser().getMutex().incrementSendTime();
             this.toHeroConsumer.sendMutexMessage(request.getReply(), response);
-            Blackboard.getInstance().getUser().getMutex().incrementTime();
             logger.info("time now at: " + Blackboard.getInstance().getUser().getMutex().getTime());
             Blackboard.getInstance().getUser().getMutexMessageStoreageList().remove(request);
 
