@@ -225,6 +225,7 @@ public class ToHeroService implements IToHeroService {
                         // fassl connection reuse löschen
                         Blackboard.getInstance().getUser().getMutexSendingMessageList().remove(wrapper);
                         logger.info("delete wrapper from sending list");
+                        continue;
 
                     }
 
