@@ -342,11 +342,13 @@ public class FromHeroService implements IFromHeroService {
 
         logger.info("adding mutex message: " + request);
 
+        Blackboard.getInstance().getUser().getMutex().incrementRequestTime(request.getTime());
+
 
         Mutex currentMutex = Blackboard.getInstance().getUser().getMutex();
         logger.info("current mutex: " + currentMutex);
 
-        currentMutex.incrementRequestTime(request.getTime());
+
 
 
         String mutexState = currentMutex.getState();
@@ -442,20 +444,6 @@ public class FromHeroService implements IFromHeroService {
         logger.info("time now at: " + currentMutex.getTime());
         this.toHeroConsumer.sendMutexMessage(request.getReply(), response);
 
-
-        // TODO - muss das hier auch geschehen?
-        /*
-        if(request.getTime() > Blackboard.getInstance().getUser().getMutex().getTime()){
-            logger.info("incoming time is higher");
-            Blackboard.getInstance().getUser().getMutex().setTime(request.getTime());
-            Blackboard.getInstance().getUser().getMutex().incrementRequestTime();
-            logger.info("time ist now at: " + Blackboard.getInstance().getUser().getMutex().getTime());
-        } else {
-            logger.info("incoming time is lower");
-            Blackboard.getInstance().getUser().getMutex().incrementRequestTime();
-            logger.info("time ist now at: " + Blackboard.getInstance().getUser().getMutex().getTime());
-        }
-        */
 
 
     }

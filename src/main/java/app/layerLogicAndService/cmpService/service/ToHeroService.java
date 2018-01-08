@@ -174,6 +174,7 @@ public class ToHeroService implements IToHeroService {
 
 
             } catch (Exception e) {
+                // wieder dekrementieren, wenn nicht gesendet wird?
                 logger.warn(e.getMessage());
             }
         }

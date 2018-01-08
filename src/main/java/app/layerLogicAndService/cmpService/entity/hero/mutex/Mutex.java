@@ -40,6 +40,10 @@ public class Mutex {
 
         logger.info("increment time");
 
+        this.time++;
+
+        /*
+
         if(requestTime > time){
             logger.info("incoming time is higher");
 
@@ -56,6 +60,7 @@ public class Mutex {
             logger.info("time ist now at: " + Blackboard.getInstance().getUser().getMutex().getTime());
 
         }
+        */
 
     }
 
