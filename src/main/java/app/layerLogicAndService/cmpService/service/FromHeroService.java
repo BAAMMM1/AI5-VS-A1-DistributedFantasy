@@ -411,6 +411,7 @@ public class FromHeroService implements IFromHeroService {
 
 
                 logger.info("user-id: " + userId);
+                logger.info("own-id: " + API.USERS + "/" + Blackboard.getInstance().getUser().getName());
 
                 if(userId.length() < (API.USERS + "/" + Blackboard.getInstance().getUser().getName()).length()){
                     logger.info("userId is lower than own id");
