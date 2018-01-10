@@ -4,8 +4,8 @@ import app.layerLogicAndService.cmpService.entity.hero.Assignment;
 import app.layerLogicAndService.cmpService.entity.hero.AssignmentDeliver;
 import app.layerLogicAndService.cmpService.entity.hero.Message;
 import app.layerLogicAndService.cmpService.entity.hero.mutex.Mutex;
-import app.layerLogicAndService.cmpService.entity.hero.mutex.MutexMessage;
-import app.layerLogicAndService.cmpService.entity.hero.mutex.MutexMessageWrapper;
+import app.layerLogicAndService.cmpService.entity.hero.mutex.MutexRequest;
+import app.layerLogicAndService.cmpService.entity.hero.mutex.MutexRequestWrapper;
 import app.layerLogicAndService.cmpService.entity.quest.Link;
 import app.layerLogicAndService.cmpService.entity.quest.questing.Questing;
 import app.layerLogicAndService.cmpService.entity.taverna.Group;
@@ -70,9 +70,9 @@ public class User{
 
     private Mutex mutex;
 
-    private List<MutexMessage> mutexMessageStoreageList;
+    private List<MutexRequest> receiveMutexRequestQueue;
 
-    private List<MutexMessageWrapper> mutexSendingMessageList;
+    private List<MutexRequestWrapper> sendMutexRequestList;
 
     private int timeFromRequest = 0;
 
@@ -85,24 +85,24 @@ public class User{
         this.assignmentList = new ArrayList<Assignment>();
         this.sendetAssignmentList = new ArrayList<Assignment>();
         this.mutex = new Mutex();
-        this.mutexMessageStoreageList = new ArrayList<MutexMessage>();
-        this.mutexSendingMessageList = new ArrayList<MutexMessageWrapper>();
+        this.receiveMutexRequestQueue = new ArrayList<MutexRequest>();
+        this.sendMutexRequestList = new ArrayList<MutexRequestWrapper>();
     }
 
-    public int getTimeFromRequest() {
+    public int getMutexRequestTime() {
         return timeFromRequest;
     }
 
-    public void setTimeFromRequest(int timeFromRequest) {
+    public void setMutexRquestedTimeStamp(int timeFromRequest) {
         this.timeFromRequest = timeFromRequest;
     }
 
-    public List<MutexMessageWrapper> getMutexSendingMessageList() {
-        return mutexSendingMessageList;
+    public List<MutexRequestWrapper> getSendMutexRequestList() {
+        return sendMutexRequestList;
     }
 
-    public List<MutexMessage> getMutexMessageStoreageList() {
-        return mutexMessageStoreageList;
+    public List<MutexRequest> getReceiveMutexRequestQueue() {
+        return receiveMutexRequestQueue;
     }
 
     public Mutex getMutex() {

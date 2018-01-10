@@ -3,22 +3,22 @@ package app.layerLogicAndService.cmpService.entity.hero.mutex;
 /**
  * @author Chris on 22.12.2017
  */
-public class MutexMessageWrapper {
+public class MutexRequestWrapper {
 
     String name;
     String uuid;
-    MutexMessage mutexMessage;
+    MutexRequest mutexRequest;
     String pathMutexState;
 
 
-    public MutexMessageWrapper(String name, String uuid, MutexMessage mutexMessage, String pathMutexState) {
+    public MutexRequestWrapper(String name, String uuid, MutexRequest mutexRequest, String pathMutexState) {
         this.name = name;
         this.uuid = uuid;
-        this.mutexMessage = mutexMessage;
+        this.mutexRequest = mutexRequest;
         this.pathMutexState = pathMutexState;
     }
 
-    public MutexMessageWrapper() {
+    public MutexRequestWrapper() {
     }
 
     public String getUuid() {
@@ -29,12 +29,12 @@ public class MutexMessageWrapper {
         this.uuid = uuid;
     }
 
-    public MutexMessage getMutexMessage() {
-        return mutexMessage;
+    public MutexRequest getMutexRequest() {
+        return mutexRequest;
     }
 
-    public void setMutexMessage(MutexMessage mutexMessage) {
-        this.mutexMessage = mutexMessage;
+    public void setMutexRequest(MutexRequest mutexRequest) {
+        this.mutexRequest = mutexRequest;
     }
 
     public String getPathMutexState() {
@@ -55,10 +55,10 @@ public class MutexMessageWrapper {
 
     @Override
     public String toString() {
-        return "MutexMessageWrapper{" +
+        return "MutexRequestWrapper{" +
                 "name='" + name + '\'' +
                 ", uuid='" + uuid + '\'' +
-                ", mutexMessage=" + mutexMessage +
+                ", mutexRequest=" + mutexRequest +
                 ", pathMutexState='" + pathMutexState + '\'' +
                 '}';
     }

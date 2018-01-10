@@ -4,7 +4,7 @@ import app.configuration.API;
 import app.layerLogicAndService.cmpService.entity.blackboard.Blackboard;
 import app.layerLogicAndService.cmpService.entity.hero.Election;
 import app.layerLogicAndService.cmpService.entity.hero.mutex.Mutex;
-import app.layerLogicAndService.cmpService.entity.hero.mutex.MutexMessage;
+import app.layerLogicAndService.cmpService.entity.hero.mutex.MutexRequest;
 import app.layerLogicAndService.cmpService.service.IFromHeroService;
 import app.layerLogicAndService.cmpService.exception.AlreadyInGroupException;
 import app.layerLogicAndService.cmpService.entity.hero.*;
@@ -158,13 +158,13 @@ public class HeroController {
             value = API.PATH_MUTEX,
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> addMutex(@RequestBody MutexMessage request) {
+    public ResponseEntity<?> addMutex(@RequestBody MutexRequest request) {
         // uri to endpoint where one posts mutex algorithm messages>" - RequestBody hier ok?
 
-        logger.info("income mutexmessage: " + request.toString());
+        logger.info("mutex-request - income: " + request.toString());
 
         try {
-            this.fromHeroService.addMutexMessage(request);
+            this.fromHeroService.addMutexRequest(request);
             return new ResponseEntity<>(HttpStatus.OK);
 
         } catch (Exception e) {
@@ -178,16 +178,14 @@ public class HeroController {
             value = API.PATH_MUTEX_REPLY + "/" + "{" + API.MUTEX_MESSAGE_ID + "}",
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> addMutexReply(@PathVariable(API.MUTEX_MESSAGE_ID) String uuid, @RequestBody MutexMessage request) {
+    public ResponseEntity<?> addMutexReply(@PathVariable(API.MUTEX_MESSAGE_ID) String uuid, @RequestBody MutexRequest request) {
         // uri to endpoint where one posts mutex algorithm messages>" - RequestBody hier ok?
 
-        logger.info("income mutexreply");
-        logger.info("uuid: " + uuid);
-        logger.info("reply: " + request.toString());
+        logger.info("mutex-reply - income: " + request.toString());
 
 
         try {
-            this.fromHeroService.addMutexReplyMessage(uuid, request);
+            this.fromHeroService.addMutexReply(uuid, request);
 
             return new ResponseEntity<>(HttpStatus.OK);
 
@@ -205,7 +203,7 @@ public class HeroController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getMutexstate(HttpServletRequest req) {
 
-        logger.info("request for mutexState from: " + req.getRemoteAddr());
+        logger.info("mutex-state - income request from: " + req.getRemoteAddr());
 
         try {
 

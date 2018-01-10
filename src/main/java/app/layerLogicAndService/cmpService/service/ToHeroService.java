@@ -108,82 +108,81 @@ public class ToHeroService implements IToHeroService {
     public String wantMutex(String ipPort, String ressource) throws UnexpectedResponseCodeException {
 
         // Phase 1 - Alle mit Capability mutex identifizieren und request schicken
+        logger.info("Phase 1 - identify all heros with capability mutex and send mutex-request to them");
+        logger.info("mutex-state - change state to: " + MutexState.WANTING.toString());
 
-        logger.info("wanting mutex");
-
-        String body = null;
-
-        logger.info("set mutex-state to: " + MutexState.WANTING.toString());
         Blackboard.getInstance().getUser().getMutex().setState(MutexState.WANTING);
+        logger.info("mutex-state - change state to: " + MutexState.WANTING.toString());
+
+        // Wir erhöhen hier die Zeit um eins, da es der Zeitstempel ist, den wir für unseren mutex-request an
+        // alle anderen übermittelnt
+        Blackboard.getInstance().getUser().getMutex().incrementTimeStampSend();
+        logger.info("time now at: " + Blackboard.getInstance().getUser().getMutex().getTime());
+
+        int requestedTimeStamp = Blackboard.getInstance().getUser().getMutex().getTime();
+        Blackboard.getInstance().getUser().setMutexRquestedTimeStamp(requestedTimeStamp);
+        logger.info("set mutex requested timestamp to: " + requestedTimeStamp);
 
 
         // 1. hole alle heros, die die capability mutex besitzen
         List<Adventurer> adventurerListWithMutex = this.tavernaService.getAdventurersWithCapabilityMutex();
-
-        logger.info("adventurers with capabilitiy mutex: " + adventurerListWithMutex.toString());
-        logger.info("starting sending mutex request for adventurers");
-
-        int requestTime = Blackboard.getInstance().getUser().getMutex().getTime();
-        Blackboard.getInstance().getUser().setTimeFromRequest(requestTime);
+        logger.info("heros with capabilitiy mutex: " + adventurerListWithMutex.toString());
 
         for (Adventurer adventurer : adventurerListWithMutex) {
-            logger.info("try to sending to: " + adventurer.toString());
+            logger.info("try to send mutex-request to: " + adventurer.toString());
 
 
             try {
 
-                String heroServiceUrl = adventurer.getUrl();
+                String urlHeroService = adventurer.getUrl();
 
-                if (!heroServiceUrl.substring(0, 7).equals("http://")) {
-                    heroServiceUrl = "http://" + heroServiceUrl;
+                if (!urlHeroService.substring(0, 7).equals("http://")) {
+                    urlHeroService = "http://" + urlHeroService;
                 }
 
-                Service heroService = this.toHeroConsumer.getHeroService(heroServiceUrl);
+                Service heroService = this.toHeroConsumer.getHeroService(urlHeroService);
 
-                String heroMutexUrl = heroService.getMutex();
+                String urlHeroMutexRequestUrl = heroService.getMutex();
 
-                if (!heroMutexUrl.substring(0, 7).equals("http://")) {
-                    heroMutexUrl = "http://" + heroMutexUrl;
+                if (!urlHeroMutexRequestUrl.substring(0, 7).equals("http://")) {
+                    urlHeroMutexRequestUrl = "http://" + urlHeroMutexRequestUrl;
                 }
 
-                String heroMutexStateUrl = heroService.getMutexstate();
+                String urlHeroMutexState = heroService.getMutexstate();
 
-                if (!heroMutexUrl.substring(0, 7).equals("http://")) {
-                    heroMutexUrl = "http://" + heroMutexStateUrl;
+                if (!urlHeroMutexRequestUrl.substring(0, 7).equals("http://")) {
+                    urlHeroMutexRequestUrl = "http://" + urlHeroMutexState;
                 }
 
                 String uuid = UUID.randomUUID().toString();
 
-                MutexMessage request = new MutexMessage(
-                        MutexMsg.REQUEST.toString(),
-                        requestTime,
-                        HTTP + Application.IP + PORT + API.PATH_MUTEX_REPLY + "/" + uuid, // TODO - Id hierein
+                MutexRequest request = new MutexRequest(
+                        MutexMessage.REQUEST.toString(),
+                        requestedTimeStamp,
+                        HTTP + Application.IP + PORT + API.PATH_MUTEX_REPLY + "/" + uuid,
                         API.USERS + "/" + Blackboard.getInstance().getUser().getName()
                 );
 
-                logger.info("sending request for: " + adventurer.getUser() + " to: " + heroMutexUrl + " reply-address: " + HTTP + Application.IP + PORT + API.PATH_MUTEX_REPLY + "/" + uuid);
+                logger.info("sending mutex-request to: " + adventurer.getUser() + " with id: " + uuid);
 
 
-                MutexMessageWrapper wrapper = new MutexMessageWrapper(adventurer.getUser(), uuid, request, heroMutexStateUrl);
-                logger.info("adding wrapper to sending list: " + wrapper.toString());
-                Blackboard.getInstance().getUser().getMutexSendingMessageList().add(wrapper);
+                MutexRequestWrapper wrapper = new MutexRequestWrapper(adventurer.getUser(), uuid, request, urlHeroMutexState);
+                logger.info("adding mutex-request to sendMutexRequestList: " + wrapper.toString());
+                Blackboard.getInstance().getUser().getSendMutexRequestList().add(wrapper);
 
-                Blackboard.getInstance().getUser().getMutex().incrementSendTime();
-                this.toHeroConsumer.sendMutexMessage(heroMutexUrl, request);
 
-                logger.info("time now at: " + Blackboard.getInstance().getUser().getMutex().getTime());
-
+                // TODO - muss hier für jedes mutex-request raussenden unsere uhr incrementiert werden?
+                this.toHeroConsumer.sendMutexMessage(urlHeroMutexRequestUrl, request);
 
             } catch (Exception e) {
-                // wieder dekrementieren, wenn nicht gesendet wird?
                 logger.warn(e.getMessage());
             }
         }
 
-        logger.info("end sending request");
-        logger.info("wrapper sending list: " + Blackboard.getInstance().getUser().getMutexSendingMessageList().toString());
+        logger.info("sendMutexRequestList: " + Blackboard.getInstance().getUser().getSendMutexRequestList().toString());
 
 
+        logger.info("Phase 2");
         // Phase 2, Prüfen ob von allen ein ein reply_ok zurpckgekommen ist.
         // Wenn nicht warte noch (z.b. ein anderer Prozess ist im kritischen Bereichen)
         // Und prüfe den mutex state
@@ -198,29 +197,28 @@ public class ToHeroService implements IToHeroService {
             e.printStackTrace();
         }
 
-        // Wenn antwort, dann lösche aus getMutexSendingMessageList -> FromHeroService -> addMutexReplyMessage
+        // Wenn antwort, dann lösche aus getSendMutexRequestList -> FromHeroService -> addMutexReply
 
         // So lange die Liste der gesendeten noch nicht leer ist
         // 2. Wenn nicht in einer angemessenen Zeit geantowrtet, dann prüfen von /mutexState
         // if wanting oder holt noch etwas warten, else bei release oder gar keine Antwort, aus der Liste löschen
         // die Liste aller gesendeten muss leer sein, damit von jedem eine Antwort rein gekommen ist
-        List<MutexMessageWrapper> sendingList = new ArrayList<MutexMessageWrapper>();
-        sendingList.addAll(Blackboard.getInstance().getUser().getMutexSendingMessageList());
+        List<MutexRequestWrapper> sendMutexRequestList = new ArrayList<MutexRequestWrapper>();
+        sendMutexRequestList.addAll(Blackboard.getInstance().getUser().getSendMutexRequestList());
 
-        while (!sendingList.isEmpty()) {
+        while (!sendMutexRequestList.isEmpty()) {
             boolean waitagain = false;
-            logger.info("wrapper sending list is after waiting not empty");
+            logger.info("sendMutexRequestList is after waiting not empty");
 
-            List<MutexMessageWrapper> list = new ArrayList<MutexMessageWrapper>();
-            list.addAll(Blackboard.getInstance().getUser().getMutexSendingMessageList());
+            List<MutexRequestWrapper> list = new ArrayList<MutexRequestWrapper>();
+            list.addAll(Blackboard.getInstance().getUser().getSendMutexRequestList());
 
-            logger.info("wrapper sending list: " + list.toString());
+            logger.info("sendMutexRequestList: " + list.toString());
 
             // für jeden der noch in der Liste ist, Frage den mutexState ab
-            logger.info("starting check mutexstate");
-            for (MutexMessageWrapper wrapper : list) {
+            for (MutexRequestWrapper wrapper : list) {
 
-                logger.info("check mutexstate for: " + wrapper.toString());
+                logger.info("check mutex-state for: " + wrapper.toString());
                 // mutextState abfragen für den jeweiligen wrapper
                 if (!wrapper.getPathMutexState().isEmpty()) {
 
@@ -230,41 +228,41 @@ public class ToHeroService implements IToHeroService {
                     } catch (Exception e) {
                         logger.warn(e.getClass().getSimpleName());
 
-                        // fassl connection reuse löschen
-                        Blackboard.getInstance().getUser().getMutexSendingMessageList().remove(wrapper);
-                        logger.info("delete wrapper from sending list");
+                        // falss connection reuse löschen
+                        Blackboard.getInstance().getUser().getSendMutexRequestList().remove(wrapper);
+                        logger.info("hero is unavaible - delete mutex-request from sendMutexRequestList");
                         continue;
 
                     }
 
                     String mutexState = hisCurrentMutexState.getState();
-                    logger.info("mutexstate is: " + mutexState);
+                    logger.info("mutex-state is at: " + mutexState);
 
                     if (mutexState != null) {
 
                         if (mutexState.equals(MutexState.WANTING.toString())) {
                             waitagain = true;
-                            logger.info("waitagain = true");
+                            logger.info("set wait-again-flag = true");
 
                         } else if (mutexState.equals(MutexState.HOLD.toString())) {
                             waitagain = true;
-                            logger.info("waitagain = true");
+                            logger.info("set wait-again-flag = true");
 
                         } else if (mutexState.equals(MutexState.RELEASED.toString())) {
-                            Blackboard.getInstance().getUser().getMutexSendingMessageList().remove(wrapper);
-                            logger.info("delete wrapper from sending list");
+                            Blackboard.getInstance().getUser().getSendMutexRequestList().remove(wrapper);
+                            logger.info("hero does not want the mutex - delete mutex-request from sending list");
                         }
 
                     } else {
                         // löschen
-                        Blackboard.getInstance().getUser().getMutexSendingMessageList().remove(wrapper);
-                        logger.info("delete wrapper from sending list");
+                        Blackboard.getInstance().getUser().getSendMutexRequestList().remove(wrapper);
+                        logger.info("mutex-state ist null: delete mutex-request from sending list");
                     }
 
                 } else {
                     // Falls der Service keine mutexState addresse hat, wird er aus der LIste gelöscht
-                    Blackboard.getInstance().getUser().getMutexSendingMessageList().remove(wrapper);
-                    logger.info("delete wrapper from sending list because there is no mutexstate address");
+                    Blackboard.getInstance().getUser().getSendMutexRequestList().remove(wrapper);
+                    logger.info("service does not have a mutex-state url - delete mutex-request from sending list because there is no mutexstate address");
                 }
 
 
@@ -272,50 +270,49 @@ public class ToHeroService implements IToHeroService {
 
             if (waitagain) {
 
-                try {
-                    logger.info("sleep");
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                this.sleep(SLEEP_TIME); // TODO - Nach oben ziehen und ersetzen mit dem anderen
             }
 
-            sendingList = new ArrayList<MutexMessageWrapper>();
-            sendingList.addAll(Blackboard.getInstance().getUser().getMutexSendingMessageList());
+            sendMutexRequestList = new ArrayList<MutexRequestWrapper>();
+            sendMutexRequestList.addAll(Blackboard.getInstance().getUser().getSendMutexRequestList());
 
         }
 
         // Phase 3 - Betrete den kritischen Abschnitt/Bereich
+        logger.info("Phase 3");
+        String body = null;
 
-        if (Blackboard.getInstance().getUser().getMutexSendingMessageList().isEmpty()) {
-            logger.info("wrapper sending list is empty");
+        if (Blackboard.getInstance().getUser().getSendMutexRequestList().isEmpty()) {
+            logger.info("sendMutexRequestList is empty");
             // Liste leer, alle haben geantwortet, dann kritisch Bereich betreten
-
-            // TODO - kritich Bereich
-            logger.info("entering critcal section");
-            logger.info("set mutex-state to: " + MutexState.HOLD.toString());
             Blackboard.getInstance().getUser().getMutex().setState(MutexState.HOLD);
+            logger.info("set mutex-state to: " + MutexState.HOLD.toString());
+            logger.info("entering critcal section");
             body = this.questConsumer.postBuffered(ipPort, ressource, "");
 
         }
+
         logger.info("leaving critcal section");
-        logger.info("set mutex-state to: " + MutexState.RELEASED.toString());
         Blackboard.getInstance().getUser().getMutex().setState(MutexState.RELEASED);
+        logger.info("set mutex-state to: " + MutexState.RELEASED.toString());
+
 
         // Phase 4 - Nach dem der kritische Bereich verlassen wurde, sende an die gespeicherten request
         // Anfragen ein reply_ok
 
-        logger.info("start to answer storaged mutexmessage-requests");
-        // 5. Wenn kritischer Bereich verlassen, dann mutexMessageStorageList, abarbeiten und allen ok senden.
-        List<MutexMessage> mutexMessageStorageList = new ArrayList<MutexMessage>();
-        mutexMessageStorageList.addAll(Blackboard.getInstance().getUser().getMutexMessageStoreageList());
+        logger.info("Phase 4");
+        logger.info("start to answer receive mutex-request queue");
 
-        logger.info("mutexMessageStorageList: " + mutexMessageStorageList.toString());
+        // 5. Wenn kritischer Bereich verlassen, dann mutexRequestStorageList, abarbeiten und allen ok senden.
+        List<MutexRequest> mutexRequestStorageList = new ArrayList<MutexRequest>();
+        mutexRequestStorageList.addAll(Blackboard.getInstance().getUser().getReceiveMutexRequestQueue());
 
-        for (MutexMessage request : mutexMessageStorageList) {
+        logger.info("receiveMutexRequestQueue: " + mutexRequestStorageList.toString());
 
-            MutexMessage response = new MutexMessage(
-                    MutexMsg.REPLYOK.toString(),
+        for (MutexRequest request : mutexRequestStorageList) {
+
+            MutexRequest response = new MutexRequest(
+                    MutexMessage.REPLYOK.toString(),
                     Blackboard.getInstance().getUser().getMutex().getTime(),
                     HTTP + Application.IP + PORT + API.PATH_MUTEX_REPLY,
                     API.USERS + "/" + Blackboard.getInstance().getUser().getName()
@@ -323,16 +320,28 @@ public class ToHeroService implements IToHeroService {
 
             logger.info("senden reply-ok to: " + request.getReply());
 
-            Blackboard.getInstance().getUser().getMutex().incrementSendTime();
+            Blackboard.getInstance().getUser().getMutex().incrementTimeStampSend();
             this.toHeroConsumer.sendMutexMessage(request.getReply(), response);
 
             logger.info("time now at: " + Blackboard.getInstance().getUser().getMutex().getTime());
-            Blackboard.getInstance().getUser().getMutexMessageStoreageList().remove(request);
+            Blackboard.getInstance().getUser().getReceiveMutexRequestQueue().remove(request);
 
         }
 
 
         return body;
+
+    }
+
+    private void sleep(int time){
+
+            try {
+                logger.info("sleep for: " + time);
+                Thread.sleep(time);
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
     }
 

@@ -3,62 +3,19 @@ package app.layerLogicAndService.cmpService.entity.hero.mutex;
 /**
  * @author Chris on 22.12.2017
  */
-public class MutexMessage {
+public enum MutexMessage {
 
-    private String msg;     // request oder reply-ok
-    private int time;
-    private String reply;
-    private String user;
+    REQUEST("request"),
+    REPLYOK("reply-ok");
 
-    public MutexMessage(String msg, int time, String reply, String user) {
-        this.msg = msg;
-        this.time = time;
-        this.reply = reply;
-        this.user = user;
-    }
+    private String name;
 
-    public MutexMessage() {
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public int getTime() {
-        return time;
-    }
-
-    public void setTime(int time) {
-        this.time = time;
-    }
-
-    public String getReply() {
-        return reply;
-    }
-
-    public void setReply(String reply) {
-        this.reply = reply;
-    }
-
-    public String getUser() {
-        return user;
-    }
-
-    public void setUser(String user) {
-        this.user = user;
+    MutexMessage(String name) {
+        this.name = name;
     }
 
     @Override
     public String toString() {
-        return "MutexMessage{" +
-                "msg='" + msg + '\'' +
-                ", time=" + time +
-                ", reply='" + reply + '\'' +
-                ", user='" + user + '\'' +
-                '}';
+        return this.name;
     }
 }

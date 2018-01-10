@@ -3,6 +3,8 @@ package app.layerLogicAndService.cmpService.entity.hero.mutex;
 import app.layerLogicAndService.cmpService.entity.blackboard.Blackboard;
 import org.apache.log4j.Logger;
 
+import java.util.Random;
+
 /**
  * @author Chris on 09.12.2017
  */
@@ -17,7 +19,7 @@ public class Mutex {
 
     public Mutex() {
         this.setState(MutexState.RELEASED);
-        this.time = 0;
+        this.time = new Random(150).nextInt();
     }
 
     public String getState() {
@@ -40,15 +42,11 @@ public class Mutex {
 
         logger.info("increment time");
 
-        this.time++;
-
-        /*
 
         if(requestTime > time){
             logger.info("incoming time is higher");
 
-            this.time = requestTime;
-            this.time++;
+            this.time = requestTime + 1;
 
             logger.info("time ist now at: " + Blackboard.getInstance().getUser().getMutex().getTime());
 
@@ -60,11 +58,11 @@ public class Mutex {
             logger.info("time ist now at: " + Blackboard.getInstance().getUser().getMutex().getTime());
 
         }
-        */
+
 
     }
 
-    public void incrementSendTime(){
+    public void incrementTimeStampSend(){
         this.time++;
     }
 
