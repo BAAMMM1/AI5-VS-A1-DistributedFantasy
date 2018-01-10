@@ -170,7 +170,7 @@ public class ToHeroService implements IToHeroService {
                 Blackboard.getInstance().getUser().getSendMutexRequestList().add(wrapper);
 
 
-                // TODO - muss hier für jedes mutex-request raussenden unsere uhr incrementiert werden?
+                // muss hier für jedes mutex-request raussenden unsere uhr incrementiert werden?
                 Blackboard.getInstance().getUser().getMutex().incrementTimeStampSend();
                 this.toHeroConsumer.sendMutexMessage(urlHeroMutexRequestUrl, request);
 
