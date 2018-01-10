@@ -171,14 +171,13 @@ public class ToHeroService implements IToHeroService {
 
 
                 // TODO - muss hier für jedes mutex-request raussenden unsere uhr incrementiert werden?
+                Blackboard.getInstance().getUser().getMutex().incrementTimeStampSend();
                 this.toHeroConsumer.sendMutexMessage(urlHeroMutexRequestUrl, request);
 
             } catch (Exception e) {
                 logger.warn(e.getMessage());
             }
         }
-
-        logger.info("sendMutexRequestList: " + Blackboard.getInstance().getUser().getSendMutexRequestList().toString());
 
 
         logger.info("Phase 2");
@@ -214,7 +213,7 @@ public class ToHeroService implements IToHeroService {
             // für jeden der noch in der Liste ist, Frage den mutexState ab
             for (MutexRequestWrapper wrapper : list) {
 
-                logger.info("check mutex-state for: " + wrapper.toString());
+                logger.info("check mutex-state for: " + wrapper.getName().toString());
 
                 // mutextState abfragen für den jeweiligen wrapper
                 if (!wrapper.getPathMutexState().isEmpty()) {
