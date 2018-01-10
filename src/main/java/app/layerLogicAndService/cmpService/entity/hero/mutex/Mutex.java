@@ -19,7 +19,8 @@ public class Mutex {
 
     public Mutex() {
         this.setState(MutexState.RELEASED);
-        this.time = new Random(150).nextInt();
+        Random random = new Random();
+        this.time = random.nextInt(150);
     }
 
     public String getState() {
