@@ -188,13 +188,8 @@ public class ToHeroService implements IToHeroService {
 
 
         // Wait bis Liste leer
-        // 1. angemessene Zeit warten
-        try {
-            logger.info("sleep");
-            Thread.sleep(SLEEP_TIME);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        // 1. angemessene Zeit warten wenn die sendMutexRequestList nicht leer ist
+
 
         // Wenn antwort, dann lösche aus getSendMutexRequestList -> FromHeroService -> addMutexReply
 
@@ -206,7 +201,9 @@ public class ToHeroService implements IToHeroService {
         sendMutexRequestList.addAll(Blackboard.getInstance().getUser().getSendMutexRequestList());
 
         while (!sendMutexRequestList.isEmpty()) {
-            boolean waitagain = false;
+
+            this.sleep(SLEEP_TIME);
+
             logger.info("sendMutexRequestList is after waiting not empty");
 
             List<MutexRequestWrapper> list = new ArrayList<MutexRequestWrapper>();
@@ -218,6 +215,7 @@ public class ToHeroService implements IToHeroService {
             for (MutexRequestWrapper wrapper : list) {
 
                 logger.info("check mutex-state for: " + wrapper.toString());
+
                 // mutextState abfragen für den jeweiligen wrapper
                 if (!wrapper.getPathMutexState().isEmpty()) {
 
@@ -237,39 +235,25 @@ public class ToHeroService implements IToHeroService {
                     String mutexState = hisCurrentMutexState.getState();
                     logger.info("mutex-state is at: " + mutexState);
 
-                    if (mutexState != null) {
-
-                        if (mutexState.equals(MutexState.WANTING.toString())) {
-                            waitagain = true;
-                            logger.info("set wait-again-flag = true");
-
-                        } else if (mutexState.equals(MutexState.HOLD.toString())) {
-                            waitagain = true;
-                            logger.info("set wait-again-flag = true");
-
-                        } else if (mutexState.equals(MutexState.RELEASED.toString())) {
-                            Blackboard.getInstance().getUser().getSendMutexRequestList().remove(wrapper);
-                            logger.info("hero does not want the mutex - delete mutex-request from sending list");
-                        }
-
-                    } else {
-                        // löschen
+                    if (mutexState.equals(MutexState.RELEASED.toString())) {
                         Blackboard.getInstance().getUser().getSendMutexRequestList().remove(wrapper);
-                        logger.info("mutex-state ist null: delete mutex-request from sending list");
+                        logger.info("hero does not want the mutex - delete mutex-request from sending list");
                     }
 
+                    if (mutexState == null) {
+                        // Falls der Service keine mutexState addresse hat, wird er aus der LIste gelöscht
+                        Blackboard.getInstance().getUser().getSendMutexRequestList().remove(wrapper);
+                        logger.info("service mutex-state is null - delete mutex-request from sending list");
+                    }
+
+
                 } else {
-                    // Falls der Service keine mutexState addresse hat, wird er aus der LIste gelöscht
                     Blackboard.getInstance().getUser().getSendMutexRequestList().remove(wrapper);
                     logger.info("service does not have a mutex-state url - delete mutex-request from sending list because there is no mutexstate address");
+
                 }
 
 
-            }
-
-            if (waitagain) {
-
-                this.sleep(SLEEP_TIME); // TODO - Nach oben ziehen und ersetzen mit dem anderen
             }
 
             sendMutexRequestList = new ArrayList<MutexRequestWrapper>();
