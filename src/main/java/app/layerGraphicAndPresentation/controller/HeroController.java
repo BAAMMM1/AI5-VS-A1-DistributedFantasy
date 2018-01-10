@@ -181,7 +181,7 @@ public class HeroController {
     public ResponseEntity<?> addMutexReply(@PathVariable(API.MUTEX_MESSAGE_ID) String uuid, @RequestBody MutexRequest request) {
         // uri to endpoint where one posts mutex algorithm messages>" - RequestBody hier ok?
 
-        logger.info("mutex-reply - income: " + request.toString());
+        logger.info("mutex-reply - income from: " + request.getUser() + " with time: " + request.getTime());
 
 
         try {
