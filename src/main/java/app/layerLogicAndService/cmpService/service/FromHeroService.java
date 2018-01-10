@@ -391,7 +391,7 @@ public class FromHeroService implements IFromHeroService {
     @Override
     public void addMutexReply(String uuid, MutexRequest request) {
 
-        logger.info("mutex-reply - processed: " + request.toString());
+        logger.info("mutex-reply - processed: " + uuid);
         Blackboard.getInstance().getUser().getMutex().incrementRequestTime(request.getTime());
 
         List<MutexRequestWrapper> wrapperList = Blackboard.getInstance().getUser().getSendMutexRequestList();
@@ -399,10 +399,10 @@ public class FromHeroService implements IFromHeroService {
         MutexRequestWrapper wrapper = wrapperList.stream().filter(w -> w.getUuid().equals(uuid)).findFirst().orElse(null);
 
         if (wrapper != null) {
-            logger.info("mutex-reply - remove from mutexMessageSendingList: " + wrapper.toString());
+            logger.info("mutex-reply - remove from mutexMessageSendingList: " + uuid);
             Blackboard.getInstance().getUser().getSendMutexRequestList().remove(wrapper);
         } else {
-            logger.info("mutex-reply - not found in sending list: " + request.toString());
+            logger.info("mutex-reply - not found in sending list: " + uuid);
         }
 
     }

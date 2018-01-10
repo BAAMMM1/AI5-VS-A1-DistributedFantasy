@@ -125,11 +125,10 @@ public class ToHeroService implements IToHeroService {
 
 
         // 1. hole alle heros, die die capability mutex besitzen
-        List<Adventurer> adventurerListWithMutex = this.tavernaService.getAdventurersWithCapabilityMutex();
-        logger.info("heros with capabilitiy mutex: " + adventurerListWithMutex.toString());
+        List<Adventurer> adventurerWithMutexList = this.tavernaService.getAdventurersWithCapabilityMutex();
 
-        for (Adventurer adventurer : adventurerListWithMutex) {
-            logger.info("try to send mutex-request to: " + adventurer.toString());
+        for (Adventurer adventurer : adventurerWithMutexList) {
+            logger.info("send mutex-request for: " + adventurer.getUser() + "to: " + adventurer.getUrl());
 
 
             try {
@@ -167,7 +166,7 @@ public class ToHeroService implements IToHeroService {
 
 
                 MutexRequestWrapper wrapper = new MutexRequestWrapper(adventurer.getUser(), uuid, request, urlHeroMutexState);
-                logger.info("adding mutex-request to sendMutexRequestList: " + wrapper.toString());
+                logger.info("adding mutex-request to sendMutexRequestList");
                 Blackboard.getInstance().getUser().getSendMutexRequestList().add(wrapper);
 
 

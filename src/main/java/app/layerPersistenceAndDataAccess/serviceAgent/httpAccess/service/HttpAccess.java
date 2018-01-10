@@ -142,10 +142,10 @@ public class HttpAccess {
 
                 body = new String(responeBody, 0, responeLen);
 
-                logger.info(responeCode + " for: " + request.getUrl());
+                //logger.info(responeCode + " for: " + request.getUrl());
                 if(body != null) {
                     if(!body.isEmpty()){
-                        logger.info(body.toString());
+                        //logger.info(body.toString());
                     }
                 }
                 //System.out.println(responeCode);

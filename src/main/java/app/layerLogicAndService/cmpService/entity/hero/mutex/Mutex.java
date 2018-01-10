@@ -40,22 +40,22 @@ public class Mutex {
 
     public void incrementRequestTime(int requestTime){
 
-        logger.info("increment time");
+        logger.info("time: " + this.time + " - income time: " + requestTime);
 
 
         if(requestTime > time){
-            logger.info("incoming time is higher");
+            logger.info("income time is higher");
 
             this.time = requestTime + 1;
 
-            logger.info("time ist now at: " + Blackboard.getInstance().getUser().getMutex().getTime());
+            logger.info("set time to: " + Blackboard.getInstance().getUser().getMutex().getTime());
 
         } else {
-            logger.info("incoming time is lower");
+            logger.info("income time is lower");
 
             this.time++;
 
-            logger.info("time ist now at: " + Blackboard.getInstance().getUser().getMutex().getTime());
+            logger.info("set time to: " + Blackboard.getInstance().getUser().getMutex().getTime());
 
         }
 
