@@ -161,7 +161,7 @@ public class HeroController {
     public ResponseEntity<?> addMutex(@RequestBody MutexRequest request) {
         // uri to endpoint where one posts mutex algorithm messages>" - RequestBody hier ok?
 
-        logger.info("mutex-request - income: " + request.toString());
+        logger.info("mutex-request - income: \n" + request.toString());
 
         try {
             this.fromHeroService.addMutexRequest(request);

@@ -308,7 +308,7 @@ public class FromHeroService implements IFromHeroService {
     @Override
     public void addMutexRequest(MutexRequest request) throws UnexpectedResponseCodeException {
 
-        logger.info("mutex request - proceed: " + request.toString());
+        logger.info("mutex request - proceed");
         Blackboard.getInstance().getUser().getMutex().incrementRequestTime(request.getTime());
 
         Mutex currentMutex = Blackboard.getInstance().getUser().getMutex();
