@@ -109,7 +109,6 @@ public class ToHeroService implements IToHeroService {
 
         // Phase 1 - Alle mit Capability mutex identifizieren und request schicken
         logger.info("Phase 1 - identify all heros with capability mutex and send mutex-request to them");
-        logger.info("mutex-state - change state to: " + MutexState.WANTING.toString());
 
         Blackboard.getInstance().getUser().getMutex().setState(MutexState.WANTING);
         logger.info("mutex-state - change state to: " + MutexState.WANTING.toString());
@@ -126,6 +125,7 @@ public class ToHeroService implements IToHeroService {
 
         // 1. hole alle heros, die die capability mutex besitzen
         List<Adventurer> adventurerWithMutexList = this.tavernaService.getAdventurersWithCapabilityMutex();
+        MutexRequestWrapper requestWrapper = null;
 
         for (Adventurer adventurer : adventurerWithMutexList) {
             logger.info("send mutex-request for: " + adventurer.getUser() + "to: " + adventurer.getUrl());
@@ -145,8 +145,7 @@ public class ToHeroService implements IToHeroService {
 
                 logger.info("sending mutex-request to: " + adventurer.getUser() + " with id: " + uuid);
 
-
-                MutexRequestWrapper requestWrapper = new MutexRequestWrapper(adventurer.getUser(), uuid, request, this.getUrl(heroService.getMutexstate()));
+                requestWrapper = new MutexRequestWrapper(adventurer.getUser(), uuid, request, this.getUrl(heroService.getMutexstate()));
 
                 logger.info("adding mutex-request to sendMutexRequestList");
                 Blackboard.getInstance().getUser().getSendMutexRequestList().add(requestWrapper);
@@ -155,6 +154,9 @@ public class ToHeroService implements IToHeroService {
                 this.toHeroConsumer.sendMutexMessage(this.getUrl(heroService.getMutex()), request);
 
             } catch (Exception e) {
+                if(requestWrapper != null){
+                    Blackboard.getInstance().getUser().getSendMutexRequestList().remove(requestWrapper);
+                }
                 logger.warn(e.getMessage());
             }
         }
@@ -201,7 +203,7 @@ public class ToHeroService implements IToHeroService {
                     } catch (Exception e) {
                         logger.warn(e.getClass().getSimpleName());
 
-                        // falss connection reuse löschen
+                        // falls connection reuse löschen
                         Blackboard.getInstance().getUser().getSendMutexRequestList().remove(wrapper);
                         logger.info("hero is unavaible - delete mutex-request from sendMutexRequestList");
                         continue;
