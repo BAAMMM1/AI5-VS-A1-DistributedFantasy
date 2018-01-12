@@ -130,28 +130,9 @@ public class ToHeroService implements IToHeroService {
         for (Adventurer adventurer : adventurerWithMutexList) {
             logger.info("send mutex-request for: " + adventurer.getUser() + "to: " + adventurer.getUrl());
 
-
             try {
 
-                String urlHeroService = adventurer.getUrl();
-
-                if (!urlHeroService.substring(0, 7).equals("http://")) {
-                    urlHeroService = "http://" + urlHeroService;
-                }
-
-                Service heroService = this.toHeroConsumer.getHeroService(urlHeroService);
-
-                String urlHeroMutexRequestUrl = heroService.getMutex();
-
-                if (!urlHeroMutexRequestUrl.substring(0, 7).equals("http://")) {
-                    urlHeroMutexRequestUrl = "http://" + urlHeroMutexRequestUrl;
-                }
-
-                String urlHeroMutexState = heroService.getMutexstate();
-
-                if (!urlHeroMutexRequestUrl.substring(0, 7).equals("http://")) {
-                    urlHeroMutexRequestUrl = "http://" + urlHeroMutexState;
-                }
+                Service heroService = this.toHeroConsumer.getHeroService(this.getUrl(adventurer.getUrl()));
 
                 String uuid = UUID.randomUUID().toString();
 
@@ -165,14 +146,13 @@ public class ToHeroService implements IToHeroService {
                 logger.info("sending mutex-request to: " + adventurer.getUser() + " with id: " + uuid);
 
 
-                MutexRequestWrapper wrapper = new MutexRequestWrapper(adventurer.getUser(), uuid, request, urlHeroMutexState);
+                MutexRequestWrapper requestWrapper = new MutexRequestWrapper(adventurer.getUser(), uuid, request, this.getUrl(heroService.getMutexstate()));
+
                 logger.info("adding mutex-request to sendMutexRequestList");
-                Blackboard.getInstance().getUser().getSendMutexRequestList().add(wrapper);
+                Blackboard.getInstance().getUser().getSendMutexRequestList().add(requestWrapper);
 
-
-                // muss hier für jedes mutex-request raussenden unsere uhr incrementiert werden?
                 Blackboard.getInstance().getUser().getMutex().incrementTimeStampSend();
-                this.toHeroConsumer.sendMutexMessage(urlHeroMutexRequestUrl, request);
+                this.toHeroConsumer.sendMutexMessage(this.getUrl(heroService.getMutex()), request);
 
             } catch (Exception e) {
                 logger.warn(e.getMessage());
@@ -180,16 +160,13 @@ public class ToHeroService implements IToHeroService {
         }
 
 
-        logger.info("Phase 2");
-        // Phase 2, Prüfen ob von allen ein ein reply_ok zurpckgekommen ist.
+        logger.info("Phase 2 - check if all responded with a reply ok");
+        //prüfen ob alle mit einem reply ok geantwortet haben
         // Wenn nicht warte noch (z.b. ein anderer Prozess ist im kritischen Bereichen)
         // Und prüfe den mutex state
 
-
         // Wait bis Liste leer
         // 1. angemessene Zeit warten wenn die sendMutexRequestList nicht leer ist
-
-
         // Wenn antwort, dann lösche aus getSendMutexRequestList -> FromHeroService -> addMutexReply
 
         // So lange die Liste der gesendeten noch nicht leer ist
@@ -261,7 +238,7 @@ public class ToHeroService implements IToHeroService {
         }
 
         // Phase 3 - Betrete den kritischen Abschnitt/Bereich
-        logger.info("Phase 3");
+        logger.info("Phase 3 - entering the critical section");
         String body = null;
 
         if (Blackboard.getInstance().getUser().getSendMutexRequestList().isEmpty()) {
@@ -282,10 +259,9 @@ public class ToHeroService implements IToHeroService {
         // Phase 4 - Nach dem der kritische Bereich verlassen wurde, sende an die gespeicherten request
         // Anfragen ein reply_ok
 
-        logger.info("Phase 4");
-        logger.info("start to answer receive mutex-request queue");
-
+        logger.info("Phase 4 - Start to answer receive mutex-request queue");
         // 5. Wenn kritischer Bereich verlassen, dann mutexRequestStorageList, abarbeiten und allen ok senden.
+
         List<MutexRequest> mutexRequestStorageList = new ArrayList<MutexRequest>();
         mutexRequestStorageList.addAll(Blackboard.getInstance().getUser().getReceiveMutexRequestQueue());
 
@@ -300,7 +276,7 @@ public class ToHeroService implements IToHeroService {
                     API.USERS + "/" + Blackboard.getInstance().getUser().getName()
             );
 
-            logger.info("senden reply-ok to: " + request.getReply());
+            logger.info("send reply-ok for: " + request.getUser() + " to: " + request.getReply());
 
             Blackboard.getInstance().getUser().getMutex().incrementTimeStampSend();
             this.toHeroConsumer.sendMutexMessage(request.getReply(), response);
@@ -310,20 +286,29 @@ public class ToHeroService implements IToHeroService {
 
         }
 
-
         return body;
 
     }
 
-    private void sleep(int time){
+    private String getUrl(String string) {
 
-            try {
-                logger.info("sleep for: " + time);
-                Thread.sleep(time);
+        if (!string.substring(0, 7).equals("http://")) {
+            return "http://" + string;
+        } else {
+            return string;
+        }
 
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+    }
+
+    private void sleep(int time) {
+
+        try {
+            logger.info("sleep for: " + time);
+            Thread.sleep(time);
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
     }
 
