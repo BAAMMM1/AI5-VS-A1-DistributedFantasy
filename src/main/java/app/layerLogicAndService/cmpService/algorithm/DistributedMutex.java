@@ -98,6 +98,7 @@ public class DistributedMutex {
 
                 this.sendMutexRequestList.add(wrapper);
 
+                System.out.println(this.toString());
                 System.out.println(this.sendMutexRequestList.toString());
 
                 this.toHeroConsumer.sendMutexMessage(
@@ -307,6 +308,7 @@ public class DistributedMutex {
 
         List<MutexRequestWrapper> wrapperList = this.sendMutexRequestList;
 
+        System.out.println(this.toString());
         System.out.println(this.sendMutexRequestList.toString());
 
         MutexRequestWrapper wrapper = wrapperList.stream().filter(w -> w.getUuid().equals(uuid)).findFirst().orElse(null);
