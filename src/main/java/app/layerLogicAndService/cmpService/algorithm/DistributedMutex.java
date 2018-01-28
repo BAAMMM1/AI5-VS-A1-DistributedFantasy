@@ -98,6 +98,8 @@ public class DistributedMutex {
 
                 this.sendMutexRequestList.add(wrapper);
 
+                System.out.println(this.sendMutexRequestList.toString());
+
                 this.toHeroConsumer.sendMutexMessage(
                         this.getUrl(heroService.getMutex()),
                         MutexMessage.REQUEST, time,
