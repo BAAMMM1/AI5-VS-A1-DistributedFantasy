@@ -399,6 +399,8 @@ public class FromHeroService implements IFromHeroService {
     @Override
     public void addMutexReply(String uuid, MutexRequest request) {
 
+        /*
+
         logger.info("mutex-reply - processed: " + uuid);
         Blackboard.getInstance().getUser().getMutex().incrementRequestTime(request.getTime());
 
@@ -412,6 +414,11 @@ public class FromHeroService implements IFromHeroService {
         } else {
             logger.info("mutex-reply - not found in sending list: " + uuid);
         }
+
+        */
+
+        DistributedMutex.getInstance().incomeReplyOK(uuid, request);
+
 
     }
 

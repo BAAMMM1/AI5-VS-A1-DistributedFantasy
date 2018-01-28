@@ -298,4 +298,20 @@ public class DistributedMutex {
         this.toHeroConsumer.sendMutexMessage(request.getReply(), MutexMessage.REPLYOK, null);
 
     }
+
+    public void incomeReplyOK(String uuid, MutexRequest request){
+
+        logger.info("mutex-reply - processed: " + uuid);
+
+        List<MutexRequestWrapper> wrapperList = this.sendMutexRequestList;
+
+        MutexRequestWrapper wrapper = wrapperList.stream().filter(w -> w.getUuid().equals(uuid)).findFirst().orElse(null);
+
+        if (wrapper != null) {
+            logger.info("mutex-reply - remove from mutexMessageSendingList: " + uuid);
+            this.sendMutexRequestList.remove(wrapper);
+        } else {
+            logger.info("mutex-reply - not found in sending list: " + uuid);
+        }
+    }
 }
