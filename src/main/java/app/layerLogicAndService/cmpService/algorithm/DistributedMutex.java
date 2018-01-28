@@ -91,7 +91,7 @@ public class DistributedMutex {
             try {
                 heroService = this.toHeroConsumer.getHeroService(this.getUrl(adventurer.getUrl()));
 
-            } catch (UnexpectedResponseCodeException e) {
+            } catch (Exception e) {
                 logger.warn(e.getMessage());
                 continue;
             }
