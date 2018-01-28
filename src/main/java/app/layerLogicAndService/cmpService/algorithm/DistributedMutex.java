@@ -99,9 +99,6 @@ public class DistributedMutex {
 
                 this.sendMutexRequestList.add(wrapper);
 
-                System.out.println(this.toString());
-                System.out.println(this.sendMutexRequestList.toString());
-
                 this.toHeroConsumer.sendMutexMessage(
                         this.getUrl(heroService.getMutex()),
                         MutexMessage.REQUEST, time,
@@ -241,7 +238,7 @@ public class DistributedMutex {
         String mutexState = currentMutex.getState();
 
         logger.info("current state at: " + mutexState);
-        logger.info("time now at: " + currentMutex.getTime());
+        logger.info("time now at: " + LamportClock.getInstance().getTime());
 
 
 
@@ -308,9 +305,6 @@ public class DistributedMutex {
         logger.info("mutex-reply - processed: " + uuid);
 
         List<MutexRequestWrapper> wrapperList = this.sendMutexRequestList;
-
-        System.out.println(this.toString());
-        System.out.println(this.sendMutexRequestList.toString());
 
         MutexRequestWrapper wrapper = wrapperList.stream().filter(w -> w.getUuid().equals(uuid)).findFirst().orElse(null);
 
