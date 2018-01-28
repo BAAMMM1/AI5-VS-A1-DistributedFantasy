@@ -91,6 +91,11 @@ public class DistributedMutex {
             try {
                 heroService = this.toHeroConsumer.getHeroService(this.getUrl(adventurer.getUrl()));
 
+            } catch (UnexpectedResponseCodeException e) {
+                logger.warn(e.getMessage());
+                continue;
+            }
+
 
             try {
                 String uuid = UUID.randomUUID().toString();
@@ -116,9 +121,6 @@ public class DistributedMutex {
                 logger.warn(e.getMessage());
             }
 
-            } catch (UnexpectedResponseCodeException e) {
-                logger.warn(e.getMessage());
-            }
 
         }
 
