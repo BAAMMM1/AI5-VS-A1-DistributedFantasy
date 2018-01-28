@@ -86,10 +86,13 @@ public class DistributedMutex {
         for (Adventurer adventurer : adventurersWithMutexCapability) {
             logger.info("for adventuer: " + adventurer.getUser().replace("/name/", "") + " to: " + adventurer.getUrl());
 
+
+            Service heroService = null;
             try {
+                heroService = this.toHeroConsumer.getHeroService(this.getUrl(adventurer.getUrl()));
 
-                Service heroService = this.toHeroConsumer.getHeroService(this.getUrl(adventurer.getUrl()));
 
+            try {
                 String uuid = UUID.randomUUID().toString();
 
 
@@ -112,6 +115,11 @@ public class DistributedMutex {
                 }
                 logger.warn(e.getMessage());
             }
+
+            } catch (UnexpectedResponseCodeException e) {
+                logger.warn(e.getMessage());
+            }
+
         }
 
     }
