@@ -4,6 +4,7 @@ package app.layerLogicAndService.cmpService.service;
 import app.Application;
 import app.configuration.API;
 import app.layerGraphicAndPresentation.shell.context.Context;
+import app.layerLogicAndService.cmpService.algorithm.DistributedMutex;
 import app.layerLogicAndService.cmpService.entity.blackboard.Blackboard;
 import app.layerLogicAndService.cmpService.entity.hero.mutex.*;
 import app.layerLogicAndService.cmpService.entity.taverna.Adventurer;
@@ -14,6 +15,7 @@ import app.layerLogicAndService.cmpService.exception.NotInGroupException;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.IToHeroConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.ToHeroConsumer;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
+import app.xlayerMiddleware.logicalClock.LamportClock;
 import org.apache.log4j.Logger;
 
 import java.util.List;
@@ -308,6 +310,8 @@ public class FromHeroService implements IFromHeroService {
     @Override
     public void addMutexRequest(MutexRequest request) throws UnexpectedResponseCodeException {
 
+        /*
+
         logger.info("mutex request - proceed");
         Blackboard.getInstance().getUser().getMutex().incrementRequestTime(request.getTime());
 
@@ -360,6 +364,10 @@ public class FromHeroService implements IFromHeroService {
         } else if (mutexState.equals(MutexState.HOLD.toString())) {
             this.saveMutexRequest(request);
         }
+
+        */
+
+        DistributedMutex.getInstance().incomeRequest(request);
 
     }
 

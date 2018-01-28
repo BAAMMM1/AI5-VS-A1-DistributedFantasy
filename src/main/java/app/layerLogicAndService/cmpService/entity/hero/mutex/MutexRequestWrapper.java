@@ -18,6 +18,12 @@ public class MutexRequestWrapper {
         this.pathMutexState = pathMutexState;
     }
 
+    public MutexRequestWrapper(String name, String uuid, String pathMutexState) {
+        this.name = name;
+        this.uuid = uuid;
+        this.pathMutexState = pathMutexState;
+    }
+
     public MutexRequestWrapper() {
     }
 

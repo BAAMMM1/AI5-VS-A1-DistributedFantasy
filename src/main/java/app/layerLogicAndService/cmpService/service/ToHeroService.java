@@ -2,6 +2,7 @@ package app.layerLogicAndService.cmpService.service;
 
 import app.Application;
 import app.configuration.API;
+import app.layerLogicAndService.cmpService.algorithm.DistributedMutex;
 import app.layerLogicAndService.cmpService.entity.blackboard.Blackboard;
 import app.layerLogicAndService.cmpService.entity.hero.mutex.*;
 import app.layerLogicAndService.cmpService.entity.quest.Task;
@@ -107,6 +108,8 @@ public class ToHeroService implements IToHeroService {
     @Override
     public String wantMutex(String ipPort, String ressource) throws UnexpectedResponseCodeException {
 
+        /*
+
         // Phase 1 - Alle mit Capability mutex identifizieren und request schicken
         logger.info("Phase 1 - identify all heros with capability mutex and send mutex-request to them");
 
@@ -128,7 +131,7 @@ public class ToHeroService implements IToHeroService {
         MutexRequestWrapper requestWrapper = null;
 
         for (Adventurer adventurer : adventurerWithMutexList) {
-            logger.info("send mutex-request for: " + adventurer.getUser() + "to: " + adventurer.getUrl());
+            logger.info("send mutex-request for: " + adventurer.getUser() + " to: " + adventurer.getUrl());
 
             try {
 
@@ -287,6 +290,31 @@ public class ToHeroService implements IToHeroService {
             Blackboard.getInstance().getUser().getReceiveMutexRequestQueue().remove(request);
 
         }
+
+        return body;
+
+        */
+
+        DistributedMutex.getInstance().requestMutex(this.tavernaService.getAdventurersWithCapabilityMutex());
+        // Phase 3 - Betrete den kritischen Abschnitt/Bereich
+        logger.info("Phase 3 - entering the critical section");
+        String body = null;
+
+        if (Blackboard.getInstance().getUser().getSendMutexRequestList().isEmpty()) {
+            logger.info("sendMutexRequestList is empty");
+            // Liste leer, alle haben geantwortet, dann kritisch Bereich betreten
+            Blackboard.getInstance().getUser().getMutex().setState(MutexState.HOLD);
+            logger.info("set mutex-state to: " + MutexState.HOLD.toString());
+            logger.info("entering critcal section");
+            body = this.questConsumer.postBuffered(ipPort, ressource, "");
+
+        }
+
+        logger.info("leaving critcal section");
+        Blackboard.getInstance().getUser().getMutex().setState(MutexState.RELEASED);
+        logger.info("set mutex-state to: " + MutexState.RELEASED.toString());
+
+        DistributedMutex.getInstance().dispenseMutext();
 
         return body;
 

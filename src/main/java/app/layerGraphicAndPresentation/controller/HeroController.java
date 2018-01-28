@@ -8,6 +8,7 @@ import app.layerLogicAndService.cmpService.entity.hero.mutex.MutexRequest;
 import app.layerLogicAndService.cmpService.service.IFromHeroService;
 import app.layerLogicAndService.cmpService.exception.AlreadyInGroupException;
 import app.layerLogicAndService.cmpService.entity.hero.*;
+import app.xlayerMiddleware.logicalClock.LamportClock;
 import com.google.gson.Gson;
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
@@ -162,6 +163,7 @@ public class HeroController {
         // uri to endpoint where one posts mutex algorithm messages>" - RequestBody hier ok?
 
         logger.info("mutex-request - income: \n" + request.toString());
+        LamportClock.getInstance().tick(request.getTime());
 
         try {
             this.fromHeroService.addMutexRequest(request);
@@ -182,7 +184,7 @@ public class HeroController {
         // uri to endpoint where one posts mutex algorithm messages>" - RequestBody hier ok?
 
         logger.info("mutex-reply - income from: " + request.getUser() + " with time: " + request.getTime());
-
+        LamportClock.getInstance().tick(request.getTime());
 
         try {
             this.fromHeroService.addMutexReply(uuid, request);

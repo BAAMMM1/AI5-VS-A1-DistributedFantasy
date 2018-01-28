@@ -1,11 +1,16 @@
 package app.layerPersistenceAndDataAccess.serviceAgent.restConsumer;
 
+import app.Application;
+import app.configuration.API;
+import app.layerLogicAndService.cmpService.entity.blackboard.Blackboard;
 import app.layerLogicAndService.cmpService.entity.hero.*;
 import app.layerLogicAndService.cmpService.entity.hero.mutex.Mutex;
+import app.layerLogicAndService.cmpService.entity.hero.mutex.MutexMessage;
 import app.layerLogicAndService.cmpService.entity.hero.mutex.MutexRequest;
 import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.service.HttpAccess;
 import app.layerPersistenceAndDataAccess.serviceAgent.httpAccess.entity.HttpResponse;
 import app.layerPersistenceAndDataAccess.serviceAgent.restConsumer.exception.UnexpectedResponseCodeException;
+import app.xlayerMiddleware.logicalClock.LamportClock;
 import com.google.gson.Gson;
 
 /**
@@ -99,6 +104,44 @@ public class ToHeroConsumer implements IToHeroConsumer {
             throw new UnexpectedResponseCodeException(response);
         }
 
+    }
+
+    @Override
+    public void sendMutexMessage(String url, MutexMessage type, int fixedTime, String reply) throws UnexpectedResponseCodeException {
+
+        LamportClock.getInstance().tick();
+
+        MutexRequest message = new MutexRequest(
+                type.toString(),
+                fixedTime,
+                reply,
+                API.USERS + "/" + Blackboard.getInstance().getUser().getName()
+        );
+
+        HttpResponse response = this.httpAccess.post(url, gson.toJson(message));
+
+        if (response.getCode() < 200 || response.getCode() >= 300) {
+            throw new UnexpectedResponseCodeException(response);
+        }
+    }
+
+    @Override
+    public void sendMutexMessage(String url, MutexMessage type, String reply) throws UnexpectedResponseCodeException {
+
+        LamportClock.getInstance().tick();
+
+        MutexRequest message = new MutexRequest(
+                type.toString(),
+                LamportClock.getInstance().getTime(),
+                reply,
+                API.USERS + "/" + Blackboard.getInstance().getUser().getName()
+        );
+
+        HttpResponse response = this.httpAccess.post(url, gson.toJson(message));
+
+        if (response.getCode() < 200 || response.getCode() >= 300) {
+            throw new UnexpectedResponseCodeException(response);
+        }
     }
 
     @Override
