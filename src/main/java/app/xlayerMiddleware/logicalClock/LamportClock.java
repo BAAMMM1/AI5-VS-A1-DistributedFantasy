@@ -15,10 +15,11 @@ public class LamportClock {
     public static LamportClock getInstance(){
 
         if (instance == null){
-            return new LamportClock();
-        } else {
-            return instance;
+            instance = new LamportClock();
         }
+
+        return instance;
+
     }
 
     private LamportClock() {

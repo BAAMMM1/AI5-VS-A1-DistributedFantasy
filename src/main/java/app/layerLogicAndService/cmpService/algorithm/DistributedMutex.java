@@ -36,12 +36,13 @@ public class DistributedMutex {
     public static final String HTTP = "http://";
     public static final int SLEEP_TIME = 5000;
 
-    public static DistributedMutex getInstance(){
+    public static DistributedMutex getInstance()
+    {
         if (instance == null){
-            return new DistributedMutex();
-        } else {
-            return instance;
+            instance = new DistributedMutex();
         }
+
+        return instance;
     }
 
     private DistributedMutex() {
