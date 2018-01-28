@@ -30,7 +30,7 @@ public class DistributedMutex {
     private IToHeroConsumer toHeroConsumer;
     private int requestTime;
 
-    private static DistributedMutex instance;
+    private static DistributedMutex instance = null;
 
     public static final String PORT = ":8080";
     public static final String HTTP = "http://";
@@ -83,7 +83,7 @@ public class DistributedMutex {
         MutexRequestWrapper wrapper = null;
 
         for (Adventurer adventurer : adventurersWithMutexCapability) {
-            logger.info("send mutex-request for: " + adventurer.getUser() + " to: " + adventurer.getUrl());
+            logger.info("for adventuer: " + adventurer.getUser().replace("/name/", "") + " to: " + adventurer.getUrl());
 
             try {
 
@@ -92,7 +92,7 @@ public class DistributedMutex {
                 String uuid = UUID.randomUUID().toString();
 
 
-                logger.info("sending mutex-request to: " + adventurer.getUser() + " with id: " + uuid);
+                logger.info("mutex-request with id: " + uuid);
                 wrapper = new MutexRequestWrapper(adventurer.getUser(), uuid, this.getUrl(heroService.getMutexstate()));
 
 
@@ -304,6 +304,8 @@ public class DistributedMutex {
         logger.info("mutex-reply - processed: " + uuid);
 
         List<MutexRequestWrapper> wrapperList = this.sendMutexRequestList;
+
+        System.out.println(this.sendMutexRequestList.toString());
 
         MutexRequestWrapper wrapper = wrapperList.stream().filter(w -> w.getUuid().equals(uuid)).findFirst().orElse(null);
 
